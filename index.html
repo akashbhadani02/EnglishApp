@@ -1210,24 +1210,23 @@ justify-content:space-between;
 
             /* START EXAM */
 
-            function startExam() {
+          function startExam() {
 
-                let examPassword = prompt("Ask password to your teacher");
+    let examPassword = prompt("Ask password to your teacher");
 
-                if (examPassword === "12345") {   // Change 12345 to your password
+    if (examPassword === "12345") {
 
-                    window.open(
-                        "https://preposition-exam.vercel.app/",
-                        "_blank"
-                    );
+        window.open(
+            "./exam.html",
+            "_blank"
+        );
 
-                } else {
+    } else {
 
-                    alert("Wrong Password!");
+        alert("Wrong Password!");
 
-                }
-
-            }
+    }
+}
 
             /* TIMER */
 
@@ -1350,6 +1349,52 @@ justify-content:space-between;
                 ).innerHTML =
                     score + " / 5";
 
+                    // Auto Certificate Issue
+if (score >= 3) {
+
+    user.certificate = true;
+
+    user.grade =
+        score === 5 ? "A+" :
+        score === 4 ? "A" :
+        score === 3 ? "B" : "C";
+
+    user.percentage = ((score / 5) * 100).toFixed(0);
+
+    students = students.map(s => {
+
+        if (s.id === user.id) {
+
+            s.certificate = true;
+            s.grade = user.grade;
+            s.percentage = user.percentage;
+
+        }
+
+        return s;
+
+    });
+
+    localStorage.setItem(
+        "students",
+        JSON.stringify(students)
+    );
+
+    localStorage.setItem(
+        "currentStudent",
+        JSON.stringify(user)
+    );
+
+    setTimeout(() => {
+
+        window.open(
+            "./certificate.html",
+            "_blank"
+        );
+
+    }, 1000);
+}
+
                 let msg = "";
 
                 if (score === 5) {
@@ -1378,27 +1423,30 @@ justify-content:space-between;
 
             /* VIEW RESULTS */
 
-            function showResults() {
+function showResults() {
 
-                let user =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "currentStudent"
-                        )
-                    );
+    let currentUser = JSON.parse(
+        localStorage.getItem("currentStudent")
+    );
 
-                document.getElementById(
-                    "scoreText"
-                ).innerHTML =
-                    (user.examScore || 0)
-                    +
-                    " / 5";
+    let students = JSON.parse(
+        localStorage.getItem("students")
+    );
 
-                showScreen(
-                    "resultScreen"
-                );
+    let user = students.find(
+        s => s.id === currentUser.id
+    );
 
-            }
+    let score = user?.examScore || 0;
+
+    document.getElementById("scoreText").innerHTML =
+        score + " / 5";
+
+    document.getElementById("resultMessage").innerHTML =
+        score >= 3 ? "Pass" : "Fail";
+
+    showScreen("resultScreen");
+}
 
             /* -----------------------
             ATTENDANCE SCREEN
