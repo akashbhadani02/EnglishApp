@@ -1,0 +1,1924 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Aducate English App</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:linear-gradient(-45deg,#b668df,#0d6efd,#e59c98,#ffcc00);
+background-size:400% 400%;
+animation:bgMove 12s ease infinite;
+min-height:100vh;
+}
+
+@keyframes bgMove{
+0%{background-position:0% 50%;}
+50%{background-position:100% 50%;}
+100%{background-position:0% 50%;}
+}
+
+.screen{
+display:none;
+min-height:100vh;
+padding:20px;
+max-width:1100px;
+margin:auto;
+}
+
+.active{
+display:block;
+animation:fadeIn .5s ease;
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+.header{
+background:rgba(255,255,255,.15);
+backdrop-filter:blur(20px);
+border:1px solid rgba(255,255,255,.2);
+color:white;
+padding:25px;
+border-radius:25px;
+text-align:center;
+margin-bottom:20px;
+box-shadow:0 8px 32px rgba(0,0,0,.2);
+animation:float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+0%,100%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-5px);
+}
+}
+
+.header h2{
+font-size:34px;
+font-weight:700;
+}
+
+.header p{
+font-size:15px;
+opacity:.9;
+}
+
+.card{
+background:rgba(255,255,255,.92);
+backdrop-filter:blur(15px);
+padding:25px;
+border-radius:25px;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+margin-bottom:15px;
+transition:.4s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+input{
+width:100%;
+padding:14px;
+margin:10px 0;
+border:none;
+border-radius:15px;
+background:#f4f6ff;
+font-size:15px;
+outline:none;
+transition:.3s;
+}
+
+input:focus{
+transform:scale(1.02);
+box-shadow:0 0 15px rgba(108,92,231,.4);
+}
+
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:15px;
+background:linear-gradient(135deg,#6c5ce7,#00cec9);
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+margin-top:10px;
+transition:.4s;
+}
+
+button:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(108,92,231,.4);
+}
+
+.link{
+text-align:center;
+font-weight:600;
+color:white;
+margin-top:10px;
+cursor:pointer;
+transition:.3s;
+}
+
+.link:hover{
+transform:scale(1.05);
+}
+
+.dashboard-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+gap:15px;
+}
+
+.tile{
+background:rgba(255,255,255,.9);
+padding:25px;
+border-radius:20px;
+text-align:center;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+transition:.4s;
+box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+
+.tile:hover{
+transform:translateY(-8px) scale(1.05);
+background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+color:#222;
+}
+
+.logout{
+background:linear-gradient(135deg,#ff416c,#ff4b2b);
+}
+
+.logout:hover{
+box-shadow:0 10px 25px rgba(255,75,43,.4);
+}
+
+.small{
+font-size:14px;
+color:#666;
+}
+
+h3{
+margin-bottom:10px;
+color:#333;
+}
+
+#studentList div{
+background:white;
+padding:15px;
+margin-top:10px;
+border-left:6px solid #6c5ce7;
+border-radius:12px;
+transition:.3s;
+}
+
+#studentList div:hover{
+transform:translateX(5px);
+}
+
+::-webkit-scrollbar{
+width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#6c5ce7;
+border-radius:20px;
+}
+
+@media(max-width:600px){
+
+.header h2{
+font-size:26px;
+}
+
+.card{
+padding:18px;
+}
+
+.tile{
+padding:18px;
+font-size:14px;
+}
+
+}
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+
+<body>
+
+    <!-- HOME -->
+    <div class="screen active" id="home">
+
+        <div class="header">
+            <h2>Aducate English</h2>
+            <p>Online Student + Admin App</p>
+        </div>
+
+
+
+        <h3>Student Login</h3>
+
+        <input type="text" id="loginUser" placeholder="Username">
+
+        <input type="password" id="loginPass" placeholder="Password">
+
+        <button onclick="studentLogin()">Login</button>
+
+        <div class="link" onclick="showScreen('register')">
+            New Student? Register Here
+        </div>
+
+        <div class="card" style="margin-top:10px;">
+            <h3>Admin Login</h3>
+
+            <input type="text" id="adminUser" placeholder="Admin Username">
+
+            <input type="password" id="adminPass" placeholder="Admin Password">
+
+            <button onclick="adminLogin()">
+                Admin Login
+            </button>
+
+        </div>
+
+    </div>
+
+
+    </div>
+
+    </div>
+
+    <!-- REGISTER -->
+    <div class="screen" id="register">
+
+        <div class="header">
+            <h2>Student Registration</h2>
+        </div>
+
+        <div class="card">
+
+            <input type="text" id="regName" placeholder="Full Name">
+
+            <input type="text" id="regUsername" placeholder="Username">
+
+            <input type="password" id="regPassword" placeholder="Password">
+
+            <input type="text" id="regMobile" placeholder="Mobile Number">
+
+            <button onclick="registerStudent()">
+                Register Student
+            </button>
+
+            <div class="link" onclick="showScreen('home')">
+                Back To Login
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- STUDENT DASHBOARD -->
+    <div class="screen" id="studentDashboard">
+
+        <div class="header">
+            <h2>Student Dashboard</h2>
+            <p id="studentWelcome"></p>
+        </div>
+
+        <div class="dashboard-grid">
+
+            <div class="dashboard-grid">
+
+                <div class="tile" onclick="showVocabulary()">📚 Vocabulary</div>
+
+                <div class="tile" onclick="showGrammar()">✍ Grammar</div>
+
+                <div class="tile" onclick="showBooks()">📖 Books</div>
+
+                <div class="tile" onclick="showSpeaking()">🎤 Speaking</div>
+
+                <div class="tile" onclick="startExam()">📝 Exams</div>
+
+                <div class="tile" onclick="showResults()">📊 Results</div>
+
+                <div class="tile" onclick="openCertificate()">🏆 Certificate</div>
+
+                <div class="tile" onclick="showFees()">💰 Fees</div>
+
+                <div class="tile" onclick="showAttendance()">📅 Attendance</div>
+
+                <div class="tile" onclick="showProfile()">👤 Profile</div>
+
+            </div>
+
+        </div>
+
+        <button class="logout" onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div class="screen" id="adminDashboard">
+
+        <div class="header">
+            <h2>Admin Dashboard</h2>
+        </div>
+
+        <div class="card">
+            <h3>Total Students</h3>
+            <h1 id="totalStudents">0</h1>
+        </div>
+
+        <div class="card">
+
+            <button onclick="viewStudents()">
+                View Students
+            </button>
+
+            <button onclick="manageAttendance()">
+                Manage Attendance
+            </button>
+
+            <button onclick="manageFees()">
+                Manage Fees
+            </button>
+
+            <button onclick="issueCertificate()">
+                Issue Certificate
+            </button>
+
+            <button class="logout" onclick="logout()">
+                Logout
+            </button>
+
+        </div>
+
+        <div class="card" id="studentList">
+        </div>
+
+    </div>
+
+<!-- VOCABULARY SCREEN -->
+<div class="screen" id="vocabularyScreen">
+
+    <div class="header">
+        <h2>Vocabulary</h2>
+    </div>
+
+    <div class="card">
+
+        <div id="vocabularyList">
+            Loading...
+        </div>
+
+    </div>
+
+    <button onclick="showScreen('studentDashboard')">
+        Back
+    </button>
+
+</div>
+   
+
+
+    <!-- GRAMMAR -->
+
+    <div class="screen" id="grammarScreen">
+
+        <div class="header">
+            <h2>Grammar Lessons</h2>
+        </div>
+
+        <div class="card">
+
+            <h3>Present Tense</h3>
+
+            <p>
+                I go to school.
+            </p>
+
+            <hr><br>
+
+            <h3>Past Tense</h3>
+
+            <p>
+                I went to school.
+            </p>
+
+            <hr><br>
+
+            <h3>Future Tense</h3>
+
+            <p>
+                I will go to school.
+            </p>
+
+        </div>
+
+        <button onclick="showScreen('studentDashboard')">
+            Back
+        </button>
+
+    </div>
+
+    <!-- SPEAKING -->
+
+    <div class="screen" id="speakingScreen">
+
+        <div class="header">
+            <h2>Speaking Practice</h2>
+        </div>
+
+        <div class="card">
+
+            <h3>Task 1</h3>
+            <p>Introduce Yourself in English.</p>
+
+            <hr><br>
+
+            <h3>Task 2</h3>
+            <p>Speak about your family.</p>
+
+            <hr><br>
+
+            <h3>Task 3</h3>
+            <p>Describe your daily routine.</p>
+
+            <hr><br>
+
+            <h3>Task 4</h3>
+            <p>Talk about your future goals.</p>
+
+        </div>
+
+        <button onclick="showScreen('studentDashboard')">
+            Back
+        </button>
+
+    </div>
+
+    <!-- PROFILE -->
+
+    <div class="screen" id="profileScreen">
+
+        <div class="header">
+            <h2>My Profile</h2>
+        </div>
+
+        <div class="card">
+
+            <input id="profileName">
+
+            <input id="profileMobile">
+
+            <button onclick="saveProfile()">
+                Save Profile
+            </button>
+
+        </div>
+
+        <button onclick="showScreen('studentDashboard')">
+            Back
+        </button>
+
+    </div>
+
+    <!-- EXAM SCREEN -->
+
+    <div class="screen" id="examScreen">
+
+        <div class="header">
+            <h2>Spoken English Exam</h2>
+            <p>Time Remaining: <span id="timer">05:00</span></p>
+        </div>
+
+        <div class="card">
+
+            <h3>1. She ___ to school every day.</h3>
+
+            <label>
+                <input type="radio" name="q1" value="a">
+                go
+            </label><br>
+
+            <label>
+                <input type="radio" name="q1" value="b">
+                goes
+            </label><br>
+
+            <label>
+                <input type="radio" name="q1" value="c">
+                going
+            </label>
+
+            <hr><br>
+
+            <h3>2. I ___ my homework yesterday.</h3>
+
+            <label>
+                <input type="radio" name="q2" value="a">
+                do
+            </label><br>
+
+            <label>
+                <input type="radio" name="q2" value="b">
+                did
+            </label><br>
+
+            <label>
+                <input type="radio" name="q2" value="c">
+                done
+            </label>
+
+            <hr><br>
+
+            <h3>3. They ___ playing cricket.</h3>
+
+            <label>
+                <input type="radio" name="q3" value="a">
+                is
+            </label><br>
+
+            <label>
+                <input type="radio" name="q3" value="b">
+                are
+            </label><br>
+
+            <label>
+                <input type="radio" name="q3" value="c">
+                am
+            </label>
+
+            <hr><br>
+
+            <h3>4. Choose correct spelling.</h3>
+
+            <label>
+                <input type="radio" name="q4" value="a">
+                Beautifull
+            </label><br>
+
+            <label>
+                <input type="radio" name="q4" value="b">
+                Beautiful
+            </label><br>
+
+            <label>
+                <input type="radio" name="q4" value="c">
+                Beautifal
+            </label>
+
+            <hr><br>
+
+            <h3>5. What is opposite of "Success"?</h3>
+
+            <label>
+                <input type="radio" name="q5" value="a">
+                Failure
+            </label><br>
+
+            <label>
+                <input type="radio" name="q5" value="b">
+                Win
+            </label><br>
+
+            <label>
+                <input type="radio" name="q5" value="c">
+                Achievement
+            </label>
+
+            <button onclick="submitExam()">
+                Submit Exam
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- RESULT SCREEN -->
+
+    <div class="screen" id="resultScreen">
+
+        <div class="header">
+            <h2>Exam Result</h2>
+        </div>
+
+        <div class="card">
+
+            <h1 id="scoreText">
+                0 / 5
+            </h1>
+
+            <p id="resultMessage"></p>
+
+        </div>
+
+        <button onclick="showScreen('studentDashboard')">
+            Back To Dashboard
+        </button>
+
+    </div>
+
+    <!-- ATTENDANCE SCREEN -->
+
+    <div class="screen" id="attendanceScreen">
+
+        <div class="header">
+            <h2>My Attendance</h2>
+        </div>
+
+        <div class="card">
+
+            <h1 id="attendanceText">0%</h1>
+
+            <p>Attendance Percentage</p>
+
+        </div>
+
+        <button onclick="showScreen('studentDashboard')">
+            Back
+        </button>
+
+    </div>
+
+    <!-- FEES SCREEN -->
+
+    <div class="screen" id="feesScreen">
+
+        <div class="header">
+            <h2>Fee Status</h2>
+        </div>
+
+        <div class="card">
+
+            <h2 id="feeStatusText">
+                Pending
+            </h2>
+
+        </div>
+
+        <button onclick="showScreen('studentDashboard')">
+            Back
+        </button>
+
+    </div>
+
+    <!-- CERTIFICATE SCREEN -->
+
+    <div class="screen" id="certificateScreen">
+
+        <div class="header">
+            <h2>Certificate Generator</h2>
+        </div>
+
+        <div class="card" id="certificateArea">
+
+            <div style="
+border:8px solid #0d6efd;
+padding:30px;
+text-align:center;
+">
+
+                <h1>CERTIFICATE</h1>
+
+                <br>
+
+                <p>This Certificate is proudly awarded to</p>
+
+                <h2 id="certificateName">
+                    Student Name
+                </h2>
+
+                <br>
+
+                <p>
+                    for successful completion of
+                </p>
+
+                <h3>
+                    Spoken English Course
+                </h3>
+
+                <br>
+
+                <p id="certificateDate"></p>
+
+                <br><br>
+
+                <div style="
+display:flex;
+justify-content:space-between;
+">
+
+                    <span>Instructor</span>
+
+                    <span>Director</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <button onclick="printCertificate()">
+            Print Certificate
+        </button>
+
+        <button onclick="showScreen('studentDashboard')">
+            Back
+        </button>
+
+    </div>
+
+    <!-- BOOK SCREEN -->
+<div class="screen" id="bookScreen">
+
+    <div class="header">
+        <h2>Books Library</h2>
+    </div>
+
+    <div class="card">
+        <button onclick="openBook('book1')">PART 1</button>
+        <button onclick="openBook('book2')">PART 2</button>
+    </div>
+
+    <button onclick="showScreen('studentDashboard')">Back</button>
+
+</div>
+
+<!-- VIEWER SCREEN -->
+<div class="screen" id="viewerScreen">
+
+    <div class="header">
+        <h2 id="bookTitle">Book</h2>
+    </div>
+
+    <div class="card" style="position:relative;text-align:center;overflow:hidden;">
+
+        <!-- WATERMARK -->
+        <div id="watermark" style="
+            position:absolute;
+            top:40%;
+            left:50%;
+            transform:translate(-50%,-50%) rotate(-30deg);
+            font-size:30px;
+            color:red;
+            opacity:0.55;
+            pointer-events:none;
+            z-index:9999;
+            font-weight:bold;
+            white-space:nowrap;
+        ">
+            Student Copy
+        </div>
+
+        <!-- BOOK IMAGE -->
+        <img
+            id="bookPage"
+            src=""
+            draggable="false"
+            oncontextmenu="return false;"
+            style="
+                max-width:100%;
+                border-radius:10px;
+                user-select:none;
+                -webkit-user-drag:none;
+            "
+        >
+
+        <p id="pageNumber"
+           style="margin-top:15px;font-weight:bold;">
+        </p>
+
+        <div style="
+            display:flex;
+            gap:10px;
+            justify-content:center;
+            margin-top:15px;
+        ">
+            <button onclick="prevPage()">⬅ Previous</button>
+            <button onclick="nextPage()">Next ➡</button>
+        </div>
+
+    </div>
+
+    <button onclick="showScreen('bookScreen')">
+        Back To Books
+    </button>
+
+
+
+    <script>
+    const ADMINS = [
+    { username: "Akash", password: "Akash" },
+    { username: "1", password: "1" },
+    { username: "Vaibhav", password: "Vaibhav" }
+
+];
+
+        /* -----------------------
+        DATABASE INITIALIZATION
+        ----------------------- */
+
+        if (!localStorage.getItem("students")) {
+            localStorage.setItem("students", "[]");
+        }
+
+        if (!localStorage.getItem("admin")) {
+           
+        }
+
+        /* -----------------------
+        SCREEN CONTROL
+        ----------------------- */
+
+        function showScreen(id, addHistory = true) {
+
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+            screen.classList.remove("active");
+        });
+
+    document
+        .getElementById(id)
+        .classList.add("active");
+
+    if(addHistory){
+        history.pushState(
+            {screen:id},
+            "",
+            "#"+id
+        );
+    }
+}
+
+        /* -----------------------
+        REGISTER
+        ----------------------- */
+
+        function registerStudent() {
+
+            let name =
+                document.getElementById("regName").value;
+
+            let username =
+                document.getElementById("regUsername").value;
+
+            let password =
+                document.getElementById("regPassword").value;
+
+            let mobile =
+                document.getElementById("regMobile").value;
+
+            if (
+                name === "" ||
+                username === "" ||
+                password === ""
+            ) {
+                alert("Fill all fields");
+                return;
+            }
+
+            let students =
+                JSON.parse(
+                    localStorage.getItem("students")
+                );
+
+            let exists =
+                students.find(
+                    s => s.username === username
+                );
+
+            if (exists) {
+                alert("Username already exists");
+                return;
+            }
+
+            students.push({
+                id: Date.now(),
+                name: name,
+                username: username,
+                password: password,
+                mobile: mobile,
+                attendance: 0,
+                fees: "Pending",
+                examScore: 0,
+                certificate: false,
+                joined: new Date().toLocaleDateString()
+            });
+
+            localStorage.setItem(
+                "students",
+                JSON.stringify(students)
+            );
+
+            alert("Registration Successful");
+
+            showScreen("home");
+
+        }
+
+        /* -----------------------
+        STUDENT LOGIN
+        ----------------------- */
+
+        function studentLogin() {
+
+            let username =
+                document.getElementById("loginUser").value;
+
+            let password =
+                document.getElementById("loginPass").value;
+
+            let students =
+                JSON.parse(
+                    localStorage.getItem("students")
+                );
+
+            let user =
+                students.find(
+                    s =>
+                        s.username === username &&
+                        s.password === password
+                );
+
+            if (user) {
+
+                localStorage.setItem(
+                    "currentStudent",
+                    JSON.stringify(user)
+                );
+
+                document.getElementById(
+                    "studentWelcome"
+                ).innerHTML =
+                    "Welcome, " + user.name;
+
+                showScreen("studentDashboard");
+
+            } else {
+
+                alert("Invalid Login");
+
+            }
+
+        }
+
+        /* -----------------------
+        ADMIN LOGIN
+        ----------------------- */
+
+ function adminLogin() {
+
+    let u = document.getElementById("adminUser").value;
+    let p = document.getElementById("adminPass").value;
+
+    let admin = ADMINS.find(a => a.username === u && a.password === p);
+
+    if (admin) {
+        updateDashboard();
+        showScreen("adminDashboard");
+    } else {
+        alert("Invalid Admin Login");
+    }
+}
+
+        /* -----------------------
+        ADMIN DASHBOARD
+        ----------------------- */
+
+        function updateDashboard() {
+
+            let students =
+                JSON.parse(
+                    localStorage.getItem("students")
+                );
+
+            document.getElementById(
+                "totalStudents"
+            ).innerHTML =
+                students.length;
+
+        }
+
+        /* -----------------------
+        VIEW STUDENTS
+        ----------------------- */
+
+        function viewStudents() {
+
+    let students = JSON.parse(localStorage.getItem("students"));
+
+    let html = "<h3>Students</h3>";
+
+    students.forEach(s => {
+
+        html += `
+        <div style="
+            padding:10px;
+            margin-top:10px;
+            background:#f5f5f5;
+            border-radius:8px;
+        ">
+            <b>${s.name}</b><br>
+            ${s.username}<br>
+            ${s.mobile}<br><br>
+
+            <button onclick="deleteStudent('${s.username}')"
+                style="background:red;color:white;padding:6px 10px;border:none;border-radius:6px;cursor:pointer;">
+                Delete
+            </button>
+        </div>
+        `;
+    });
+
+    document.getElementById("studentList").innerHTML = html;
+}
+
+        /* -----------------------
+        VOCABULARY
+        ----------------------- */
+
+     function showVocabulary() {
+
+    loadVocabularyExcel();
+
+    showScreen("vocabularyScreen");
+
+}
+
+        /* -----------------------
+        GRAMMAR
+        ----------------------- */
+
+        function showGrammar() {
+            window.open("https://byakashbhadani.vercel.app/", "_blank");
+        }
+
+        showScreen("home");
+
+
+        /* -----------------------
+        SPEAKING
+        ----------------------- */
+
+        function showSpeaking() {
+
+            showScreen("speakingScreen");
+
+        }
+
+        /* -----------------------
+        PROFILE
+        ----------------------- */
+
+        function showProfile() {
+
+            let user =
+                JSON.parse(
+                    localStorage.getItem(
+                        "currentStudent"
+                    )
+                );
+
+            document.getElementById(
+                "profileName"
+            ).value = user.name;
+
+            document.getElementById(
+                "profileMobile"
+            ).value = user.mobile;
+
+            showScreen("profileScreen");
+
+        }
+
+        /* -----------------------
+        SAVE PROFILE
+        ----------------------- */
+
+        function saveProfile() {
+
+            let user =
+                JSON.parse(
+                    localStorage.getItem(
+                        "currentStudent"
+                    )
+                );
+
+            let students =
+                JSON.parse(
+                    localStorage.getItem(
+                        "students"
+                    )
+                );
+
+            let newName =
+                document.getElementById(
+                    "profileName"
+                ).value;
+
+            let newMobile =
+                document.getElementById(
+                    "profileMobile"
+                ).value;
+
+            students =
+                students.map(s => {
+
+                    if (s.id === user.id) {
+
+                        s.name = newName;
+                        s.mobile = newMobile;
+
+                    }
+
+                    return s;
+
+                });
+
+            localStorage.setItem(
+                "students",
+                JSON.stringify(students)
+            );
+
+            user.name = newName;
+            user.mobile = newMobile;
+
+            localStorage.setItem(
+                "currentStudent",
+                JSON.stringify(user)
+            );
+
+            alert(
+                "Profile Updated"
+            );
+
+        }
+
+        /* -----------------------
+        EXAM SYSTEM
+        ----------------------- */
+
+        let examTimer;
+        let timeLeft = 300;
+
+        /* START EXAM */
+
+      function startExam() {
+
+    let examPassword = prompt("Ask password to your teacher");
+
+    if(examPassword === "12345"){   // Change 12345 to your password
+
+        window.open(
+            "https://preposition-exam.vercel.app/",
+            "_blank"
+        );
+
+    }else{
+
+        alert("Wrong Password!");
+
+    }
+
+}
+
+        /* TIMER */
+
+        function updateTimer() {
+
+            let minutes =
+                Math.floor(timeLeft / 60);
+
+            let seconds =
+                timeLeft % 60;
+
+            document.getElementById(
+                "timer"
+            ).innerHTML =
+                String(minutes).padStart(2, '0')
+                +
+                ":"
+                +
+                String(seconds).padStart(2, '0');
+
+        }
+
+        /* SUBMIT EXAM */
+
+        function submitExam() {
+
+            clearInterval(examTimer);
+
+            let score = 0;
+
+            if (
+                document.querySelector(
+                    'input[name="q1"]:checked'
+                )?.value === "b"
+            ) {
+                score++;
+            }
+
+            if (
+                document.querySelector(
+                    'input[name="q2"]:checked'
+                )?.value === "b"
+            ) {
+                score++;
+            }
+
+            if (
+                document.querySelector(
+                    'input[name="q3"]:checked'
+                )?.value === "b"
+            ) {
+                score++;
+            }
+
+            if (
+                document.querySelector(
+                    'input[name="q4"]:checked'
+                )?.value === "b"
+            ) {
+                score++;
+            }
+
+            if (
+                document.querySelector(
+                    'input[name="q5"]:checked'
+                )?.value === "a"
+            ) {
+                score++;
+            }
+
+            saveResult(score);
+
+        }
+
+        /* SAVE RESULT */
+
+        function saveResult(score) {
+
+            let user =
+                JSON.parse(
+                    localStorage.getItem(
+                        "currentStudent"
+                    )
+                );
+
+            let students =
+                JSON.parse(
+                    localStorage.getItem(
+                        "students"
+                    )
+                );
+
+            students =
+                students.map(s => {
+
+                    if (s.id === user.id) {
+
+                        s.examScore = score;
+
+                    }
+
+                    return s;
+
+                });
+
+            localStorage.setItem(
+                "students",
+                JSON.stringify(students)
+            );
+
+            user.examScore = score;
+
+            localStorage.setItem(
+                "currentStudent",
+                JSON.stringify(user)
+            );
+
+            document.getElementById(
+                "scoreText"
+            ).innerHTML =
+                score + " / 5";
+
+            let msg = "";
+
+            if (score === 5) {
+
+                msg = "Excellent Performance!";
+
+            } else if (score >= 3) {
+
+                msg = "Good Job!";
+
+            } else {
+
+                msg = "Need More Practice.";
+
+            }
+
+            document.getElementById(
+                "resultMessage"
+            ).innerHTML = msg;
+
+            showScreen(
+                "resultScreen"
+            );
+
+        }
+
+        /* VIEW RESULTS */
+
+        function showResults() {
+
+            let user =
+                JSON.parse(
+                    localStorage.getItem(
+                        "currentStudent"
+                    )
+                );
+
+            document.getElementById(
+                "scoreText"
+            ).innerHTML =
+                (user.examScore || 0)
+                +
+                " / 5";
+
+            showScreen(
+                "resultScreen"
+            );
+
+        }
+
+        /* -----------------------
+        ATTENDANCE SCREEN
+        ----------------------- */
+
+        function showAttendance() {
+
+            let user =
+                JSON.parse(
+                    localStorage.getItem(
+                        "currentStudent"
+                    )
+                );
+
+            document.getElementById(
+                "attendanceText"
+            ).innerHTML =
+                (user.attendance || 0)
+                +
+                "%";
+
+            showScreen(
+                "attendanceScreen"
+            );
+
+        }
+
+        /* -----------------------
+        FEE SCREEN
+        ----------------------- */
+
+        function showFees() {
+
+            let user =
+                JSON.parse(
+                    localStorage.getItem(
+                        "currentStudent"
+                    )
+                );
+
+            document.getElementById(
+                "feeStatusText"
+            ).innerHTML =
+                user.fees || "Pending";
+
+            showScreen(
+                "feesScreen"
+            );
+
+        }
+
+        /* -----------------------
+        ADMIN ATTENDANCE
+        ----------------------- */
+
+        function manageAttendance() {
+
+            let students =
+                JSON.parse(
+                    localStorage.getItem(
+                        "students"
+                    )
+                );
+
+            let username =
+                prompt(
+                    "Enter Student Username"
+                );
+
+            if (!username) return;
+
+            let percent =
+                prompt(
+                    "Attendance Percentage"
+                );
+
+            students =
+                students.map(s => {
+
+                    if (s.username === username) {
+
+                        s.attendance =
+                            parseInt(percent) || 0;
+
+                    }
+
+                    return s;
+
+                });
+
+            localStorage.setItem(
+                "students",
+                JSON.stringify(students)
+            );
+
+            alert(
+                "Attendance Updated"
+            );
+
+        }
+
+        /* -----------------------
+        ADMIN FEES
+        ----------------------- */
+
+        function manageFees() {
+
+            let students =
+                JSON.parse(
+                    localStorage.getItem(
+                        "students"
+                    )
+                );
+
+            let username =
+                prompt(
+                    "Enter Student Username"
+                );
+
+            if (!username) return;
+
+            let status =
+                prompt(
+                    "Fee Status (Paid/Pending)"
+                );
+
+            students =
+                students.map(s => {
+
+                    if (s.username === username) {
+
+                        s.fees = status;
+
+                    }
+
+                    return s;
+
+                });
+
+            localStorage.setItem(
+                "students",
+                JSON.stringify(students)
+            );
+
+            alert(
+                "Fee Status Updated"
+            );
+
+        }
+
+        /* -----------------------
+        SHOW CERTIFICATE
+        ----------------------- */
+
+       function showCertificate() {
+
+    let user = JSON.parse(localStorage.getItem("currentStudent"));
+
+    let students = JSON.parse(localStorage.getItem("students"));
+    user = students.find(s => s.id === user.id);
+
+    if (!user.certificate) {
+        alert("Certificate Not Issued Yet");
+        return;
+    }
+
+    loadCertificate(user);
+
+    showScreen("certificateScreen");
+}
+        /* -----------------------
+        PRINT CERTIFICATE
+        ----------------------- */
+
+        function printCertificate() {
+
+            let content =
+                document.getElementById(
+                    "certificateArea"
+                ).innerHTML;
+
+            let win =
+                window.open(
+                    "",
+                    "",
+                    "width=900,height=700"
+                );
+
+            win.document.write(
+                content
+            );
+
+            win.print();
+
+        }
+
+        /* -----------------------
+        ISSUE CERTIFICATE
+        ----------------------- */
+
+        function issueCertificate() {
+
+            let username =
+                prompt(
+                    "Enter Student Username"
+                );
+
+            if (!username) return;
+
+            let students =
+                JSON.parse(
+                    localStorage.getItem(
+                        "students"
+                    )
+                );
+
+            let found = false;
+
+            students =
+                students.map(s => {
+
+                    if (s.username === username) {
+
+                        s.certificate = true;
+
+                        found = true;
+
+                    }
+
+                    return s;
+
+                });
+
+            localStorage.setItem(
+                "students",
+                JSON.stringify(students)
+            );
+
+            if (found) {
+
+                alert(
+                    "Certificate Issued"
+                );
+
+            } else {
+
+                alert(
+                    "Student Not Found"
+                );
+
+            }
+
+        }
+        /* -----------------------
+        LOGOUT
+        ----------------------- */
+
+        function logout() {
+
+            showScreen("home");
+
+        }
+       /* -----------------------
+BOOK SYSTEM
+----------------------- */
+
+function showBooks(){
+    showScreen("bookScreen");
+}
+
+let currentPage = 1;
+let totalPages = 10;
+let currentBook = "";
+
+function openBook(book){
+
+    let user = JSON.parse(
+        localStorage.getItem("currentStudent")
+    );
+
+    document.getElementById("watermark").innerHTML =
+    "FLUENT ENGLISH";
+
+    currentBook = book;
+    currentPage = 1;
+
+    if(book === "book1"){
+        totalPages = 93;
+        document.getElementById("bookTitle").innerHTML =
+            "PART 1";
+    }
+
+    if(book === "book2"){
+        totalPages = 50;
+        document.getElementById("bookTitle").innerHTML =
+            "PART 2";
+    }
+
+    loadPage();
+
+    showScreen("viewerScreen");
+}
+
+function loadPage(){
+
+    document.getElementById("bookPage").src =
+        "./books/" +
+        currentBook +
+        "/page" +
+        currentPage +
+        ".jpg";
+
+    document.getElementById("pageNumber").innerHTML =
+        "Page " +
+        currentPage +
+        " of " +
+        totalPages;
+}
+
+function nextPage(){
+
+    if(currentPage < totalPages){
+
+        currentPage++;
+
+        loadPage();
+
+    }
+
+}
+
+function prevPage(){
+
+    if(currentPage > 1){
+
+        currentPage--;
+
+        loadPage();
+
+    }
+
+}
+
+/* -----------------------
+PROTECTION
+----------------------- */
+
+// Disable Right Click
+document.addEventListener("contextmenu", function(e){
+    e.preventDefault();
+});
+
+// Disable Drag
+document.addEventListener("dragstart", function(e){
+    e.preventDefault();
+});
+
+// Disable Save Source
+document.addEventListener("keydown", function(e){
+
+    if(
+        e.ctrlKey &&
+        (
+            e.key.toLowerCase() === "s" ||
+            e.key.toLowerCase() === "u"
+        )
+    ){
+        e.preventDefault();
+    }
+
+});
+
+
+async function loadVocabularyExcel() {
+
+    const response = await fetch("./vocabulary.xlsx");
+    const arrayBuffer = await response.arrayBuffer();
+
+    const workbook = XLSX.read(arrayBuffer);
+
+    const sheet =
+        workbook.Sheets[
+            workbook.SheetNames[0]
+        ];
+
+    const data =
+        XLSX.utils.sheet_to_json(sheet);
+
+    let html = "";
+
+    data.forEach(row => {
+
+        html += `
+        <div style="
+            background:white;
+            padding:15px;
+            margin-bottom:15px;
+            border-radius:12px;
+            border-left:6px solid #6c5ce7;
+        ">
+            <h3 style="color:#6c5ce7;">
+                ${row.Word}
+            </h3>
+
+            <p>
+                <b>Meaning:</b>
+                ${row.Meaning}
+            </p>
+
+            <p>
+                <b>Example:</b>
+                ${row.Example}
+            </p>
+
+            <p>
+                <b>Gujarati:</b>
+                ${row.Gujarati}
+            </p>
+        </div>
+
+        <button onclick="speakVocabulary(
+'${row.Word}',
+'${row.Meaning}',
+'${row.Example}',
+'${row.Gujarati}'
+)">
+🔊 Listen
+</button>
+        `;
+
+    });
+
+    document.getElementById(
+        "vocabularyList"
+    ).innerHTML = html;
+}
+
+function speakVocabulary(word, meaning, example, gujarati){
+
+    // English Part
+    let englishSpeech = new SpeechSynthesisUtterance(
+        "Word " + word +
+        ". Meaning " + meaning +
+        ". Example " + example 
+        );
+
+    englishSpeech.lang = "en-US";
+
+    // Gujarati Part
+    let gujaratiSpeech = new SpeechSynthesisUtterance(
+        gujarati
+    );
+
+    gujaratiSpeech.lang = "gu-IN";
+
+    speechSynthesis.cancel();
+
+    englishSpeech.onend = function(){
+        speechSynthesis.speak(gujaratiSpeech);
+    };
+
+    speechSynthesis.speak(englishSpeech);
+}
+
+history.replaceState(
+    {screen:"home"},
+    "",
+    "#home"
+);
+
+window.addEventListener(
+    "popstate",
+    function(event){
+
+        if(
+            event.state &&
+            event.state.screen
+        ){
+            showScreen(
+                event.state.screen,
+                false
+            );
+        }else{
+            showScreen(
+                "home",
+                false
+            );
+        }
+
+    }
+);
+
+function loadCertificate(user){
+
+    document.getElementById("studentName").innerText = user.name;
+
+}
+
+function openCertificate() {
+
+    let user = JSON.parse(localStorage.getItem("currentStudent"));
+
+    let students = JSON.parse(localStorage.getItem("students"));
+    user = students.find(s => s.id === user.id);
+
+    if (!user.certificate) {
+        alert("Certificate Not Issued Yet");
+        return;
+    }
+
+    localStorage.setItem("currentStudent", JSON.stringify(user));
+
+    window.open("./certificate.html", "_blank");
+}
+
+function deleteStudent(username) {
+
+    let students = JSON.parse(localStorage.getItem("students"));
+
+    let confirmDelete = confirm("Are you sure you want to delete this student?");
+
+    if (!confirmDelete) return;
+
+    students = students.filter(s => s.username !== username);
+
+    localStorage.setItem("students", JSON.stringify(students));
+
+    alert("Student deleted successfully");
+
+    viewStudents(); // refresh list
+    updateDashboard(); // update count
+}
+    </script>
+
+</body>
+
+</html>
