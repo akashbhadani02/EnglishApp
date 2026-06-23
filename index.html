@@ -771,12 +771,26 @@ justify-content:space-between;
 
 
         <script>
+
             const ADMINS = [
                 { username: "Akash", password: "Akash" },
                 { username: "1", password: "1" },
                 { username: "Vaibhav", password: "Vaibhav" }
 
             ];
+            window.onload = function () {
+
+    let currentStudent =
+        JSON.parse(localStorage.getItem("currentStudent"));
+
+    if (currentStudent) {
+
+        document.getElementById("studentWelcome").innerHTML =
+            "Welcome, " + currentStudent.name;
+
+        showScreen("studentDashboard", false);
+    }
+};
 
             /* -----------------------
             DATABASE INITIALIZATION
@@ -925,6 +939,11 @@ justify-content:space-between;
                     alert("Invalid Login");
 
                 }
+                history.replaceState(
+    { screen: "studentDashboard" },
+    "",
+    "#studentDashboard"
+);
 
             }
 
@@ -1716,11 +1735,12 @@ justify-content:space-between;
             LOGOUT
             ----------------------- */
 
-            function logout() {
+           function logout() {
 
-                showScreen("home");
+    localStorage.removeItem("currentStudent");
 
-            }
+    showScreen("home");
+}
             /* -----------------------
      BOOK SYSTEM
      ----------------------- */
