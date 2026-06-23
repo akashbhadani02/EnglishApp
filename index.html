@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    
- <title>Aducate English App</title>
+
+    <title>Aducate English App</title>
 
     <!-- Browser Tab Icon -->
     <link rel="icon" type="image/png" href="./img/Aducate English Classes Logo.png">
@@ -654,11 +654,7 @@
 
         <div class="card">
 
-            <h1 id="scoreText">
-                0 / 5
-            </h1>
-
-            <p id="resultMessage"></p>
+            <div id="resultMessage"></div>
 
         </div>
 
@@ -779,26 +775,26 @@ justify-content:space-between;
 
     </div>
 
-<!-- BOOK SCREEN -->
-<div class="screen" id="bookScreen">
+    <!-- BOOK SCREEN -->
+    <div class="screen" id="bookScreen">
 
-    <div class="header">
-        <h2>Books Library</h2>
+        <div class="header">
+            <h2>Books Library</h2>
+        </div>
+
+        <div class="card">
+            <button onclick="openBook('book1')">PART 1</button>
+            <button onclick="openBook('book2')">PART 2</button>
+        </div>
+
+        <button onclick="showScreen('studentDashboard')">
+            Back
+        </button>
+
     </div>
 
-    <div class="card">
-        <button onclick="openBook('book1')">PART 1</button>
-        <button onclick="openBook('book2')">PART 2</button>
-    </div>
-
-    <button onclick="showScreen('studentDashboard')">
-        Back
-    </button>
-
-</div>
-
-<!-- VIEWER SCREEN -->
-<div class="screen" id="viewerScreen">
+    <!-- VIEWER SCREEN -->
+    <div class="screen" id="viewerScreen">
 
         <div class="header">
             <h2 id="bookTitle">Book</h2>
@@ -948,6 +944,7 @@ justify-content:space-between;
                     attendance: 0,
                     fees: "Pending",
                     examScore: 0,
+                    examResults: [], // ADD THIS
                     certificate: false,
                     joined: new Date().toLocaleDateString()
                 });
@@ -1210,23 +1207,23 @@ justify-content:space-between;
 
             /* START EXAM */
 
-          function startExam() {
+            function startExam() {
 
-    let examPassword = prompt("Ask password to your teacher");
+                let examPassword = prompt("Ask password to your teacher");
 
-    if (examPassword === "12345") {
+                if (examPassword === "12345") {
 
-        window.open(
-            "./exam.html",
-            "_blank"
-        );
+                    window.open(
+                        "./exam.html",
+                        "_blank"
+                    );
 
-    } else {
+                } else {
 
-        alert("Wrong Password!");
+                    alert("Wrong Password!");
 
-    }
-}
+                }
+            }
 
             /* TIMER */
 
@@ -1320,17 +1317,27 @@ justify-content:space-between;
                     );
 
                 students =
-                    students.map(s => {
+    students.map(s => {
 
-                        if (s.id === user.id) {
+        if (s.id === user.id) {
 
-                            s.examScore = score;
+            if (!s.examResults) {
+                s.examResults = [];
+            }
 
-                        }
+            s.examResults.push({
+                score: score,
+                total: 5,
+                date: new Date().toLocaleString()
+            });
 
-                        return s;
+            s.examScore = score;
 
-                    });
+        }
+
+        return s;
+
+    });
 
                 localStorage.setItem(
                     "students",
@@ -1349,51 +1356,51 @@ justify-content:space-between;
                 ).innerHTML =
                     score + " / 5";
 
-                    // Auto Certificate Issue
-if (score >= 3) {
+                // Auto Certificate Issue
+                if (score >= 3) {
 
-    user.certificate = true;
+                    user.certificate = true;
 
-    user.grade =
-        score === 5 ? "A+" :
-        score === 4 ? "A" :
-        score === 3 ? "B" : "C";
+                    user.grade =
+                        score === 5 ? "A+" :
+                            score === 4 ? "A" :
+                                score === 3 ? "B" : "C";
 
-    user.percentage = ((score / 5) * 100).toFixed(0);
+                    user.percentage = ((score / 5) * 100).toFixed(0);
 
-    students = students.map(s => {
+                    students = students.map(s => {
 
-        if (s.id === user.id) {
+                        if (s.id === user.id) {
 
-            s.certificate = true;
-            s.grade = user.grade;
-            s.percentage = user.percentage;
+                            s.certificate = true;
+                            s.grade = user.grade;
+                            s.percentage = user.percentage;
 
-        }
+                        }
 
-        return s;
+                        return s;
 
-    });
+                    });
 
-    localStorage.setItem(
-        "students",
-        JSON.stringify(students)
-    );
+                    localStorage.setItem(
+                        "students",
+                        JSON.stringify(students)
+                    );
 
-    localStorage.setItem(
-        "currentStudent",
-        JSON.stringify(user)
-    );
+                    localStorage.setItem(
+                        "currentStudent",
+                        JSON.stringify(user)
+                    );
 
-    setTimeout(() => {
+                    setTimeout(() => {
 
-        window.open(
-            "./certificate.html",
-            "_blank"
-        );
+                        window.open(
+                            "./certificate.html",
+                            "_blank"
+                        );
 
-    }, 1000);
-}
+                    }, 1000);
+                }
 
                 let msg = "";
 
@@ -1423,7 +1430,7 @@ if (score >= 3) {
 
             /* VIEW RESULTS */
 
-function showResults() {
+          function showResults() {
 
     let currentUser = JSON.parse(
         localStorage.getItem("currentStudent")
@@ -1439,15 +1446,51 @@ function showResults() {
 
     let score = user?.examScore || 0;
 
-    document.getElementById("scoreText").innerHTML =
-        score + " / 5";
 
-    document.getElementById("resultMessage").innerHTML =
-        score >= 3 ? "Pass" : "Fail";
+     document.getElementById("resultMessage").innerHTML =
+        `<pre>${JSON.stringify(user.examResults || [], null, 2)}</pre>`;
+
+
+    let html = "";
+
+    if (user.examResults && user.examResults.length > 0) {
+
+        html += "<h3>Exam History</h3>";
+
+        user.examResults.reverse().forEach((r, index) => {
+
+            let status =
+                r.score >= 3
+                    ? "✅ Pass"
+                    : "❌ Fail";
+
+            html += `
+                <div style="
+                    padding:10px;
+                    margin:10px 0;
+                    background:#f5f5f5;
+                    border-radius:10px;
+                ">
+                    <b>Exam ${user.examResults.length - index}</b><br>
+                    Score: ${r.score}/${r.total}<br>
+                    Result: ${status}<br>
+                    Date: ${r.date}
+                </div>
+            `;
+        });
+
+    } else {
+
+        html = "No Exam Result Found";
+
+    }
+
+    document.getElementById(
+        "resultMessage"
+    ).innerHTML = html;
 
     showScreen("resultScreen");
 }
-
             /* -----------------------
             ATTENDANCE SCREEN
             ----------------------- */

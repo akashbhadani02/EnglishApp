@@ -468,8 +468,8 @@
 
         let cheatCount = 0;
 
-       const allQuestions = [
-            {q:"Which letter comes after A?",options:["B","C","D","E"],answer:"B"},
+const allQuestions = [
+{q:"Which letter comes after A?",options:["B","C","D","E"],answer:"B"},
 {q:"Which letter comes after B?",options:["C","D","E","F"],answer:"C"},
 {q:"Which letter comes after C?",options:["D","E","F","G"],answer:"D"},
 {q:"Which letter comes after D?",options:["E","F","G","H"],answer:"E"},
@@ -1572,7 +1572,7 @@
 {q:"The children ran ___ the playground.",options:["across","under","at","in"],answer:"across"},
 {q:"He completed the work ___ time.",options:["on","in","at","under"],answer:"on"},
 {q:"The airplane landed ___ the airport.",options:["at","on","in","under"],answer:"at"}
- ];
+];
 
         function removeDuplicateQuestions(arr) {
             const seen = new Set();
@@ -1817,14 +1817,51 @@ else {
     certGrade = "C";
 }
 
+let user = JSON.parse(
+    localStorage.getItem("currentStudent")
+);
+
+let students = JSON.parse(
+    localStorage.getItem("students")
+);
+
+if (!user.examResults) {
+    user.examResults = [];
+}
+
+user.examResults.push({
+    score: score,
+    total: questions.length,
+    percentage: percentage,
+    grade: certGrade,
+    date: new Date().toLocaleString()
+});
+
+user.examScore = score;
+user.percentage = percentage;
+user.grade = certGrade;
+
+students = students.map(s => {
+
+    if (s.id === user.id) {
+
+        s.examResults = user.examResults;
+        s.examScore = score;
+        s.percentage = percentage;
+        s.grade = certGrade;
+    }
+
+    return s;
+});
+
+localStorage.setItem(
+    "students",
+    JSON.stringify(students)
+);
+
 localStorage.setItem(
     "currentStudent",
-    JSON.stringify({
-        name: studentName,
-        score: score,
-        percentage: percentage,
-        grade: certGrade
-    })
+    JSON.stringify(user)
 );
 
             let tbody =
