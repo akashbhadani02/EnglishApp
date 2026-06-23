@@ -342,7 +342,7 @@
 
                 <div class="tile" onclick="showBooks()">📖 Books</div>
 
-                <div class="tile" onclick="showSpeaking()">🎤 Speaking</div>
+                <div class="tile" onclick="window.open('./speaking.html','_blank')">🎤 Speaking</div>
 
                 <div class="tile" onclick="startExam()">📝 Exams</div>
 
@@ -1317,27 +1317,27 @@ justify-content:space-between;
                     );
 
                 students =
-    students.map(s => {
+                    students.map(s => {
 
-        if (s.id === user.id) {
+                        if (s.id === user.id) {
 
-            if (!s.examResults) {
-                s.examResults = [];
-            }
+                            if (!s.examResults) {
+                                s.examResults = [];
+                            }
 
-            s.examResults.push({
-                score: score,
-                total: 5,
-                date: new Date().toLocaleString()
-            });
+                            s.examResults.push({
+                                score: score,
+                                total: 5,
+                                date: new Date().toLocaleString()
+                            });
 
-            s.examScore = score;
+                            s.examScore = score;
 
-        }
+                        }
 
-        return s;
+                        return s;
 
-    });
+                    });
 
                 localStorage.setItem(
                     "students",
@@ -1430,7 +1430,7 @@ justify-content:space-between;
 
             /* VIEW RESULTS */
 
-          function showResults() {
+           function showResults() {
 
     let currentUser = JSON.parse(
         localStorage.getItem("currentStudent")
@@ -1444,45 +1444,90 @@ justify-content:space-between;
         s => s.id === currentUser.id
     );
 
-    let score = user?.examScore || 0;
-
-
-     document.getElementById("resultMessage").innerHTML =
-        `<pre>${JSON.stringify(user.examResults || [], null, 2)}</pre>`;
-
-
     let html = "";
+
+    /* =========================
+       EXAM RESULTS
+    ========================= */
 
     if (user.examResults && user.examResults.length > 0) {
 
-        html += "<h3>Exam History</h3>";
+        html += "<h3>📝 Exam History</h3>";
 
-        user.examResults.reverse().forEach((r, index) => {
+        [...user.examResults].reverse().forEach((r, index) => {
 
             let status =
-                r.score >= 33
+                ((r.score / r.total) * 100) >= 33
                     ? "✅ Pass"
                     : "❌ Fail";
 
             html += `
-                <div style="
-                    padding:10px;
-                    margin:10px 0;
-                    background:#f5f5f5;
-                    border-radius:10px;
-                ">
-                    <b>Exam ${user.examResults.length - index}</b><br>
-                    Score: ${r.score}/${r.total}<br>
-                    Result: ${status}<br>
-                    Date: ${r.date}
-                </div>
+            <div style="
+                padding:10px;
+                margin:10px 0;
+                background:#f5f5f5;
+                border-radius:10px;
+            ">
+                <b>Exam ${user.examResults.length - index}</b><br>
+                Score: ${r.score}/${r.total}<br>
+                Result: ${status}<br>
+                Date: ${r.date}
+            </div>
             `;
         });
 
     } else {
 
-        html = "No Exam Result Found";
+        html += `
+        <div style="
+            padding:10px;
+            background:#f5f5f5;
+            border-radius:10px;
+        ">
+            No Exam Results Found
+        </div>
+        `;
+    }
 
+    /* =========================
+       SPEAKING RESULTS
+    ========================= */
+
+    if (user.speakingResults && user.speakingResults.length > 0) {
+
+        html += "<br><h3>🎤 Speaking Results</h3>";
+
+        [...user.speakingResults].reverse().forEach((r, index) => {
+
+            html += `
+            <div style="
+                padding:10px;
+                margin:10px 0;
+                background:#eef7ff;
+                border-radius:10px;
+                border-left:5px solid #0d6efd;
+            ">
+                <b>Topic:</b> ${r.topic || "-"}<br>
+                <b>Score:</b> ${r.score || 0}/100<br>
+                <b>Words:</b> ${r.words || 0}<br>
+                <b>WPM:</b> ${r.wpm || 0}<br>
+                <b>Date:</b> ${r.date || "-"}
+            </div>
+            `;
+        });
+
+    } else {
+
+        html += `
+        <br>
+        <div style="
+            padding:10px;
+            background:#eef7ff;
+            border-radius:10px;
+        ">
+            No Speaking Results Found
+        </div>
+        `;
     }
 
     document.getElementById(
