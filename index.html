@@ -463,6 +463,8 @@
 
                 <div class="tile" onclick="showProfile()">👤<br> Profile</div>
 
+                <div class="tile" onclick="openVideoPractice()">📹<br> Video Practice</div>
+
             </div>
 
     
@@ -1989,6 +1991,10 @@ justify-content:space-between;
                 viewStudents(); // refresh list
                 updateDashboard(); // update count
             }
+
+            function openVideoPractice() {
+    window.open("./video.html", "_blank");
+}
         </script>
 
 </body>
