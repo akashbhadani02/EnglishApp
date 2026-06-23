@@ -1,254 +1,266 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spelling & Reading Practice</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spelling & Reading Practice</title>
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
 
-body{
-    background:#f4f7fc;
-    padding:20px;
-}
+        body {
+            background: #f4f7fc;
+            padding: 20px;
+        }
 
-.container{
-    max-width:800px;
-    margin:auto;
-    background:#fff;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 0 15px rgba(0,0,0,0.1);
-}
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
 
-h1{
-    text-align:center;
-    color:#0d6efd;
-    margin-bottom:20px;
-}
+        h1 {
+            text-align: center;
+            color: #0d6efd;
+            margin-bottom: 20px;
+        }
 
-.input-section{
-    display:flex;
-    gap:10px;
-    margin-bottom:20px;
-}
+        .input-section {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
 
-.input-section input{
-    flex:1;
-    padding:12px;
-    border:1px solid #ccc;
-    border-radius:8px;
-    font-size:16px;
-}
+        .input-section input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
 
-.input-section button{
-    padding:12px 20px;
-    border:none;
-    background:#28a745;
-    color:white;
-    border-radius:8px;
-    cursor:pointer;
-}
+        .input-section button {
+            padding: 12px 20px;
+            border: none;
+            background: #28a745;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
 
-.display-box{
-    min-height:120px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    padding:20px;
-    border-radius:12px;
-    background:#eef5ff;
-    border:2px solid #0d6efd;
-    font-size:32px;
-    font-weight:bold;
-    margin-bottom:20px;
-    word-break:break-word;
-}
+        .display-box {
+            min-height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            background: #eef5ff;
+            border: 2px solid #0d6efd;
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            word-break: break-word;
+        }
 
-.buttons{
-    display:flex;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
-}
+        .buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
 
-.buttons button{
-    padding:12px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    color:white;
-    font-size:16px;
-}
+        .delete {
+            display: block;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
 
-.speak{
-    background:#0d6efd;
-}
+        .buttons button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 16px;
+        }
 
-.prev{
-    background:#6c757d;
-}
+        .speak {
+            background: #0d6efd;
+        }
 
-.next{
-    background:#198754;
-}
+        .prev {
+            background: #6c757d;
+        }
 
-.clear{
-    background:#ffffff;
-}
+        .next {
+            background: #198754;
+        }
 
-.list-box{
-    margin-top:25px;
-}
+        .clear {
+            background: #ff0000;
+        }
 
-.list-box h3{
-    margin-bottom:10px;
-}
+        .list-box {
+            margin-top: 25px;
+        }
 
-.list-box ul{
-    list-style:none;
-}
+        .list-box h3 {
+            margin-bottom: 10px;
+        }
 
-.list-box li{
-    background:#f8f9fa;
-    padding:10px;
-    margin-bottom:5px;
-    border-radius:6px;
-}
-</style>
+        .list-box ul {
+            list-style: none;
+        }
+
+        .list-box li {
+            background: #f8f9fa;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-radius: 6px;
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>Spelling & Reading Practice</h1>
 
-    <div class="input-section">
-        <input
-            type="text"
-            id="newText"
-            placeholder="Enter spelling or sentence">
-        <button onclick="addText()">Add</button>
+        <h1>Spelling & Reading Practice</h1>
+
+        <div class="input-section">
+            <input type="text" id="newText" placeholder="Enter spelling or sentence">
+            <button onclick="addText()">Add</button>
+        </div>
+
+        
+        <div class="display-box" id="displayBox">
+            Enter a spelling or sentence and click Add
+        </div>
+        
+        <div class="buttons">
+            <button class="speak" onclick="speakText()">🔊 Speak</button>
+            <button class="prev" onclick="previousItem()">⬅ Previous</button>
+            <button class="next" onclick="nextItem()">Next ➡</button>
+            <button class="clear" onclick="clearAll()">Delete</button>
+        </div>
+
+        <div class="list-box" style="display: flex;">
+            <h3>Added Spellings / Sentences</h3>
+            <ul id="list"></ul>
+        </div>
+
     </div>
-     <div class="buttons">
-    <button class="clear" onclick="clearAll()"></button>
-    </div>
 
-    <div class="display-box" id="displayBox">
-        Enter a spelling or sentence and click Add
-    </div>
+    <script>
 
-    <div class="buttons">
-        <button class="speak" onclick="speakText()">🔊 Speak</button>
-        <button class="prev" onclick="previousItem()">⬅ Previous</button>
-        <button class="next" onclick="nextItem()">Next ➡</button>
-    </div>
+        let items = JSON.parse(localStorage.getItem("readingItems")) || [];
+        let currentIndex = -1;
 
-    <div class="list-box">
-        <h3>Added Spellings / Sentences</h3>
-        <ul id="list"></ul>
-    </div>
+        function updateList() {
+            const list = document.getElementById("list");
+            list.innerHTML = "";
 
-</div>
+            items.forEach((item, index) => {
+                const li = document.createElement("li");
+                li.textContent = (index + 1) + ". " + item;
+                list.appendChild(li);
+            });
 
-<script>
+            localStorage.setItem("readingItems", JSON.stringify(items));
+        }
 
-let items = JSON.parse(localStorage.getItem("readingItems")) || [];
-let currentIndex = -1;
+        function addText() {
 
-function updateList(){
-    const list = document.getElementById("list");
-    list.innerHTML = "";
+            const input = document.getElementById("newText");
+            const text = input.value.trim();
 
-    items.forEach((item,index)=>{
-        const li = document.createElement("li");
-        li.textContent = (index + 1) + ". " + item;
-        list.appendChild(li);
-    });
+            if (text === "") {
+                alert("Please enter a spelling or sentence");
+                return;
+            }
 
-    localStorage.setItem("readingItems", JSON.stringify(items));
-}
+            items.push(text);
+            currentIndex = items.length - 1;
 
-function addText(){
+            document.getElementById("displayBox").innerText = text;
 
-    const input = document.getElementById("newText");
-    const text = input.value.trim();
+            updateList();
 
-    if(text === ""){
-        alert("Please enter a spelling or sentence");
+            input.value = "";
+        }
+
+        function speakText() {
+
+            const text =
+                document.getElementById("displayBox").innerText;
+
+            if (
+                text === "Enter a spelling or sentence and click Add"
+            ) {
+                return;
+            }
+
+            speechSynthesis.cancel();
+
+            const speech =
+                new SpeechSynthesisUtterance(text);
+
+            speech.lang = "en-US";
+            speech.rate = 0.8;
+
+            speechSynthesis.speak(speech);
+        }
+
+        function nextItem() {
+
+            if (items.length === 0) return;
+
+            currentIndex++;
+
+            if (currentIndex >= items.length) {
+                currentIndex = 0;
+            }
+
+            document.getElementById("displayBox").innerText =
+                items[currentIndex];
+        }
+
+        function previousItem() {
+
+            if (items.length === 0) return;
+
+            currentIndex--;
+
+            if (currentIndex < 0) {
+                currentIndex = items.length - 1;
+            }
+
+            document.getElementById("displayBox").innerText =
+                items[currentIndex];
+        }
+
+        function clearAll() {
+
+    const password = prompt("call your teacher");
+
+    if(password !== "km"){
+        alert("Wrong Password!");
         return;
     }
 
-    items.push(text);
-    currentIndex = items.length - 1;
-
-    document.getElementById("displayBox").innerText = text;
-
-    updateList();
-
-    input.value = "";
-}
-
-function speakText(){
-
-    const text =
-        document.getElementById("displayBox").innerText;
-
-    if(
-        text === "Enter a spelling or sentence and click Add"
-    ){
-        return;
-    }
-
-    speechSynthesis.cancel();
-
-    const speech =
-        new SpeechSynthesisUtterance(text);
-
-    speech.lang = "en-US";
-    speech.rate = 0.8;
-
-    speechSynthesis.speak(speech);
-}
-
-function nextItem(){
-
-    if(items.length === 0) return;
-
-    currentIndex++;
-
-    if(currentIndex >= items.length){
-        currentIndex = 0;
-    }
-
-    document.getElementById("displayBox").innerText =
-        items[currentIndex];
-}
-
-function previousItem(){
-
-    if(items.length === 0) return;
-
-    currentIndex--;
-
-    if(currentIndex < 0){
-        currentIndex = items.length - 1;
-    }
-
-    document.getElementById("displayBox").innerText =
-        items[currentIndex];
-}
-
-function clearAll(){
-
-    if(!confirm("Delete all spellings and sentences?")){
+    if (!confirm("Delete all spellings and sentences?")) {
         return;
     }
 
@@ -261,17 +273,20 @@ function clearAll(){
         "Enter a spelling or sentence and click Add";
 
     updateList();
+
+    alert("All data deleted successfully.");
 }
 
-updateList();
+        updateList();
 
-if(items.length > 0){
-    currentIndex = 0;
-    document.getElementById("displayBox").innerText =
-        items[0];
-}
+        if (items.length > 0) {
+            currentIndex = 0;
+            document.getElementById("displayBox").innerText =
+                items[0];
+        }
 
-</script>
+    </script>
 
 </body>
+
 </html>
