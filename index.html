@@ -247,6 +247,111 @@
             }
 
         }
+        /* ===== MOBILE RESPONSIVE ===== */
+
+@media (max-width: 768px) {
+
+    body{
+        padding:10px;
+    }
+
+    .screen{
+        padding:10px;
+    }
+
+    .header{
+        padding:18px;
+        border-radius:18px;
+    }
+
+    .header h2{
+        font-size:24px;
+    }
+
+    .header p{
+        font-size:13px;
+    }
+
+    .card{
+        padding:15px;
+        border-radius:18px;
+    }
+
+    input,
+    button{
+        font-size:14px;
+        padding:12px;
+    }
+
+    .dashboard-grid{
+        grid-template-columns: repeat(2,1fr);
+        gap:10px;
+    }
+
+    .tile{
+        padding:15px 10px;
+        font-size:14px;
+        min-height:90px;
+    }
+
+    #certificateArea{
+        overflow-x:auto;
+    }
+
+    #certificateArea h1{
+        font-size:24px;
+    }
+
+    #certificateArea h2{
+        font-size:20px;
+    }
+
+    #certificateArea h3{
+        font-size:18px;
+    }
+
+    #watermark{
+        font-size:18px !important;
+    }
+
+    #bookPage{
+        width:100%;
+        height:auto;
+    }
+
+    #studentList div{
+        font-size:14px;
+        word-break:break-word;
+    }
+
+}
+
+/* EXTRA SMALL MOBILE */
+
+@media (max-width: 480px){
+
+    .dashboard-grid{
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .tile{
+        font-size:13px;
+        padding:12px 8px;
+    }
+
+    .header h2{
+        font-size:20px;
+    }
+
+    button{
+        font-size:13px;
+    }
+
+    #certificateArea{
+        transform:scale(.85);
+        transform-origin:top center;
+    }
+}
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
@@ -332,7 +437,7 @@
             <p id="studentWelcome"></p>
         </div>
 
-        <div class="dashboard-grid">
+        
 
             <div class="dashboard-grid">
 
@@ -360,7 +465,7 @@
 
             </div>
 
-        </div>
+    
 
         <button class="logout" onclick="logout()">
             Logout
