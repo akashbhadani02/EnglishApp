@@ -352,11 +352,24 @@
         transform-origin:top center;
     }
 }
+#loader{
+    position:fixed;
+    inset:0;
+    background:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+}
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 
 <body>
+
+    <div id="loader">
+    <h1>📚 Aducate English</h1>
+</div>
 
     <!-- HOME -->
     <div class="screen active" id="home">
@@ -2015,6 +2028,14 @@ justify-content:space-between;
             function openVideoPractice() {
     window.open("./video.html", "_blank");
 }
+
+window.addEventListener("load",()=>{
+
+setTimeout(()=>{
+document.getElementById("loader").style.display="none";
+},1500);
+
+});
         </script>
 
 </body>
