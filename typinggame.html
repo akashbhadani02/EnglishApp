@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Aducate English Classes - Typing Master</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 1000px;
+            max-width: 100%;
+            background: #1e293b;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, .4);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .top {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .card {
+            background: #334155;
+            padding: 15px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .card h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #cbd5e1;
+        }
+
+        .card p {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        input[type=text] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .progress {
+            height: 12px;
+            background: #475569;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .bar {
+            height: 100%;
+            width: 0%;
+            background: #22c55e;
+            transition: .2s;
+        }
+
+        .paragraph {
+            background: #334155;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 22px;
+            line-height: 2;
+            margin-bottom: 15px;
+            word-wrap: break-word;
+        }
+
+        .correct {
+            color: #22c55e;
+        }
+
+        .wrong {
+            color: #ef4444;
+            background: #450a0a;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            font-size: 20px;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+            resize: none;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        button:hover {
+            opacity: .9;
+        }
+
+        .footer {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        @media(max-width:600px) {
+            .paragraph {
+                font-size: 18px;
+            }
+
+            textarea {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>⌨ Aducate English Classes</h1>
+
+        <input type="text" id="studentName" placeholder="Enter Student Name">
+
+        <div class="top">
+
+            <div class="card">
+                <h3>Time</h3>
+                <p id="time">60</p>
+            </div>
+
+            <div class="card">
+                <h3>WPM</h3>
+                <p id="wpm">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Accuracy</h3>
+                <p id="accuracy">100%</p>
+            </div>
+
+            <div class="card">
+                <h3>XP</h3>
+                <p id="xp">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Level</h3>
+                <p id="level">1</p>
+            </div>
+
+            <div class="card">
+                <h3>Best WPM</h3>
+                <p id="best">0</p>
+            </div>
+
+        </div>
+
+        <div class="progress">
+            <div class="bar" id="bar"></div>
+        </div>
+
+        <div class="paragraph" id="paragraph"></div>
+
+        <textarea id="input" placeholder="Start typing here..."></textarea>
+
+        <div class="buttons">
+            <button onclick="restartGame()">Restart</button>
+            <button onclick="nextParagraph()">Next Paragraph</button>
+        </div>
+
+        <div class="footer">
+            🏆 Keep Practicing Every Day
+        </div>
+
+    </div>
+
+    <script>
+
+        const paragraphs = [
+            "Learning English every day improves communication skills and builds confidence for speaking with people around the world.",
+            "Technology helps students learn faster by providing educational resources videos and interactive exercises.",
+            "Reading books regularly expands vocabulary improves grammar and develops critical thinking abilities.",
+            "Practice makes a person perfect and consistent effort leads to success in every field.",
+            "Typing quickly and accurately helps students complete their work more efficiently.",
+            "The best way to improve spoken English is to practice every single day.",
+            "Confidence grows when students speak clearly and communicate with others."
+        ];
+
+        let currentText = "";
+        let timer = 60;
+        let started = false;
+        let interval;
+        let xp = 0;
+        let level = 1;
+
+        const paragraph = document.getElementById("paragraph");
+        const input = document.getElementById("input");
+
+        let bestScore = localStorage.getItem("bestWPM") || 0;
+        document.getElementById("best").textContent = bestScore;
+
+        /* ---------- WEB AUDIO SOUNDS ---------- */
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function beep(freq, duration, type = "sine", volume = 0.05) {
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = type;
+            osc.frequency.value = freq;
+
+            gain.gain.value = volume;
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+
+            setTimeout(() => {
+                osc.stop();
+            }, duration);
+
+        }
+
+        function correctSound() { const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = "square"; osc.frequency.setValueAtTime(1800, audioCtx.currentTime); gain.gain.setValueAtTime(0.15, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.03); }
+
+        function wrongSound() { const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = "sawtooth"; osc.frequency.setValueAtTime(180, audioCtx.currentTime); gain.gain.setValueAtTime(0.20, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.15); }
+
+        function finishSound() { const notes = [700, 900, 1200, 1500]; notes.forEach((note, index) => { setTimeout(() => { const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain(); osc.type = "triangle"; osc.frequency.value = note; gain.gain.setValueAtTime(0.12, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15); osc.connect(gain); gain.connect(audioCtx.destination); osc.start(); osc.stop(audioCtx.currentTime + 0.15); }, index * 120); }); }
+        /* ---------- GAME ---------- */
+
+        function loadParagraph() {
+
+            currentText =
+                paragraphs[Math.floor(Math.random() * paragraphs.length)];
+
+            paragraph.innerHTML = currentText
+                .split("")
+                .map(ch => `<span>${ch}</span>`)
+                .join("");
+
+            input.value = "";
+            timer = 60;
+
+            document.getElementById("time").textContent = 60;
+            document.getElementById("wpm").textContent = 0;
+            document.getElementById("accuracy").textContent = "100%";
+            document.getElementById("bar").style.width = "0%";
+
+            clearInterval(interval);
+            started = false;
+        }
+
+        input.addEventListener("input", () => {
+
+            if (audioCtx.state === "suspended") {
+                audioCtx.resume();
+            }
+
+            if (!started) {
+
+                started = true;
+
+                interval = setInterval(() => {
+
+                    timer--;
+                    document.getElementById("time").textContent = timer;
+
+                    if (timer <= 0) {
+
+                        clearInterval(interval);
+
+                        input.disabled = true;
+
+                        finishSound();
+
+                        let finalWpm =
+                            parseInt(document.getElementById("wpm").textContent);
+
+                        if (finalWpm > bestScore) {
+
+                            bestScore = finalWpm;
+                            localStorage.setItem("bestWPM", bestScore);
+                            document.getElementById("best").textContent = bestScore;
+
+                        }
+
+                    }
+
+                }, 1000);
+
+            }
+
+            let chars = input.value.split("");
+            let spans = paragraph.querySelectorAll("span");
+
+            let correct = 0;
+
+            spans.forEach((span, index) => {
+
+                let typed = chars[index];
+
+                if (typed == null) {
+                    span.className = "";
+                }
+                else if (typed === span.innerText) {
+                    span.className = "correct";
+                    correct++;
+                }
+                else {
+                    span.className = "wrong";
+                }
+
+            });
+
+            if (chars.length > 0) {
+
+                let last = chars.length - 1;
+
+                if (chars[last] === currentText[last]) {
+                    correctSound();
+                } else {
+                    wrongSound();
+                }
+
+            }
+
+            let accuracy = Math.round(
+                (correct / Math.max(chars.length, 1)) * 100
+            );
+
+            document.getElementById("accuracy").textContent =
+                accuracy + "%";
+
+            let words = input.value.trim()
+                ? input.value.trim().split(/\s+/).length
+                : 0;
+
+            let elapsed = 60 - timer;
+
+            let wpm = elapsed > 0
+                ? Math.round(words / (elapsed / 60))
+                : 0;
+
+            document.getElementById("wpm").textContent = wpm;
+
+            let progress =
+                (input.value.length / currentText.length) * 100;
+
+            document.getElementById("bar").style.width =
+                Math.min(progress, 100) + "%";
+
+            xp = correct;
+
+            document.getElementById("xp").textContent = xp;
+
+            level = Math.floor(xp / 50) + 1;
+
+            document.getElementById("level").textContent = level;
+
+            if (input.value === currentText) {
+
+                finishSound();
+
+                xp += 50;
+                document.getElementById("xp").textContent = xp;
+
+                setTimeout(() => {
+                    nextParagraph();
+                }, 1200);
+
+            }
+
+        });
+
+        function restartGame() {
+
+            input.disabled = false;
+            loadParagraph();
+
+        }
+
+        function nextParagraph() {
+
+            input.disabled = false;
+            loadParagraph();
+
+        }
+
+        loadParagraph();
+
+    </script>
+
+</body>
+
+</html>
