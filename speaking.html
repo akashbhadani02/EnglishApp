@@ -3,670 +3,199 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aducate English App - Speaking Test</title>
-
-<link rel="icon" type="image/png" href="./img/Aducate English Classes Logo.png">
-
+<title>Premium Speaking Exam</title>
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-}
-
+*{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
 body{
-    min-height:100vh;
-    background:linear-gradient(-45deg,#b668df,#0d6efd,#e59c98,#ffcc00);
-    background-size:400% 400%;
-    animation:bgMove 12s ease infinite;
-    padding:20px;
+margin:0;
+background:linear-gradient(135deg,#4f46e5,#7c3aed,#0ea5e9);
+min-height:100vh;
+padding:20px;
 }
-
-@keyframes bgMove{
-    0%{background-position:0% 50%;}
-    50%{background-position:100% 50%;}
-    100%{background-position:0% 50%;}
-}
-
 .container{
-    max-width:1000px;
-    margin:auto;
+max-width:1100px;margin:auto;
+background:rgba(255,255,255,.12);
+backdrop-filter:blur(16px);
+border:1px solid rgba(255,255,255,.25);
+border-radius:24px;
+padding:25px;
+color:#fff;
+box-shadow:0 20px 40px rgba(0,0,0,.25);
 }
-
+h1{text-align:center}
 .card{
-    background:rgba(255,255,255,.95);
-    border-radius:25px;
-    padding:25px;
-    margin-bottom:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.15);
+background:rgba(255,255,255,.12);
+padding:18px;border-radius:18px;margin:15px 0;
 }
-
-.header{
-    text-align:center;
-    color:white;
-    margin-bottom:20px;
+input{
+width:100%;padding:12px;border:none;border-radius:12px;
 }
-
-.header h1{
-    font-size:38px;
+.btn{
+padding:12px 18px;border:none;border-radius:12px;
+cursor:pointer;font-weight:bold;margin:5px;
 }
-
-.student-box{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:15px;
+.start{background:#22c55e;color:#fff}
+.stop{background:#ef4444;color:#fff}
+.next{background:#f59e0b;color:#fff}
+.save{background:#06b6d4;color:#fff}
+.recording{display:none;color:#ffdddd;font-weight:bold}
+#transcript,#history,#result{
+background:#fff;color:#222;border-radius:14px;padding:15px;
 }
-
-.info{
-    background:#f5f7ff;
-    padding:15px;
-    border-radius:15px;
-}
-
-.info h3{
-    color:#0d6efd;
-}
-
-.topic{
-    text-align:center;
-    font-size:22px;
-    font-weight:bold;
-    margin:20px 0;
-}
-
-.controls{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    justify-content:center;
-}
-
-button{
-    border:none;
-    padding:14px 24px;
-    border-radius:15px;
-    cursor:pointer;
-    color:white;
-    font-size:15px;
-    font-weight:600;
-}
-
-.topicBtn{background:#0d6efd;}
-.start{background:#28a745;}
-.stop{background:#dc3545;}
-.saveBtn{background:#6f42c1;}
-.backBtn{background:#343a40;}
-
-select{
-    width:100%;
-    padding:12px;
-    border-radius:10px;
-    border:1px solid #ddd;
-}
-
-#output{
-    min-height:250px;
-    border:2px solid #ddd;
-    border-radius:15px;
-    padding:15px;
-    margin-top:20px;
-    background:white;
-    text-align:left;
-    line-height:1.7;
-}
-
 .progress{
-    width:100%;
-    height:18px;
-    background:#eee;
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:15px;
+height:18px;background:#ddd;border-radius:20px;overflow:hidden;margin:8px 0;
 }
-
-.progress-bar{
-    width:0%;
-    height:100%;
-    background:#0d6efd;
+.bar{
+height:100%;width:0%;background:linear-gradient(90deg,#22c55e,#3b82f6);
 }
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:15px;
-    margin-top:20px;
+.badge{
+display:inline-block;padding:8px 14px;border-radius:20px;
+font-weight:bold;color:#fff;
 }
-
-.stat{
-    background:#f5f7ff;
-    padding:15px;
-    border-radius:15px;
-    text-align:center;
-}
-
-.stat h2{
-    color:#0d6efd;
-}
-
-.resultCard{
-    display:none;
-}
-
-@media(max-width:600px){
-
-    .header h1{
-        font-size:28px;
-    }
-
-    button{
-        width:100%;
-    }
-}
+table{width:100%;border-collapse:collapse}
+th,td{border:1px solid #ddd;padding:10px;text-align:center}
+th{background:#eef2ff}
 </style>
 </head>
-
 <body>
-
 <div class="container">
+<h1>🎤 Premium Speaking Exam Portal</h1>
 
-<div class="header">
-    <h1>🎤 Speaking Exam</h1>
-    <p>Aducate English App</p>
+<div class="card">
+<label>Student Name</label>
+<input id="student" placeholder="Enter student name">
 </div>
 
 <div class="card">
-
-<div class="student-box">
-
-<div class="info">
-    <h3>Student</h3>
-    <p id="studentName">Loading...</p>
+<h3>Question</h3>
+<p id="question">Introduce yourself in English.</p>
 </div>
 
-<div class="info">
-    <h3>Select Time</h3>
+<button class="btn start" onclick="startRec()">▶ Start</button>
+<button class="btn stop" onclick="stopRec()">⏹ Stop</button>
+<button class="btn next" onclick="nextQuestion()">➡ Next Question</button>
+<button class="btn save" onclick="saveResult()">💾 Save</button>
+<button class="btn" onclick="window.print()">🖨 Print</button>
 
-    <select id="timeSelect">
-        <option value="30">0.5 Minute</option>
-        <option value="60">1 Minute</option>
-        <option value="120">2 Minutes</option>
-        <option value="180">3 Minutes</option>
-        <option value="240">4 Minutes</option>
-        <option value="300">5 Minutes</option>
-    </select>
+<p id="rec" class="recording">🔴 Recording in progress...</p>
+
+<div class="card">
+<h3>Transcript</h3>
+<div id="transcript">Student speech will appear here...</div>
 </div>
 
+<div class="card">
+<h3>Performance Analysis</h3>
+<div>Fluency <div class="progress"><div id="fbar" class="bar"></div></div></div>
+<div>Vocabulary <div class="progress"><div id="vbar" class="bar"></div></div></div>
+<div>Pronunciation <div class="progress"><div id="pbar" class="bar"></div></div></div>
+<div>Confidence <div class="progress"><div id="cbar" class="bar"></div></div></div>
 </div>
 
-<div class="topic" id="topicText">
-    Click Generate Topic
+<div class="card">
+<h3>Result Card</h3>
+<div id="result"></div>
 </div>
 
-<div class="controls">
-    <button class="topicBtn" onclick="generateTopic()">🎲 Generate Topic</button>
-    <button class="start" onclick="startSpeaking()">🎤 Start</button>
-    <button class="stop" onclick="stopSpeaking()">🛑 Stop</button>
-    <button class="saveBtn" onclick="saveSpeakingResult()">💾 Save Result</button>
+<div class="card">
+<h3>Student History</h3>
+<div id="history"></div>
 </div>
-
-<h2 style="text-align:center;margin-top:20px;" id="timerText">
-00:00
-</h2>
-
-<div class="progress">
-    <div class="progress-bar" id="progressBar"></div>
-</div>
-
-<div class="stats">
-
-<div class="stat">
-    <h2 id="wordCount">0</h2>
-    <p>Words</p>
-</div>
-
-<div class="stat">
-    <h2 id="wpm">0</h2>
-    <p>WPM</p>
-</div>
-
-<div class="stat">
-    <h2 id="score">0</h2>
-    <p>Score</p>
-</div>
-
-</div>
-
-<div id="output">
-Your speech will appear here...
-</div>
-
-</div>
-
-<div class="card resultCard" id="resultCard">
-
-<h2>Speaking Result</h2>
-<br>
-
-<div id="resultContent"></div>
-
 </div>
 
 <script>
-
-const currentStudent = JSON.parse(
-    localStorage.getItem("currentStudent")
-);
-
-document.getElementById("studentName").innerHTML =
-    currentStudent?.name || "Student";
-
-let transcript = "";
-let recognition;
-let currentTopic = "";
-let timer;
-let timeLeft = 0;
-let totalTime = 0;
-let wordCount = 0;
-let wpm = 0;
-let score = 0;
-
-const topics = [
-    "Describe your self",
-    "Describe your best friend",
-    "Talk about your future goals",
-    "Describe your family",
-    "Describe your favorite teacher",
-    "Describe your daily routine",
-    "Describe your dream job",
-    "Describe your favorite book",
-    "Talk about your favorite festival",
-    "Describe a memorable journey"
+const questions=[
+"Introduce yourself.",
+"Describe your favourite hobby.",
+"Talk about your family.",
+"What are your future goals?",
+"Describe your school."
 ];
-// =====================
-// TOPIC GENERATOR
-// =====================
+let q=0, recognition, transcript="";
 
-function generateTopic(){
-
-    currentTopic =
-        topics[Math.floor(
-            Math.random() * topics.length
-        )];
-
-    document.getElementById(
-        "topicText"
-    ).innerHTML = currentTopic;
+function nextQuestion(){
+q=(q+1)%questions.length;
+document.getElementById("question").innerText=questions[q];
 }
 
-// =====================
-// SPEECH RECOGNITION
-// =====================
-
-if ('webkitSpeechRecognition' in window) {
-
-    recognition =
-        new webkitSpeechRecognition();
-
-    recognition.continuous = true;
-
-    recognition.interimResults = true;
-
-    recognition.lang = "en-US";
-
-    recognition.onresult = function(event){
-
-        transcript = "";
-
-        for(
-            let i = 0;
-            i < event.results.length;
-            i++
-        ){
-
-            transcript +=
-                event.results[i][0].transcript + " ";
-        }
-
-        document.getElementById(
-            "output"
-        ).innerHTML = transcript;
-
-        updateStats();
-    };
-
-    recognition.onerror = function(e){
-
-        console.log(e.error);
-
-    };
-
-} else {
-
-    alert(
-        "Speech Recognition not supported"
-    );
-
+function startRec(){
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!SR){alert("Speech Recognition not supported.");return;}
+recognition=new SR();
+recognition.continuous=true;
+recognition.interimResults=true;
+recognition.lang="en-US";
+document.getElementById("rec").style.display="block";
+recognition.onresult=(e)=>{
+transcript="";
+for(let i=0;i<e.results.length;i++) transcript+=e.results[i][0].transcript+" ";
+document.getElementById("transcript").innerText=transcript;
+};
+recognition.start();
 }
 
-// =====================
-// START SPEAKING
-// =====================
-
-function startSpeaking(){
-
-    if(currentTopic === ""){
-
-        alert(
-            "Please Generate Topic First"
-        );
-
-        return;
-    }
-
-    totalTime = parseInt(
-        document.getElementById(
-            "timeSelect"
-        ).value
-    );
-
-    timeLeft = totalTime;
-
-    startTimer();
-
-    recognition.start();
-
+function stopRec(){
+if(recognition) recognition.stop();
+document.getElementById("rec").style.display="none";
+analyze();
 }
 
-// =====================
-// STOP SPEAKING
-// =====================
+function analyze(){
+const words=transcript.trim().split(/\s+/).filter(Boolean);
+const wc=words.length;
+const unique=new Set(words.map(x=>x.toLowerCase())).size;
 
-function stopSpeaking(){
+let fluency=Math.min(25,Math.round(wc/4));
+let vocab=Math.min(25,Math.round(unique/2));
+let pron=Math.min(25,Math.max(8,Math.round(unique/(wc||1)*40)));
+let conf=Math.min(25,Math.round(wc/3));
 
-    if(recognition){
+let total=Math.min(100,fluency+vocab+pron+conf);
 
-        recognition.stop();
+document.getElementById("fbar").style.width=(fluency*4)+"%";
+document.getElementById("vbar").style.width=(vocab*4)+"%";
+document.getElementById("pbar").style.width=(pron*4)+"%";
+document.getElementById("cbar").style.width=(conf*4)+"%";
 
-    }
+let grade="F",color="#ef4444";
+if(total>=90){grade="A+";color="#16a34a";}
+else if(total>=75){grade="A";color="#22c55e";}
+else if(total>=60){grade="B";color="#3b82f6";}
+else if(total>=40){grade="C";color="#f59e0b";}
 
-    clearInterval(timer);
+document.getElementById("result").innerHTML=`
+<table>
+<tr><th>Category</th><th>Score</th></tr>
+<tr><td>Fluency</td><td>${fluency}/25</td></tr>
+<tr><td>Vocabulary</td><td>${vocab}/25</td></tr>
+<tr><td>Pronunciation</td><td>${pron}/25</td></tr>
+<tr><td>Confidence</td><td>${conf}/25</td></tr>
+<tr><th>Total</th><th>${total}/100</th></tr>
+</table>
+<br><span class="badge" style="background:${color}">Grade ${grade}</span>`;
 
-    updateStats();
-
+window.currentResult={
+student:document.getElementById("student").value,
+total,grade,date:new Date().toLocaleString()
+};
 }
 
-// =====================
-// TIMER
-// =====================
-
-function startTimer(){
-
-    clearInterval(timer);
-
-    timer = setInterval(() => {
-
-        timeLeft--;
-
-        let minutes =
-            Math.floor(timeLeft / 60);
-
-        let seconds =
-            timeLeft % 60;
-
-        document.getElementById(
-            "timerText"
-        ).innerHTML =
-            String(minutes)
-            .padStart(2,"0")
-            +
-            ":"
-            +
-            String(seconds)
-            .padStart(2,"0");
-
-        let progress =
-            (
-                (totalTime - timeLeft)
-                /
-                totalTime
-            ) * 100;
-
-        document.getElementById(
-            "progressBar"
-        ).style.width =
-            progress + "%";
-
-        if(timeLeft <= 0){
-
-            stopSpeaking();
-
-            alert(
-                "Time Completed"
-            );
-
-        }
-
-    },1000);
-
+function saveResult(){
+if(!window.currentResult){alert("Generate result first.");return;}
+let data=JSON.parse(localStorage.getItem("premiumSpeaking")||"[]");
+data.push(window.currentResult);
+localStorage.setItem("premiumSpeaking",JSON.stringify(data));
+loadHistory();
 }
 
-// =====================
-// STATS
-// =====================
-
-function updateStats(){
-
-    wordCount =
-        transcript
-        .trim()
-        .split(/\s+/)
-        .filter(Boolean)
-        .length;
-
-    let minutesSpent =
-        (
-            totalTime - timeLeft
-        ) / 60;
-
-    if(minutesSpent > 0){
-
-        wpm =
-            Math.round(
-                wordCount /
-                minutesSpent
-            );
-
-    }
-
-    score =
-        Math.min(
-            100,
-            Math.round(
-                wordCount * 0.8
-            )
-        );
-
-    document.getElementById(
-        "wordCount"
-    ).innerHTML =
-        wordCount;
-
-    document.getElementById(
-        "wpm"
-    ).innerHTML =
-        wpm;
-
-    document.getElementById(
-        "score"
-    ).innerHTML =
-        score;
+function loadHistory(){
+let data=JSON.parse(localStorage.getItem("premiumSpeaking")||"[]");
+document.getElementById("history").innerHTML=data.map(x=>
+`<div style="background:#eef2ff;color:#111;padding:10px;border-radius:10px;margin:8px 0">
+<b>${x.student}</b> | ${x.total}/100 | Grade ${x.grade}<br>${x.date}
+</div>`).join("");
 }
-// =====================
-// SAVE RESULT
-// =====================
-
-function saveSpeakingResult(){
-
-    if(transcript.trim() === ""){
-
-        alert(
-            "Please speak first."
-        );
-
-        return;
-    }
-
-    let currentStudent =
-        JSON.parse(
-            localStorage.getItem(
-                "currentStudent"
-            )
-        );
-
-    if(!currentStudent){
-
-        alert("Please Login First");
-
-        return;
-    }
-
-    let students =
-        JSON.parse(
-            localStorage.getItem(
-                "students"
-            )
-        ) || [];
-
-    const result = {
-
-        topic: currentTopic,
-
-        answer: transcript,
-
-        words: wordCount,
-
-        wpm: wpm,
-
-        score: score,
-
-        status:
-            score >= 33
-            ? "PASS"
-            : "FAIL",
-
-        date:
-            new Date()
-            .toLocaleString()
-    };
-
-    students = students.map(s => {
-
-        if(
-            s.id === currentStudent.id
-        ){
-
-            if(
-                !s.speakingResults
-            ){
-                s.speakingResults = [];
-            }
-
-            s.speakingResults.push(
-                result
-            );
-
-        }
-
-        return s;
-    });
-
-    localStorage.setItem(
-        "students",
-        JSON.stringify(
-            students
-        )
-    );
-
-    showResult(result);
-
-    alert(
-        "Speaking Result Saved Successfully"
-    );
-}
-
-// =====================
-// SHOW RESULT
-// =====================
-
-function showResult(result){
-
-    document.getElementById(
-        "resultCard"
-    ).style.display =
-        "block";
-
-    document.getElementById(
-        "resultContent"
-    ).innerHTML = `
-
-    <div style="
-        background:#f8f9fa;
-        padding:20px;
-        border-radius:15px;
-    ">
-
-        <p>
-        <b>Topic:</b>
-        ${result.topic}
-        </p>
-
-        <br>
-
-        <p>
-        <b>Words:</b>
-        ${result.words}
-        </p>
-
-        <br>
-
-        <p>
-        <b>WPM:</b>
-        ${result.wpm}
-        </p>
-
-        <br>
-
-        <p>
-        <b>Score:</b>
-        ${result.score}/100
-        </p>
-
-        <br>
-
-        <p>
-        <b>Status:</b>
-        ${result.status}
-        </p>
-
-        <br>
-
-        <p>
-        <b>Date:</b>
-        ${result.date}
-        </p>
-
-    </div>
-    `;
-}
-
-// =====================
-// AUTO TOPIC ON LOAD
-// =====================
-
-generateTopic();
-
+loadHistory();
 </script>
-
 </body>
 </html>
