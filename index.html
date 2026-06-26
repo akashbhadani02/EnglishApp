@@ -23,27 +23,1686 @@
             font-family: 'Poppins', sans-serif;
         }
 
-        body {
-            background: linear-gradient(-45deg, #b668df, #0d6efd, #e59c98, #ffcc00);
-            background-size: 400% 400%;
-            animation: bgMove 12s ease infinite;
-            min-height: 100vh;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap');
 
-        @keyframes bgMove {
-            0% {
-                background-position: 0% 50%;
-            }
+:root{
 
-            50% {
-                background-position: 100% 50%;
-            }
+--bg:#05070d;
+--bg2:#090d16;
 
-            100% {
-                background-position: 0% 50%;
-            }
-        }
+--card:rgba(15,20,35,.82);
 
+--border:#00e5ff55;
+
+--cyan:#00e5ff;
+
+--blue:#008cff;
+
+--purple:#8b5cf6;
+
+--text:#ffffff;
+
+--text2:#9fb3c8;
+
+--danger:#ff3b6b;
+
+--success:#00ff95;
+
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+
+min-height:100vh;
+
+color:white;
+
+background:
+
+radial-gradient(circle at top left,#13203f 0%,transparent 30%),
+
+radial-gradient(circle at bottom right,#19003b 0%,transparent 35%),
+
+linear-gradient(135deg,#03040a,#0b1020,#05070d);
+
+overflow-x:hidden;
+
+}
+
+/* Animated Background */
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+left:-50%;
+
+top:-50%;
+
+width:200%;
+
+height:200%;
+
+background:
+
+repeating-linear-gradient(
+
+45deg,
+
+transparent 0px,
+
+transparent 40px,
+
+rgba(0,229,255,.03) 42px,
+
+transparent 44px
+
+);
+
+animation:gridMove 18s linear infinite;
+
+pointer-events:none;
+
+z-index:-2;
+
+}
+
+/* Neon Glow */
+
+body::after{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+background:
+
+radial-gradient(circle at 20% 20%,
+rgba(0,229,255,.15),
+transparent 30%),
+
+radial-gradient(circle at 80% 80%,
+rgba(139,92,246,.18),
+transparent 35%),
+
+radial-gradient(circle at 50% 50%,
+rgba(0,140,255,.08),
+transparent 40%);
+
+animation:glowMove 12s infinite alternate;
+
+pointer-events:none;
+
+z-index:-1;
+
+}
+
+@keyframes gridMove{
+
+0%{
+transform:translate(0,0);
+}
+
+100%{
+transform:translate(70px,70px);
+}
+
+}
+
+@keyframes glowMove{
+
+0%{
+
+transform:scale(1);
+
+filter:hue-rotate(0deg);
+
+}
+
+100%{
+
+transform:scale(1.2);
+
+filter:hue-rotate(40deg);
+
+}
+
+}
+
+/* ===============================
+   HEADER
+=================================*/
+
+.header{
+
+position:relative;
+
+background:rgba(12,18,35,.75);
+
+backdrop-filter:blur(25px);
+
+border:1px solid rgba(0,229,255,.25);
+
+border-radius:28px;
+
+padding:35px;
+
+margin-bottom:25px;
+
+overflow:hidden;
+
+box-shadow:
+
+0 0 25px rgba(0,229,255,.15),
+
+0 0 70px rgba(0,140,255,.08);
+
+animation:headerFloat 5s ease-in-out infinite;
+
+}
+
+.header::before{
+
+content:"";
+
+position:absolute;
+
+top:-60%;
+
+left:-30%;
+
+width:180px;
+
+height:180px;
+
+border-radius:50%;
+
+background:rgba(0,229,255,.15);
+
+filter:blur(45px);
+
+}
+
+.header::after{
+
+content:"";
+
+position:absolute;
+
+right:-40px;
+
+bottom:-40px;
+
+width:170px;
+
+height:170px;
+
+border-radius:50%;
+
+background:rgba(139,92,246,.18);
+
+filter:blur(55px);
+
+}
+
+.header h2{
+
+font-family:Orbitron,sans-serif;
+
+font-size:38px;
+
+letter-spacing:3px;
+
+text-transform:uppercase;
+
+color:#fff;
+
+text-shadow:
+
+0 0 8px #00e5ff,
+
+0 0 18px #00e5ff,
+
+0 0 35px #008cff;
+
+}
+
+.header p{
+
+margin-top:12px;
+
+font-size:15px;
+
+color:#bcd4e8;
+
+letter-spacing:1px;
+
+}
+
+@keyframes headerFloat{
+
+0%,100%{
+
+transform:translateY(0px);
+
+}
+
+50%{
+
+transform:translateY(-6px);
+
+}
+
+}
+
+/* ===============================
+   SCREEN
+=================================*/
+
+.screen{
+
+display:none;
+
+min-height:100vh;
+
+padding:25px;
+
+max-width:1200px;
+
+margin:auto;
+
+animation:fadeGame .45s ease;
+
+}
+
+.active{
+
+display:block;
+
+}
+
+@keyframes fadeGame{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ===============================
+   CARD
+=================================*/
+
+.card{
+
+position:relative;
+
+background:rgba(12,18,35,.72);
+
+backdrop-filter:blur(20px);
+
+border:1px solid rgba(0,229,255,.18);
+
+border-radius:24px;
+
+padding:25px;
+
+margin-bottom:20px;
+
+overflow:hidden;
+
+transition:.35s;
+
+box-shadow:
+
+0 0 18px rgba(0,229,255,.12);
+
+}
+
+.card::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:-100%;
+
+width:100%;
+
+height:100%;
+
+background:linear-gradient(90deg,
+
+transparent,
+
+rgba(255,255,255,.08),
+
+transparent);
+
+transition:.8s;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+border-color:#00e5ff;
+
+box-shadow:
+
+0 0 25px rgba(0,229,255,.28),
+
+0 0 60px rgba(0,140,255,.15);
+
+}
+
+.card:hover::before{
+
+left:120%;
+
+}
+
+/* ===============================
+   INPUT
+=================================*/
+
+input{
+
+width:100%;
+
+padding:16px 18px;
+
+margin:12px 0;
+
+border-radius:16px;
+
+background:#0d1325;
+
+border:1px solid rgba(0,229,255,.20);
+
+color:#fff;
+
+font-size:15px;
+
+outline:none;
+
+transition:.35s;
+
+}
+
+input::placeholder{
+
+color:#8fa5bc;
+
+}
+
+input:focus{
+
+border-color:#00e5ff;
+
+box-shadow:
+
+0 0 10px rgba(0,229,255,.5),
+
+0 0 20px rgba(0,229,255,.18);
+
+transform:scale(1.02);
+
+}
+
+/* ===============================
+   BUTTON
+=================================*/
+
+button{
+
+width:100%;
+
+padding:15px;
+
+margin-top:12px;
+
+border:none;
+
+border-radius:16px;
+
+cursor:pointer;
+
+font-size:15px;
+
+font-weight:600;
+
+color:white;
+
+background:linear-gradient(135deg,
+
+#00b7ff,
+
+#0066ff,
+
+#7c3aed);
+
+background-size:250%;
+
+transition:.35s;
+
+box-shadow:
+
+0 0 15px rgba(0,183,255,.35);
+
+}
+
+button:hover{
+
+background-position:right center;
+
+transform:translateY(-4px);
+
+box-shadow:
+
+0 0 20px #00e5ff,
+
+0 0 45px rgba(0,229,255,.35);
+
+}
+
+/* Logout */
+
+.logout{
+
+background:linear-gradient(135deg,
+
+#ff004d,
+
+#ff3366);
+
+}
+
+.logout:hover{
+
+box-shadow:
+
+0 0 20px #ff3366,
+
+0 0 45px rgba(255,0,90,.45);
+
+}
+
+/* ===============================
+   LINKS
+=================================*/
+
+.link{
+
+margin-top:18px;
+
+text-align:center;
+
+color:#00e5ff;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.link:hover{
+
+color:#fff;
+
+text-shadow:
+
+0 0 10px #00e5ff,
+
+0 0 20px #00e5ff;
+
+transform:scale(1.05);
+
+}
+
+h3{
+
+margin-bottom:12px;
+
+color:#ffffff;
+
+font-family:Orbitron,sans-serif;
+
+letter-spacing:1px;
+
+}
+/* ===========================================
+   DASHBOARD GRID
+=========================================== */
+
+.dashboard-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+
+gap:22px;
+
+margin-top:25px;
+
+}
+
+/* ===========================================
+   GAMING TILE
+=========================================== */
+
+.tile{
+
+position:relative;
+
+overflow:hidden;
+
+background:rgba(10,18,35,.80);
+
+backdrop-filter:blur(18px);
+
+border:1px solid rgba(0,229,255,.18);
+
+border-radius:22px;
+
+padding:28px 18px;
+
+text-align:center;
+
+cursor:pointer;
+
+transition:.35s;
+
+box-shadow:
+
+0 0 18px rgba(0,229,255,.12);
+
+color:white;
+
+font-size:17px;
+
+font-weight:600;
+
+min-height:150px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+/* Neon Top Border */
+
+.tile::before{
+
+content:"";
+
+position:absolute;
+
+top:0;
+
+left:-100%;
+
+width:100%;
+
+height:3px;
+
+background:linear-gradient(90deg,
+
+transparent,
+
+#00e5ff,
+
+#8b5cf6,
+
+transparent);
+
+transition:.7s;
+
+}
+
+/* Glow Circle */
+
+.tile::after{
+
+content:"";
+
+position:absolute;
+
+width:180px;
+
+height:180px;
+
+border-radius:50%;
+
+background:rgba(0,229,255,.08);
+
+filter:blur(35px);
+
+top:-90px;
+
+right:-90px;
+
+transition:.5s;
+
+}
+
+.tile:hover{
+
+transform:
+
+translateY(-12px)
+
+scale(1.05);
+
+border-color:#00e5ff;
+
+box-shadow:
+
+0 0 20px rgba(0,229,255,.35),
+
+0 0 45px rgba(0,140,255,.20),
+
+0 0 90px rgba(139,92,246,.18);
+
+}
+
+.tile:hover::before{
+
+left:100%;
+
+}
+
+.tile:hover::after{
+
+background:rgba(139,92,246,.15);
+
+}
+
+/* Icon */
+
+.tile span{
+
+font-size:52px;
+
+margin-bottom:14px;
+
+transition:.4s;
+
+filter:drop-shadow(0 0 8px #00e5ff);
+
+}
+
+.tile:hover span{
+
+transform:scale(1.18) rotate(8deg);
+
+filter:
+
+drop-shadow(0 0 12px #00e5ff)
+
+drop-shadow(0 0 20px #008cff);
+
+}
+
+/* Tile Text */
+
+.tile strong{
+
+display:block;
+
+margin-top:8px;
+
+font-size:17px;
+
+font-family:Orbitron,sans-serif;
+
+letter-spacing:1px;
+
+}
+
+/* ===========================================
+   ADMIN CARD
+=========================================== */
+
+#totalStudents{
+
+font-size:65px;
+
+font-family:Orbitron,sans-serif;
+
+text-align:center;
+
+color:#00e5ff;
+
+text-shadow:
+
+0 0 10px #00e5ff,
+
+0 0 30px #008cff,
+
+0 0 60px #008cff;
+
+}
+
+/* Student List */
+
+#studentList div{
+
+background:rgba(10,18,35,.75);
+
+border:1px solid rgba(0,229,255,.15);
+
+border-left:5px solid #00e5ff;
+
+padding:18px;
+
+border-radius:16px;
+
+margin-bottom:15px;
+
+transition:.35s;
+
+color:#fff;
+
+}
+
+#studentList div:hover{
+
+transform:translateX(10px);
+
+box-shadow:
+
+0 0 20px rgba(0,229,255,.25);
+
+}
+
+/* ===========================================
+   SMALL TEXT
+=========================================== */
+
+.small{
+
+color:#8fb2d1;
+
+font-size:14px;
+
+}
+
+/* ===========================================
+   SCROLLBAR
+=========================================== */
+
+::-webkit-scrollbar{
+
+width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#05070d;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:linear-gradient(
+
+180deg,
+
+#00e5ff,
+
+#008cff,
+
+#7c3aed
+
+);
+
+border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#00e5ff;
+
+}
+
+/* ===========================================
+   RESPONSIVE
+=========================================== */
+
+@media(max-width:900px){
+
+.dashboard-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.tile{
+
+min-height:130px;
+
+padding:20px;
+
+font-size:15px;
+
+}
+
+.tile span{
+
+font-size:42px;
+
+}
+
+}
+
+@media(max-width:550px){
+
+.dashboard-grid{
+
+grid-template-columns:1fr 1fr;
+
+gap:12px;
+
+}
+
+.tile{
+
+min-height:115px;
+
+padding:16px;
+
+font-size:14px;
+
+border-radius:18px;
+
+}
+
+.tile span{
+
+font-size:34px;
+
+margin-bottom:8px;
+
+}
+
+#totalStudents{
+
+font-size:45px;
+
+}
+
+}
+/* ==========================================
+   PREMIUM LOADER
+========================================== */
+
+#loader{
+
+position:fixed;
+
+inset:0;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+flex-direction:column;
+
+background:#02040a;
+
+z-index:999999;
+
+overflow:hidden;
+
+}
+
+/* Animated Background */
+
+#loader::before{
+
+content:"";
+
+position:absolute;
+
+width:500px;
+
+height:500px;
+
+border-radius:50%;
+
+background:radial-gradient(circle,#00e5ff33,transparent 70%);
+
+animation:loaderPulse 3s infinite;
+
+}
+
+#loader::after{
+
+content:"";
+
+position:absolute;
+
+width:800px;
+
+height:800px;
+
+border:1px solid rgba(0,229,255,.08);
+
+border-radius:50%;
+
+animation:rotateLoader 18s linear infinite;
+
+}
+
+/* Logo */
+
+#loader h1{
+
+position:relative;
+
+font-family:Orbitron,sans-serif;
+
+font-size:42px;
+
+letter-spacing:4px;
+
+color:#ffffff;
+
+text-shadow:
+
+0 0 10px #00e5ff,
+
+0 0 25px #00e5ff,
+
+0 0 45px #008cff;
+
+z-index:2;
+
+}
+
+/* Loading Bar */
+
+#loader h1::after{
+
+content:"";
+
+display:block;
+
+margin-top:20px;
+
+width:260px;
+
+height:6px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,.08);
+
+overflow:hidden;
+
+}
+
+#loader h1::before{
+
+content:"";
+
+position:absolute;
+
+left:0;
+
+bottom:-30px;
+
+width:90px;
+
+height:6px;
+
+border-radius:20px;
+
+background:linear-gradient(90deg,#00e5ff,#008cff,#7c3aed);
+
+animation:loadingBar 2.2s infinite;
+
+}
+
+/* ==========================================
+   FLOATING PARTICLES
+========================================== */
+
+body .particle{
+
+position:fixed;
+
+width:5px;
+
+height:5px;
+
+background:#00e5ff;
+
+border-radius:50%;
+
+pointer-events:none;
+
+opacity:.6;
+
+animation:particleFloat linear infinite;
+
+}
+
+@keyframes particleFloat{
+
+0%{
+
+transform:translateY(100vh) scale(.3);
+
+opacity:0;
+
+}
+
+20%{
+
+opacity:1;
+
+}
+
+100%{
+
+transform:translateY(-100px) scale(1);
+
+opacity:0;
+
+}
+
+}
+
+/* ==========================================
+   GLOW BORDER
+========================================== */
+
+.glow-border{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.glow-border::before{
+
+content:"";
+
+position:absolute;
+
+inset:-2px;
+
+background:linear-gradient(
+
+90deg,
+
+#00e5ff,
+
+#008cff,
+
+#8b5cf6,
+
+#00e5ff
+
+);
+
+background-size:300%;
+
+animation:borderMove 5s linear infinite;
+
+z-index:-2;
+
+border-radius:inherit;
+
+}
+
+.glow-border::after{
+
+content:"";
+
+position:absolute;
+
+inset:2px;
+
+background:#0b1222;
+
+border-radius:inherit;
+
+z-index:-1;
+
+}
+
+/* ==========================================
+   NEON TEXT
+========================================== */
+
+.neon{
+
+color:#fff;
+
+text-shadow:
+
+0 0 5px #00e5ff,
+
+0 0 10px #00e5ff,
+
+0 0 20px #00e5ff,
+
+0 0 35px #008cff;
+
+}
+
+/* ==========================================
+   BUTTON RIPPLE
+========================================== */
+
+button{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+button::after{
+
+content:"";
+
+position:absolute;
+
+width:20px;
+
+height:20px;
+
+background:rgba(255,255,255,.4);
+
+border-radius:50%;
+
+transform:scale(0);
+
+opacity:0;
+
+pointer-events:none;
+
+}
+
+button:active::after{
+
+animation:ripple .6s ease;
+
+}
+
+/* ==========================================
+   ANIMATIONS
+========================================== */
+
+@keyframes loaderPulse{
+
+0%{
+
+transform:scale(.8);
+
+opacity:.4;
+
+}
+
+50%{
+
+transform:scale(1.2);
+
+opacity:.8;
+
+}
+
+100%{
+
+transform:scale(.8);
+
+opacity:.4;
+
+}
+
+}
+
+@keyframes rotateLoader{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+@keyframes loadingBar{
+
+0%{
+
+left:0;
+
+}
+
+50%{
+
+left:170px;
+
+}
+
+100%{
+
+left:0;
+
+}
+
+}
+
+@keyframes borderMove{
+
+0%{
+
+background-position:0%;
+
+}
+
+100%{
+
+background-position:300%;
+
+}
+
+}
+
+@keyframes ripple{
+
+0%{
+
+transform:scale(0);
+
+opacity:.8;
+
+}
+
+100%{
+
+transform:scale(18);
+
+opacity:0;
+
+}
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:600px){
+
+#loader h1{
+
+font-size:28px;
+
+letter-spacing:2px;
+
+}
+
+#loader h1::after{
+
+width:180px;
+
+}
+
+}
+/* ===========================================
+   CERTIFICATE DESIGN
+=========================================== */
+
+#certificateArea{
+
+background:linear-gradient(135deg,#08111f,#111b30,#0a1322);
+
+border:3px solid #00e5ff;
+
+border-radius:30px;
+
+padding:40px;
+
+box-shadow:
+
+0 0 25px rgba(0,229,255,.35),
+
+0 0 70px rgba(0,140,255,.18);
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+#certificateArea::before{
+
+content:"";
+
+position:absolute;
+
+top:-150px;
+
+right:-150px;
+
+width:300px;
+
+height:300px;
+
+border-radius:50%;
+
+background:rgba(0,229,255,.10);
+
+filter:blur(60px);
+
+}
+
+#certificateArea h1{
+
+font-family:Orbitron,sans-serif;
+
+font-size:50px;
+
+letter-spacing:5px;
+
+text-align:center;
+
+color:#00e5ff;
+
+text-shadow:
+
+0 0 10px #00e5ff,
+
+0 0 30px #008cff;
+
+}
+
+#certificateArea h2{
+
+font-size:36px;
+
+margin:20px 0;
+
+color:#fff;
+
+}
+
+#certificateArea p{
+
+color:#b7cbe0;
+
+font-size:18px;
+
+}
+
+/* ===========================================
+   VOCABULARY CARDS
+=========================================== */
+
+#vocabularyList{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+gap:20px;
+
+}
+
+#vocabularyList div{
+
+background:rgba(12,18,35,.82);
+
+border:1px solid rgba(0,229,255,.20);
+
+border-radius:22px;
+
+padding:20px;
+
+transition:.35s;
+
+box-shadow:0 0 15px rgba(0,229,255,.12);
+
+}
+
+#vocabularyList div:hover{
+
+transform:translateY(-8px);
+
+box-shadow:
+
+0 0 22px rgba(0,229,255,.25),
+
+0 0 60px rgba(0,140,255,.15);
+
+}
+
+#vocabularyList h3{
+
+color:#00e5ff;
+
+font-family:Orbitron,sans-serif;
+
+margin-bottom:12px;
+
+}
+
+/* ===========================================
+   BOOK VIEWER
+=========================================== */
+
+#bookPage{
+
+width:100%;
+
+border-radius:18px;
+
+border:2px solid rgba(0,229,255,.20);
+
+box-shadow:
+
+0 0 20px rgba(0,229,255,.18);
+
+transition:.4s;
+
+}
+
+#bookPage:hover{
+
+transform:scale(1.02);
+
+}
+
+#watermark{
+
+font-size:34px!important;
+
+font-family:Orbitron,sans-serif;
+
+color:rgba(0,229,255,.25)!important;
+
+text-shadow:0 0 10px #00e5ff;
+
+}
+
+/* ===========================================
+   RESULT BOX
+=========================================== */
+
+#resultMessage{
+
+font-size:18px;
+
+color:#fff;
+
+line-height:1.8;
+
+}
+
+#resultMessage div{
+
+background:rgba(10,18,35,.75);
+
+padding:18px;
+
+border-radius:18px;
+
+margin-bottom:15px;
+
+border-left:5px solid #00e5ff;
+
+}
+
+/* ===========================================
+   PROFILE
+=========================================== */
+
+#profileScreen input{
+
+margin-bottom:18px;
+
+}
+
+/* ===========================================
+   FEES
+=========================================== */
+
+#feeStatusText{
+
+font-size:48px;
+
+text-align:center;
+
+font-family:Orbitron,sans-serif;
+
+color:#00ff95;
+
+text-shadow:
+
+0 0 12px #00ff95,
+
+0 0 30px #00e5ff;
+
+}
+
+/* ===========================================
+   ATTENDANCE
+=========================================== */
+
+#attendanceText{
+
+font-size:70px;
+
+font-family:Orbitron,sans-serif;
+
+text-align:center;
+
+color:#00e5ff;
+
+text-shadow:
+
+0 0 12px #00e5ff,
+
+0 0 35px #008cff;
+
+}
+
+/* ===========================================
+   BOOK BUTTONS
+=========================================== */
+
+#viewerScreen button{
+
+width:220px;
+
+}
+
+/* ===========================================
+   MOBILE
+=========================================== */
+
+@media(max-width:768px){
+
+#certificateArea{
+
+padding:20px;
+
+}
+
+#certificateArea h1{
+
+font-size:34px;
+
+}
+
+#certificateArea h2{
+
+font-size:24px;
+
+}
+
+#attendanceText{
+
+font-size:45px;
+
+}
+
+#feeStatusText{
+
+font-size:32px;
+
+}
+
+#vocabularyList{
+
+grid-template-columns:1fr;
+
+}
+
+}
         .screen {
             display: none;
             min-height: 100vh;
@@ -124,7 +1783,7 @@
             margin: 10px 0;
             border: none;
             border-radius: 15px;
-            background: #f4f6ff;
+            background: #394164;
             font-size: 15px;
             outline: none;
             transition: .3s;
@@ -157,7 +1816,7 @@
         .link {
             text-align: center;
             font-weight: 600;
-            color: #000000;
+            color: #ffffff;
             margin-top: 10px;
             cursor: pointer;
             transition: .3s;
@@ -174,7 +1833,7 @@
         }
 
         .tile {
-            background: rgba(255, 255, 255, .9);
+            background: rgba(0, 0, 0, 0.9);
             padding: 25px;
             border-radius: 20px;
             text-align: center;
@@ -187,8 +1846,8 @@
 
         .tile:hover {
             transform: translateY(-8px) scale(1.05);
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-            color: #222;
+            background: linear-gradient(135deg, #000000, #631212);
+            color: #0b0202;
         }
 
         .logout {
@@ -383,7 +2042,7 @@
 
 
 
-        <h3>Student Login</h3>
+        <h3 style="color: var(--text);">Student Login</h3>
 
         <input type="text" id="loginUser" placeholder="Username">
 
@@ -454,32 +2113,32 @@
 
 
 
-        <div class="dashboard-grid">
-            <div class="tile" onclick="showBooks()">📖<br> Books</div>
+<div class="dashboard-grid">
+            <div class="tile"><span>📖</span><strong>Books</strong></div>
 
-            <div class="tile" onclick="showVocabulary()">📚<br> Vocabulary</div>
+            <div class="tile" onclick="showVocabulary()"><span>📚</span><strong>Vocabulary</strong></div>
 
-            <div class="tile" onclick="showGrammar()">✍<br> Grammar</div>
+            <div class="tile" onclick="showGrammar()"><span>✍</span><strong> Grammar</strong></div>
 
-            <div class="tile" onclick="window.open('./speaking.html','_blank')">🎤<br> Speaking Exam</div>
+            <div class="tile" onclick="window.open('./speaking.html','_blank')"><span>🎤</span> Speaking Exam<strong></strong></div>
 
-            <div class="tile" onclick="window.open('./pronunciation.html','_blank')">🗣<br> Pronunciation</div>
+            <div class="tile" onclick="window.open('./pronunciation.html','_blank')"><span>🗣</span><strong>Pronunciation</strong> </div>
 
-            <div class="tile" onclick="openVideoPractice()">📹<br> Video Practice</div>
+            <div class="tile" onclick="openVideoPractice()"><span>📹</span><strong>Video Practice</strong> </div>
 
-            <div class="tile" onclick="startExam()">📝<br> Exams</div>
+            <div class="tile" onclick="startExam()"><span>📝</span><strong>Exams</strong> </div>
 
-            <div class="tile" onclick="showResults()">📊<br> Results</div>
+            <div class="tile" onclick="showResults()"><span>📊</span><strong>Results</strong> </div>
 
-            <div class="tile" onclick="openCertificate()">🏆<br> Certificate</div>
+            <div class="tile" onclick="openCertificate()"><span>🏆</span><strong> Certificate</strong></div>
 
-            <div class="tile" onclick="showFees()">💰<br> Fees</div>
+            <div class="tile" onclick="showFees()"><span>💰</span><strong>Fees</strong> </div>
 
-            <div class="tile" onclick="showAttendance()">📅<br> Attendance</div>
+            <div class="tile" onclick="showAttendance()"><span>📅</span><strong>Attendance</strong> </div>
 
-            <div class="tile" onclick="showProfile()">👤<br> Profile</div>
+            <div class="tile" onclick="showProfile()"><span>👤</span><strong>Profile</strong> </div>
 
-            <div class="tile" onclick="window.open('./typinggame.html','_blank')">⌨ Typing Game</div>
+            <div class="tile" onclick="window.open('./typinggame.html','_blank')"><span>⌨</span><strong>Typing Game</strong></div>
 
         </div>
 
@@ -2036,7 +3695,23 @@ justify-content:space-between;
                 setTimeout(() => {
                     document.getElementById("loader").style.display = "none";
                 }, 1500);
+                // Floating Particles
 
+for(let i=0;i<35;i++){
+
+let p=document.createElement("div");
+
+p.className="particle";
+
+p.style.left=Math.random()*100+"vw";
+
+p.style.animationDuration=(8+Math.random()*8)+"s";
+
+p.style.animationDelay=Math.random()*10+"s";
+
+document.body.appendChild(p);
+
+}
             });
         </script>
 
