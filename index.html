@@ -3808,6 +3808,22 @@ justify-content:space-between;
 
                 }
             });
+
+            document.addEventListener("keydown", function(e){
+
+    if(e.key=="ArrowRight"){
+
+        nextPage();
+
+    }
+
+    if(e.key=="ArrowLeft"){
+
+        previousPage();
+
+    }
+
+});
         </script>
 
 </body>
