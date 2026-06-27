@@ -800,7 +800,7 @@
 
             text-align: center;
 
-            color: #00e5ff;
+            color: #000000;
 
             text-shadow:
 
@@ -1859,7 +1859,7 @@
         .link {
             text-align: center;
             font-weight: 600;
-            color: #ffffff;
+            color: #1900ff;
             margin-top: 10px;
             cursor: pointer;
             transition: .3s;
@@ -2134,14 +2134,9 @@ body{
     position:fixed;
     width:35px;
     height:35px;
-    border:2px solid #00e5ff;
     border-radius:50%;
     pointer-events:none;
     transform:translate(-50%,-50%);
-    box-shadow:
-        0 0 10px #00e5ff,
-        0 0 25px #00e5ff,
-        0 0 50px #00e5ff;
     transition:0.15s;
     z-index:99999999;
 }
@@ -2150,7 +2145,7 @@ body{
     position:fixed;
     width:8px;
     height:8px;
-    background:#fff;
+    background:#000000;
     border-radius:50%;
     pointer-events:none;
     transform:translate(-50%,-50%);
@@ -2857,7 +2852,7 @@ justify-content:space-between;
         <div style="
             padding:10px;
             margin-top:10px;
-            background:#f5f5f5;
+            background:#000000;
             border-radius:8px;
         ">
             <b>${s.name}</b><br>
@@ -4015,15 +4010,13 @@ document.querySelectorAll("button,a,input,.tile,.card").forEach(el=>{
 
         cursor.style.width="60px";
         cursor.style.height="60px";
-        cursor.style.border="3px solid yellow";
-
+        
     });
 
     el.addEventListener("mouseleave",()=>{
 
         cursor.style.width="35px";
         cursor.style.height="35px";
-        cursor.style.border="2px solid #00e5ff";
 
     });
 
