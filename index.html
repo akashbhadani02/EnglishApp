@@ -2523,11 +2523,30 @@ justify-content:space-between;
         ">
                 <button onclick="prevPage()">⬅ Previous</button>
                 <button onclick="nextPage()">Next ➡</button>
+                <div style="margin-top:15px;text-align:center;">
+
+    <input
+        type="number"
+        id="gotoPage"
+        placeholder="Page No."
+        min="1"
+        style="
+            width:120px;
+            padding:10px;
+            border-radius:8px;
+            text-align:center;
+        ">
+
+    <button onclick="goToPage()">
+        Go To
+    </button>
+
+</div>
             </div>
 
         </div>
 
-        <button onclick="showScreen('bookScreen')">
+        <button onclick="showScreen('bookScreen')" style="width: 100%;">
             Back To Books
         </button>
 
@@ -3604,6 +3623,32 @@ justify-content:space-between;
                 }
 
             }
+
+            function goToPage() {
+
+    let page = parseInt(document.getElementById("gotoPage").value);
+
+    if (isNaN(page)) {
+
+        alert("Enter Page Number");
+
+        return;
+
+    }
+
+    if (page < 1 || page > totalPages) {
+
+        alert("Page must be between 1 and " + totalPages);
+
+        return;
+
+    }
+
+    currentPage = page;
+
+    loadPage();
+
+}
 
             /* -----------------------
             PROTECTION
