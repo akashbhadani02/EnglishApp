@@ -16,6 +16,8 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+        
+
         * {
             margin: 0;
             padding: 0;
@@ -2121,11 +2123,70 @@
             font-weight: bold;
 
         }
+
+/* ===== PREMIUM MOUSE CURSOR ===== */
+
+body{
+    cursor:none;
+}
+
+.cursor{
+    position:fixed;
+    width:35px;
+    height:35px;
+    border:2px solid #00e5ff;
+    border-radius:50%;
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    box-shadow:
+        0 0 10px #00e5ff,
+        0 0 25px #00e5ff,
+        0 0 50px #00e5ff;
+    transition:0.15s;
+    z-index:99999999;
+}
+
+.dot{
+    position:fixed;
+    width:8px;
+    height:8px;
+    background:#fff;
+    border-radius:50%;
+    pointer-events:none;
+    transform:translate(-50%,-50%);
+    z-index:99999999;
+}
+
+.mouse-particle{
+    position:fixed;
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    pointer-events:none;
+    animation:mouseTrail .8s linear forwards;
+    z-index:9999999;
+}
+
+@keyframes mouseTrail{
+0%{
+opacity:1;
+transform:translate(-50%,-50%) scale(1);
+}
+100%{
+opacity:0;
+transform:
+translate(calc(-50% + var(--x)),
+calc(-50% + var(--y)))
+scale(3);
+}
+}
+        
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 
 <body>
+    
 
     <div id="loader">
         <h1>📚 Aducate English</h1>
@@ -2563,6 +2624,8 @@ justify-content:space-between;
             Back To Books
         </button>
 
+        <div class="cursor"></div>
+        <div class="dot"></div>
 
 
         <script>
@@ -3882,7 +3945,94 @@ justify-content:space-between;
     }
 
 });
+
+// ===== Premium Mouse Cursor =====
+
+const cursor = document.querySelector(".cursor");
+const dot = document.querySelector(".dot");
+
+if(cursor && dot){
+
+document.addEventListener("mousemove",(e)=>{
+
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+
+    dot.style.left = e.clientX + "px";
+    dot.style.top = e.clientY + "px";
+
+    createTrail(e.clientX,e.clientY);
+
+});
+
+function createTrail(x,y){
+
+    const p=document.createElement("div");
+
+    p.className="mouse-particle";
+
+    p.style.left=x+"px";
+    p.style.top=y+"px";
+
+    const colors=[
+        "#00ffff",
+        "#00ff00",
+        "#ff00ff",
+        "#ff0000",
+        "#ffff00",
+        "#008cff"
+    ];
+
+    const color=colors[Math.floor(Math.random()*colors.length)];
+
+    p.style.background=color;
+    p.style.boxShadow="0 0 20px "+color;
+
+    p.style.setProperty("--x",(Math.random()*100-50)+"px");
+    p.style.setProperty("--y",(Math.random()*100-50)+"px");
+
+    document.body.appendChild(p);
+
+    setTimeout(()=>{
+        p.remove();
+    },800);
+
+}
+
+document.addEventListener("click",(e)=>{
+
+    for(let i=0;i<25;i++){
+
+        createTrail(e.clientX,e.clientY);
+
+    }
+
+});
+
+document.querySelectorAll("button,a,input,.tile,.card").forEach(el=>{
+
+    el.addEventListener("mouseenter",()=>{
+
+        cursor.style.width="60px";
+        cursor.style.height="60px";
+        cursor.style.border="3px solid yellow";
+
+    });
+
+    el.addEventListener("mouseleave",()=>{
+
+        cursor.style.width="35px";
+        cursor.style.height="35px";
+        cursor.style.border="2px solid #00e5ff";
+
+    });
+
+});
+
+}
         </script>
+
+
 
 </body>
 
