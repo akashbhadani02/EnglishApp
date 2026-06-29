@@ -16,7 +16,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-        
+
 
         * {
             margin: 0;
@@ -65,19 +65,17 @@
 
             color: white;
 
-           background: linear-gradient(
-    -45deg,
-    #020617,
-    #0f172a,
-    #1e293b,
-    #0f766e,
-    #2563eb,
-    #7c3aed,
-    #020617
-);
+            background: linear-gradient(-45deg,
+                    #020617,
+                    #0f172a,
+                    #1e293b,
+                    #0f766e,
+                    #2563eb,
+                    #7c3aed,
+                    #020617);
 
-background-size: 400% 400%;
-animation: gradientBG 15s ease infinite;
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
 
             overflow-x: hidden;
 
@@ -121,47 +119,48 @@ animation: gradientBG 15s ease infinite;
 
         /* Neon Glow */
 
-        body::after{
+        body::after {
 
-    content:"";
+            content: "";
 
-    position:fixed;
+            position: fixed;
 
-    inset:0;
+            inset: 0;
 
-    pointer-events:none;
+            pointer-events: none;
 
-    z-index:-1;
+            z-index: -1;
 
-    background:
+            background:
 
-        radial-gradient(circle at 15% 20%,
-        rgba(0,255,255,.18),
-        transparent 30%),
+                radial-gradient(circle at 15% 20%,
+                    rgba(0, 255, 255, .18),
+                    transparent 30%),
 
-        radial-gradient(circle at 85% 75%,
-        rgba(140,80,255,.20),
-        transparent 35%),
+                radial-gradient(circle at 85% 75%,
+                    rgba(140, 80, 255, .20),
+                    transparent 35%),
 
-        radial-gradient(circle at 50% 50%,
-        rgba(0,120,255,.12),
-        transparent 40%);
+                radial-gradient(circle at 50% 50%,
+                    rgba(0, 120, 255, .12),
+                    transparent 40%);
 
-    animation: glowAnimation 10s ease-in-out infinite alternate;
-}
-@keyframes glowAnimation{
+            animation: glowAnimation 10s ease-in-out infinite alternate;
+        }
 
-    0%{
-        transform:scale(1);
-        filter:hue-rotate(0deg);
-    }
+        @keyframes glowAnimation {
 
-    100%{
-        transform:scale(1.15);
-        filter:hue-rotate(40deg);
-    }
+            0% {
+                transform: scale(1);
+                filter: hue-rotate(0deg);
+            }
 
-}
+            100% {
+                transform: scale(1.15);
+                filter: hue-rotate(40deg);
+            }
+
+        }
 
         @keyframes gridMove {
 
@@ -194,21 +193,22 @@ animation: gradientBG 15s ease infinite;
             }
 
         }
-        @keyframes gradientBG{
 
-    0%{
-        background-position:0% 50%;
-    }
+        @keyframes gradientBG {
 
-    50%{
-        background-position:100% 50%;
-    }
+            0% {
+                background-position: 0% 50%;
+            }
 
-    100%{
-        background-position:0% 50%;
-    }
+            50% {
+                background-position: 100% 50%;
+            }
 
-}
+            100% {
+                background-position: 0% 50%;
+            }
+
+        }
 
         /* ===============================
    HEADER
@@ -1590,21 +1590,23 @@ animation: gradientBG 15s ease infinite;
             text-shadow: 0 0 20px #335dbe;
 
         }
-        @media (max-width:768px){
 
-    #bookPage{
+        @media (max-width:768px) {
 
-        width:100%;
+            #bookPage {
 
-        height:auto;
+                width: 100%;
 
-        max-height:65vh;
+                height: auto;
 
-        object-fit:contain;
+                max-height: 65vh;
 
-    }
+                object-fit: contain;
 
-}
+            }
+
+        }
+
         /* ===========================================
    RESULT BOX
 =========================================== */
@@ -2157,64 +2159,63 @@ animation: gradientBG 15s ease infinite;
 
         }
 
-/* ===== PREMIUM MOUSE CURSOR ===== */
+        /* ===== PREMIUM MOUSE CURSOR ===== */
 
-body{
-    cursor:none;
-}
+        body {
+            cursor: none;
+        }
 
-.cursor{
-    position:fixed;
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    pointer-events:none;
-    transform:translate(-50%,-50%);
-    transition:0.15s;
-    z-index:99999999;
-}
+        .cursor {
+            position: fixed;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            transition: 0.15s;
+            z-index: 99999999;
+        }
 
-.dot{
-    position:fixed;
-    width:8px;
-    height:8px;
-    background:#000000;
-    border-radius:50%;
-    pointer-events:none;
-    transform:translate(-50%,-50%);
-    z-index:99999999;
-}
+        .dot {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: #000000;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 99999999;
+        }
 
-.mouse-particle{
-    position:fixed;
-    width:8px;
-    height:8px;
-    border-radius:50%;
-    pointer-events:none;
-    animation:mouseTrail .8s linear forwards;
-    z-index:9999999;
-}
+        .mouse-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: mouseTrail .8s linear forwards;
+            z-index: 9999999;
+        }
 
-@keyframes mouseTrail{
-0%{
-opacity:1;
-transform:translate(-50%,-50%) scale(1);
-}
-100%{
-opacity:0;
-transform:
-translate(calc(-50% + var(--x)),
-calc(-50% + var(--y)))
-scale(3);
-}
-}
-        
+        @keyframes mouseTrail {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                opacity: 0;
+                transform:
+                    translate(calc(-50% + var(--x)),
+                        calc(-50% + var(--y))) scale(3);
+            }
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 
 <body>
-    
+
 
     <div id="loader">
         <h1>📚 Aducate English</h1>
@@ -2257,8 +2258,8 @@ scale(3);
 
     </div>
 
-</div>
-<a href="https://quenq.com/directory/">.</a>
+    </div>
+    <a href="https://quenq.com/directory/">.</a>
 
     </div>
 
@@ -2308,9 +2309,11 @@ scale(3);
 
             <div class="tile" onclick="showGrammar()"><span>✍</span><strong> Grammar</strong></div>
 
-            <div class="tile" onclick="window.open('./speaking.html','_blank')"><span>🎤</span> Speaking Exam<strong></strong></div>
+            <div class="tile" onclick="window.open('./speaking.html','_blank')"><span>🎤</span> Speaking
+                Exam<strong></strong></div>
 
-            <div class="tile" onclick="window.open('./pronunciation.html','_blank')"><span>🗣</span><strong>Pronunciation</strong></div>
+            <div class="tile" onclick="window.open('./pronunciation.html','_blank')">
+                <span>🗣</span><strong>Pronunciation</strong></div>
 
             <div class="tile" onclick="openVideoPractice()"><span>📹</span><strong>Video Practice</strong> </div>
 
@@ -2326,9 +2329,11 @@ scale(3);
 
             <div class="tile" onclick="showProfile()"><span>👤</span><strong>Profile</strong> </div>
 
-            <div class="tile" onclick="window.open('./typinggame.html','_blank')"><span>⌨</span><strong>Typing Game</strong></div>
-         
-            <div class="tile" onclick="window.open('./computer.html','_blank')"><span>🌐</span><strong>Web Development</strong></div>
+            <div class="tile" onclick="window.open('./typinggame.html','_blank')"><span>⌨</span><strong>Typing
+                    Game</strong></div>
+
+            <div class="tile" onclick="window.open('./computer.html','_blank')"><span>🌐</span><strong>Web
+                    Development</strong></div>
 
         </div>
 
@@ -2625,23 +2630,18 @@ justify-content:space-between;
                 <button onclick="nextPage()">Next ➡</button>
                 <div style="margin-top:15px;text-align:center;">
 
-    <input
-        type="number"
-        id="gotoPage"
-        placeholder="Page No."
-        min="1"
-        style="
+                    <input type="number" id="gotoPage" placeholder="Page No." min="1" style="
             width:120px;
             padding:10px;
             border-radius:8px;
             text-align:center;
         ">
 
-    <button onclick="goToPage()">
-        Go To
-    </button>
+                    <button onclick="goToPage()">
+                        Go To
+                    </button>
 
-</div>
+                </div>
             </div>
 
         </div>
@@ -3728,29 +3728,29 @@ justify-content:space-between;
 
             function goToPage() {
 
-    let page = parseInt(document.getElementById("gotoPage").value);
+                let page = parseInt(document.getElementById("gotoPage").value);
 
-    if (isNaN(page)) {
+                if (isNaN(page)) {
 
-        alert("Enter Page Number");
+                    alert("Enter Page Number");
 
-        return;
+                    return;
 
-    }
+                }
 
-    if (page < 1 || page > totalPages) {
+                if (page < 1 || page > totalPages) {
 
-        alert("Page must be between 1 and " + totalPages);
+                    alert("Page must be between 1 and " + totalPages);
 
-        return;
+                    return;
 
-    }
+                }
 
-    currentPage = page;
+                currentPage = page;
 
-    loadPage();
+                loadPage();
 
-}
+            }
 
             /* -----------------------
             PROTECTION
@@ -3956,104 +3956,104 @@ justify-content:space-between;
                 }
             });
 
-            document.addEventListener("keydown", function(e){
+            document.addEventListener("keydown", function (e) {
 
-    if(e.key=="ArrowRight"){
+                if (e.key == "ArrowRight") {
 
-        nextPage();
+                    nextPage();
 
-    }
+                }
 
-    if(e.key=="ArrowLeft"){
+                if (e.key == "ArrowLeft") {
 
-        previousPage();
+                    previousPage();
 
-    }
+                }
 
-});
+            });
 
-// ===== Premium Mouse Cursor =====
+            // ===== Premium Mouse Cursor =====
 
-const cursor = document.querySelector(".cursor");
-const dot = document.querySelector(".dot");
+            const cursor = document.querySelector(".cursor");
+            const dot = document.querySelector(".dot");
 
-if(cursor && dot){
+            if (cursor && dot) {
 
-document.addEventListener("mousemove",(e)=>{
+                document.addEventListener("mousemove", (e) => {
 
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
+                    cursor.style.left = e.clientX + "px";
+                    cursor.style.top = e.clientY + "px";
 
-    dot.style.left = e.clientX + "px";
-    dot.style.top = e.clientY + "px";
+                    dot.style.left = e.clientX + "px";
+                    dot.style.top = e.clientY + "px";
 
-    createTrail(e.clientX,e.clientY);
+                    createTrail(e.clientX, e.clientY);
 
-});
+                });
 
-function createTrail(x,y){
+                function createTrail(x, y) {
 
-    const p=document.createElement("div");
+                    const p = document.createElement("div");
 
-    p.className="mouse-particle";
+                    p.className = "mouse-particle";
 
-    p.style.left=x+"px";
-    p.style.top=y+"px";
+                    p.style.left = x + "px";
+                    p.style.top = y + "px";
 
-    const colors=[
-        "#00ffff",
-        "#00ff00",
-        "#ff00ff",
-        "#ff0000",
-        "#ffff00",
-        "#008cff"
-    ];
+                    const colors = [
+                        "#00ffff",
+                        "#00ff00",
+                        "#ff00ff",
+                        "#ff0000",
+                        "#ffff00",
+                        "#008cff"
+                    ];
 
-    const color=colors[Math.floor(Math.random()*colors.length)];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
 
-    p.style.background=color;
-    p.style.boxShadow="0 0 20px "+color;
+                    p.style.background = color;
+                    p.style.boxShadow = "0 0 20px " + color;
 
-    p.style.setProperty("--x",(Math.random()*100-50)+"px");
-    p.style.setProperty("--y",(Math.random()*100-50)+"px");
+                    p.style.setProperty("--x", (Math.random() * 100 - 50) + "px");
+                    p.style.setProperty("--y", (Math.random() * 100 - 50) + "px");
 
-    document.body.appendChild(p);
+                    document.body.appendChild(p);
 
-    setTimeout(()=>{
-        p.remove();
-    },800);
+                    setTimeout(() => {
+                        p.remove();
+                    }, 800);
 
-}
+                }
 
-document.addEventListener("click",(e)=>{
+                document.addEventListener("click", (e) => {
 
-    for(let i=0;i<25;i++){
+                    for (let i = 0; i < 25; i++) {
 
-        createTrail(e.clientX,e.clientY);
+                        createTrail(e.clientX, e.clientY);
 
-    }
+                    }
 
-});
+                });
 
-document.querySelectorAll("button,a,input,.tile,.card").forEach(el=>{
+                document.querySelectorAll("button,a,input,.tile,.card").forEach(el => {
 
-    el.addEventListener("mouseenter",()=>{
+                    el.addEventListener("mouseenter", () => {
 
-        cursor.style.width="60px";
-        cursor.style.height="60px";
-        
-    });
+                        cursor.style.width = "60px";
+                        cursor.style.height = "60px";
 
-    el.addEventListener("mouseleave",()=>{
+                    });
 
-        cursor.style.width="35px";
-        cursor.style.height="35px";
+                    el.addEventListener("mouseleave", () => {
 
-    });
+                        cursor.style.width = "35px";
+                        cursor.style.height = "35px";
 
-});
+                    });
 
-}
+                });
+
+            }
         </script>
 
 

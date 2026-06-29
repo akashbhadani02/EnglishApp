@@ -1,376 +1,422 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Speaking Task With IP Camera</title>
 
-<link rel="stylesheet" href="style.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speaking Task With IP Camera</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <style>
-    *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
-
-body{
-    background:#f4f6f9;
-    padding:20px;
-}
-
-.container{
-    max-width:800px;
-    margin:auto;
-    background:#fff;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-}
-
-h1{
-    text-align:center;
-    margin-bottom:20px;
-    color:#333;
-}
-
-input,
-textarea{
-    width:100%;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:8px;
-    margin-bottom:15px;
-    font-size:16px;
-}
-
-textarea{
-    resize:none;
-}
-
-.task-box,
-.timer-box{
-    margin-bottom:20px;
-}
-
-.timer-box{
-    text-align:center;
-}
-
-#timer{
-    font-size:40px;
-    margin-bottom:10px;
-    color:#007bff;
-}
-
-button{
-    padding:10px 18px;
-    border:none;
-    border-radius:8px;
-    background:#007bff;
-    color:white;
-    cursor:pointer;
-    margin:5px;
-    transition:0.3s;
-}
-
-button:hover{
-    background:#0056b3;
-}
-
-.btn-group{
-    text-align:center;
-    margin-top:10px;
-}
-
-video{
-    width:100%;
-    border-radius:10px;
-    background:black;
-    margin-top:10px;
-}
-
-.ip-view{
-    width:100%;
-    display:none;
-    border-radius:10px;
-    margin-top:10px;
-    border:2px solid #ddd;
-}
-
-#result{
-    margin-top:20px;
-}
-
-#result video{
-    width:100%;
-    border-radius:10px;
-}
-
-hr{
-    margin:20px 0;
-}
-
-/* Mobile Responsive */
-@media(max-width:600px){
-
-    .container{
-        padding:15px;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
     }
 
-    h1{
-        font-size:24px;
+    body {
+        background: #f4f6f9;
+        padding: 20px;
     }
 
-    #timer{
-        font-size:32px;
+    .container {
+        max-width: 800px;
+        margin: auto;
+        background: #fff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
-    button{
-        width:100%;
-        margin:5px 0;
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
     }
 
-    .btn-group{
-        display:flex;
-        flex-direction:column;
+    input,
+    textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        font-size: 16px;
     }
-}
+
+    textarea {
+        resize: none;
+    }
+
+    .task-box,
+    .timer-box {
+        margin-bottom: 20px;
+    }
+
+    .timer-box {
+        text-align: center;
+    }
+
+    #timer {
+        font-size: 40px;
+        margin-bottom: 10px;
+        color: #007bff;
+    }
+
+    button {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 8px;
+        background: #007bff;
+        color: white;
+        cursor: pointer;
+        margin: 5px;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #0056b3;
+    }
+
+    .btn-group {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    video {
+        width: 100%;
+        border-radius: 10px;
+        background: black;
+        margin-top: 10px;
+    }
+
+    .ip-view {
+        width: 100%;
+        display: none;
+        border-radius: 10px;
+        margin-top: 10px;
+        border: 2px solid #ddd;
+    }
+
+    #result {
+        margin-top: 20px;
+    }
+
+    #result video {
+        width: 100%;
+        border-radius: 10px;
+    }
+
+    hr {
+        margin: 20px 0;
+    }
+
+    /* Mobile Responsive */
+    @media(max-width:600px) {
+
+        .container {
+            padding: 15px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        #timer {
+            font-size: 32px;
+        }
+
+        button {
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+        }
+    }
 </style>
+
 <body>
 
-<div class="container">
+    <div class="container">
 
-    <h1>Video Speaking Task</h1>
+        <h1>Video Speaking Task</h1>
 
-    <input
-        type="text"
-        id="studentName"
-        placeholder="Enter Student Name"
-    >
+        <input type="text" id="studentName" placeholder="Enter Student Name">
 
-    <div class="task-box">
-        <h3>Speaking Topic</h3>
+        <div class="task-box">
+            <h3>Speaking Topic</h3>
 
-        <textarea
-            id="task"
-            rows="3"
-        >Introduce Yourself in English</textarea>
-    </div>
+            <textarea id="task" rows="3">Introduce Yourself in English</textarea>
+        </div>
 
-    <div class="timer-box">
-        <h2 id="timer">00:00</h2>
+        <div class="timer-box">
+            <h2 id="timer">00:00</h2>
 
-        <button onclick="startTimer()">
-            Start Timer
+            <button onclick="startTimer()">
+                Start Timer
+            </button>
+
+            <button onclick="resetTimer()">
+                Reset Timer
+            </button>
+        </div>
+
+        <hr>
+
+        <h2>IP Camera (Download IP Webcam in your Mobile for use this)</h2>
+
+        <input type="text" id="ipUrl" placeholder="http://192.168.1.5:8080/video">
+
+        <button onclick="connectIPCamera()">
+            Connect IP Camera
         </button>
 
-        <button onclick="resetTimer()">
-            Reset Timer
-        </button>
-    </div>
+        <img id="ipCameraView" class="ip-view">
 
-    <hr>
+        <hr>
 
-    <h2>IP Camera (Download IP Webcam in your Mobile for use this)</h2>
+        <h2>Browser Camera</h2>
 
-    <input
-        type="text"
-        id="ipUrl"
-        placeholder="http://192.168.1.5:8080/video"
-    >
+        <video id="preview" autoplay muted></video>
 
-    <button onclick="connectIPCamera()">
-        Connect IP Camera
-    </button>
+        <div class="btn-group">
 
-    <img
-        id="ipCameraView"
-        class="ip-view"
-    >
+            <button onclick="startCamera()">
+                Start Camera
+            </button>
 
-    <hr>
+            <button onclick="startRecording()">
+                Start Recording
+            </button>
 
-    <h2>Browser Camera</h2>
+            <button onclick="stopRecording()">
+                Stop Recording
+            </button>
 
-    <video
-        id="preview"
-        autoplay
-        muted
-    ></video>
+        </div>
 
-    <div class="btn-group">
+        <div class="btn-group">
 
-        <button onclick="startCamera()">
-            Start Camera
-        </button>
+            <button onclick="loadVideo()">
+                Load Saved Video
+            </button>
 
-        <button onclick="startRecording()">
-            Start Recording
-        </button>
+            <button onclick="deleteVideo()">
+                Delete Video
+            </button>
 
-        <button onclick="stopRecording()">
-            Stop Recording
-        </button>
+        </div>
 
-    </div>
-
-    <div class="btn-group">
-
-        <button onclick="loadVideo()">
-            Load Saved Video
-        </button>
-
-        <button onclick="deleteVideo()">
-            Delete Video
-        </button>
+        <div id="result"></div>
 
     </div>
 
-    <div id="result"></div>
+    <script>
+        let stream;
+        let mediaRecorder;
+        let chunks = [];
 
-</div>
+        let seconds = 0;
+        let timerInterval;
 
-<script>
-    let stream;
-let mediaRecorder;
-let chunks = [];
+        // ======================
+        // TIMER
+        // ======================
 
-let seconds = 0;
-let timerInterval;
+        function startTimer() {
 
-// ======================
-// TIMER
-// ======================
+            clearInterval(timerInterval);
 
-function startTimer(){
+            timerInterval = setInterval(() => {
 
-    clearInterval(timerInterval);
+                seconds++;
 
-    timerInterval = setInterval(() => {
+                let mins = Math.floor(seconds / 60);
+                let secs = seconds % 60;
 
-        seconds++;
+                document.getElementById("timer").innerText =
+                    String(mins).padStart(2, "0") +
+                    ":" +
+                    String(secs).padStart(2, "0");
 
-        let mins = Math.floor(seconds / 60);
-        let secs = seconds % 60;
+            }, 1000);
 
-        document.getElementById("timer").innerText =
-            String(mins).padStart(2,"0") +
-            ":" +
-            String(secs).padStart(2,"0");
+        }
 
-    },1000);
+        function resetTimer() {
 
-}
+            clearInterval(timerInterval);
 
-function resetTimer(){
+            seconds = 0;
 
-    clearInterval(timerInterval);
+            document.getElementById("timer").innerText =
+                "00:00";
 
-    seconds = 0;
+        }
 
-    document.getElementById("timer").innerText =
-        "00:00";
+        // ======================
+        // IP CAMERA
+        // ======================
 
-}
+        function connectIPCamera() {
 
-// ======================
-// IP CAMERA
-// ======================
+            const url =
+                document.getElementById("ipUrl").value.trim();
 
-function connectIPCamera(){
+            if (!url) {
 
-    const url =
-        document.getElementById("ipUrl").value.trim();
+                alert("Enter IP Camera URL");
+                return;
 
-    if(!url){
+            }
 
-        alert("Enter IP Camera URL");
-        return;
+            const img =
+                document.getElementById("ipCameraView");
 
-    }
+            img.src = url;
+            img.style.display = "block";
 
-    const img =
-        document.getElementById("ipCameraView");
+        }
 
-    img.src = url;
-    img.style.display = "block";
+        // ======================
+        // CAMERA
+        // ======================
 
-}
+        async function startCamera() {
 
-// ======================
-// CAMERA
-// ======================
+            try {
 
-async function startCamera(){
+                stream =
+                    await navigator.mediaDevices.getUserMedia({
+                        video: true,
+                        audio: true
+                    });
 
-    try{
+                document.getElementById("preview")
+                    .srcObject = stream;
 
-        stream =
-            await navigator.mediaDevices.getUserMedia({
-                video:true,
-                audio:true
-            });
+            } catch (error) {
 
-        document.getElementById("preview")
-            .srcObject = stream;
+                console.error(error);
 
-    }catch(error){
+                alert(
+                    "Camera Permission Denied"
+                );
 
-        console.error(error);
+            }
 
-        alert(
-            "Camera Permission Denied"
-        );
+        }
 
-    }
+        // ======================
+        // RECORDING
+        // ======================
 
-}
+        function startRecording() {
 
-// ======================
-// RECORDING
-// ======================
+            if (!stream) {
 
-function startRecording(){
+                alert("Start Camera First");
+                return;
 
-    if(!stream){
+            }
 
-        alert("Start Camera First");
-        return;
+            chunks = [];
 
-    }
+            mediaRecorder =
+                new MediaRecorder(stream);
 
-    chunks = [];
+            mediaRecorder.ondataavailable =
+                e => {
 
-    mediaRecorder =
-        new MediaRecorder(stream);
+                    chunks.push(e.data);
 
-    mediaRecorder.ondataavailable =
-        e => {
+                };
 
-            chunks.push(e.data);
+            mediaRecorder.onstop = () => {
 
-        };
+                const blob =
+                    new Blob(chunks, {
+                        type: "video/webm"
+                    });
 
-    mediaRecorder.onstop = () => {
+                const reader =
+                    new FileReader();
 
-        const blob =
-            new Blob(chunks,{
-                type:"video/webm"
-            });
+                reader.onloadend = () => {
 
-        const reader =
-            new FileReader();
+                    const studentName =
+                        document.getElementById(
+                            "studentName"
+                        ).value.trim();
 
-        reader.onloadend = () => {
+                    if (!studentName) {
+
+                        alert(
+                            "Enter Student Name"
+                        );
+
+                        return;
+
+                    }
+
+                    localStorage.setItem(
+                        "video_" + studentName,
+                        reader.result
+                    );
+
+                    showVideo(
+                        reader.result,
+                        studentName
+                    );
+
+                    alert(
+                        "Video Saved Successfully"
+                    );
+
+                };
+
+                reader.readAsDataURL(blob);
+
+            };
+
+            mediaRecorder.start();
+
+            alert(
+                "Recording Started"
+            );
+
+        }
+
+        function stopRecording() {
+
+            if (
+                mediaRecorder &&
+                mediaRecorder.state !== "inactive"
+            ) {
+
+                mediaRecorder.stop();
+
+            }
+
+        }
+
+        // ======================
+        // LOAD VIDEO
+        // ======================
+
+        function loadVideo() {
 
             const studentName =
                 document.getElementById(
                     "studentName"
                 ).value.trim();
 
-            if(!studentName){
+            if (!studentName) {
 
                 alert(
                     "Enter Student Name"
@@ -380,134 +426,72 @@ function startRecording(){
 
             }
 
-            localStorage.setItem(
-                "video_" + studentName,
-                reader.result
+            const savedVideo =
+                localStorage.getItem(
+                    "video_" + studentName
+                );
+
+            if (savedVideo) {
+
+                showVideo(
+                    savedVideo,
+                    studentName
+                );
+
+            } else {
+
+                alert(
+                    "No Saved Video Found"
+                );
+
+            }
+
+        }
+
+        // ======================
+        // DELETE VIDEO
+        // ======================
+
+        function deleteVideo() {
+
+            const studentName =
+                document.getElementById(
+                    "studentName"
+                ).value.trim();
+
+            if (!studentName) {
+
+                alert(
+                    "Enter Student Name"
+                );
+
+                return;
+
+            }
+
+            localStorage.removeItem(
+                "video_" + studentName
             );
 
-            showVideo(
-                reader.result,
-                studentName
-            );
+            document.getElementById(
+                "result"
+            ).innerHTML = "";
 
             alert(
-                "Video Saved Successfully"
+                "Video Deleted"
             );
 
-        };
+        }
 
-        reader.readAsDataURL(blob);
+        // ======================
+        // SHOW VIDEO
+        // ======================
 
-    };
+        function showVideo(videoSrc, student) {
 
-    mediaRecorder.start();
-
-    alert(
-        "Recording Started"
-    );
-
-}
-
-function stopRecording(){
-
-    if(
-        mediaRecorder &&
-        mediaRecorder.state !== "inactive"
-    ){
-
-        mediaRecorder.stop();
-
-    }
-
-}
-
-// ======================
-// LOAD VIDEO
-// ======================
-
-function loadVideo(){
-
-    const studentName =
-        document.getElementById(
-            "studentName"
-        ).value.trim();
-
-    if(!studentName){
-
-        alert(
-            "Enter Student Name"
-        );
-
-        return;
-
-    }
-
-    const savedVideo =
-        localStorage.getItem(
-            "video_" + studentName
-        );
-
-    if(savedVideo){
-
-        showVideo(
-            savedVideo,
-            studentName
-        );
-
-    }else{
-
-        alert(
-            "No Saved Video Found"
-        );
-
-    }
-
-}
-
-// ======================
-// DELETE VIDEO
-// ======================
-
-function deleteVideo(){
-
-    const studentName =
-        document.getElementById(
-            "studentName"
-        ).value.trim();
-
-    if(!studentName){
-
-        alert(
-            "Enter Student Name"
-        );
-
-        return;
-
-    }
-
-    localStorage.removeItem(
-        "video_" + studentName
-    );
-
-    document.getElementById(
-        "result"
-    ).innerHTML = "";
-
-    alert(
-        "Video Deleted"
-    );
-
-}
-
-// ======================
-// SHOW VIDEO
-// ======================
-
-function showVideo(videoSrc,student){
-
-    document.getElementById(
-        "result"
-    ).innerHTML = `
+            document.getElementById(
+                "result"
+            ).innerHTML = `
 
         <h3>
             Saved Video - ${student}
@@ -524,8 +508,9 @@ function showVideo(videoSrc,student){
 
     `;
 
-}
-</script>
+        }
+    </script>
 
 </body>
+
 </html>

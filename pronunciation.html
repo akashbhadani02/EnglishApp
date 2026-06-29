@@ -144,11 +144,11 @@
             <button onclick="addText()">Add</button>
         </div>
 
-        
+
         <div class="display-box" id="displayBox">
             Enter a spelling or sentence and click Add
         </div>
-        
+
         <div class="buttons">
             <button class="speak" onclick="speakText()">🔊 Speak</button>
             <button class="prev" onclick="previousItem()">⬅ Previous</button>
@@ -253,29 +253,29 @@
 
         function clearAll() {
 
-    const password = prompt("call your teacher");
+            const password = prompt("call your teacher");
 
-    if(password !== "km"){
-        alert("Wrong Password!");
-        return;
-    }
+            if (password !== "km") {
+                alert("Wrong Password!");
+                return;
+            }
 
-    if (!confirm("Delete all spellings and sentences?")) {
-        return;
-    }
+            if (!confirm("Delete all spellings and sentences?")) {
+                return;
+            }
 
-    items = [];
-    currentIndex = -1;
+            items = [];
+            currentIndex = -1;
 
-    localStorage.removeItem("readingItems");
+            localStorage.removeItem("readingItems");
 
-    document.getElementById("displayBox").innerText =
-        "Enter a spelling or sentence and click Add";
+            document.getElementById("displayBox").innerText =
+                "Enter a spelling or sentence and click Add";
 
-    updateList();
+            updateList();
 
-    alert("All data deleted successfully.");
-}
+            alert("All data deleted successfully.");
+        }
 
         updateList();
 

@@ -96,48 +96,49 @@
             margin-bottom: 25px;
 
         }
-        @media (max-width:768px){
 
-.header{
+        @media (max-width:768px) {
 
-    flex-direction:column;
-    align-items:flex-start;
-    gap:15px;
+            .header {
 
-}
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
 
-.header h1{
+            }
 
-    font-size:24px;
+            .header h1 {
 
-}
+                font-size: 24px;
 
-.header > div{
+            }
 
-    width:100%;
+            .header>div {
 
-}
+                width: 100%;
 
-.header > div:last-child{
+            }
 
-    text-align:left !important;
+            .header>div:last-child {
 
-}
+                text-align: left !important;
 
-.search{
+            }
 
-    width:100%;
+            .search {
 
-}
+                width: 100%;
 
-#themeBtn{
+            }
 
-    width:100%;
-    margin-top:10px;
+            #themeBtn {
 
-}
+                width: 100%;
+                margin-top: 10px;
 
-}
+            }
+
+        }
 
         .header h1 {
 
@@ -924,62 +925,63 @@
             border-right: 1px solid rgba(255, 255, 255, .08);
 
         }
+
         /* ==========================
    MOBILE SIDEBAR
 ========================== */
 
-@media (max-width:768px){
+        @media (max-width:768px) {
 
-#menuBtn{
+            #menuBtn {
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    position:fixed;
-    top:15px;
-    left:15px;
-    width:50px;
-    height:50px;
-    background:#00e5ff;
-    color:#000;
-    border-radius:12px;
-    font-size:28px;
-    cursor:pointer;
-    z-index:99999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: fixed;
+                top: 15px;
+                left: 15px;
+                width: 50px;
+                height: 50px;
+                background: #00e5ff;
+                color: #000;
+                border-radius: 12px;
+                font-size: 28px;
+                cursor: pointer;
+                z-index: 99999;
 
-}
+            }
 
-.sidebar{
+            .sidebar {
 
-    left:-270px;
-    width:260px;
-    height:100vh;
-    transition:.35s;
+                left: -270px;
+                width: 260px;
+                height: 100vh;
+                transition: .35s;
 
-}
+            }
 
-.sidebar.active{
+            .sidebar.active {
 
-    left:0;
+                left: 0;
 
-}
+            }
 
-.main{
+            .main {
 
-    width:100%;
-    margin-left:0;
-    padding:80px 15px 20px;
+                width: 100%;
+                margin-left: 0;
+                padding: 80px 15px 20px;
 
-}
+            }
 
-}
+        }
     </style>
 
 </head>
 
 <body>
     <!-- Mobile Menu Button -->
-   <div id="menuBtn">☰</div>
+    <div id="menuBtn">☰</div>
     <div class="sidebar">
 
         <div class="logo">
@@ -1058,45 +1060,45 @@
         <div class="cards">
 
 
-                <div class="card">
+            <div class="card">
 
-                    <div class="counter" data-target="30">0</div>
+                <div class="counter" data-target="30">0</div>
 
-                    <h2>HTML Notes</h2>
+                <h2>HTML Notes</h2>
 
-                    <p>30 Practical Topics</p>
+                <p>30 Practical Topics</p>
 
-                </div>
+            </div>
 
-                <div class="card">
+            <div class="card">
 
-                    <div class="counter" data-target="30">0</div>
+                <div class="counter" data-target="30">0</div>
 
-                    <h2>CSS Notes</h2>
+                <h2>CSS Notes</h2>
 
-                    <p>25 Practical Programs</p>
+                <p>25 Practical Programs</p>
 
-                </div>
+            </div>
 
-                <div class="card">
+            <div class="card">
 
-                    <div class="counter" data-target="30">0</div>
+                <div class="counter" data-target="30">0</div>
 
-                    <h2>JavaScript</h2>
+                <h2>JavaScript</h2>
 
-                    <p>30 Practice Programs</p>
+                <p>30 Practice Programs</p>
 
-                </div>
+            </div>
 
-                <div class="card">
+            <div class="card">
 
-                    <div class="counter" data-target="50">0</div>
+                <div class="counter" data-target="50">0</div>
 
-                    <h2>Quiz MCQ</h2>
+                <h2>Quiz MCQ</h2>
 
-                    <p>50 Important Questions</p>
+                <p>50 Important Questions</p>
 
-                </div>
+            </div>
 
 
         </div>
@@ -3113,27 +3115,27 @@ color:var(--main);
             document.querySelector(".sidebar").classList.toggle("active");
 
         }
-        const menuBtn=document.getElementById("menuBtn");
-const sidebar=document.querySelector(".sidebar");
+        const menuBtn = document.getElementById("menuBtn");
+        const sidebar = document.querySelector(".sidebar");
 
-menuBtn.onclick=function(){
+        menuBtn.onclick = function () {
 
-    sidebar.classList.toggle("active");
-
-}
-document.querySelectorAll(".sidebar a").forEach(link=>{
-
-    link.onclick=function(){
-
-        if(window.innerWidth<=768){
-
-            sidebar.classList.remove("active");
+            sidebar.classList.toggle("active");
 
         }
+        document.querySelectorAll(".sidebar a").forEach(link => {
 
-    }
+            link.onclick = function () {
 
-});
+                if (window.innerWidth <= 768) {
+
+                    sidebar.classList.remove("active");
+
+                }
+
+            }
+
+        });
     </script>
 
 </body>

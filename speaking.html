@@ -1,169 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Speaking Exam</title>
-<style>
-*{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
-body{
-margin:0;
-background:linear-gradient(135deg,#4f46e5,#7c3aed,#0ea5e9);
-min-height:100vh;
-padding:20px;
-}
-.container{
-max-width:1100px;margin:auto;
-background:rgba(255,255,255,.12);
-backdrop-filter:blur(16px);
-border:1px solid rgba(255,255,255,.25);
-border-radius:24px;
-padding:25px;
-color:#fff;
-box-shadow:0 20px 40px rgba(0,0,0,.25);
-}
-h1{text-align:center}
-.card{
-background:rgba(255,255,255,.12);
-padding:18px;border-radius:18px;margin:15px 0;
-}
-input{
-width:100%;padding:12px;border:none;border-radius:12px;
-}
-.btn{
-padding:12px 18px;border:none;border-radius:12px;
-cursor:pointer;font-weight:bold;margin:5px;
-}
-.start{background:#22c55e;color:#fff}
-.stop{background:#ef4444;color:#fff}
-.next{background:#f59e0b;color:#fff}
-.save{background:#06b6d4;color:#fff}
-.recording{display:none;color:#ffdddd;font-weight:bold}
-#transcript,#history,#result{
-background:#fff;color:#222;border-radius:14px;padding:15px;
-}
-.progress{
-height:18px;background:#ddd;border-radius:20px;overflow:hidden;margin:8px 0;
-}
-.bar{
-height:100%;width:0%;background:linear-gradient(90deg,#22c55e,#3b82f6);
-}
-.badge{
-display:inline-block;padding:8px 14px;border-radius:20px;
-font-weight:bold;color:#fff;
-}
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid #ddd;padding:10px;text-align:center}
-th{background:#eef2ff}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Speaking Exam</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Segoe UI, Arial, sans-serif
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed, #0ea5e9);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            background: rgba(255, 255, 255, .12);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, .25);
+            border-radius: 24px;
+            padding: 25px;
+            color: #fff;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .25);
+        }
+
+        h1 {
+            text-align: center
+        }
+
+        .card {
+            background: rgba(255, 255, 255, .12);
+            padding: 18px;
+            border-radius: 18px;
+            margin: 15px 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+        }
+
+        .btn {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .start {
+            background: #22c55e;
+            color: #fff
+        }
+
+        .stop {
+            background: #ef4444;
+            color: #fff
+        }
+
+        .next {
+            background: #f59e0b;
+            color: #fff
+        }
+
+        .save {
+            background: #06b6d4;
+            color: #fff
+        }
+
+        .recording {
+            display: none;
+            color: #ffdddd;
+            font-weight: bold
+        }
+
+        #transcript,
+        #history,
+        #result {
+            background: #fff;
+            color: #222;
+            border-radius: 14px;
+            padding: 15px;
+        }
+
+        .progress {
+            height: 18px;
+            background: #ddd;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #22c55e, #3b82f6);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center
+        }
+
+        th {
+            background: #eef2ff
+        }
+    </style>
 </head>
+
 <body>
-<div class="container">
-<h1>🎤 Premium Speaking Exam Portal</h1>
+    <div class="container">
+        <h1>🎤 Premium Speaking Exam Portal</h1>
 
-<div class="card">
-<label>Student Name</label>
-<input id="student" placeholder="Enter student name">
-</div>
+        <div class="card">
+            <label>Student Name</label>
+            <input id="student" placeholder="Enter student name">
+        </div>
 
-<div class="card">
-<h3>Question</h3>
-<p id="question">Introduce yourself in English.</p>
-</div>
+        <div class="card">
+            <h3>Question</h3>
+            <p id="question">Introduce yourself in English.</p>
+        </div>
 
-<button class="btn start" onclick="startRec()">▶ Start</button>
-<button class="btn stop" onclick="stopRec()">⏹ Stop</button>
-<button class="btn next" onclick="nextQuestion()">➡ Next Question</button>
-<button class="btn save" onclick="saveResult()">💾 Save</button>
-<button class="btn" onclick="window.print()">🖨 Print</button>
+        <button class="btn start" onclick="startRec()">▶ Start</button>
+        <button class="btn stop" onclick="stopRec()">⏹ Stop</button>
+        <button class="btn next" onclick="nextQuestion()">➡ Next Question</button>
+        <button class="btn save" onclick="saveResult()">💾 Save</button>
+        <button class="btn" onclick="window.print()">🖨 Print</button>
 
-<p id="rec" class="recording">🔴 Recording in progress...</p>
+        <p id="rec" class="recording">🔴 Recording in progress...</p>
 
-<div class="card">
-<h3>Transcript</h3>
-<div id="transcript">Student speech will appear here...</div>
-</div>
+        <div class="card">
+            <h3>Transcript</h3>
+            <div id="transcript">Student speech will appear here...</div>
+        </div>
 
-<div class="card">
-<h3>Performance Analysis</h3>
-<div>Fluency <div class="progress"><div id="fbar" class="bar"></div></div></div>
-<div>Vocabulary <div class="progress"><div id="vbar" class="bar"></div></div></div>
-<div>Pronunciation <div class="progress"><div id="pbar" class="bar"></div></div></div>
-<div>Confidence <div class="progress"><div id="cbar" class="bar"></div></div></div>
-</div>
+        <div class="card">
+            <h3>Performance Analysis</h3>
+            <div>Fluency <div class="progress">
+                    <div id="fbar" class="bar"></div>
+                </div>
+            </div>
+            <div>Vocabulary <div class="progress">
+                    <div id="vbar" class="bar"></div>
+                </div>
+            </div>
+            <div>Pronunciation <div class="progress">
+                    <div id="pbar" class="bar"></div>
+                </div>
+            </div>
+            <div>Confidence <div class="progress">
+                    <div id="cbar" class="bar"></div>
+                </div>
+            </div>
+        </div>
 
-<div class="card">
-<h3>Result Card</h3>
-<div id="result"></div>
-</div>
+        <div class="card">
+            <h3>Result Card</h3>
+            <div id="result"></div>
+        </div>
 
-<div class="card">
-<h3>Student History</h3>
-<div id="history"></div>
-</div>
-</div>
+        <div class="card">
+            <h3>Student History</h3>
+            <div id="history"></div>
+        </div>
+    </div>
 
-<script>
-const questions=[
-"Introduce yourself.",
-"Describe your favourite hobby.",
-"Talk about your family.",
-"What are your future goals?",
-"Describe your school."
-];
-let q=0, recognition, transcript="";
+    <script>
+        const questions = [
+            "Introduce yourself.",
+            "Describe your favourite hobby.",
+            "Talk about your family.",
+            "What are your future goals?",
+            "Describe your school."
+        ];
+        let q = 0, recognition, transcript = "";
 
-function nextQuestion(){
-q=(q+1)%questions.length;
-document.getElementById("question").innerText=questions[q];
-}
+        function nextQuestion() {
+            q = (q + 1) % questions.length;
+            document.getElementById("question").innerText = questions[q];
+        }
 
-function startRec(){
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-if(!SR){alert("Speech Recognition not supported.");return;}
-recognition=new SR();
-recognition.continuous=true;
-recognition.interimResults=true;
-recognition.lang="en-US";
-document.getElementById("rec").style.display="block";
-recognition.onresult=(e)=>{
-transcript="";
-for(let i=0;i<e.results.length;i++) transcript+=e.results[i][0].transcript+" ";
-document.getElementById("transcript").innerText=transcript;
-};
-recognition.start();
-}
+        function startRec() {
+            const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SR) { alert("Speech Recognition not supported."); return; }
+            recognition = new SR();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = "en-US";
+            document.getElementById("rec").style.display = "block";
+            recognition.onresult = (e) => {
+                transcript = "";
+                for (let i = 0; i < e.results.length; i++) transcript += e.results[i][0].transcript + " ";
+                document.getElementById("transcript").innerText = transcript;
+            };
+            recognition.start();
+        }
 
-function stopRec(){
-if(recognition) recognition.stop();
-document.getElementById("rec").style.display="none";
-analyze();
-}
+        function stopRec() {
+            if (recognition) recognition.stop();
+            document.getElementById("rec").style.display = "none";
+            analyze();
+        }
 
-function analyze(){
-const words=transcript.trim().split(/\s+/).filter(Boolean);
-const wc=words.length;
-const unique=new Set(words.map(x=>x.toLowerCase())).size;
+        function analyze() {
+            const words = transcript.trim().split(/\s+/).filter(Boolean);
+            const wc = words.length;
+            const unique = new Set(words.map(x => x.toLowerCase())).size;
 
-let fluency=Math.min(25,Math.round(wc/4));
-let vocab=Math.min(25,Math.round(unique/2));
-let pron=Math.min(25,Math.max(8,Math.round(unique/(wc||1)*40)));
-let conf=Math.min(25,Math.round(wc/3));
+            let fluency = Math.min(25, Math.round(wc / 4));
+            let vocab = Math.min(25, Math.round(unique / 2));
+            let pron = Math.min(25, Math.max(8, Math.round(unique / (wc || 1) * 40)));
+            let conf = Math.min(25, Math.round(wc / 3));
 
-let total=Math.min(100,fluency+vocab+pron+conf);
+            let total = Math.min(100, fluency + vocab + pron + conf);
 
-document.getElementById("fbar").style.width=(fluency*4)+"%";
-document.getElementById("vbar").style.width=(vocab*4)+"%";
-document.getElementById("pbar").style.width=(pron*4)+"%";
-document.getElementById("cbar").style.width=(conf*4)+"%";
+            document.getElementById("fbar").style.width = (fluency * 4) + "%";
+            document.getElementById("vbar").style.width = (vocab * 4) + "%";
+            document.getElementById("pbar").style.width = (pron * 4) + "%";
+            document.getElementById("cbar").style.width = (conf * 4) + "%";
 
-let grade="F",color="#ef4444";
-if(total>=90){grade="A+";color="#16a34a";}
-else if(total>=75){grade="A";color="#22c55e";}
-else if(total>=60){grade="B";color="#3b82f6";}
-else if(total>=40){grade="C";color="#f59e0b";}
+            let grade = "F", color = "#ef4444";
+            if (total >= 90) { grade = "A+"; color = "#16a34a"; }
+            else if (total >= 75) { grade = "A"; color = "#22c55e"; }
+            else if (total >= 60) { grade = "B"; color = "#3b82f6"; }
+            else if (total >= 40) { grade = "C"; color = "#f59e0b"; }
 
-document.getElementById("result").innerHTML=`
+            document.getElementById("result").innerHTML = `
 <table>
 <tr><th>Category</th><th>Score</th></tr>
 <tr><td>Fluency</td><td>${fluency}/25</td></tr>
@@ -174,28 +261,29 @@ document.getElementById("result").innerHTML=`
 </table>
 <br><span class="badge" style="background:${color}">Grade ${grade}</span>`;
 
-window.currentResult={
-student:document.getElementById("student").value,
-total,grade,date:new Date().toLocaleString()
-};
-}
+            window.currentResult = {
+                student: document.getElementById("student").value,
+                total, grade, date: new Date().toLocaleString()
+            };
+        }
 
-function saveResult(){
-if(!window.currentResult){alert("Generate result first.");return;}
-let data=JSON.parse(localStorage.getItem("premiumSpeaking")||"[]");
-data.push(window.currentResult);
-localStorage.setItem("premiumSpeaking",JSON.stringify(data));
-loadHistory();
-}
+        function saveResult() {
+            if (!window.currentResult) { alert("Generate result first."); return; }
+            let data = JSON.parse(localStorage.getItem("premiumSpeaking") || "[]");
+            data.push(window.currentResult);
+            localStorage.setItem("premiumSpeaking", JSON.stringify(data));
+            loadHistory();
+        }
 
-function loadHistory(){
-let data=JSON.parse(localStorage.getItem("premiumSpeaking")||"[]");
-document.getElementById("history").innerHTML=data.map(x=>
-`<div style="background:#eef2ff;color:#111;padding:10px;border-radius:10px;margin:8px 0">
+        function loadHistory() {
+            let data = JSON.parse(localStorage.getItem("premiumSpeaking") || "[]");
+            document.getElementById("history").innerHTML = data.map(x =>
+                `<div style="background:#eef2ff;color:#111;padding:10px;border-radius:10px;margin:8px 0">
 <b>${x.student}</b> | ${x.total}/100 | Grade ${x.grade}<br>${x.date}
 </div>`).join("");
-}
-loadHistory();
-</script>
+        }
+        loadHistory();
+    </script>
 </body>
+
 </html>
