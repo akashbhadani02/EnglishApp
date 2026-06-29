@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CCC Master App</title>
+    <title>AB Master App</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -89,7 +89,6 @@
         /* Header */
 
         .header {
-
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -97,6 +96,48 @@
             margin-bottom: 25px;
 
         }
+        @media (max-width:768px){
+
+.header{
+
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+
+}
+
+.header h1{
+
+    font-size:24px;
+
+}
+
+.header > div{
+
+    width:100%;
+
+}
+
+.header > div:last-child{
+
+    text-align:left !important;
+
+}
+
+.search{
+
+    width:100%;
+
+}
+
+#themeBtn{
+
+    width:100%;
+    margin-top:10px;
+
+}
+
+}
 
         .header h1 {
 
@@ -402,399 +443,534 @@
             margin-bottom: 10px;
 
         }
-        section{
 
-margin-top:60px;
+        section {
+
+            margin-top: 60px;
+
+        }
+
+        .topic {
+
+            background: #132445;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 15px;
+            border-left: 5px solid cyan;
+            transition: .3s;
+
+        }
+
+        .topic:hover {
+
+            transform: translateY(-5px);
+
+        }
+
+        pre {
+
+            margin-top: 15px;
+            background: #000;
+            color: #00ff99;
+            padding: 15px;
+            overflow: auto;
+            border-radius: 10px;
+
+        }
+
+        .copyBtn {
+
+            background: #00e5ff;
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-weight: bold;
+
+        }
+
+        .copyBtn:hover {
+
+            background: #00ff99;
+
+        }
+
+        .preview {
+
+            margin-top: 15px;
+            padding: 20px;
+            background: white;
+            color: black;
+            border-radius: 10px;
+
+        }
+
+        .topic h2 {
+
+            color: #00e5ff;
+
+        }
+
+        #htmlComplete {
+
+            text-align: center;
+
+            background: linear-gradient(135deg, #00b894, #0984e3);
+
+            color: white;
+
+            animation: glow 2s infinite alternate;
+
+        }
+
+        #doneMsg {
+
+            margin-top: 20px;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: yellow;
+
+        }
+
+        @keyframes glow {
+
+            from {
+
+                box-shadow: 0 0 15px cyan;
+
+            }
+
+            to {
+
+                box-shadow: 0 0 35px lime;
+
+            }
+
+        }
+
+        #cssNotes {
+
+            margin-top: 70px;
+
+        }
+
+        #cssNotes h1 {
+
+            color: #00e5ff;
+
+            margin-bottom: 15px;
+
+        }
+
+        #cssNotes .topic {
+
+            border-left: 5px solid orange;
+
+        }
+
+        /* Animation Demo */
+
+        .demoAnimation {
+
+            width: 60px;
+            height: 60px;
+            background: #ff5722;
+            border-radius: 50%;
+            position: relative;
+            animation: moveBall 3s infinite alternate;
+
+        }
+
+        @keyframes moveBall {
+
+            0% {
+
+                left: 0;
+
+            }
+
+            100% {
+
+                left: 220px;
+
+                background: #00e5ff;
+
+            }
+
+        }
+
+        /* Flex Demo */
+
+        .flexDemo {
+
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            margin-top: 15px;
+
+        }
+
+        .flexDemo div {
+
+            background: #4CAF50;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            flex: 1;
+            text-align: center;
+
+        }
+
+        /* Grid Demo */
+
+        .gridDemo {
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+
+        }
+
+        .gridDemo div {
+
+            background: #673AB7;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+
+        }
+
+        /* CSS Variables */
+
+        :root {
+
+            --primary: #00e5ff;
+
+            --secondary: #0e1b37;
+
+            --success: #00ff99;
+
+        }
+
+        /* Variable Demo */
+
+        .variableBox {
+
+            background: var(--primary);
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            color: #000;
+
+            text-align: center;
+
+        }
+
+        /* Media Query Demo */
+
+        .mediaDemo {
+
+            background: #4CAF50;
+
+            padding: 20px;
+
+            text-align: center;
+
+            border-radius: 12px;
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+            transition: .4s;
+
+        }
+
+        @media(max-width:768px) {
+
+            .mediaDemo {
+
+                background: #ff9800;
+
+                font-size: 18px;
+
+            }
+
+        }
+
+        @media(max-width:500px) {
+
+            .mediaDemo {
+
+                background: #f44336;
+
+                font-size: 16px;
+
+            }
+
+        }
+
+        /* CSS Completion Card */
+
+        #cssComplete {
+
+            text-align: center;
+
+            background: linear-gradient(135deg, #673AB7, #03A9F4);
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            animation: cssGlow 2s infinite alternate;
+
+        }
+
+        /* Badge */
+
+        .badge {
+
+            display: inline-block;
+
+            padding: 15px 35px;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            background: gold;
+
+            color: #000;
+
+            border-radius: 50px;
+
+            box-shadow: 0 0 20px gold;
+
+            animation: badgePulse 1.5s infinite;
+
+        }
+
+        /* Success Message */
+
+        #cssMessage {
+
+            margin-top: 20px;
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: yellow;
+
+        }
+
+        /* Glow Animation */
+
+        @keyframes cssGlow {
+
+            from {
+
+                box-shadow: 0 0 20px cyan;
+
+            }
+
+            to {
+
+                box-shadow: 0 0 40px lime;
+
+            }
+
+        }
+
+        /* Badge Animation */
+
+        @keyframes badgePulse {
+
+            0% {
+
+                transform: scale(1);
+
+            }
+
+            50% {
+
+                transform: scale(1.08);
+
+            }
+
+            100% {
+
+                transform: scale(1);
+
+            }
+
+        }
+
+        #learningProgress {
+
+            margin-top: 40px;
+
+            text-align: center;
+
+            background: #132445;
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+        }
+
+        #mainProgress {
+
+            width: 0%;
+
+            height: 20px;
+
+            background: linear-gradient(90deg, #00e5ff, #00ff99);
+
+            border-radius: 30px;
+
+            transition: 1s;
+
+        }
+
+        /* ===============================
+   HAMBURGER MENU
+================================ */
+
+        #menuBtn {
+            display: none;
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 50px;
+            height: 50px;
+            background: #00e5ff;
+            color: #000;
+            border-radius: 12px;
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            z-index: 9999;
+            box-shadow: 0 5px 20px rgba(0, 229, 255, .4);
+        }
+
+        @media(max-width:768px) {
+
+            #menuBtn {
+                display: block;
+            }
+
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                top: 0;
+                width: 260px;
+                height: 100vh;
+                transition: .4s;
+                z-index: 9998;
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding-top: 80px;
+            }
+
+        }
+
+        .sidebar a {
+
+            display: block;
+            padding: 14px 18px;
+            margin: 8px 12px;
+            border-radius: 12px;
+            transition: .35s;
+            text-decoration: none;
+            color: #fff;
+
+        }
+
+        .sidebar a:hover {
+
+            background: #00e5ff;
+            color: #000;
+            transform: translateX(8px);
+
+        }
+
+        .sidebar {
+            background: rgba(15, 23, 42, .92);
+            backdrop-filter: blur(18px);
+            border-right: 1px solid rgba(255, 255, 255, .08);
+
+        }
+        /* ==========================
+   MOBILE SIDEBAR
+========================== */
+
+@media (max-width:768px){
+
+#menuBtn{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:fixed;
+    top:15px;
+    left:15px;
+    width:50px;
+    height:50px;
+    background:#00e5ff;
+    color:#000;
+    border-radius:12px;
+    font-size:28px;
+    cursor:pointer;
+    z-index:99999;
 
 }
 
-.topic{
+.sidebar{
 
-background:#132445;
-padding:20px;
-margin-top:20px;
-border-radius:15px;
-border-left:5px solid cyan;
-transition:.3s;
+    left:-270px;
+    width:260px;
+    height:100vh;
+    transition:.35s;
 
 }
 
-.topic:hover{
+.sidebar.active{
 
-transform:translateY(-5px);
-
-}
-
-pre{
-
-margin-top:15px;
-background:#000;
-color:#00ff99;
-padding:15px;
-overflow:auto;
-border-radius:10px;
-
-}
-.copyBtn{
-
-background:#00e5ff;
-color:#000;
-padding:10px 20px;
-border:none;
-border-radius:8px;
-cursor:pointer;
-margin-top:15px;
-font-weight:bold;
+    left:0;
 
 }
 
-.copyBtn:hover{
+.main{
 
-background:#00ff99;
-
-}
-
-.preview{
-
-margin-top:15px;
-padding:20px;
-background:white;
-color:black;
-border-radius:10px;
+    width:100%;
+    margin-left:0;
+    padding:80px 15px 20px;
 
 }
-
-.topic h2{
-
-color:#00e5ff;
-
-}
-#htmlComplete{
-
-text-align:center;
-
-background:linear-gradient(135deg,#00b894,#0984e3);
-
-color:white;
-
-animation:glow 2s infinite alternate;
-
-}
-
-#doneMsg{
-
-margin-top:20px;
-
-font-size:22px;
-
-font-weight:bold;
-
-color:yellow;
-
-}
-
-@keyframes glow{
-
-from{
-
-box-shadow:0 0 15px cyan;
-
-}
-
-to{
-
-box-shadow:0 0 35px lime;
-
-}
-
-}
-#cssNotes{
-
-margin-top:70px;
-
-}
-
-#cssNotes h1{
-
-color:#00e5ff;
-
-margin-bottom:15px;
-
-}
-
-#cssNotes .topic{
-
-border-left:5px solid orange;
-
-}
-/* Animation Demo */
-
-.demoAnimation{
-
-width:60px;
-height:60px;
-background:#ff5722;
-border-radius:50%;
-position:relative;
-animation:moveBall 3s infinite alternate;
-
-}
-
-@keyframes moveBall{
-
-0%{
-
-left:0;
-
-}
-
-100%{
-
-left:220px;
-
-background:#00e5ff;
-
-}
-
-}
-
-/* Flex Demo */
-
-.flexDemo{
-
-display:flex;
-justify-content:space-around;
-gap:10px;
-margin-top:15px;
-
-}
-
-.flexDemo div{
-
-background:#4CAF50;
-color:white;
-padding:20px;
-border-radius:10px;
-flex:1;
-text-align:center;
-
-}
-
-/* Grid Demo */
-
-.gridDemo{
-
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px;
-margin-top:15px;
-
-}
-
-.gridDemo div{
-
-background:#673AB7;
-padding:20px;
-color:white;
-text-align:center;
-border-radius:10px;
-
-}
-/* CSS Variables */
-
-:root{
-
---primary:#00e5ff;
-
---secondary:#0e1b37;
-
---success:#00ff99;
-
-}
-
-/* Variable Demo */
-
-.variableBox{
-
-background:var(--primary);
-
-padding:25px;
-
-border-radius:12px;
-
-font-size:20px;
-
-font-weight:bold;
-
-color:#000;
-
-text-align:center;
-
-}
-
-/* Media Query Demo */
-
-.mediaDemo{
-
-background:#4CAF50;
-
-padding:20px;
-
-text-align:center;
-
-border-radius:12px;
-
-font-size:20px;
-
-font-weight:bold;
-
-transition:.4s;
-
-}
-
-@media(max-width:768px){
-
-.mediaDemo{
-
-background:#ff9800;
-
-font-size:18px;
-
-}
-
-}
-
-@media(max-width:500px){
-
-.mediaDemo{
-
-background:#f44336;
-
-font-size:16px;
-
-}
-
-}
-/* CSS Completion Card */
-
-#cssComplete{
-
-text-align:center;
-
-background:linear-gradient(135deg,#673AB7,#03A9F4);
-
-border-radius:20px;
-
-padding:30px;
-
-animation:cssGlow 2s infinite alternate;
-
-}
-
-/* Badge */
-
-.badge{
-
-display:inline-block;
-
-padding:15px 35px;
-
-font-size:24px;
-
-font-weight:bold;
-
-background:gold;
-
-color:#000;
-
-border-radius:50px;
-
-box-shadow:0 0 20px gold;
-
-animation:badgePulse 1.5s infinite;
-
-}
-
-/* Success Message */
-
-#cssMessage{
-
-margin-top:20px;
-
-font-size:22px;
-
-font-weight:bold;
-
-color:yellow;
-
-}
-
-/* Glow Animation */
-
-@keyframes cssGlow{
-
-from{
-
-box-shadow:0 0 20px cyan;
-
-}
-
-to{
-
-box-shadow:0 0 40px lime;
-
-}
-
-}
-
-/* Badge Animation */
-
-@keyframes badgePulse{
-
-0%{
-
-transform:scale(1);
-
-}
-
-50%{
-
-transform:scale(1.08);
-
-}
-
-100%{
-
-transform:scale(1);
-
-}
-
-}
-#learningProgress{
-
-margin-top:40px;
-
-text-align:center;
-
-background:#132445;
-
-padding:25px;
-
-border-radius:20px;
-
-}
-
-#mainProgress{
-
-width:0%;
-
-height:20px;
-
-background:linear-gradient(90deg,#00e5ff,#00ff99);
-
-border-radius:30px;
-
-transition:1s;
 
 }
     </style>
@@ -802,12 +978,13 @@ transition:1s;
 </head>
 
 <body>
-
+    <!-- Mobile Menu Button -->
+   <div id="menuBtn">☰</div>
     <div class="sidebar">
 
         <div class="logo">
 
-            CCC MASTER
+            AB MASTER
 
         </div>
 
@@ -848,7 +1025,7 @@ transition:1s;
 
                 <h1 id="welcome">Welcome Student 👋</h1>
 
-                <p>CCC Learning Application</p>
+                <p>AB Learning Application</p>
 
             </div>
 
@@ -880,66 +1057,64 @@ transition:1s;
 
         <div class="cards">
 
-            <div class="cards">
 
-<div class="card">
+                <div class="card">
 
-<div class="counter" data-target="30">0</div>
+                    <div class="counter" data-target="30">0</div>
 
-<h2>HTML Notes</h2>
+                    <h2>HTML Notes</h2>
 
-<p>30 Practical Topics</p>
+                    <p>30 Practical Topics</p>
 
-</div>
+                </div>
 
-<div class="card">
+                <div class="card">
 
-<div class="counter" data-target="30">0</div>
+                    <div class="counter" data-target="30">0</div>
 
-<h2>CSS Notes</h2>
+                    <h2>CSS Notes</h2>
 
-<p>25 Practical Programs</p>
+                    <p>25 Practical Programs</p>
 
-</div>
+                </div>
 
-<div class="card">
+                <div class="card">
 
-<div class="counter" data-target="30">0</div>
+                    <div class="counter" data-target="30">0</div>
 
-<h2>JavaScript</h2>
+                    <h2>JavaScript</h2>
 
-<p>30 Practice Programs</p>
+                    <p>30 Practice Programs</p>
 
-</div>
+                </div>
 
-<div class="card">
+                <div class="card">
 
-<div class="counter" data-target="50">0</div>
+                    <div class="counter" data-target="50">0</div>
 
-<h2>Quiz MCQ</h2>
+                    <h2>Quiz MCQ</h2>
 
-<p>50 Important Questions</p>
+                    <p>50 Important Questions</p>
 
-</div>
+                </div>
 
-</div>
 
         </div>
 
-<section id="htmlNotes">
+        <section id="htmlNotes">
 
-<h1>📘 HTML Complete Notes</h1>
+            <h1>📘 HTML Complete Notes</h1>
 
-<p>
-HTML (HyperText Markup Language) is the standard language used to create web pages.
-</p>
+            <p>
+                HTML (HyperText Markup Language) is the standard language used to create web pages.
+            </p>
 
-<!-- 1 -->
-<div class="topic">
+            <!-- 1 -->
+            <div class="topic">
 
-<h2>1. HTML Structure</h2>
+                <h2>1. HTML Structure</h2>
 
-<pre>
+                <pre>
 
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -956,13 +1131,13 @@ Hello World
 
 </pre>
 
-</div>
-<!-- 2 -->
- <div class="topic">
+            </div>
+            <!-- 2 -->
+            <div class="topic">
 
-<h2>2. Heading Tags</h2>
+                <h2>2. Heading Tags</h2>
 
-<pre>
+                <pre>
 
 &lt;h1&gt;Heading 1&lt;/h1&gt;
 
@@ -978,13 +1153,13 @@ Hello World
 
 </pre>
 
-</div>
-<!-- 3 -->
- <div class="topic">
+            </div>
+            <!-- 3 -->
+            <div class="topic">
 
-<h2>3. Paragraph</h2>
+                <h2>3. Paragraph</h2>
 
-<pre>
+                <pre>
 
 &lt;p&gt;
 
@@ -994,13 +1169,13 @@ This is paragraph.
 
 </pre>
 
-</div>
-<!-- 4 -->
- <div class="topic">
+            </div>
+            <!-- 4 -->
+            <div class="topic">
 
-<h2>4. Line Break</h2>
+                <h2>4. Line Break</h2>
 
-<pre>
+                <pre>
 
 Hello
 
@@ -1010,105 +1185,105 @@ World
 
 </pre>
 
-</div>
- <!-- 5 -->
-<div class="topic">
+            </div>
+            <!-- 5 -->
+            <div class="topic">
 
-<h2>5. Horizontal Line</h2>
+                <h2>5. Horizontal Line</h2>
 
-<pre>
+                <pre>
 
 &lt;hr&gt;
 
 </pre>
 
-</div>
- <!-- 6 -->
- <div class="topic">
+            </div>
+            <!-- 6 -->
+            <div class="topic">
 
-<h2>6. Bold Tag</h2>
+                <h2>6. Bold Tag</h2>
 
-<pre>&lt;b&gt;Bold Text&lt;/b&gt;</pre>
+                <pre>&lt;b&gt;Bold Text&lt;/b&gt;</pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<b>Bold Text</b>
+                    <b>Bold Text</b>
 
-</div>
+                </div>
 
-</div>
- <!-- 7 -->
- <div class="topic">
+            </div>
+            <!-- 7 -->
+            <div class="topic">
 
-<h2>7. Italic Tag</h2>
+                <h2>7. Italic Tag</h2>
 
-<pre>&lt;i&gt;Italic Text&lt;/i&gt;</pre>
+                <pre>&lt;i&gt;Italic Text&lt;/i&gt;</pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<i>Italic Text</i>
+                    <i>Italic Text</i>
 
-</div>
+                </div>
 
-</div>
- <!-- 8 -->
- <div class="topic">
+            </div>
+            <!-- 8 -->
+            <div class="topic">
 
-<h2>8. Underline Tag</h2>
+                <h2>8. Underline Tag</h2>
 
-<pre>&lt;u&gt;Underline&lt;/u&gt;</pre>
+                <pre>&lt;u&gt;Underline&lt;/u&gt;</pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<u>Underline</u>
+                    <u>Underline</u>
 
-</div>
+                </div>
 
-</div>
- <!-- 9 -->
- <div class="topic">
+            </div>
+            <!-- 9 -->
+            <div class="topic">
 
-<h2>9. Image Tag</h2>
+                <h2>9. Image Tag</h2>
 
-<pre>&lt;img src="image.jpg" width="200"&gt;</pre>
+                <pre>&lt;img src="image.jpg" width="200"&gt;</pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<img src="https://via.placeholder.com/200">
+                    <img src="https://via.placeholder.com/200">
 
-</div>
+                </div>
 
-</div>
- <!-- 10 -->
- <div class="topic">
+            </div>
+            <!-- 10 -->
+            <div class="topic">
 
-<h2>10. Hyperlink</h2>
+                <h2>10. Hyperlink</h2>
 
-<pre>&lt;a href="#"&gt;Click Here&lt;/a&gt;</pre>
+                <pre>&lt;a href="#"&gt;Click Here&lt;/a&gt;</pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<a href="#">Click Here</a>
+                    <a href="#">Click Here</a>
 
-</div>
+                </div>
 
-</div>
- <!-- 11 -->
- <div class="topic">
+            </div>
+            <!-- 11 -->
+            <div class="topic">
 
-<h2>11. Ordered List</h2>
+                <h2>11. Ordered List</h2>
 
-<pre>
+                <pre>
 
 &lt;ol&gt;
 
@@ -1118,29 +1293,29 @@ World
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<ol>
+                    <ol>
 
-<li>HTML</li>
+                        <li>HTML</li>
 
-<li>CSS</li>
+                        <li>CSS</li>
 
-<li>JavaScript</li>
+                        <li>JavaScript</li>
 
-</ol>
+                    </ol>
 
-</div>
+                </div>
 
-</div>
-<!-- 12 -->
-<div class="topic">
-    
-<h2>12. Unordered List</h2>
+            </div>
+            <!-- 12 -->
+            <div class="topic">
 
-<pre>
+                <h2>12. Unordered List</h2>
+
+                <pre>
 
 &lt;ul&gt;
 
@@ -1150,29 +1325,29 @@ World
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
-    
-    <ul>
+                <div class="preview">
 
-<li>Apple</li>
+                    <ul>
 
-<li>Mango</li>
+                        <li>Apple</li>
 
-<li>Orange</li>
+                        <li>Mango</li>
 
-</ul>
+                        <li>Orange</li>
 
-</div>
+                    </ul>
 
-</div>
-<!-- 13/ -->
-<div class="topic">
+                </div>
 
-<h2>13. Table</h2>
+            </div>
+            <!-- 13/ -->
+            <div class="topic">
 
-<pre>
+                <h2>13. Table</h2>
+
+                <pre>
 
 &lt;table border="1"&gt;
 
@@ -1182,39 +1357,39 @@ World
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<table border="1">
+                    <table border="1">
 
-<tr>
+                        <tr>
 
-<th>Name</th>
+                            <th>Name</th>
 
-<th>City</th>
+                            <th>City</th>
 
-</tr>
+                        </tr>
 
-<tr>
+                        <tr>
 
-<td>Akash</td>
+                            <td>Akash</td>
 
-<td>Surat</td>
+                            <td>Surat</td>
 
-</tr>
+                        </tr>
 
-</table>
+                    </table>
 
-</div>
+                </div>
 
-</div>
-<!-- 14 -->
-<div class="topic">
+            </div>
+            <!-- 14 -->
+            <div class="topic">
 
-<h2>14. Form</h2>
+                <h2>14. Form</h2>
 
-<pre>
+                <pre>
 
 &lt;form&gt;
 
@@ -1224,21 +1399,21 @@ World
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<input type="text" placeholder="Enter Name">
+                    <input type="text" placeholder="Enter Name">
 
-</div>
+                </div>
 
-</div>
-<!-- 15 -->
-<div class="topic">
+            </div>
+            <!-- 15 -->
+            <div class="topic">
 
-<h2>15. Button</h2>
+                <h2>15. Button</h2>
 
-<pre>
+                <pre>
 
 &lt;button&gt;
 
@@ -1248,126 +1423,123 @@ Click
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<button>
+                    <button>
 
-Click Me
+                        Click Me
 
-</button>
+                    </button>
 
-</div>
+                </div>
 
-</div>
-<!-- 16 -->
-<div class="topic">
+            </div>
+            <!-- 16 -->
+            <div class="topic">
 
-<h2>16. HTML Audio</h2>
+                <h2>16. HTML Audio</h2>
 
-<p>Audio ચલાવવા માટે <code>&lt;audio&gt;</code> tag નો ઉપયોગ થાય છે.</p>
+                <p>Audio ચલાવવા માટે <code>&lt;audio&gt;</code> tag નો ઉપયોગ થાય છે.</p>
 
-<pre>
+                <pre>
 &lt;audio controls&gt;
     &lt;source src="song.mp3" type="audio/mpeg"&gt;
 &lt;/audio&gt;
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<audio controls>
-<source src="">
-Your browser does not support audio.
-</audio>
+                    <audio controls>
+                        <source src="">
+                        Your browser does not support audio.
+                    </audio>
 
-</div>
+                </div>
 
-</div>
-<!-- 17 -->
-<div class="topic">
+            </div>
+            <!-- 17 -->
+            <div class="topic">
 
-<h2>17. HTML Video</h2>
+                <h2>17. HTML Video</h2>
 
-<p>Video બતાવવા માટે <code>&lt;video&gt;</code> tag વપરાય છે.</p>
+                <p>Video બતાવવા માટે <code>&lt;video&gt;</code> tag વપરાય છે.</p>
 
-<pre>
+                <pre>
 &lt;video controls width="300"&gt;
     &lt;source src="video.mp4"&gt;
 &lt;/video&gt;
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<video width="300" controls>
-<source src="">
-</video>
+                    <video width="300" controls>
+                        <source src="">
+                    </video>
 
-</div>
+                </div>
 
-</div>
-<!-- 18 -->
-<div class="topic">
+            </div>
+            <!-- 18 -->
+            <div class="topic">
 
-<h2>18. Marquee</h2>
+                <h2>18. Marquee</h2>
 
-<p>Scrolling Text બનાવવા માટે.</p>
+                <p>Scrolling Text બનાવવા માટે.</p>
 
-<pre>
+                <pre>
 &lt;marquee&gt;
-Welcome CCC Student
+Welcome AB Student
 &lt;/marquee&gt;
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<marquee>
+                    <marquee>
 
-🎉 Welcome to CCC Master App 🎉
+                        🎉 Welcome to AB Master App 🎉
 
-</marquee>
+                    </marquee>
 
-</div>
+                </div>
 
-</div>
-<!-- 19 -->
-<div class="topic">
+            </div>
+            <!-- 19 -->
+            <div class="topic">
 
-<h2>19. Iframe</h2>
+                <h2>19. Iframe</h2>
 
-<p>બીજું Web Page Embed કરવા માટે.</p>
+                <p>બીજું Web Page Embed કરવા માટે.</p>
 
-<pre>
+                <pre>
 &lt;iframe
 src="https://example.com"&gt;
 &lt;/iframe&gt;
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<iframe
-src="about:blank"
-width="300"
-height="150">
-</iframe>
+                    <iframe src="about:blank" width="300" height="150">
+                    </iframe>
 
-</div>
+                </div>
 
-</div>
-<!-- 20 -->
-<div class="topic">
+            </div>
+            <!-- 20 -->
+            <div class="topic">
 
-<h2>20. HTML Entities</h2>
+                <h2>20. HTML Entities</h2>
 
-<pre>
+                <pre>
 
 &amp;nbsp;
 
@@ -1383,29 +1555,29 @@ height="150">
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-© CCC Master App
+                    © AB Master App
 
-<br>
+                    <br>
 
-₹ 500
+                    ₹ 500
 
-<br>
+                    <br>
 
-&lt;HTML&gt;
+                    &lt;HTML&gt;
 
-</div>
+                </div>
 
-</div>
-<!-- 21 -->
-<div class="topic">
+            </div>
+            <!-- 21 -->
+            <div class="topic">
 
-<h2>21. HTML Comments</h2>
+                <h2>21. HTML Comments</h2>
 
-<pre>
+                <pre>
 
 &lt;!--
 
@@ -1415,21 +1587,21 @@ This is Comment
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-Comment Browser માં દેખાતો નથી.
+                    Comment Browser માં દેખાતો નથી.
 
-</div>
+                </div>
 
-</div>
-<!-- 22 -->
-<div class="topic">
+            </div>
+            <!-- 22 -->
+            <div class="topic">
 
-<h2>22. Semantic Tags</h2>
+                <h2>22. Semantic Tags</h2>
 
-<pre>
+                <pre>
 
 &lt;header&gt;
 
@@ -1443,33 +1615,33 @@ Comment Browser માં દેખાતો નથી.
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<header style="background:#0099ff;color:white;padding:10px;">
-Header
-</header>
+                    <header style="background:#0099ff;color:white;padding:10px;">
+                        Header
+                    </header>
 
-<section style="padding:10px;">
-Content Section
-</section>
+                    <section style="padding:10px;">
+                        Content Section
+                    </section>
 
-<footer style="background:#333;color:white;padding:10px;">
-Footer
-</footer>
+                    <footer style="background:#333;color:white;padding:10px;">
+                        Footer
+                    </footer>
 
-</div>
+                </div>
 
-</div>
-<!-- 23 -->
-<div class="topic">
+            </div>
+            <!-- 23 -->
+            <div class="topic">
 
-<h2>23. HTML5 Input Types</h2>
+                <h2>23. HTML5 Input Types</h2>
 
-<p>HTML5 માં ઘણા નવા Input Types ઉમેરાયા છે.</p>
+                <p>HTML5 માં ઘણા નવા Input Types ઉમેરાયા છે.</p>
 
-<pre>
+                <pre>
 
 &lt;input type="email"&gt;
 
@@ -1483,39 +1655,39 @@ Footer
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<input type="email" placeholder="Email">
+                    <input type="email" placeholder="Email">
 
-<br><br>
+                    <br><br>
 
-<input type="date">
+                    <input type="date">
 
-<br><br>
+                    <br><br>
 
-<input type="color">
+                    <input type="color">
 
-<br><br>
+                    <br><br>
 
-<input type="number" placeholder="Number">
+                    <input type="number" placeholder="Number">
 
-<br><br>
+                    <br><br>
 
-<input type="range">
+                    <input type="range">
 
-</div>
+                </div>
 
-</div>
-<!-- 24 -->
- <div class="topic">
+            </div>
+            <!-- 24 -->
+            <div class="topic">
 
-<h2>24. Progress Tag</h2>
+                <h2>24. Progress Tag</h2>
 
-<p>કામ કેટલું પૂર્ણ થયું છે તે બતાવવા માટે.</p>
+                <p>કામ કેટલું પૂર્ણ થયું છે તે બતાવવા માટે.</p>
 
-<pre>
+                <pre>
 
 &lt;progress value="70" max="100"&gt;
 
@@ -1523,25 +1695,25 @@ Footer
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<progress value="70" max="100"></progress>
+                    <progress value="70" max="100"></progress>
 
-<p>70% Completed</p>
+                    <p>70% Completed</p>
 
-</div>
+                </div>
 
-</div>
-<!-- 25 -->
-<div class="topic">
+            </div>
+            <!-- 25 -->
+            <div class="topic">
 
-<h2>25. Meter Tag</h2>
+                <h2>25. Meter Tag</h2>
 
-<p>Value ની Range બતાવવા માટે.</p>
+                <p>Value ની Range બતાવવા માટે.</p>
 
-<pre>
+                <pre>
 
 &lt;meter value="8"
 
@@ -1553,25 +1725,25 @@ max="10"&gt;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<meter value="8" min="0" max="10"></meter>
+                    <meter value="8" min="0" max="10"></meter>
 
-<p>Performance : 8 / 10</p>
+                    <p>Performance : 8 / 10</p>
 
-</div>
+                </div>
 
-</div>
-<!-- 26 -->
- <div class="topic">
+            </div>
+            <!-- 26 -->
+            <div class="topic">
 
-<h2>26. Details & Summary</h2>
+                <h2>26. Details & Summary</h2>
 
-<p>Click કરીને માહિતી Show/Hide કરી શકાય.</p>
+                <p>Click કરીને માહિતી Show/Hide કરી શકાય.</p>
 
-<pre>
+                <pre>
 
 &lt;details&gt;
 
@@ -1587,35 +1759,35 @@ Hidden Content
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<details>
+                    <details>
 
-<summary>📘 Click Here</summary>
+                        <summary>📘 Click Here</summary>
 
-<p>
+                        <p>
 
-HTML એટલે HyperText Markup Language.
+                            HTML એટલે HyperText Markup Language.
 
-તે Web Page બનાવવા માટે વપરાય છે.
+                            તે Web Page બનાવવા માટે વપરાય છે.
 
-</p>
+                        </p>
 
-</details>
+                    </details>
 
-</div>
+                </div>
 
-</div>
-<!-- 27 -->
- <div class="topic">
+            </div>
+            <!-- 27 -->
+            <div class="topic">
 
-<h2>27. SVG Graphics</h2>
+                <h2>27. SVG Graphics</h2>
 
-<p>SVG (Scalable Vector Graphics) નો ઉપયોગ Vector Graphics બનાવવા માટે થાય છે.</p>
+                <p>SVG (Scalable Vector Graphics) નો ઉપયોગ Vector Graphics બનાવવા માટે થાય છે.</p>
 
-<pre>
+                <pre>
 
 &lt;svg width="200" height="150"&gt;
 
@@ -1632,33 +1804,27 @@ HTML એટલે HyperText Markup Language.
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<svg width="220" height="160">
+                    <svg width="220" height="160">
 
-<circle
-cx="110"
-cy="80"
-r="55"
-fill="cyan"
-stroke="blue"
-stroke-width="5"/>
+                        <circle cx="110" cy="80" r="55" fill="cyan" stroke="blue" stroke-width="5" />
 
-</svg>
+                    </svg>
 
-</div>
+                </div>
 
-</div>
-<!-- 28 -->
- <div class="topic">
+            </div>
+            <!-- 28 -->
+            <div class="topic">
 
-<h2>28. HTML Canvas</h2>
+                <h2>28. HTML Canvas</h2>
 
-<p>Canvas દ્વારા JavaScript ની મદદથી Drawing કરી શકાય છે.</p>
+                <p>Canvas દ્વારા JavaScript ની મદદથી Drawing કરી શકાય છે.</p>
 
-<pre>
+                <pre>
 
 &lt;canvas id="myCanvas"
 
@@ -1670,28 +1836,25 @@ height="150"&gt;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<canvas
-id="myCanvas"
-width="250"
-height="150"
-style="border:2px solid #333;background:white;border-radius:10px;">
-</canvas>
+                    <canvas id="myCanvas" width="250" height="150"
+                        style="border:2px solid #333;background:white;border-radius:10px;">
+                    </canvas>
 
-</div>
+                </div>
 
-</div>
-<!-- 29 -->
-<div class="topic">
+            </div>
+            <!-- 29 -->
+            <div class="topic">
 
-<h2>29. Figure & Figcaption</h2>
+                <h2>29. Figure & Figcaption</h2>
 
-<p>Image સાથે Caption બતાવવા માટે.</p>
+                <p>Image સાથે Caption બતાવવા માટે.</p>
 
-<pre>
+                <pre>
 
 &lt;figure&gt;
 
@@ -1707,35 +1870,33 @@ Beautiful Image
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<figure style="text-align:center;">
+                    <figure style="text-align:center;">
 
-<img
-src="https://via.placeholder.com/250x150"
-style="border-radius:10px;max-width:100%;">
+                        <img src="https://via.placeholder.com/250x150" style="border-radius:10px;max-width:100%;">
 
-<figcaption>
+                        <figcaption>
 
-Sample HTML Image
+                            Sample HTML Image
 
-</figcaption>
+                        </figcaption>
 
-</figure>
+                    </figure>
 
-</div>
+                </div>
 
-</div>
-<!-- 30 -->
-<div class="topic">
+            </div>
+            <!-- 30 -->
+            <div class="topic">
 
-<h2>30. HTML Datalist</h2>
+                <h2>30. HTML Datalist</h2>
 
-<p>Suggestion List બનાવવા માટે.</p>
+                <p>Suggestion List બનાવવા માટે.</p>
 
-<pre>
+                <pre>
 
 &lt;input list="course"&gt;
 
@@ -1751,81 +1912,76 @@ Sample HTML Image
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<input
-list="course"
-placeholder="Choose Course">
+                    <input list="course" placeholder="Choose Course">
 
-<datalist id="course">
+                    <datalist id="course">
 
-<option value="HTML">
+                        <option value="HTML">
 
-<option value="CSS">
+                        <option value="CSS">
 
-<option value="JavaScript">
+                        <option value="JavaScript">
 
-<option value="Bootstrap">
+                        <option value="Bootstrap">
 
-<option value="React">
+                        <option value="React">
 
-</datalist>
+                    </datalist>
 
-</div>
+                </div>
 
-</div>
-<!-- -------------- -->
+            </div>
+            <!-- -------------- -->
 
-<div class="topic" id="htmlComplete">
+            <div class="topic" id="htmlComplete">
 
-<h2 style="color:#00ff99;">
-🎉 HTML Module Completed
-</h2>
+                <h2 style="color:#00ff99;">
+                    🎉 HTML Module Completed
+                </h2>
 
-<p>
+                <p>
 
-Congratulations!
+                    Congratulations!
 
-You have completed all 30 HTML Topics.
+                    You have completed all 30 HTML Topics.
 
-</p>
+                </p>
 
-<br>
+                <br>
 
-<progress
-value="100"
-max="100"
-style="width:100%;height:25px;">
-</progress>
+                <progress value="100" max="100" style="width:100%;height:25px;">
+                </progress>
 
-<br><br>
+                <br><br>
 
-<button id="htmlDone">
+                <button id="htmlDone">
 
-✔ Mark as Completed
+                    ✔ Mark as Completed
 
-</button>
+                </button>
 
-<p id="doneMsg"></p>
+                <p id="doneMsg"></p>
 
-</div>
-</section>
+            </div>
+        </section>
 
-<section id="cssNotes">
+        <section id="cssNotes">
 
-<h1>🎨 CSS Complete Notes</h1>
+            <h1>🎨 CSS Complete Notes</h1>
 
-<p>
-CSS (Cascading Style Sheets) નો ઉપયોગ HTML Page ને સુંદર અને Responsive બનાવવા માટે થાય છે.
-</p>
-<!-- 1 -->
-<div class="topic">
+            <p>
+                CSS (Cascading Style Sheets) નો ઉપયોગ HTML Page ને સુંદર અને Responsive બનાવવા માટે થાય છે.
+            </p>
+            <!-- 1 -->
+            <div class="topic">
 
-<h2>1. Inline CSS</h2>
+                <h2>1. Inline CSS</h2>
 
-<pre>
+                <pre>
 
 &lt;p style="color:red;"&gt;
 
@@ -1835,25 +1991,25 @@ Hello CSS
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<p style="color:red;font-size:22px;">
+                    <p style="color:red;font-size:22px;">
 
-Hello CSS
+                        Hello CSS
 
-</p>
+                    </p>
 
-</div>
+                </div>
 
-</div>
-<!-- 2 -->
-<div class="topic">
+            </div>
+            <!-- 2 -->
+            <div class="topic">
 
-<h2>2. Internal CSS</h2>
+                <h2>2. Internal CSS</h2>
 
-<pre>
+                <pre>
 
 &lt;style&gt;
 
@@ -1867,25 +2023,25 @@ color:blue;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<h2 style="color:blue;">
+                    <h2 style="color:blue;">
 
-Internal CSS Example
+                        Internal CSS Example
 
-</h2>
+                    </h2>
 
-</div>
+                </div>
 
-</div>
-<!-- 3 -->
-<div class="topic">
+            </div>
+            <!-- 3 -->
+            <div class="topic">
 
-<h2>3. External CSS</h2>
+                <h2>3. External CSS</h2>
 
-<pre>
+                <pre>
 
 &lt;link
 
@@ -1895,183 +2051,183 @@ href="style.css"&gt;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-✔ External CSS File Connected
+                    ✔ External CSS File Connected
 
-</div>
+                </div>
 
-</div>
-<!-- 4 -->
-<div class="topic">
+            </div>
+            <!-- 4 -->
+            <div class="topic">
 
-<h2>4. Text Color</h2>
+                <h2>4. Text Color</h2>
 
-<pre>
+                <pre>
 
 color:red;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<p style="color:crimson;font-size:20px;">
+                    <p style="color:crimson;font-size:20px;">
 
-This is Red Text
+                        This is Red Text
 
-</p>
+                    </p>
 
-</div>
+                </div>
 
-</div>
-<!-- 5 -->
-<div class="topic">
+            </div>
+            <!-- 5 -->
+            <div class="topic">
 
-<h2>5. Background Color</h2>
+                <h2>5. Background Color</h2>
 
-<pre>
+                <pre>
 
 background:orange;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="background:orange;padding:20px;border-radius:10px;">
+                    <div style="background:orange;padding:20px;border-radius:10px;">
 
-Background Example
+                        Background Example
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 6 -->
- <div class="topic">
+            </div>
+            <!-- 6 -->
+            <div class="topic">
 
-<h2>6. Font Size</h2>
+                <h2>6. Font Size</h2>
 
-<pre>
+                <pre>
 
 font-size:30px;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<p style="font-size:30px;">Large Font Example</p>
+                    <p style="font-size:30px;">Large Font Example</p>
 
-</div>
+                </div>
 
-</div>
-<!-- 7 -->
-<div class="topic">
+            </div>
+            <!-- 7 -->
+            <div class="topic">
 
-<h2>7. Font Family</h2>
+                <h2>7. Font Family</h2>
 
-<pre>
+                <pre>
 
 font-family:Arial;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<p style="font-family:Arial;">Arial Font</p>
+                    <p style="font-family:Arial;">Arial Font</p>
 
-<p style="font-family:Georgia;">Georgia Font</p>
+                    <p style="font-family:Georgia;">Georgia Font</p>
 
-</div>
+                </div>
 
-</div>
-<!-- 8 -->
- <div class="topic">
+            </div>
+            <!-- 8 -->
+            <div class="topic">
 
-<h2>8. Border</h2>
+                <h2>8. Border</h2>
 
-<pre>
+                <pre>
 
 border:2px solid blue;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="border:2px solid blue;padding:20px;border-radius:8px;">
+                    <div style="border:2px solid blue;padding:20px;border-radius:8px;">
 
-Border Example
+                        Border Example
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 9 -->
- <div class="topic">
+            </div>
+            <!-- 9 -->
+            <div class="topic">
 
-<h2>9. Margin</h2>
+                <h2>9. Margin</h2>
 
-<pre>
+                <pre>
 
 margin:20px;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="background:#ff9800;padding:10px;margin:20px;color:#fff;">
+                    <div style="background:#ff9800;padding:10px;margin:20px;color:#fff;">
 
-Margin Example
+                        Margin Example
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 10 -->
- <div class="topic">
+            </div>
+            <!-- 10 -->
+            <div class="topic">
 
-<h2>10. Padding</h2>
+                <h2>10. Padding</h2>
 
-<pre>
+                <pre>
 
 padding:25px;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="background:#00b894;padding:25px;color:#fff;border-radius:8px;">
+                    <div style="background:#00b894;padding:25px;color:#fff;border-radius:8px;">
 
-Padding Example
+                        Padding Example
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 11 -->
- <div class="topic">
+            </div>
+            <!-- 11 -->
+            <div class="topic">
 
-<h2>11. Width & Height</h2>
+                <h2>11. Width & Height</h2>
 
-<pre>
+                <pre>
 
 width:200px;
 
@@ -2079,47 +2235,48 @@ height:100px;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="width:200px;height:100px;background:#2196f3;color:#fff;display:flex;align-items:center;justify-content:center;">
+                    <div
+                        style="width:200px;height:100px;background:#2196f3;color:#fff;display:flex;align-items:center;justify-content:center;">
 
-200 × 100
+                        200 × 100
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 12 -->
- <div class="topic">
+            </div>
+            <!-- 12 -->
+            <div class="topic">
 
-<h2>12. Display</h2>
+                <h2>12. Display</h2>
 
-<pre>
+                <pre>
 
 display:inline-block;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<span style="display:inline-block;background:#673ab7;color:#fff;padding:10px;">Box 1</span>
+                    <span style="display:inline-block;background:#673ab7;color:#fff;padding:10px;">Box 1</span>
 
-<span style="display:inline-block;background:#009688;color:#fff;padding:10px;">Box 2</span>
+                    <span style="display:inline-block;background:#009688;color:#fff;padding:10px;">Box 2</span>
 
-</div>
+                </div>
 
-</div>
-<!-- 13 -->
- <div class="topic">
+            </div>
+            <!-- 13 -->
+            <div class="topic">
 
-<h2>13. Position</h2>
+                <h2>13. Position</h2>
 
-<pre>
+                <pre>
 
 position:relative;
 
@@ -2129,198 +2286,198 @@ left:20px;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="position:relative;left:20px;top:10px;background:#e91e63;color:#fff;padding:10px;width:150px;">
+                    <div
+                        style="position:relative;left:20px;top:10px;background:#e91e63;color:#fff;padding:10px;width:150px;">
 
-Relative Position
+                        Relative Position
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 14 -->
- <div class="topic">
+            </div>
+            <!-- 14 -->
+            <div class="topic">
 
-<h2>14. Overflow</h2>
+                <h2>14. Overflow</h2>
 
-<pre>
+                <pre>
 
 overflow:auto;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="width:220px;height:80px;overflow:auto;border:1px solid #ccc;padding:10px;background:#fff;color:#000;">
+                    <div
+                        style="width:220px;height:80px;overflow:auto;border:1px solid #ccc;padding:10px;background:#fff;color:#000;">
 
-This is a long text to demonstrate CSS overflow property. Scroll bar will appear automatically when the content exceeds the container height.
+                        This is a long text to demonstrate CSS overflow property. Scroll bar will appear automatically
+                        when the content exceeds the container height.
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 15 -->
- <div class="topic">
+            </div>
+            <!-- 15 -->
+            <div class="topic">
 
-<h2>15. Opacity</h2>
+                <h2>15. Opacity</h2>
 
-<pre>
+                <pre>
 
 opacity:0.5;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="background:red;color:#fff;padding:20px;opacity:.5;">
+                    <div style="background:red;color:#fff;padding:20px;opacity:.5;">
 
-Opacity 50%
+                        Opacity 50%
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 16 -->
-<div class="topic">
+            </div>
+            <!-- 16 -->
+            <div class="topic">
 
-<h2>16. Border Radius</h2>
+                <h2>16. Border Radius</h2>
 
-<pre>
+                <pre>
 
 border-radius:20px;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="width:200px;height:100px;background:#4CAF50;
+                    <div style="width:200px;height:100px;background:#4CAF50;
 border-radius:20px;color:white;
 display:flex;align-items:center;justify-content:center;">
 
-Rounded Box
+                        Rounded Box
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 17 -->
- <div class="topic">
+            </div>
+            <!-- 17 -->
+            <div class="topic">
 
-<h2>17. Border Style</h2>
+                <h2>17. Border Style</h2>
 
-<pre>
+                <pre>
 
 border:4px dashed red;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="padding:20px;border:4px dashed red;">
+                    <div style="padding:20px;border:4px dashed red;">
 
-Dashed Border
+                        Dashed Border
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 18 -->
- <div class="topic">
+            </div>
+            <!-- 18 -->
+            <div class="topic">
 
-<h2>18. Outline</h2>
+                <h2>18. Outline</h2>
 
-<pre>
+                <pre>
 
 outline:3px solid blue;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<input
-type="text"
-value="Outline Example"
-style="outline:3px solid blue;
+                    <input type="text" value="Outline Example" style="outline:3px solid blue;
 padding:10px;">
 
-</div>
+                </div>
 
-</div>
-<!-- 19 -->
- <div class="topic">
+            </div>
+            <!-- 19 -->
+            <div class="topic">
 
-<h2>19. Box Shadow</h2>
+                <h2>19. Box Shadow</h2>
 
-<pre>
+                <pre>
 
 box-shadow:0 0 20px gray;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="background:white;
+                    <div style="background:white;
 color:black;
 padding:20px;
 box-shadow:0 0 20px gray;">
 
-Shadow Box
+                        Shadow Box
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 20 -->
- <div class="topic">
+            </div>
+            <!-- 20 -->
+            <div class="topic">
 
-<h2>20. Text Shadow</h2>
+                <h2>20. Text Shadow</h2>
 
-<pre>
+                <pre>
 
 text-shadow:2px 2px 5px red;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<h2 style="text-shadow:2px 2px 5px red;">
+                    <h2 style="text-shadow:2px 2px 5px red;">
 
-CSS Shadow
+                        CSS Shadow
 
-</h2>
+                    </h2>
 
-</div>
+                </div>
 
-</div>
-<!-- 21 -->
- <div class="topic">
+            </div>
+            <!-- 21 -->
+            <div class="topic">
 
-<h2>21. Linear Gradient</h2>
+                <h2>21. Linear Gradient</h2>
 
-<pre>
+                <pre>
 
 background:
 
@@ -2328,59 +2485,59 @@ linear-gradient(red,blue);
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="height:120px;
+                    <div style="height:120px;
 background:linear-gradient(45deg,#ff5722,#2196f3);
 border-radius:12px;">
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 22 -->
- <div class="topic">
+            </div>
+            <!-- 22 -->
+            <div class="topic">
 
-<h2>22. Cursor</h2>
+                <h2>22. Cursor</h2>
 
-<pre>
+                <pre>
 
 cursor:pointer;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<button style="cursor:pointer;">
+                    <button style="cursor:pointer;">
 
-Hover Me
+                        Hover Me
 
-</button>
+                    </button>
 
-</div>
+                </div>
 
-</div>
-<!-- 23 -->
- <div class="topic">
+            </div>
+            <!-- 23 -->
+            <div class="topic">
 
-<h2>23. Transform</h2>
+                <h2>23. Transform</h2>
 
-<pre>
+                <pre>
 
 transform:rotate(10deg);
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="width:120px;
+                    <div style="width:120px;
 height:120px;
 background:#9C27B0;
 color:white;
@@ -2389,19 +2546,19 @@ align-items:center;
 justify-content:center;
 transform:rotate(10deg);">
 
-Rotate
+                        Rotate
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 24 -->
- <div class="topic">
+            </div>
+            <!-- 24 -->
+            <div class="topic">
 
-<h2>24. CSS Transition</h2>
+                <h2>24. CSS Transition</h2>
 
-<pre>
+                <pre>
 
 .box{
 
@@ -2419,11 +2576,11 @@ transform:scale(1.1);
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div style="
+                    <div style="
 width:120px;
 height:120px;
 background:#2196F3;
@@ -2432,23 +2589,22 @@ display:flex;
 align-items:center;
 justify-content:center;
 transition:.5s;
-cursor:pointer;"
-onmouseover="this.style.background='#ff5722';this.style.transform='scale(1.1)'"
-onmouseout="this.style.background='#2196F3';this.style.transform='scale(1)'">
+cursor:pointer;" onmouseover="this.style.background='#ff5722';this.style.transform='scale(1.1)'"
+                        onmouseout="this.style.background='#2196F3';this.style.transform='scale(1)'">
 
-Hover
+                        Hover
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 25 -->
- <div class="topic">
+            </div>
+            <!-- 25 -->
+            <div class="topic">
 
-<h2>25. CSS Animation</h2>
+                <h2>25. CSS Animation</h2>
 
-<pre>
+                <pre>
 
 @keyframes move{
 
@@ -2460,21 +2616,21 @@ Hover
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div class="demoAnimation"></div>
+                    <div class="demoAnimation"></div>
 
-</div>
+                </div>
 
-</div>
-<!-- 26 -->
- <div class="topic">
+            </div>
+            <!-- 26 -->
+            <div class="topic">
 
-<h2>26. CSS Flexbox</h2>
+                <h2>26. CSS Flexbox</h2>
 
-<pre>
+                <pre>
 
 display:flex;
 
@@ -2484,29 +2640,29 @@ align-items:center;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div class="flexDemo">
+                    <div class="flexDemo">
 
-<div>A</div>
+                        <div>A</div>
 
-<div>B</div>
+                        <div>B</div>
 
-<div>C</div>
+                        <div>C</div>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 27 -->
- <div class="topic">
+            </div>
+            <!-- 27 -->
+            <div class="topic">
 
-<h2>27. CSS Grid</h2>
+                <h2>27. CSS Grid</h2>
 
-<pre>
+                <pre>
 
 display:grid;
 
@@ -2516,39 +2672,39 @@ grid-template-columns:
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div class="gridDemo">
+                    <div class="gridDemo">
 
-<div>1</div>
+                        <div>1</div>
 
-<div>2</div>
+                        <div>2</div>
 
-<div>3</div>
+                        <div>3</div>
 
-<div>4</div>
+                        <div>4</div>
 
-<div>5</div>
+                        <div>5</div>
 
-<div>6</div>
+                        <div>6</div>
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 28 -->
-<div class="topic">
+            </div>
+            <!-- 28 -->
+            <div class="topic">
 
-<h2>28. Media Query</h2>
+                <h2>28. Media Query</h2>
 
-<p>
-Media Query નો ઉપયોગ Responsive Website બનાવવા માટે થાય છે.
-</p>
+                <p>
+                    Media Query નો ઉપયોગ Responsive Website બનાવવા માટે થાય છે.
+                </p>
 
-<pre>
+                <pre>
 
 @media(max-width:768px){
 
@@ -2562,31 +2718,31 @@ background:#222;
 
 </pre>
 
-<button class="copyBtn">Copy Code</button>
+                <button class="copyBtn">Copy Code</button>
 
-<div class="preview">
+                <div class="preview">
 
-<div class="mediaDemo">
+                    <div class="mediaDemo">
 
-Resize Browser Window 📱
+                        Resize Browser Window 📱
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 29 -->
- <div class="topic">
+            </div>
+            <!-- 29 -->
+            <div class="topic">
 
-<h2>29. CSS Variables</h2>
+                <h2>29. CSS Variables</h2>
 
-<p>
+                <p>
 
-CSS Variable દ્વારા એક જ Value ઘણી જગ્યાએ ઉપયોગ કરી શકાય.
+                    CSS Variable દ્વારા એક જ Value ઘણી જગ્યાએ ઉપયોગ કરી શકાય.
 
-</p>
+                </p>
 
-<pre>
+                <pre>
 
 :root{
 
@@ -2602,96 +2758,90 @@ color:var(--main);
 
 </pre>
 
-<button class="copyBtn">
+                <button class="copyBtn">
 
-Copy Code
+                    Copy Code
 
-</button>
+                </button>
 
-<div class="preview">
+                <div class="preview">
 
-<div class="variableBox">
+                    <div class="variableBox">
 
-CSS Variables Demo
+                        CSS Variables Demo
 
-</div>
+                    </div>
 
-</div>
+                </div>
 
-</div>
-<!-- 30 -->
-<div class="topic" id="cssComplete">
+            </div>
+            <!-- 30 -->
+            <div class="topic" id="cssComplete">
 
-<h2 style="color:#00ff99;">
-🏆 CSS Module Completed
-</h2>
+                <h2 style="color:#00ff99;">
+                    🏆 CSS Module Completed
+                </h2>
 
-<p>
+                <p>
 
-Congratulations!
+                    Congratulations!
 
-You have successfully completed all 30 CSS Topics.
+                    You have successfully completed all 30 CSS Topics.
 
-</p>
+                </p>
 
-<br>
+                <br>
 
-<div class="badge">
+                <div class="badge">
 
-🥇 CSS MASTER
+                    🥇 CSS MASTER
 
-</div>
+                </div>
 
-<br>
+                <br>
 
-<progress
+                <progress value="100" max="100" style="width:100%;height:25px;">
 
-value="100"
+                </progress>
 
-max="100"
+                <br><br>
 
-style="width:100%;height:25px;">
+                <button id="cssDone">
 
-</progress>
+                    ✔ Mark CSS as Completed
 
-<br><br>
+                </button>
 
-<button id="cssDone">
+                <p id="cssMessage"></p>
 
-✔ Mark CSS as Completed
+            </div>
+            <!-- --------------- -->
+        </section>
 
-</button>
+        <div class="topic" id="learningProgress">
 
-<p id="cssMessage"></p>
+            <h2>📊 Learning Progress</h2>
 
-</div>
-<!-- --------------- -->
-</section>
+            <div class="progress">
 
-<div class="topic" id="learningProgress">
+                <div id="mainProgress"></div>
 
-<h2>📊 Learning Progress</h2>
+            </div>
 
-<div class="progress">
+            <br>
 
-<div id="mainProgress"></div>
+            <h3 id="progressText">
 
-</div>
+                HTML : 100% | CSS : 0%
 
-<br>
+            </h3>
 
-<h3 id="progressText">
-
-HTML : 100% | CSS : 0%
-
-</h3>
-
-</div>
+        </div>
         <footer>
 
             <br><br>
 
-            © 2026 CCC Master App
+            © 2026 AB Master App
 
         </footer>
 
@@ -2737,226 +2887,253 @@ HTML : 100% | CSS : 0%
         setInterval(clock, 1000);
 
         clock();
-let counters=document.querySelectorAll(".counter");
+        let counters = document.querySelectorAll(".counter");
 
-counters.forEach(counter=>{
+        counters.forEach(counter => {
 
-let update=()=>{
+            let update = () => {
 
-let target=+counter.dataset.target;
+                let target = +counter.dataset.target;
 
-let count=+counter.innerHTML;
+                let count = +counter.innerHTML;
 
-let inc=target/60;
+                let inc = target / 60;
 
-if(count<target){
+                if (count < target) {
 
-counter.innerHTML=Math.ceil(count+inc);
+                    counter.innerHTML = Math.ceil(count + inc);
 
-setTimeout(update,20);
+                    setTimeout(update, 20);
+
+                }
+
+                else {
+
+                    counter.innerHTML = target;
+
+                }
+
+            }
+
+            update();
+
+        });
+        let search = document.querySelector(".search");
+
+        search.addEventListener("keyup", function () {
+
+            let value = this.value.toLowerCase();
+
+            let topics = document.querySelectorAll(".topic");
+
+            topics.forEach(function (item) {
+
+                if (item.innerText.toLowerCase().indexOf(value) > -1) {
+
+                    item.style.display = "block";
+
+                }
+
+                else {
+
+                    item.style.display = "none";
+
+                }
+
+            });
+
+        });
+        document.querySelectorAll(".copyBtn").forEach(function (btn) {
+
+            btn.onclick = function () {
+
+                let code = this.previousElementSibling.innerText;
+
+                navigator.clipboard.writeText(code);
+
+                this.innerHTML = "✅ Copied";
+
+                setTimeout(() => {
+
+                    this.innerHTML = "Copy Code";
+
+                }, 1500);
+
+            }
+
+        });
+        let canvas = document.getElementById("myCanvas");
+
+        if (canvas) {
+
+            let ctx = canvas.getContext("2d");
+
+            // Rectangle
+            ctx.fillStyle = "deepskyblue";
+            ctx.fillRect(20, 20, 80, 50);
+
+            // Circle
+            ctx.beginPath();
+            ctx.arc(170, 45, 25, 0, 2 * Math.PI);
+            ctx.fillStyle = "orange";
+            ctx.fill();
+
+            // Line
+            ctx.beginPath();
+            ctx.moveTo(20, 110);
+            ctx.lineTo(220, 110);
+            ctx.strokeStyle = "red";
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // Text
+            ctx.fillStyle = "green";
+            ctx.font = "18px Arial";
+            ctx.fillText("CCC Canvas", 60, 140);
+
+        }
+        let done = document.getElementById("htmlDone");
+
+        if (done) {
+
+            done.onclick = function () {
+
+                localStorage.setItem("htmlCompleted", "YES");
+
+                document.getElementById("doneMsg").innerHTML =
+
+                    "🏆 HTML Notes Completed Successfully!";
+
+                this.disabled = true;
+
+                this.innerHTML = "Completed ✔";
+
+            }
+
+        }
+
+        window.onload = function () {
+
+            if (localStorage.getItem("htmlCompleted")) {
+
+                let btn = document.getElementById("htmlDone");
+
+                if (btn) {
+
+                    btn.disabled = true;
+
+                    btn.innerHTML = "Completed ✔";
+
+                    document.getElementById("doneMsg").innerHTML =
+
+                        "🏆 HTML Notes Completed Successfully!";
+
+                }
+
+            }
+
+        }
+        let progress = document.getElementById("progressBar");
+
+        if (localStorage.getItem("htmlCompleted")) {
+
+            progress.style.width = "35%";
+
+        }
+        let cssDone = document.getElementById("cssDone");
+
+        if (cssDone) {
+
+            cssDone.onclick = function () {
+
+                localStorage.setItem("cssCompleted", "YES");
+
+                document.getElementById("cssMessage").innerHTML =
+
+                    "🎉 CSS Module Completed Successfully!";
+
+                this.disabled = true;
+
+                this.innerHTML = "Completed ✔";
+
+                updateProgress();
+
+            }
+
+        }
+
+        function updateProgress() {
+
+            let percent = 0;
+
+            let text = [];
+
+            if (localStorage.getItem("htmlCompleted")) {
+
+                percent += 50;
+
+                text.push("HTML : 100%");
+
+            }
+
+            else {
+
+                text.push("HTML : 0%");
+
+            }
+
+            if (localStorage.getItem("cssCompleted")) {
+
+                percent += 50;
+
+                text.push("CSS : 100%");
+
+            }
+
+            else {
+
+                text.push("CSS : 0%");
+
+            }
+
+            document.getElementById("mainProgress").style.width =
+
+                percent + "%";
+
+            document.getElementById("progressText").innerHTML =
+
+                text.join(" | ");
+
+        }
+
+        updateProgress();
+
+        function toggleMenu() {
+
+            document.querySelector(".sidebar").classList.toggle("active");
+
+        }
+        const menuBtn=document.getElementById("menuBtn");
+const sidebar=document.querySelector(".sidebar");
+
+menuBtn.onclick=function(){
+
+    sidebar.classList.toggle("active");
 
 }
+document.querySelectorAll(".sidebar a").forEach(link=>{
 
-else{
+    link.onclick=function(){
 
-counter.innerHTML=target;
+        if(window.innerWidth<=768){
 
-}
+            sidebar.classList.remove("active");
 
-}
+        }
 
-update();
+    }
 
 });
-let search=document.querySelector(".search");
-
-search.addEventListener("keyup",function(){
-
-let value=this.value.toLowerCase();
-
-let topics=document.querySelectorAll(".topic");
-
-topics.forEach(function(item){
-
-if(item.innerText.toLowerCase().indexOf(value)>-1){
-
-item.style.display="block";
-
-}
-
-else{
-
-item.style.display="none";
-
-}
-
-});
-
-});
-document.querySelectorAll(".copyBtn").forEach(function(btn){
-
-btn.onclick=function(){
-
-let code=this.previousElementSibling.innerText;
-
-navigator.clipboard.writeText(code);
-
-this.innerHTML="✅ Copied";
-
-setTimeout(()=>{
-
-this.innerHTML="Copy Code";
-
-},1500);
-
-}
-
-});
-let canvas = document.getElementById("myCanvas");
-
-if(canvas){
-
-let ctx = canvas.getContext("2d");
-
-// Rectangle
-ctx.fillStyle = "deepskyblue";
-ctx.fillRect(20,20,80,50);
-
-// Circle
-ctx.beginPath();
-ctx.arc(170,45,25,0,2*Math.PI);
-ctx.fillStyle = "orange";
-ctx.fill();
-
-// Line
-ctx.beginPath();
-ctx.moveTo(20,110);
-ctx.lineTo(220,110);
-ctx.strokeStyle = "red";
-ctx.lineWidth = 4;
-ctx.stroke();
-
-// Text
-ctx.fillStyle = "green";
-ctx.font = "18px Arial";
-ctx.fillText("CCC Canvas",60,140);
-
-}
-let done=document.getElementById("htmlDone");
-
-if(done){
-
-done.onclick=function(){
-
-localStorage.setItem("htmlCompleted","YES");
-
-document.getElementById("doneMsg").innerHTML=
-
-"🏆 HTML Notes Completed Successfully!";
-
-this.disabled=true;
-
-this.innerHTML="Completed ✔";
-
-}
-
-}
-
-window.onload=function(){
-
-if(localStorage.getItem("htmlCompleted")){
-
-let btn=document.getElementById("htmlDone");
-
-if(btn){
-
-btn.disabled=true;
-
-btn.innerHTML="Completed ✔";
-
-document.getElementById("doneMsg").innerHTML=
-
-"🏆 HTML Notes Completed Successfully!";
-
-}
-
-}
-
-}
-let progress=document.getElementById("progressBar");
-
-if(localStorage.getItem("htmlCompleted")){
-
-progress.style.width="35%";
-
-}
-let cssDone=document.getElementById("cssDone");
-
-if(cssDone){
-
-cssDone.onclick=function(){
-
-localStorage.setItem("cssCompleted","YES");
-
-document.getElementById("cssMessage").innerHTML=
-
-"🎉 CSS Module Completed Successfully!";
-
-this.disabled=true;
-
-this.innerHTML="Completed ✔";
-
-updateProgress();
-
-}
-
-}
-
-function updateProgress(){
-
-let percent=0;
-
-let text=[];
-
-if(localStorage.getItem("htmlCompleted")){
-
-percent+=50;
-
-text.push("HTML : 100%");
-
-}
-
-else{
-
-text.push("HTML : 0%");
-
-}
-
-if(localStorage.getItem("cssCompleted")){
-
-percent+=50;
-
-text.push("CSS : 100%");
-
-}
-
-else{
-
-text.push("CSS : 0%");
-
-}
-
-document.getElementById("mainProgress").style.width=
-
-percent+"%";
-
-document.getElementById("progressText").innerHTML=
-
-text.join(" | ");
-
-}
-
-updateProgress();
     </script>
 
 </body>
