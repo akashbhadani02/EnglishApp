@@ -1,0 +1,2964 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CCC Master App</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+
+            background: #081229;
+            color: white;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+
+        }
+
+        /* Sidebar */
+
+        .sidebar {
+
+            width: 260px;
+            background: #0e1b37;
+            padding: 20px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            overflow: auto;
+
+        }
+
+        .logo {
+
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #00e5ff;
+
+        }
+
+        .sidebar a {
+
+            display: block;
+            padding: 15px;
+            text-decoration: none;
+            color: white;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            transition: .3s;
+
+        }
+
+        .sidebar a:hover {
+
+            background: #00e5ff;
+            color: #000;
+
+        }
+
+        /* Main */
+
+        .main {
+
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            padding: 30px;
+
+        }
+
+        /* Header */
+
+        .header {
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+
+        }
+
+        .header h1 {
+
+            font-size: 32px;
+
+        }
+
+        /* Search */
+
+        .search {
+
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            width: 300px;
+            font-size: 15px;
+
+        }
+
+        /* Progress */
+
+        .progress {
+
+            width: 100%;
+            height: 18px;
+            background: #23375f;
+            border-radius: 50px;
+            overflow: hidden;
+            margin-top: 20px;
+
+        }
+
+        .bar {
+
+            width: 18%;
+            height: 100%;
+            background: linear-gradient(90deg, #00e5ff, #00ff99);
+
+        }
+
+        /* Cards */
+
+        .cards {
+
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+
+        }
+
+        .card {
+
+            background: #132445;
+            padding: 25px;
+            border-radius: 20px;
+            transition: .4s;
+            cursor: pointer;
+            text-align: center;
+
+        }
+
+        .card:hover {
+
+            transform: translateY(-8px);
+            box-shadow: 0 0 20px cyan;
+
+        }
+
+        .card h2 {
+
+            margin-bottom: 15px;
+            color: #00e5ff;
+
+        }
+
+        .card p {
+
+            font-size: 14px;
+            color: #ddd;
+
+        }
+
+        footer {
+
+            text-align: center;
+            margin-top: 40px;
+            color: #999;
+
+        }
+
+        @media(max-width:900px) {
+
+            .sidebar {
+
+                width: 100%;
+                position: relative;
+
+            }
+
+            .main {
+
+                margin-left: 0;
+                width: 100%;
+
+            }
+
+            .search {
+
+                width: 100%;
+                margin-top: 15px;
+
+            }
+
+        }
+
+        button {
+
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #00e5ff;
+            font-size: 15px;
+            font-weight: bold;
+            transition: .3s;
+
+        }
+
+        button:hover {
+
+            transform: scale(1.05);
+
+        }
+
+        #clock {
+
+            font-size: 24px;
+            margin-top: 10px;
+            color: #00ff99;
+
+        }
+
+        #today {
+
+            margin-top: 5px;
+            font-size: 14px;
+            color: #ddd;
+
+        }
+
+        .light {
+
+            background: #f3f7ff;
+            color: #111;
+
+        }
+
+        .light .sidebar {
+
+            background: #ffffff;
+
+        }
+
+        .light .card {
+
+            background: #ffffff;
+            color: #222;
+
+        }
+
+        .light .card p {
+
+            color: #444;
+
+        }
+
+        .light .sidebar a {
+
+            color: #222;
+
+        }
+
+        /* Floating Background */
+
+        .bg {
+
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: -1;
+
+        }
+
+        .bg span {
+
+            position: absolute;
+            display: block;
+            width: 180px;
+            height: 180px;
+            background: rgba(0, 229, 255, .08);
+            border-radius: 50%;
+            animation: float 18s linear infinite;
+            box-shadow: 0 0 50px cyan;
+
+        }
+
+        .bg span:nth-child(1) {
+
+            left: 5%;
+            top: 10%;
+
+        }
+
+        .bg span:nth-child(2) {
+
+            left: 75%;
+            top: 20%;
+            width: 250px;
+            height: 250px;
+
+        }
+
+        .bg span:nth-child(3) {
+
+            left: 35%;
+            top: 75%;
+            width: 120px;
+            height: 120px;
+
+        }
+
+        .bg span:nth-child(4) {
+
+            left: 80%;
+            top: 70%;
+            width: 150px;
+            height: 150px;
+
+        }
+
+        .bg span:nth-child(5) {
+
+            left: 15%;
+            top: 55%;
+            width: 210px;
+            height: 210px;
+
+        }
+
+        .bg span:nth-child(6) {
+
+            left: 55%;
+            top: 35%;
+            width: 170px;
+            height: 170px;
+
+        }
+
+        @keyframes float {
+
+            0% {
+
+                transform: translateY(0px) rotate(0deg);
+
+            }
+
+            50% {
+
+                transform: translateY(-40px) rotate(180deg);
+
+            }
+
+            100% {
+
+                transform: translateY(0px) rotate(360deg);
+
+            }
+
+        }
+
+        /* Glass Cards */
+
+        .card {
+
+            background: rgba(255, 255, 255, .08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, .12);
+
+        }
+
+        /* Counter */
+
+        .counter {
+
+            font-size: 38px;
+            font-weight: bold;
+            color: #00ff99;
+            margin-bottom: 10px;
+
+        }
+        section{
+
+margin-top:60px;
+
+}
+
+.topic{
+
+background:#132445;
+padding:20px;
+margin-top:20px;
+border-radius:15px;
+border-left:5px solid cyan;
+transition:.3s;
+
+}
+
+.topic:hover{
+
+transform:translateY(-5px);
+
+}
+
+pre{
+
+margin-top:15px;
+background:#000;
+color:#00ff99;
+padding:15px;
+overflow:auto;
+border-radius:10px;
+
+}
+.copyBtn{
+
+background:#00e5ff;
+color:#000;
+padding:10px 20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+margin-top:15px;
+font-weight:bold;
+
+}
+
+.copyBtn:hover{
+
+background:#00ff99;
+
+}
+
+.preview{
+
+margin-top:15px;
+padding:20px;
+background:white;
+color:black;
+border-radius:10px;
+
+}
+
+.topic h2{
+
+color:#00e5ff;
+
+}
+#htmlComplete{
+
+text-align:center;
+
+background:linear-gradient(135deg,#00b894,#0984e3);
+
+color:white;
+
+animation:glow 2s infinite alternate;
+
+}
+
+#doneMsg{
+
+margin-top:20px;
+
+font-size:22px;
+
+font-weight:bold;
+
+color:yellow;
+
+}
+
+@keyframes glow{
+
+from{
+
+box-shadow:0 0 15px cyan;
+
+}
+
+to{
+
+box-shadow:0 0 35px lime;
+
+}
+
+}
+#cssNotes{
+
+margin-top:70px;
+
+}
+
+#cssNotes h1{
+
+color:#00e5ff;
+
+margin-bottom:15px;
+
+}
+
+#cssNotes .topic{
+
+border-left:5px solid orange;
+
+}
+/* Animation Demo */
+
+.demoAnimation{
+
+width:60px;
+height:60px;
+background:#ff5722;
+border-radius:50%;
+position:relative;
+animation:moveBall 3s infinite alternate;
+
+}
+
+@keyframes moveBall{
+
+0%{
+
+left:0;
+
+}
+
+100%{
+
+left:220px;
+
+background:#00e5ff;
+
+}
+
+}
+
+/* Flex Demo */
+
+.flexDemo{
+
+display:flex;
+justify-content:space-around;
+gap:10px;
+margin-top:15px;
+
+}
+
+.flexDemo div{
+
+background:#4CAF50;
+color:white;
+padding:20px;
+border-radius:10px;
+flex:1;
+text-align:center;
+
+}
+
+/* Grid Demo */
+
+.gridDemo{
+
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px;
+margin-top:15px;
+
+}
+
+.gridDemo div{
+
+background:#673AB7;
+padding:20px;
+color:white;
+text-align:center;
+border-radius:10px;
+
+}
+/* CSS Variables */
+
+:root{
+
+--primary:#00e5ff;
+
+--secondary:#0e1b37;
+
+--success:#00ff99;
+
+}
+
+/* Variable Demo */
+
+.variableBox{
+
+background:var(--primary);
+
+padding:25px;
+
+border-radius:12px;
+
+font-size:20px;
+
+font-weight:bold;
+
+color:#000;
+
+text-align:center;
+
+}
+
+/* Media Query Demo */
+
+.mediaDemo{
+
+background:#4CAF50;
+
+padding:20px;
+
+text-align:center;
+
+border-radius:12px;
+
+font-size:20px;
+
+font-weight:bold;
+
+transition:.4s;
+
+}
+
+@media(max-width:768px){
+
+.mediaDemo{
+
+background:#ff9800;
+
+font-size:18px;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.mediaDemo{
+
+background:#f44336;
+
+font-size:16px;
+
+}
+
+}
+/* CSS Completion Card */
+
+#cssComplete{
+
+text-align:center;
+
+background:linear-gradient(135deg,#673AB7,#03A9F4);
+
+border-radius:20px;
+
+padding:30px;
+
+animation:cssGlow 2s infinite alternate;
+
+}
+
+/* Badge */
+
+.badge{
+
+display:inline-block;
+
+padding:15px 35px;
+
+font-size:24px;
+
+font-weight:bold;
+
+background:gold;
+
+color:#000;
+
+border-radius:50px;
+
+box-shadow:0 0 20px gold;
+
+animation:badgePulse 1.5s infinite;
+
+}
+
+/* Success Message */
+
+#cssMessage{
+
+margin-top:20px;
+
+font-size:22px;
+
+font-weight:bold;
+
+color:yellow;
+
+}
+
+/* Glow Animation */
+
+@keyframes cssGlow{
+
+from{
+
+box-shadow:0 0 20px cyan;
+
+}
+
+to{
+
+box-shadow:0 0 40px lime;
+
+}
+
+}
+
+/* Badge Animation */
+
+@keyframes badgePulse{
+
+0%{
+
+transform:scale(1);
+
+}
+
+50%{
+
+transform:scale(1.08);
+
+}
+
+100%{
+
+transform:scale(1);
+
+}
+
+}
+#learningProgress{
+
+margin-top:40px;
+
+text-align:center;
+
+background:#132445;
+
+padding:25px;
+
+border-radius:20px;
+
+}
+
+#mainProgress{
+
+width:0%;
+
+height:20px;
+
+background:linear-gradient(90deg,#00e5ff,#00ff99);
+
+border-radius:30px;
+
+transition:1s;
+
+}
+    </style>
+
+</head>
+
+<body>
+
+    <div class="sidebar">
+
+        <div class="logo">
+
+            CCC MASTER
+
+        </div>
+
+        <a href="#">🏠 Dashboard</a>
+
+        <a href="#htmlNotes">📘 HTML Notes</a>
+
+        <a href="#cssNotes">🎨 CSS Notes</a>
+
+        <a href="#">💻 JavaScript</a>
+
+        <a href="#">📝 Quiz</a>
+
+        <a href="#">🧮 Calculator</a>
+
+        <a href="#">📊 Result</a>
+
+        <a href="#">⚙ Settings</a>
+
+    </div>
+
+    <div class="bg">
+
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </div>
+
+    <div class="main">
+
+        <div class="header">
+
+            <div>
+
+                <h1 id="welcome">Welcome Student 👋</h1>
+
+                <p>CCC Learning Application</p>
+
+            </div>
+
+            <div style="text-align:right;">
+
+                <input type="text" class="search" placeholder="Search Notes...">
+
+                <br><br>
+
+                <button id="themeBtn">
+                    🌙 Dark Mode
+                </button>
+
+                <div id="clock"></div>
+
+                <div id="today"></div>
+
+            </div>
+
+        </div>
+
+        <h3>Your Learning Progress</h3>
+
+        <div class="progress">
+
+            <div class="bar" id="progressBar"></div>
+
+        </div>
+
+        <div class="cards">
+
+            <div class="cards">
+
+<div class="card">
+
+<div class="counter" data-target="30">0</div>
+
+<h2>HTML Notes</h2>
+
+<p>30 Practical Topics</p>
+
+</div>
+
+<div class="card">
+
+<div class="counter" data-target="30">0</div>
+
+<h2>CSS Notes</h2>
+
+<p>25 Practical Programs</p>
+
+</div>
+
+<div class="card">
+
+<div class="counter" data-target="30">0</div>
+
+<h2>JavaScript</h2>
+
+<p>30 Practice Programs</p>
+
+</div>
+
+<div class="card">
+
+<div class="counter" data-target="50">0</div>
+
+<h2>Quiz MCQ</h2>
+
+<p>50 Important Questions</p>
+
+</div>
+
+</div>
+
+        </div>
+
+<section id="htmlNotes">
+
+<h1>📘 HTML Complete Notes</h1>
+
+<p>
+HTML (HyperText Markup Language) is the standard language used to create web pages.
+</p>
+
+<!-- 1 -->
+<div class="topic">
+
+<h2>1. HTML Structure</h2>
+
+<pre>
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;My Page&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+Hello World
+
+&lt;/body&gt;
+&lt;/html&gt;
+
+</pre>
+
+</div>
+<!-- 2 -->
+ <div class="topic">
+
+<h2>2. Heading Tags</h2>
+
+<pre>
+
+&lt;h1&gt;Heading 1&lt;/h1&gt;
+
+&lt;h2&gt;Heading 2&lt;/h2&gt;
+
+&lt;h3&gt;Heading 3&lt;/h3&gt;
+
+&lt;h4&gt;Heading 4&lt;/h4&gt;
+
+&lt;h5&gt;Heading 5&lt;/h5&gt;
+
+&lt;h6&gt;Heading 6&lt;/h6&gt;
+
+</pre>
+
+</div>
+<!-- 3 -->
+ <div class="topic">
+
+<h2>3. Paragraph</h2>
+
+<pre>
+
+&lt;p&gt;
+
+This is paragraph.
+
+&lt;/p&gt;
+
+</pre>
+
+</div>
+<!-- 4 -->
+ <div class="topic">
+
+<h2>4. Line Break</h2>
+
+<pre>
+
+Hello
+
+&lt;br&gt;
+
+World
+
+</pre>
+
+</div>
+ <!-- 5 -->
+<div class="topic">
+
+<h2>5. Horizontal Line</h2>
+
+<pre>
+
+&lt;hr&gt;
+
+</pre>
+
+</div>
+ <!-- 6 -->
+ <div class="topic">
+
+<h2>6. Bold Tag</h2>
+
+<pre>&lt;b&gt;Bold Text&lt;/b&gt;</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<b>Bold Text</b>
+
+</div>
+
+</div>
+ <!-- 7 -->
+ <div class="topic">
+
+<h2>7. Italic Tag</h2>
+
+<pre>&lt;i&gt;Italic Text&lt;/i&gt;</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<i>Italic Text</i>
+
+</div>
+
+</div>
+ <!-- 8 -->
+ <div class="topic">
+
+<h2>8. Underline Tag</h2>
+
+<pre>&lt;u&gt;Underline&lt;/u&gt;</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<u>Underline</u>
+
+</div>
+
+</div>
+ <!-- 9 -->
+ <div class="topic">
+
+<h2>9. Image Tag</h2>
+
+<pre>&lt;img src="image.jpg" width="200"&gt;</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<img src="https://via.placeholder.com/200">
+
+</div>
+
+</div>
+ <!-- 10 -->
+ <div class="topic">
+
+<h2>10. Hyperlink</h2>
+
+<pre>&lt;a href="#"&gt;Click Here&lt;/a&gt;</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<a href="#">Click Here</a>
+
+</div>
+
+</div>
+ <!-- 11 -->
+ <div class="topic">
+
+<h2>11. Ordered List</h2>
+
+<pre>
+
+&lt;ol&gt;
+
+&lt;li&gt;HTML&lt;/li&gt;
+
+&lt;/ol&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<ol>
+
+<li>HTML</li>
+
+<li>CSS</li>
+
+<li>JavaScript</li>
+
+</ol>
+
+</div>
+
+</div>
+<!-- 12 -->
+<div class="topic">
+    
+<h2>12. Unordered List</h2>
+
+<pre>
+
+&lt;ul&gt;
+
+&lt;li&gt;Apple&lt;/li&gt;
+
+&lt;/ul&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+    
+    <ul>
+
+<li>Apple</li>
+
+<li>Mango</li>
+
+<li>Orange</li>
+
+</ul>
+
+</div>
+
+</div>
+<!-- 13/ -->
+<div class="topic">
+
+<h2>13. Table</h2>
+
+<pre>
+
+&lt;table border="1"&gt;
+
+...
+
+&lt;/table&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<table border="1">
+
+<tr>
+
+<th>Name</th>
+
+<th>City</th>
+
+</tr>
+
+<tr>
+
+<td>Akash</td>
+
+<td>Surat</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+<!-- 14 -->
+<div class="topic">
+
+<h2>14. Form</h2>
+
+<pre>
+
+&lt;form&gt;
+
+&lt;input type="text"&gt;
+
+&lt;/form&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<input type="text" placeholder="Enter Name">
+
+</div>
+
+</div>
+<!-- 15 -->
+<div class="topic">
+
+<h2>15. Button</h2>
+
+<pre>
+
+&lt;button&gt;
+
+Click
+
+&lt;/button&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<button>
+
+Click Me
+
+</button>
+
+</div>
+
+</div>
+<!-- 16 -->
+<div class="topic">
+
+<h2>16. HTML Audio</h2>
+
+<p>Audio ચલાવવા માટે <code>&lt;audio&gt;</code> tag નો ઉપયોગ થાય છે.</p>
+
+<pre>
+&lt;audio controls&gt;
+    &lt;source src="song.mp3" type="audio/mpeg"&gt;
+&lt;/audio&gt;
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<audio controls>
+<source src="">
+Your browser does not support audio.
+</audio>
+
+</div>
+
+</div>
+<!-- 17 -->
+<div class="topic">
+
+<h2>17. HTML Video</h2>
+
+<p>Video બતાવવા માટે <code>&lt;video&gt;</code> tag વપરાય છે.</p>
+
+<pre>
+&lt;video controls width="300"&gt;
+    &lt;source src="video.mp4"&gt;
+&lt;/video&gt;
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<video width="300" controls>
+<source src="">
+</video>
+
+</div>
+
+</div>
+<!-- 18 -->
+<div class="topic">
+
+<h2>18. Marquee</h2>
+
+<p>Scrolling Text બનાવવા માટે.</p>
+
+<pre>
+&lt;marquee&gt;
+Welcome CCC Student
+&lt;/marquee&gt;
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<marquee>
+
+🎉 Welcome to CCC Master App 🎉
+
+</marquee>
+
+</div>
+
+</div>
+<!-- 19 -->
+<div class="topic">
+
+<h2>19. Iframe</h2>
+
+<p>બીજું Web Page Embed કરવા માટે.</p>
+
+<pre>
+&lt;iframe
+src="https://example.com"&gt;
+&lt;/iframe&gt;
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<iframe
+src="about:blank"
+width="300"
+height="150">
+</iframe>
+
+</div>
+
+</div>
+<!-- 20 -->
+<div class="topic">
+
+<h2>20. HTML Entities</h2>
+
+<pre>
+
+&amp;nbsp;
+
+&amp;copy;
+
+&amp;reg;
+
+&amp;euro;
+
+&amp;lt;
+
+&amp;gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+© CCC Master App
+
+<br>
+
+₹ 500
+
+<br>
+
+&lt;HTML&gt;
+
+</div>
+
+</div>
+<!-- 21 -->
+<div class="topic">
+
+<h2>21. HTML Comments</h2>
+
+<pre>
+
+&lt;!--
+
+This is Comment
+
+--&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+Comment Browser માં દેખાતો નથી.
+
+</div>
+
+</div>
+<!-- 22 -->
+<div class="topic">
+
+<h2>22. Semantic Tags</h2>
+
+<pre>
+
+&lt;header&gt;
+
+&lt;nav&gt;
+
+&lt;section&gt;
+
+&lt;article&gt;
+
+&lt;footer&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<header style="background:#0099ff;color:white;padding:10px;">
+Header
+</header>
+
+<section style="padding:10px;">
+Content Section
+</section>
+
+<footer style="background:#333;color:white;padding:10px;">
+Footer
+</footer>
+
+</div>
+
+</div>
+<!-- 23 -->
+<div class="topic">
+
+<h2>23. HTML5 Input Types</h2>
+
+<p>HTML5 માં ઘણા નવા Input Types ઉમેરાયા છે.</p>
+
+<pre>
+
+&lt;input type="email"&gt;
+
+&lt;input type="date"&gt;
+
+&lt;input type="color"&gt;
+
+&lt;input type="number"&gt;
+
+&lt;input type="range"&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<input type="email" placeholder="Email">
+
+<br><br>
+
+<input type="date">
+
+<br><br>
+
+<input type="color">
+
+<br><br>
+
+<input type="number" placeholder="Number">
+
+<br><br>
+
+<input type="range">
+
+</div>
+
+</div>
+<!-- 24 -->
+ <div class="topic">
+
+<h2>24. Progress Tag</h2>
+
+<p>કામ કેટલું પૂર્ણ થયું છે તે બતાવવા માટે.</p>
+
+<pre>
+
+&lt;progress value="70" max="100"&gt;
+
+&lt;/progress&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<progress value="70" max="100"></progress>
+
+<p>70% Completed</p>
+
+</div>
+
+</div>
+<!-- 25 -->
+<div class="topic">
+
+<h2>25. Meter Tag</h2>
+
+<p>Value ની Range બતાવવા માટે.</p>
+
+<pre>
+
+&lt;meter value="8"
+
+min="0"
+
+max="10"&gt;
+
+&lt;/meter&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<meter value="8" min="0" max="10"></meter>
+
+<p>Performance : 8 / 10</p>
+
+</div>
+
+</div>
+<!-- 26 -->
+ <div class="topic">
+
+<h2>26. Details & Summary</h2>
+
+<p>Click કરીને માહિતી Show/Hide કરી શકાય.</p>
+
+<pre>
+
+&lt;details&gt;
+
+&lt;summary&gt;
+
+Click Here
+
+&lt;/summary&gt;
+
+Hidden Content
+
+&lt;/details&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<details>
+
+<summary>📘 Click Here</summary>
+
+<p>
+
+HTML એટલે HyperText Markup Language.
+
+તે Web Page બનાવવા માટે વપરાય છે.
+
+</p>
+
+</details>
+
+</div>
+
+</div>
+<!-- 27 -->
+ <div class="topic">
+
+<h2>27. SVG Graphics</h2>
+
+<p>SVG (Scalable Vector Graphics) નો ઉપયોગ Vector Graphics બનાવવા માટે થાય છે.</p>
+
+<pre>
+
+&lt;svg width="200" height="150"&gt;
+
+    &lt;circle cx="100"
+    cy="75"
+    r="50"
+    fill="cyan"
+    stroke="blue"
+    stroke-width="4"&gt;
+
+    &lt;/circle&gt;
+
+&lt;/svg&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<svg width="220" height="160">
+
+<circle
+cx="110"
+cy="80"
+r="55"
+fill="cyan"
+stroke="blue"
+stroke-width="5"/>
+
+</svg>
+
+</div>
+
+</div>
+<!-- 28 -->
+ <div class="topic">
+
+<h2>28. HTML Canvas</h2>
+
+<p>Canvas દ્વારા JavaScript ની મદદથી Drawing કરી શકાય છે.</p>
+
+<pre>
+
+&lt;canvas id="myCanvas"
+
+width="250"
+
+height="150"&gt;
+
+&lt;/canvas&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<canvas
+id="myCanvas"
+width="250"
+height="150"
+style="border:2px solid #333;background:white;border-radius:10px;">
+</canvas>
+
+</div>
+
+</div>
+<!-- 29 -->
+<div class="topic">
+
+<h2>29. Figure & Figcaption</h2>
+
+<p>Image સાથે Caption બતાવવા માટે.</p>
+
+<pre>
+
+&lt;figure&gt;
+
+&lt;img src="image.jpg"&gt;
+
+&lt;figcaption&gt;
+
+Beautiful Image
+
+&lt;/figcaption&gt;
+
+&lt;/figure&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<figure style="text-align:center;">
+
+<img
+src="https://via.placeholder.com/250x150"
+style="border-radius:10px;max-width:100%;">
+
+<figcaption>
+
+Sample HTML Image
+
+</figcaption>
+
+</figure>
+
+</div>
+
+</div>
+<!-- 30 -->
+<div class="topic">
+
+<h2>30. HTML Datalist</h2>
+
+<p>Suggestion List બનાવવા માટે.</p>
+
+<pre>
+
+&lt;input list="course"&gt;
+
+&lt;datalist id="course"&gt;
+
+&lt;option value="HTML"&gt;
+
+&lt;option value="CSS"&gt;
+
+&lt;option value="JavaScript"&gt;
+
+&lt;/datalist&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<input
+list="course"
+placeholder="Choose Course">
+
+<datalist id="course">
+
+<option value="HTML">
+
+<option value="CSS">
+
+<option value="JavaScript">
+
+<option value="Bootstrap">
+
+<option value="React">
+
+</datalist>
+
+</div>
+
+</div>
+<!-- -------------- -->
+
+<div class="topic" id="htmlComplete">
+
+<h2 style="color:#00ff99;">
+🎉 HTML Module Completed
+</h2>
+
+<p>
+
+Congratulations!
+
+You have completed all 30 HTML Topics.
+
+</p>
+
+<br>
+
+<progress
+value="100"
+max="100"
+style="width:100%;height:25px;">
+</progress>
+
+<br><br>
+
+<button id="htmlDone">
+
+✔ Mark as Completed
+
+</button>
+
+<p id="doneMsg"></p>
+
+</div>
+</section>
+
+<section id="cssNotes">
+
+<h1>🎨 CSS Complete Notes</h1>
+
+<p>
+CSS (Cascading Style Sheets) નો ઉપયોગ HTML Page ને સુંદર અને Responsive બનાવવા માટે થાય છે.
+</p>
+<!-- 1 -->
+<div class="topic">
+
+<h2>1. Inline CSS</h2>
+
+<pre>
+
+&lt;p style="color:red;"&gt;
+
+Hello CSS
+
+&lt;/p&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<p style="color:red;font-size:22px;">
+
+Hello CSS
+
+</p>
+
+</div>
+
+</div>
+<!-- 2 -->
+<div class="topic">
+
+<h2>2. Internal CSS</h2>
+
+<pre>
+
+&lt;style&gt;
+
+h1{
+
+color:blue;
+
+}
+
+&lt;/style&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<h2 style="color:blue;">
+
+Internal CSS Example
+
+</h2>
+
+</div>
+
+</div>
+<!-- 3 -->
+<div class="topic">
+
+<h2>3. External CSS</h2>
+
+<pre>
+
+&lt;link
+
+rel="stylesheet"
+
+href="style.css"&gt;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+✔ External CSS File Connected
+
+</div>
+
+</div>
+<!-- 4 -->
+<div class="topic">
+
+<h2>4. Text Color</h2>
+
+<pre>
+
+color:red;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<p style="color:crimson;font-size:20px;">
+
+This is Red Text
+
+</p>
+
+</div>
+
+</div>
+<!-- 5 -->
+<div class="topic">
+
+<h2>5. Background Color</h2>
+
+<pre>
+
+background:orange;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="background:orange;padding:20px;border-radius:10px;">
+
+Background Example
+
+</div>
+
+</div>
+
+</div>
+<!-- 6 -->
+ <div class="topic">
+
+<h2>6. Font Size</h2>
+
+<pre>
+
+font-size:30px;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<p style="font-size:30px;">Large Font Example</p>
+
+</div>
+
+</div>
+<!-- 7 -->
+<div class="topic">
+
+<h2>7. Font Family</h2>
+
+<pre>
+
+font-family:Arial;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<p style="font-family:Arial;">Arial Font</p>
+
+<p style="font-family:Georgia;">Georgia Font</p>
+
+</div>
+
+</div>
+<!-- 8 -->
+ <div class="topic">
+
+<h2>8. Border</h2>
+
+<pre>
+
+border:2px solid blue;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="border:2px solid blue;padding:20px;border-radius:8px;">
+
+Border Example
+
+</div>
+
+</div>
+
+</div>
+<!-- 9 -->
+ <div class="topic">
+
+<h2>9. Margin</h2>
+
+<pre>
+
+margin:20px;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="background:#ff9800;padding:10px;margin:20px;color:#fff;">
+
+Margin Example
+
+</div>
+
+</div>
+
+</div>
+<!-- 10 -->
+ <div class="topic">
+
+<h2>10. Padding</h2>
+
+<pre>
+
+padding:25px;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="background:#00b894;padding:25px;color:#fff;border-radius:8px;">
+
+Padding Example
+
+</div>
+
+</div>
+
+</div>
+<!-- 11 -->
+ <div class="topic">
+
+<h2>11. Width & Height</h2>
+
+<pre>
+
+width:200px;
+
+height:100px;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="width:200px;height:100px;background:#2196f3;color:#fff;display:flex;align-items:center;justify-content:center;">
+
+200 × 100
+
+</div>
+
+</div>
+
+</div>
+<!-- 12 -->
+ <div class="topic">
+
+<h2>12. Display</h2>
+
+<pre>
+
+display:inline-block;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<span style="display:inline-block;background:#673ab7;color:#fff;padding:10px;">Box 1</span>
+
+<span style="display:inline-block;background:#009688;color:#fff;padding:10px;">Box 2</span>
+
+</div>
+
+</div>
+<!-- 13 -->
+ <div class="topic">
+
+<h2>13. Position</h2>
+
+<pre>
+
+position:relative;
+
+top:10px;
+
+left:20px;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="position:relative;left:20px;top:10px;background:#e91e63;color:#fff;padding:10px;width:150px;">
+
+Relative Position
+
+</div>
+
+</div>
+
+</div>
+<!-- 14 -->
+ <div class="topic">
+
+<h2>14. Overflow</h2>
+
+<pre>
+
+overflow:auto;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="width:220px;height:80px;overflow:auto;border:1px solid #ccc;padding:10px;background:#fff;color:#000;">
+
+This is a long text to demonstrate CSS overflow property. Scroll bar will appear automatically when the content exceeds the container height.
+
+</div>
+
+</div>
+
+</div>
+<!-- 15 -->
+ <div class="topic">
+
+<h2>15. Opacity</h2>
+
+<pre>
+
+opacity:0.5;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="background:red;color:#fff;padding:20px;opacity:.5;">
+
+Opacity 50%
+
+</div>
+
+</div>
+
+</div>
+<!-- 16 -->
+<div class="topic">
+
+<h2>16. Border Radius</h2>
+
+<pre>
+
+border-radius:20px;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="width:200px;height:100px;background:#4CAF50;
+border-radius:20px;color:white;
+display:flex;align-items:center;justify-content:center;">
+
+Rounded Box
+
+</div>
+
+</div>
+
+</div>
+<!-- 17 -->
+ <div class="topic">
+
+<h2>17. Border Style</h2>
+
+<pre>
+
+border:4px dashed red;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="padding:20px;border:4px dashed red;">
+
+Dashed Border
+
+</div>
+
+</div>
+
+</div>
+<!-- 18 -->
+ <div class="topic">
+
+<h2>18. Outline</h2>
+
+<pre>
+
+outline:3px solid blue;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<input
+type="text"
+value="Outline Example"
+style="outline:3px solid blue;
+padding:10px;">
+
+</div>
+
+</div>
+<!-- 19 -->
+ <div class="topic">
+
+<h2>19. Box Shadow</h2>
+
+<pre>
+
+box-shadow:0 0 20px gray;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="background:white;
+color:black;
+padding:20px;
+box-shadow:0 0 20px gray;">
+
+Shadow Box
+
+</div>
+
+</div>
+
+</div>
+<!-- 20 -->
+ <div class="topic">
+
+<h2>20. Text Shadow</h2>
+
+<pre>
+
+text-shadow:2px 2px 5px red;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<h2 style="text-shadow:2px 2px 5px red;">
+
+CSS Shadow
+
+</h2>
+
+</div>
+
+</div>
+<!-- 21 -->
+ <div class="topic">
+
+<h2>21. Linear Gradient</h2>
+
+<pre>
+
+background:
+
+linear-gradient(red,blue);
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="height:120px;
+background:linear-gradient(45deg,#ff5722,#2196f3);
+border-radius:12px;">
+
+</div>
+
+</div>
+
+</div>
+<!-- 22 -->
+ <div class="topic">
+
+<h2>22. Cursor</h2>
+
+<pre>
+
+cursor:pointer;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<button style="cursor:pointer;">
+
+Hover Me
+
+</button>
+
+</div>
+
+</div>
+<!-- 23 -->
+ <div class="topic">
+
+<h2>23. Transform</h2>
+
+<pre>
+
+transform:rotate(10deg);
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="width:120px;
+height:120px;
+background:#9C27B0;
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+transform:rotate(10deg);">
+
+Rotate
+
+</div>
+
+</div>
+
+</div>
+<!-- 24 -->
+ <div class="topic">
+
+<h2>24. CSS Transition</h2>
+
+<pre>
+
+.box{
+
+transition:0.5s;
+
+}
+
+.box:hover{
+
+background:red;
+
+transform:scale(1.1);
+
+}
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div style="
+width:120px;
+height:120px;
+background:#2196F3;
+border-radius:12px;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:.5s;
+cursor:pointer;"
+onmouseover="this.style.background='#ff5722';this.style.transform='scale(1.1)'"
+onmouseout="this.style.background='#2196F3';this.style.transform='scale(1)'">
+
+Hover
+
+</div>
+
+</div>
+
+</div>
+<!-- 25 -->
+ <div class="topic">
+
+<h2>25. CSS Animation</h2>
+
+<pre>
+
+@keyframes move{
+
+0%{left:0;}
+
+100%{left:200px;}
+
+}
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div class="demoAnimation"></div>
+
+</div>
+
+</div>
+<!-- 26 -->
+ <div class="topic">
+
+<h2>26. CSS Flexbox</h2>
+
+<pre>
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div class="flexDemo">
+
+<div>A</div>
+
+<div>B</div>
+
+<div>C</div>
+
+</div>
+
+</div>
+
+</div>
+<!-- 27 -->
+ <div class="topic">
+
+<h2>27. CSS Grid</h2>
+
+<pre>
+
+display:grid;
+
+grid-template-columns:
+
+1fr 1fr 1fr;
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div class="gridDemo">
+
+<div>1</div>
+
+<div>2</div>
+
+<div>3</div>
+
+<div>4</div>
+
+<div>5</div>
+
+<div>6</div>
+
+</div>
+
+</div>
+
+</div>
+<!-- 28 -->
+<div class="topic">
+
+<h2>28. Media Query</h2>
+
+<p>
+Media Query નો ઉપયોગ Responsive Website બનાવવા માટે થાય છે.
+</p>
+
+<pre>
+
+@media(max-width:768px){
+
+body{
+
+background:#222;
+
+}
+
+}
+
+</pre>
+
+<button class="copyBtn">Copy Code</button>
+
+<div class="preview">
+
+<div class="mediaDemo">
+
+Resize Browser Window 📱
+
+</div>
+
+</div>
+
+</div>
+<!-- 29 -->
+ <div class="topic">
+
+<h2>29. CSS Variables</h2>
+
+<p>
+
+CSS Variable દ્વારા એક જ Value ઘણી જગ્યાએ ઉપયોગ કરી શકાય.
+
+</p>
+
+<pre>
+
+:root{
+
+--main:#00e5ff;
+
+}
+
+h1{
+
+color:var(--main);
+
+}
+
+</pre>
+
+<button class="copyBtn">
+
+Copy Code
+
+</button>
+
+<div class="preview">
+
+<div class="variableBox">
+
+CSS Variables Demo
+
+</div>
+
+</div>
+
+</div>
+<!-- 30 -->
+<div class="topic" id="cssComplete">
+
+<h2 style="color:#00ff99;">
+🏆 CSS Module Completed
+</h2>
+
+<p>
+
+Congratulations!
+
+You have successfully completed all 30 CSS Topics.
+
+</p>
+
+<br>
+
+<div class="badge">
+
+🥇 CSS MASTER
+
+</div>
+
+<br>
+
+<progress
+
+value="100"
+
+max="100"
+
+style="width:100%;height:25px;">
+
+</progress>
+
+<br><br>
+
+<button id="cssDone">
+
+✔ Mark CSS as Completed
+
+</button>
+
+<p id="cssMessage"></p>
+
+</div>
+<!-- --------------- -->
+</section>
+
+<div class="topic" id="learningProgress">
+
+<h2>📊 Learning Progress</h2>
+
+<div class="progress">
+
+<div id="mainProgress"></div>
+
+</div>
+
+<br>
+
+<h3 id="progressText">
+
+HTML : 100% | CSS : 0%
+
+</h3>
+
+</div>
+        <footer>
+
+            <br><br>
+
+            © 2026 CCC Master App
+
+        </footer>
+
+    </div>
+    <script>
+
+        let dark = true;
+
+        document.getElementById("themeBtn").onclick = function () {
+
+            if (dark) {
+
+                document.body.classList.add("light");
+
+                this.innerHTML = "☀ Light Mode";
+
+                dark = false;
+
+            }
+
+            else {
+
+                document.body.classList.remove("light");
+
+                this.innerHTML = "🌙 Dark Mode";
+
+                dark = true;
+
+            }
+
+        }
+
+        function clock() {
+
+            let d = new Date();
+
+            document.getElementById("clock").innerHTML = d.toLocaleTimeString();
+
+            document.getElementById("today").innerHTML = d.toDateString();
+
+        }
+
+        setInterval(clock, 1000);
+
+        clock();
+let counters=document.querySelectorAll(".counter");
+
+counters.forEach(counter=>{
+
+let update=()=>{
+
+let target=+counter.dataset.target;
+
+let count=+counter.innerHTML;
+
+let inc=target/60;
+
+if(count<target){
+
+counter.innerHTML=Math.ceil(count+inc);
+
+setTimeout(update,20);
+
+}
+
+else{
+
+counter.innerHTML=target;
+
+}
+
+}
+
+update();
+
+});
+let search=document.querySelector(".search");
+
+search.addEventListener("keyup",function(){
+
+let value=this.value.toLowerCase();
+
+let topics=document.querySelectorAll(".topic");
+
+topics.forEach(function(item){
+
+if(item.innerText.toLowerCase().indexOf(value)>-1){
+
+item.style.display="block";
+
+}
+
+else{
+
+item.style.display="none";
+
+}
+
+});
+
+});
+document.querySelectorAll(".copyBtn").forEach(function(btn){
+
+btn.onclick=function(){
+
+let code=this.previousElementSibling.innerText;
+
+navigator.clipboard.writeText(code);
+
+this.innerHTML="✅ Copied";
+
+setTimeout(()=>{
+
+this.innerHTML="Copy Code";
+
+},1500);
+
+}
+
+});
+let canvas = document.getElementById("myCanvas");
+
+if(canvas){
+
+let ctx = canvas.getContext("2d");
+
+// Rectangle
+ctx.fillStyle = "deepskyblue";
+ctx.fillRect(20,20,80,50);
+
+// Circle
+ctx.beginPath();
+ctx.arc(170,45,25,0,2*Math.PI);
+ctx.fillStyle = "orange";
+ctx.fill();
+
+// Line
+ctx.beginPath();
+ctx.moveTo(20,110);
+ctx.lineTo(220,110);
+ctx.strokeStyle = "red";
+ctx.lineWidth = 4;
+ctx.stroke();
+
+// Text
+ctx.fillStyle = "green";
+ctx.font = "18px Arial";
+ctx.fillText("CCC Canvas",60,140);
+
+}
+let done=document.getElementById("htmlDone");
+
+if(done){
+
+done.onclick=function(){
+
+localStorage.setItem("htmlCompleted","YES");
+
+document.getElementById("doneMsg").innerHTML=
+
+"🏆 HTML Notes Completed Successfully!";
+
+this.disabled=true;
+
+this.innerHTML="Completed ✔";
+
+}
+
+}
+
+window.onload=function(){
+
+if(localStorage.getItem("htmlCompleted")){
+
+let btn=document.getElementById("htmlDone");
+
+if(btn){
+
+btn.disabled=true;
+
+btn.innerHTML="Completed ✔";
+
+document.getElementById("doneMsg").innerHTML=
+
+"🏆 HTML Notes Completed Successfully!";
+
+}
+
+}
+
+}
+let progress=document.getElementById("progressBar");
+
+if(localStorage.getItem("htmlCompleted")){
+
+progress.style.width="35%";
+
+}
+let cssDone=document.getElementById("cssDone");
+
+if(cssDone){
+
+cssDone.onclick=function(){
+
+localStorage.setItem("cssCompleted","YES");
+
+document.getElementById("cssMessage").innerHTML=
+
+"🎉 CSS Module Completed Successfully!";
+
+this.disabled=true;
+
+this.innerHTML="Completed ✔";
+
+updateProgress();
+
+}
+
+}
+
+function updateProgress(){
+
+let percent=0;
+
+let text=[];
+
+if(localStorage.getItem("htmlCompleted")){
+
+percent+=50;
+
+text.push("HTML : 100%");
+
+}
+
+else{
+
+text.push("HTML : 0%");
+
+}
+
+if(localStorage.getItem("cssCompleted")){
+
+percent+=50;
+
+text.push("CSS : 100%");
+
+}
+
+else{
+
+text.push("CSS : 0%");
+
+}
+
+document.getElementById("mainProgress").style.width=
+
+percent+"%";
+
+document.getElementById("progressText").innerHTML=
+
+text.join(" | ");
+
+}
+
+updateProgress();
+    </script>
+
+</body>
+
+</html>
