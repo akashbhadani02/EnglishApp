@@ -65,13 +65,19 @@
 
             color: white;
 
-            background:
+           background: linear-gradient(
+    -45deg,
+    #020617,
+    #0f172a,
+    #1e293b,
+    #0f766e,
+    #2563eb,
+    #7c3aed,
+    #020617
+);
 
-                radial-gradient(circle at top left, #13203f 0%, transparent 30%),
-
-                radial-gradient(circle at bottom right, #19003b 0%, transparent 35%),
-
-                linear-gradient(135deg, #03040a, #0b1020, #05070d);
+background-size: 400% 400%;
+animation: gradientBG 15s ease infinite;
 
             overflow-x: hidden;
 
@@ -115,35 +121,47 @@
 
         /* Neon Glow */
 
-        body::after {
+        body::after{
 
-            content: "";
+    content:"";
 
-            position: fixed;
+    position:fixed;
 
-            inset: 0;
+    inset:0;
 
-            background:
+    pointer-events:none;
 
-                radial-gradient(circle at 20% 20%,
-                    rgba(0, 229, 255, .15),
-                    transparent 30%),
+    z-index:-1;
 
-                radial-gradient(circle at 80% 80%,
-                    rgba(139, 92, 246, .18),
-                    transparent 35%),
+    background:
 
-                radial-gradient(circle at 50% 50%,
-                    rgba(0, 140, 255, .08),
-                    transparent 40%);
+        radial-gradient(circle at 15% 20%,
+        rgba(0,255,255,.18),
+        transparent 30%),
 
-            animation: glowMove 12s infinite alternate;
+        radial-gradient(circle at 85% 75%,
+        rgba(140,80,255,.20),
+        transparent 35%),
 
-            pointer-events: none;
+        radial-gradient(circle at 50% 50%,
+        rgba(0,120,255,.12),
+        transparent 40%);
 
-            z-index: -1;
+    animation: glowAnimation 10s ease-in-out infinite alternate;
+}
+@keyframes glowAnimation{
 
-        }
+    0%{
+        transform:scale(1);
+        filter:hue-rotate(0deg);
+    }
+
+    100%{
+        transform:scale(1.15);
+        filter:hue-rotate(40deg);
+    }
+
+}
 
         @keyframes gridMove {
 
@@ -176,6 +194,21 @@
             }
 
         }
+        @keyframes gradientBG{
+
+    0%{
+        background-position:0% 50%;
+    }
+
+    50%{
+        background-position:100% 50%;
+    }
+
+    100%{
+        background-position:0% 50%;
+    }
+
+}
 
         /* ===============================
    HEADER
