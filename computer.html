@@ -975,6 +975,313 @@
             }
 
         }
+
+        /* ==========================
+   JavaScript Editor
+========================== */
+
+        #jsEditor {
+
+            width: 100%;
+
+            height: 250px;
+
+            background: #111827;
+
+            color: #00ff99;
+
+            font-size: 16px;
+
+            padding: 15px;
+
+            border-radius: 12px;
+
+            border: 2px solid #00e5ff;
+
+            outline: none;
+
+            resize: vertical;
+
+            font-family: Consolas, monospace;
+
+            margin-top: 20px;
+
+        }
+
+        #outputBox {
+
+            margin-top: 20px;
+
+            padding: 20px;
+
+            background: #0f172a;
+
+            border-left: 5px solid #00e5ff;
+
+            border-radius: 12px;
+
+            color: #fff;
+
+            min-height: 80px;
+
+        }
+
+        #outputBox h3 {
+
+            color: #00e5ff;
+
+            margin-bottom: 10px;
+
+        }
+
+        /* ==========================
+   Lesson Progress
+========================== */
+
+        .lessonProgress {
+
+            width: 100%;
+
+            height: 14px;
+
+            background: #1f2937;
+
+            border-radius: 50px;
+
+            overflow: hidden;
+
+            margin: 15px 0;
+
+        }
+
+        #lessonBar {
+
+            width: 0%;
+
+            height: 100%;
+
+            background: linear-gradient(90deg, #00e5ff, #00ff99);
+
+            transition: 1s;
+
+        }
+
+        #lessonText {
+
+            text-align: center;
+
+            font-weight: bold;
+
+            color: #00e5ff;
+
+            margin-bottom: 15px;
+
+        }
+
+        /* Copy Button */
+
+        button {
+
+            transition: .3s;
+
+        }
+
+        button:hover {
+
+            transform: translateY(-3px);
+
+            box-shadow: 0 10px 25px rgba(0, 229, 255, .4);
+
+        }
+
+        /* ==========================
+   VS Code Editor UI
+========================== */
+
+        .editorHeader {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            background: #20232a;
+
+            padding: 12px 18px;
+
+            border-radius: 15px 15px 0 0;
+
+            border: 1px solid rgba(255, 255, 255, .08);
+
+        }
+
+        .editorDots {
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+        .editorDots span {
+
+            width: 14px;
+
+            height: 14px;
+
+            border-radius: 50%;
+
+            display: block;
+
+        }
+
+        .red {
+
+            background: #ff5f57;
+
+        }
+
+        .yellow {
+
+            background: #ffbd2e;
+
+        }
+
+        .green {
+
+            background: #28c840;
+
+        }
+
+        .editorTitle {
+
+            color: #fff;
+
+            font-weight: bold;
+
+            font-size: 15px;
+
+            letter-spacing: 1px;
+
+        }
+
+        #jsEditor {
+
+            margin-top: 0;
+
+            border-radius: 0 0 15px 15px;
+
+            background: #1e1e1e;
+
+            color: #d4d4d4;
+
+            line-height: 1.7;
+
+            font-size: 15px;
+
+            padding: 20px;
+
+            font-family: Consolas, monospace;
+
+        }
+
+        #jsEditor:focus {
+
+            border: 2px solid #00e5ff;
+
+            box-shadow: 0 0 20px rgba(0, 229, 255, .4);
+
+        }
+
+        .lessonNav {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 25px;
+
+        }
+
+        .lessonNav button {
+
+            flex: 1;
+
+        }
+
+        .completeBtn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(90deg, #00e5ff, #00ff99);
+            color: #000;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .completeBtn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 229, 255, .4);
+        }
+
+        /* ==========================
+   XP Progress Card
+========================== */
+
+.progressCard{
+
+text-align:center;
+
+padding:25px;
+
+}
+
+.progressCircle{
+
+width:150px;
+
+height:150px;
+
+margin:20px auto;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:28px;
+
+font-weight:bold;
+
+background:conic-gradient(#00e5ff 0deg,#00ff99 0deg,#1f2937 0deg);
+
+transition:1s;
+
+color:#fff;
+
+}
+
+#badgeText{
+
+margin-top:15px;
+
+font-size:20px;
+
+font-weight:bold;
+
+color:#00e5ff;
+
+}
     </style>
 
 </head>
@@ -996,7 +1303,7 @@
 
         <a href="#cssNotes">🎨 CSS Notes</a>
 
-        <a href="#">💻 JavaScript</a>
+        <a href="#jsNotes">💻 JavaScript</a>
 
         <a href="#">📝 Quiz</a>
 
@@ -1080,13 +1387,27 @@
 
             </div>
 
-            <div class="card">
+            <div class="card" onclick="showSection('jsNotes')">
 
-                <div class="counter" data-target="30">0</div>
+                <div class="counter" data-target="10">0</div>
 
-                <h2>JavaScript</h2>
+                <h2> JavaScript</h2>
 
-                <p>30 Practice Programs</p>
+                <p>10 Practice Programs</p>
+
+            </div>
+
+            <div class="card progressCard">
+
+                <h2>🏆 JavaScript Progress</h2>
+
+                <div class="progressCircle">
+
+                    <span id="xpValue">0%</span>
+
+                </div>
+
+                <p id="badgeText">Beginner</p>
 
             </div>
 
@@ -2820,6 +3141,640 @@ color:var(--main);
             <!-- --------------- -->
         </section>
 
+        <!-- ==========================
+     JavaScript Notes
+========================== -->
+
+        <section id="jsNotes" class="section" style="display:none;">
+
+            <h1>💻 JavaScript Notes</h1>
+
+            <p class="subtitle">
+                Learn JavaScript Step by Step with Examples
+            </p>
+
+            <div class="cards">
+
+                <div class="card" onclick="openTopic(1)">
+                    <h2>📘 1. Introduction</h2>
+                    <p>Introduction to JavaScript</p>
+                </div>
+
+                <div class="card" onclick="openTopic(2)">
+                    <h2>📘 2. Variables</h2>
+                    <p>var, let and const</p>
+                </div>
+
+                <div class="card" onclick="openTopic(3)">
+                    <h2>📘 3. Data Types</h2>
+                    <p>String, Number, Boolean...</p>
+                </div>
+
+                <div class="card" onclick="openTopic(4)">
+                    <h2>📘 4. Operators</h2>
+                    <p>Arithmetic & Logical Operators</p>
+                </div>
+
+                <div class="card" onclick="openTopic(5)">
+                    <h2>📘 5. Input & Output</h2>
+                    <p>alert(), prompt(), console.log()</p>
+                </div>
+
+                <div class="card" onclick="openTopic(6)">
+                    <h2>📘 6. Conditions</h2>
+                    <p>if, else, switch</p>
+                </div>
+
+                <div class="card" onclick="openTopic(7)">
+                    <h2>📘 7. Loops</h2>
+                    <p>for, while, do while</p>
+                </div>
+
+                <div class="card" onclick="openTopic(8)">
+                    <h2>📘 8. Functions</h2>
+                    <p>User Defined Functions</p>
+                </div>
+
+                <div class="card" onclick="openTopic(9)">
+                    <h2>📘 9. Arrays</h2>
+                    <p>Array Methods</p>
+                </div>
+
+                <div class="card" onclick="openTopic(10)">
+                    <h2>📘 10. Objects</h2>
+                    <p>JavaScript Objects</p>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================
+     JavaScript Topic 
+========================== -->
+        <section id="jsTopic1" style="display:none;">
+
+            <div class="topic">
+
+                <h1>📘 Introduction to JavaScript</h1>
+
+                <p>
+                    JavaScript is a programming language used to make web pages interactive.
+                </p>
+
+                <h2>Features</h2>
+
+                <ul>
+
+                    <li>✔ Client Side Language</li>
+
+                    <li>✔ Fast Execution</li>
+
+                    <li>✔ Interactive Website</li>
+
+                    <li>✔ Supported by all Browsers</li>
+
+                </ul>
+
+                <h2>Example</h2>
+                <h2>💻 Live JavaScript Editor</h2>
+                <h3>Lesson Progress</h3>
+
+                <div class="lessonProgress">
+
+                    <div id="lessonBar"></div>
+
+                </div>
+
+                <p id="lessonText">0% Completed</p>
+
+                <div class="editorHeader">
+
+                    <div class="editorDots">
+                        <span class="red"></span>
+                        <span class="yellow"></span>
+                        <span class="green"></span>
+                    </div>
+
+                    <div class="editorTitle">
+                        app.js
+                    </div>
+
+                </div>
+
+                <textarea id="jsEditor" rows="10" spellcheck="false">
+
+alert("Welcome to JavaScript");
+
+</textarea>
+
+                <br><br>
+
+                <button onclick="runEditor()">▶ Run Code</button>
+
+                <button onclick="copyEditorCode()">📋 Copy Code</button>
+
+                <button onclick="clearEditor()">🗑 Clear</button>
+
+                <button onclick="resetEditor()">🔄 Reset</button>
+
+                <button onclick="completeLesson();updateProgress();">🏆 Complete Lesson</button>
+
+                <div class="lessonNav">
+
+                    <button onclick="previousLesson()">
+                        ⬅ Previous
+                    </button>
+
+                    <button onclick="openTopic(2)">➡ Next</button>
+
+
+                </div>
+
+                <div id="outputBox">
+
+                    <h3>Output</h3>
+
+                    <p>Click Run Code</p>
+
+                </div>
+
+                <pre>
+&lt;script&gt;
+
+alert("Welcome to JavaScript");
+
+&lt;/script&gt;
+</pre>
+
+                <button onclick="copyJS1()">📋 Copy Code</button>
+
+                <button onclick="runJS1()">▶ Run Example</button>
+
+                <button onclick="showSection('jsNotes')">⬅ Back</button>
+
+            </div>
+
+        </section>
+
+        <section id="jsTopic2" style="display:none;">
+
+            <div class="topic">
+
+                <h1>📘 Topic 2 : Variables</h1>
+
+                <p>
+                    Variables are used to store data in JavaScript.
+                </p>
+
+                <h2>Types of Variables</h2>
+
+                <ul>
+                    <li>var</li>
+                    <li>let</li>
+                    <li>const</li>
+                </ul>
+
+                <div class="editorHeader">
+
+                    <div class="editorDots">
+                        <span class="red"></span>
+                        <span class="yellow"></span>
+                        <span class="green"></span>
+                    </div>
+
+                    <div class="editorTitle">
+                        variables.js
+                    </div>
+
+                </div>
+
+                <textarea id="jsEditor2">
+
+let name="Akash";
+
+alert(name);
+
+</textarea>
+
+                <br><br>
+
+                <button onclick="runEditor2()">▶ Run Code</button>
+
+                <button onclick="copyEditor2()">📋 Copy Code</button>
+
+                <button onclick="showSection('jsNotes')">⬅ Back</button>
+
+                <button onclick="openTopic(3)">➡ Next</button>
+
+                <button onclick="completeLesson();updateProgress();">🏆 Complete Lesson</button>
+
+
+                <div id="output2"></div>
+
+            </div>
+
+        </section>
+
+        <section id="jsTopic3" style="display:none;">
+
+            <div class="topic">
+
+                <h1>📘 Topic 3 : Data Types</h1>
+
+                <p>JavaScript માં મુખ્ય Data Types:</p>
+
+                <ul>
+                    <li>String</li>
+                    <li>Number</li>
+                    <li>Boolean</li>
+                    <li>Array</li>
+                    <li>Object</li>
+                    <li>Null</li>
+                    <li>Undefined</li>
+                </ul>
+
+                <div class="editorHeader">
+                    <div class="editorDots">
+                        <span class="red"></span>
+                        <span class="yellow"></span>
+                        <span class="green"></span>
+                    </div>
+
+                    <div class="editorTitle">datatype.js</div>
+                </div>
+
+                <textarea id="jsEditor3">
+let name="Akash";
+let age=22;
+let student=true;
+
+console.log(name);
+console.log(age);
+console.log(student);
+</textarea>
+
+                <br>
+
+                <button onclick="runEditor3()">▶ Run</button>
+
+                <button onclick="copyEditor3()">📋 Copy</button>
+
+                <button onclick="showSection('jsNotes')">⬅ Back</button>
+
+                <button onclick="openTopic(4)">➡ Next</button>
+
+                <button onclick="completeLesson();updateProgress();">🏆 Complete Lesson</button>
+
+
+
+                <div id="output3"></div>
+
+            </div>
+
+        </section>
+
+        <section id="jsTopic4" style="display:none;">
+
+            <div class="topic">
+
+                <h1>📘 Topic 4 : Operators</h1>
+
+                <p>Operators are used to perform operations on values.</p>
+
+                <h2>Types of Operators</h2>
+
+                <ul>
+                    <li>Arithmetic (+ - * / %)</li>
+                    <li>Comparison (== != &gt; &lt;)</li>
+                    <li>Logical (&& || !)</li>
+                    <li>Assignment (= += -=)</li>
+                </ul>
+
+                <div class="editorHeader">
+
+                    <div class="editorDots">
+                        <span class="red"></span>
+                        <span class="yellow"></span>
+                        <span class="green"></span>
+                    </div>
+
+                    <div class="editorTitle">
+                        operators.js
+                    </div>
+
+                </div>
+
+                <textarea id="jsEditor4">
+
+let a=20;
+
+let b=10;
+
+alert(a+b);
+
+</textarea>
+
+                <br><br>
+
+                <button onclick="runEditor4()">▶ Run</button>
+
+                <button onclick="copyEditor4()">📋 Copy</button>
+
+                <button onclick="showSection('jsNotes')">⬅ Back</button>
+
+                <button onclick="openTopic(5)">➡ Next</button>
+
+                <button onclick="completeLesson();updateProgress();">🏆 Complete Lesson</button>
+
+
+                <div id="output4"></div>
+
+            </div>
+
+        </section>
+
+        <section id="jsTopic5" style="display:none;">
+
+            <div class="topic">
+
+                <h1>📘 Topic 5 : Input & Output</h1>
+
+                <p>
+                    JavaScript માં Input અને Output માટે મુખ્ય Functions:
+                </p>
+
+                <ul>
+                    <li>alert()</li>
+                    <li>prompt()</li>
+                    <li>console.log()</li>
+                    <li>document.write()</li>
+                </ul>
+
+                <div class="editorHeader">
+
+                    <div class="editorDots">
+                        <span class="red"></span>
+                        <span class="yellow"></span>
+                        <span class="green"></span>
+                    </div>
+
+                    <div class="editorTitle">
+                        input_output.js
+                    </div>
+
+                </div>
+
+                <textarea id="jsEditor5">
+
+let name = prompt("Enter Your Name");
+
+alert("Welcome " + name);
+
+</textarea>
+
+                <br><br>
+
+                <button onclick="runEditor5()">▶ Run</button>
+
+                <button onclick="copyEditor5()">📋 Copy</button>
+
+                <button onclick="showSection('jsNotes')">⬅ Back</button>
+
+                <button onclick="openTopic(6)">➡ Next</button>
+
+                <button onclick="completeLesson();updateProgress();">🏆 Complete Lesson</button>
+
+
+                <div id="output5"></div>
+
+            </div>
+
+        </section>
+
+        <section id="jsTopic6" style="display:none;">
+
+            <div class="topic">
+
+                <h1>📘 Topic 6 : if / else</h1>
+
+                <p>
+                    The if...else statement is used to execute different code based on a condition.
+                </p>
+
+                <h2>Example</h2>
+
+                <div class="editorHeader">
+
+                    <div class="editorDots">
+                        <span class="red"></span>
+                        <span class="yellow"></span>
+                        <span class="green"></span>
+                    </div>
+
+                    <div class="editorTitle">
+                        if_else.js
+                    </div>
+
+                </div>
+
+                <textarea id="jsEditor6">
+
+let age = 18;
+
+if(age >= 18){
+
+alert("Eligible for Voting");
+
+}else{
+
+alert("Not Eligible");
+
+}
+
+</textarea>
+
+                <br><br>
+
+                <button onclick="runEditor6()">▶ Run</button>
+
+                <button onclick="copyEditor6()">📋 Copy</button>
+
+                <button onclick="showSection('jsNotes')">⬅ Back</button>
+
+                <button onclick="openTopic(7)">➡ Next</button>
+
+                <button onclick="completeLesson();updateProgress();">🏆 Complete Lesson</button>
+
+
+                <div id="output6"></div>
+
+            </div>
+
+        </section>
+
+        <section id="jsTopic7" style="display:none;">
+
+            <div class="topic">
+
+                <h1>📘 Topic 7 : Switch Statement</h1>
+
+                <p>Switch is used for multiple conditions.</p>
+
+                <textarea id="jsEditor7">
+
+let day=2;
+
+switch(day){
+
+case 1:
+
+alert("Monday");
+
+break;
+
+case 2:
+
+alert("Tuesday");
+
+break;
+
+default:
+
+alert("Invalid");
+
+}
+
+</textarea>
+
+                <br><br>
+
+                <button onclick="runEditor7()">▶ Run</button>
+
+                <button onclick="copyEditor7()">📋 Copy</button>
+
+                <button onclick="showSection('jsNotes')">⬅ Back</button>
+
+                <button onclick="openTopic(8)">➡ Next</button>
+
+                <button onclick="completeLesson();updateProgress();">🏆 Complete Lesson</button>
+
+
+                <div id="output7"></div>
+
+            </div>
+
+        </section>
+
+        <section id="jsTopic8" style="display:none;">
+
+            <div class="topic">
+
+                <h1>📘 Topic 8 : For Loop</h1>
+
+                <textarea id="jsEditor8">
+
+for(let i=1;i<=5;i++){
+
+console.log(i);
+
+}
+
+</textarea>
+
+                <br><br>
+
+                <button onclick="runEditor8()">▶ Run</button>
+
+                <button onclick="copyEditor8()">📋 Copy</button>
+
+                <button onclick="showSection('jsNotes')">⬅ Back</button>
+
+                <button onclick="openTopic(9)">➡ Next</button>
+
+                <button onclick="completeLesson();updateProgress();">🏆 Complete Lesson</button>
+
+
+                <div id="output8"></div>
+
+            </div>
+
+        </section>
+
+        <section id="jsTopic9" style="display:none;">
+
+            <div class="topic">
+
+                <h1>📘 Topic 9 : While Loop</h1>
+
+                <textarea id="jsEditor9">
+
+let i=1;
+
+while(i<=5){
+
+console.log(i);
+
+i++;
+
+}
+
+</textarea>
+
+                <br><br>
+
+                <button onclick="runEditor9()">▶ Run</button>
+
+                <button onclick="copyEditor9()">📋 Copy</button>
+
+                <button onclick="showSection('jsNotes')">⬅ Back</button>
+
+                <button onclick="openTopic(10)">➡ Next</button>
+
+                <button onclick="completeLesson();updateProgress();">🏆 Complete Lesson</button>
+
+
+                <div id="output9"></div>
+
+            </div>
+
+        </section>
+
+        <section id="jsTopic10" style="display:none;">
+
+            <div class="topic">
+
+                <h1>📘 Topic 10 : Functions</h1>
+
+                <textarea id="jsEditor10">
+
+function hello(){
+
+alert("Welcome");
+
+}
+
+hello();
+
+</textarea>
+
+                <br><br>
+
+                <button onclick="runEditor10()">▶ Run</button>
+
+                <button onclick="copyEditor10()">📋 Copy</button>
+
+                <button onclick="showSection('jsNotes')">⬅ Back</button>
+
+                <button onclick="completeLesson();updateProgress();">🏆 Complete Lesson</button>
+    
+
+                <div id="output10"></div>
+
+            </div>
+
+        </section>
+
         <div class="topic" id="learningProgress">
 
             <h2>📊 Learning Progress</h2>
@@ -3035,7 +3990,7 @@ color:var(--main);
             }
 
         }
-        let progress = document.getElementById("progressBar");
+        let progressBar = document.getElementById("progressBar");
 
         if (localStorage.getItem("htmlCompleted")) {
 
@@ -3136,6 +4091,427 @@ color:var(--main);
             }
 
         });
+
+        function showSection(sectionId) {
+
+            // બધા Sections Hide કરો
+            document.querySelectorAll("section").forEach(function (section) {
+                section.style.display = "none";
+            });
+
+            // પસંદ કરેલું Section Show કરો
+            document.getElementById(sectionId).style.display = "block";
+
+            // ઉપર Scroll કરો
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+        function openTopic(topic) {
+
+            switch (topic) {
+
+                case 1:
+
+                    showSection("jsTopic1");
+
+                    break;
+
+                case 2:
+
+                    showSection("jsTopic2");
+
+                    break;
+
+                case 3:
+
+                    showSection("jsTopic3");
+
+                    break;
+
+                case 4:
+
+                    showSection("jsTopic4");
+
+                    break;
+
+                case 5:
+
+                    showSection("jsTopic5");
+
+                    break;
+
+                case 6:
+
+                    showSection("jsTopic6");
+
+                    break;
+
+                case 7:
+
+                    showSection("jsTopic7");
+
+                    break;
+
+                case 8:
+
+                    showSection("jsTopic8");
+
+                    break;
+
+                case 9:
+
+                    showSection("jsTopic9");
+
+                    break;
+
+                case 10:
+
+                    showSection("jsTopic10");
+
+                    break;
+
+                default:
+
+                    alert("Topic " + topic + " Coming Soon!");
+
+            }
+
+        }
+
+
+        function copyJS1() {
+
+            navigator.clipboard.writeText(`alert("Welcome to JavaScript");`);
+
+            alert("Code Copied Successfully.");
+
+        }
+
+        function runJS1() {
+
+            alert("Welcome to JavaScript");
+
+        }
+        const defaultJS = 'alert("Welcome to JavaScript");';
+
+        function runEditor() {
+
+            let code = document.getElementById("jsEditor").value;
+
+            document.getElementById("outputBox").innerHTML =
+
+                "<h3>Output</h3><p>Code Executed Successfully.</p>";
+
+            try {
+
+                eval(code);
+
+            } catch (err) {
+
+                document.getElementById("outputBox").innerHTML =
+
+                    "<h3>Error</h3><p>" + err + "</p>";
+
+            }
+
+        }
+
+        function clearEditor() {
+
+            document.getElementById("jsEditor").value = "";
+
+            document.getElementById("outputBox").innerHTML =
+
+                "<h3>Output</h3><p>Editor Cleared.</p>";
+
+        }
+
+        function resetEditor() {
+
+            document.getElementById("jsEditor").value = defaultJS;
+
+            document.getElementById("outputBox").innerHTML =
+
+                "<h3>Output</h3><p>Editor Reset.</p>";
+
+        }
+
+        function copyEditorCode() {
+
+            let code = document.getElementById("jsEditor").value;
+
+            navigator.clipboard.writeText(code);
+
+            alert("✅ Code Copied Successfully!");
+
+        }
+
+        let progress = 0;
+
+        function completeLesson() {
+
+            document.getElementById("lessonBar").style.width = "100%";
+
+            document.getElementById("lessonText").innerHTML = "100% Completed ✅";
+
+            localStorage.setItem("jsLesson1", "100");
+
+        }
+
+        window.onload = function () {
+
+            let save = localStorage.getItem("jsLesson1");
+
+            if (save) {
+
+                document.getElementById("lessonBar").style.width = save + "%";
+
+                document.getElementById("lessonText").innerHTML = save + "% Completed ✅";
+
+            }
+
+        }
+        function previousLesson() {
+
+            showSection("jsNotes");
+
+        }
+
+        // function nextLesson() {
+
+        //     alert("📘 Topic 2 (Variables) will be added in Step 9.");
+
+        // }
+        function runEditor2() {
+
+            let code = document.getElementById("jsEditor2").value;
+
+            try {
+
+                eval(code);
+
+                document.getElementById("output2").innerHTML =
+                    "✅ Code Executed Successfully";
+
+            } catch (e) {
+
+                document.getElementById("output2").innerHTML = e;
+
+            }
+
+        }
+
+        function copyEditor2() {
+
+            navigator.clipboard.writeText(
+
+                document.getElementById("jsEditor2").value
+
+            );
+
+            alert("Code Copied");
+
+        }
+
+        function nextTopic2() {
+
+            alert("Topic 3 Coming in Step 10");
+
+        }
+        function runEditor3() {
+
+            let code = document.getElementById("jsEditor3").value;
+
+            try {
+
+                eval(code);
+
+                document.getElementById("output3").innerHTML = "✅ Code Executed";
+
+            } catch (e) {
+
+                document.getElementById("output3").innerHTML = e;
+
+            }
+
+        }
+
+        function copyEditor3() {
+
+            navigator.clipboard.writeText(
+
+                document.getElementById("jsEditor3").value
+
+            );
+
+            alert("Code Copied");
+
+        }
+        function runEditor4() {
+
+            let code = document.getElementById("jsEditor4").value;
+
+            try {
+
+                eval(code);
+
+                document.getElementById("output4").innerHTML =
+                    "✅ Code Executed Successfully";
+
+            } catch (err) {
+
+                document.getElementById("output4").innerHTML = err;
+
+            }
+
+        }
+
+        function copyEditor4() {
+
+            navigator.clipboard.writeText(
+
+                document.getElementById("jsEditor4").value
+
+            );
+
+            alert("Code Copied Successfully");
+
+        }
+        function runEditor5() {
+
+            let code = document.getElementById("jsEditor5").value;
+
+            try {
+
+                eval(code);
+
+                document.getElementById("output5").innerHTML =
+                    "✅ Code Executed Successfully";
+
+            } catch (err) {
+
+                document.getElementById("output5").innerHTML = err;
+
+            }
+
+        }
+
+        function copyEditor5() {
+
+            navigator.clipboard.writeText(
+                document.getElementById("jsEditor5").value
+            );
+
+            alert("Code Copied Successfully");
+
+        }
+
+        function runEditor6() {
+
+            let code = document.getElementById("jsEditor6").value;
+
+            try {
+
+                eval(code);
+
+                document.getElementById("output6").innerHTML =
+                    "✅ Code Executed Successfully";
+
+            } catch (err) {
+
+                document.getElementById("output6").innerHTML =
+                    "❌ " + err;
+
+            }
+
+        }
+
+        function copyEditor6() {
+
+            navigator.clipboard.writeText(
+
+                document.getElementById("jsEditor6").value
+
+            );
+
+            alert("✅ Code Copied");
+
+        }
+        function runEditor7() { eval(document.getElementById("jsEditor7").value); }
+        function runEditor8() { eval(document.getElementById("jsEditor8").value); }
+        function runEditor9() { eval(document.getElementById("jsEditor9").value); }
+        function runEditor10() { eval(document.getElementById("jsEditor10").value); }
+
+        function copyEditor7() { navigator.clipboard.writeText(jsEditor7.value); alert("Copied"); }
+        function copyEditor8() { navigator.clipboard.writeText(jsEditor8.value); alert("Copied"); }
+        function copyEditor9() { navigator.clipboard.writeText(jsEditor9.value); alert("Copied"); }
+        function copyEditor10() { navigator.clipboard.writeText(jsEditor10.value); alert("Copied"); }
+
+
+        let completedTopics=0;
+
+function updateProgress(){
+
+completedTopics++;
+
+let percent=Math.floor((completedTopics/10)*100);
+
+document.getElementById("xpValue").innerHTML=percent+"%";
+
+let deg=percent*3.6;
+
+document.querySelector(".progressCircle").style.background=
+
+`conic-gradient(#00e5ff ${deg}deg,#00ff99 ${deg}deg,#1f2937 0deg)`;
+
+if(percent>=100){
+
+document.getElementById("badgeText").innerHTML="🏆 JavaScript Master";
+
+}
+
+else if(percent>=70){
+
+document.getElementById("badgeText").innerHTML="🥇 Advanced";
+
+}
+
+else if(percent>=40){
+
+document.getElementById("badgeText").innerHTML="🥈 Intermediate";
+
+}
+
+else{
+
+document.getElementById("badgeText").innerHTML="🥉 Beginner";
+
+}
+
+localStorage.setItem("jsProgress",completedTopics);
+
+}
+
+window.addEventListener("load",()=>{
+
+let save=localStorage.getItem("jsProgress");
+
+if(save){
+
+completedTopics=parseInt(save);
+
+for(let i=0;i<completedTopics;i++){
+
+updateProgress();
+
+}
+
+}
+
+});
     </script>
 
 </body>
