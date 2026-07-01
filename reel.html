@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aducate Reel</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
+}
+
+body{
+  background:black;
+  overflow:hidden;
+}
+
+/* CONTAINER */
+.container{
+  height:100vh;
+  height:100svh;
+  overflow-y:scroll;
+  scroll-snap-type:y mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.container::-webkit-scrollbar{
+  display:none;
+}
+
+/* REEL */
+.reel{
+  height:100vh;
+  height:100svh;
+  width:100%;
+  position:relative;
+  scroll-snap-align:start;
+  overflow:hidden;
+}
+
+/* VIDEO */
+video{
+  width:100%;
+  height:100%;
+}
+
+/* OVERLAY */
+.overlay{
+  position:absolute;
+  bottom:20px;
+  left:15px;
+  color:white;
+  z-index:2;
+}
+
+.overlay h3{
+  font-size:16px;
+}
+
+.overlay p{
+  font-size:12px;
+  opacity:0.8;
+}
+
+/* ACTION BUTTONS */
+.actions{
+  position:absolute;
+  right:15px;
+  bottom:90px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  z-index:2;
+}
+
+.btn{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.15);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  font-size:18px;
+  backdrop-filter: blur(5px);
+}
+
+/* MOBILE */
+@media (max-width:600px){
+  .btn{
+    width:40px;
+    height:40px;
+    font-size:16px;
+  }
+
+  .overlay{
+    bottom:15px;
+    left:10px;
+  }
+
+  .actions{
+    right:10px;
+    bottom:80px;
+    gap:10px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container" id="container"></div>
+
+<script>
+
+const container = document.getElementById("container");
+
+let videos = [
+  "vid/1.mp4","vid/2.mp4","vid/3.mp4","vid/4.mp4","vid/5.mp4",
+  "vid/6.mp4","vid/7.mp4","vid/8.mp4","vid/9.mp4","vid/10.mp4",
+  "vid/11.mp4","vid/12.mp4","vid/13.mp4","vid/14.mp4","vid/15.mp4"
+];
+
+function shuffle(arr){
+  return arr.sort(() => Math.random() - 0.5);
+}
+
+videos = shuffle(videos);
+
+let index = 0;
+
+/* SOUND CONTROL */
+let soundEnabled = false;
+
+document.body.addEventListener("click", () => {
+  soundEnabled = !soundEnabled;
+
+  const vids = document.querySelectorAll("video");
+
+  vids.forEach(v => {
+    v.muted = !soundEnabled;
+  });
+
+});
+
+/* CREATE REEL */
+function createReel(src){
+  const reel = document.createElement("div");
+  reel.className = "reel";
+
+  reel.innerHTML = `
+    <video class="video" muted loop playsinline src="${src}"></video>
+
+    <div class="overlay">
+      <h3>Aducate Reel</h3>
+      <p>#viral #trending</p>
+    </div>
+
+    <div class="actions">
+      <div class="btn">❤️</div>
+      <div class="btn">💬</div>
+      <div class="btn">🔗</div>
+    </div>
+  `;
+
+  container.appendChild(reel);
+}
+
+/* INITIAL LOAD */
+for(let i=0;i<3;i++){
+  createReel(videos[index]);
+  index++;
+}
+
+/* LOAD MORE */
+function loadMore(){
+  for(let i=0;i<2;i++){
+    if(index >= videos.length){
+      videos = shuffle(videos);
+      index = 0;
+    }
+    createReel(videos[index]);
+    index++;
+  }
+  observeVideos();
+}
+
+/* AUTO PLAY + SOUND CONTROL */
+function observeVideos(){
+  const vids = document.querySelectorAll("video");
+
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.play();
+
+        if(soundEnabled){
+          e.target.muted = false;
+        } else {
+          e.target.muted = true;
+        }
+
+      } else {
+        e.target.pause();
+        e.target.muted = true;
+      }
+    });
+  }, { threshold:0.75 });
+
+  vids.forEach(v=>observer.observe(v));
+}
+
+/* INFINITE SCROLL */
+container.addEventListener("scroll", ()=>{
+  if(container.scrollTop + container.clientHeight >= container.scrollHeight - 50){
+    loadMore();
+  }
+});
+
+observeVideos();
+
+</script>
+
+</body>
+</html>
