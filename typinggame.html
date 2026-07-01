@@ -236,7 +236,7 @@
 ];
 
         let currentText = "";
-        let timer = 60;
+        let timer = 300;
         let started = false;
         let interval;
         let xp = 0;
@@ -387,10 +387,10 @@
                 ? input.value.trim().split(/\s+/).length
                 : 0;
 
-            let elapsed = 60 - timer;
+            let elapsed = 300 - timer;
 
             let wpm = elapsed > 0
-                ? Math.round(words / (elapsed / 60))
+                ? Math.round(words / (elapsed / 300))
                 : 0;
 
             document.getElementById("wpm").textContent = wpm;
