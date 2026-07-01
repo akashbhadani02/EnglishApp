@@ -2239,10 +2239,7 @@
 
         <button onclick="studentLogin()">Login</button>
 
-        <div class="link" onclick="showScreen('register')">
-            New Student? Register Here
-        </div>
-
+        
         <div class="card" style="margin-top:10px;">
             <h3>Admin Login</h3>
 
@@ -2658,9 +2655,17 @@ justify-content:space-between;
         <script>
 
             const ADMINS = [
-                { username: "Akash", password: "Akash" },
-                { username: "Vaibhav", password: "Vaibhav" }
+                { username: "Akash", password: "Akash" }
 
+            ];
+
+            const STUDENTS = [
+                { username: "Admin", password: "12345" },
+                { username: "Admin1", password: "12345" },
+                { username: "Admin2", password: "12345" },
+                { username: "Admin3", password: "12345" },
+                { username: "Admin4", password: "12345" },
+                { username: "Admin5", password: "12345" },
             ];
             window.onload = function () {
 
@@ -2792,17 +2797,11 @@ justify-content:space-between;
                 let password =
                     document.getElementById("loginPass").value;
 
-                let students =
-                    JSON.parse(
-                        localStorage.getItem("students")
-                    );
-
-                let user =
-                    students.find(
-                        s =>
-                            s.username === username &&
-                            s.password === password
-                    );
+                let user = STUDENTS.find(
+                    s =>
+                        s.username === username &&
+                        s.password === password
+                );
 
                 if (user) {
 
@@ -2941,22 +2940,26 @@ justify-content:space-between;
 
             function showProfile() {
 
-                let user =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "currentStudent"
-                        )
-                    );
+                if (user) {
 
-                document.getElementById(
-                    "profileName"
-                ).value = user.name;
+    user.name = user.name || "";
+    user.mobile = user.mobile || "";
 
-                document.getElementById(
-                    "profileMobile"
-                ).value = user.mobile;
+    localStorage.setItem(
+        "currentStudent",
+        JSON.stringify(user)
+    );
 
-                showScreen("profileScreen");
+    document.getElementById("studentWelcome").innerHTML =
+        "Welcome";
+
+    showScreen("studentDashboard");
+
+} else {
+
+    alert("Invalid Login");
+
+}
 
             }
 
@@ -4055,6 +4058,7 @@ justify-content:space-between;
                 });
 
             }
+            
         </script>
 
 
