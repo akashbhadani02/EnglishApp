@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aducate Reel</title>
+<title>PRO Reels App</title>
 
 <style>
 *{
@@ -18,27 +18,19 @@ body{
   overflow:hidden;
 }
 
-/* CONTAINER */
+/* MAIN CONTAINER */
 .container{
   height:100vh;
-  height:100svh;
   overflow-y:scroll;
   scroll-snap-type:y mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-
-.container::-webkit-scrollbar{
-  display:none;
+  scroll-behavior:smooth;
 }
 
 /* REEL */
 .reel{
   height:100vh;
-  height:100svh;
-  width:100%;
   position:relative;
   scroll-snap-align:start;
-  overflow:hidden;
 }
 
 /* VIDEO */
@@ -53,27 +45,16 @@ video{
   bottom:20px;
   left:15px;
   color:white;
-  z-index:2;
 }
 
-.overlay h3{
-  font-size:16px;
-}
-
-.overlay p{
-  font-size:12px;
-  opacity:0.8;
-}
-
-/* ACTION BUTTONS */
+/* ACTIONS */
 .actions{
   position:absolute;
   right:15px;
-  bottom:90px;
+  bottom:120px;
   display:flex;
   flex-direction:column;
-  gap:12px;
-  z-index:2;
+  gap:15px;
 }
 
 .btn{
@@ -85,28 +66,42 @@ video{
   align-items:center;
   justify-content:center;
   color:white;
-  font-size:18px;
-  backdrop-filter: blur(5px);
+  cursor:pointer;
+  user-select:none;
 }
 
-/* MOBILE */
-@media (max-width:600px){
-  .btn{
-    width:40px;
-    height:40px;
-    font-size:16px;
-  }
+.count{
+  color:white;
+  font-size:12px;
+  text-align:center;
+}
 
-  .overlay{
-    bottom:15px;
-    left:10px;
-  }
+/* COMMENT BOX */
+.commentBox{
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  padding:10px;
+}
 
-  .actions{
-    right:10px;
-    bottom:80px;
-    gap:10px;
-  }
+.commentBox input{
+  width:75%;
+  padding:8px;
+}
+
+.commentBox button{
+  padding:8px;
+}
+
+.comments{
+  max-height:120px;
+  overflow:auto;
+  color:white;
+  font-size:12px;
+  margin-top:5px;
 }
 </style>
 </head>
@@ -125,103 +120,122 @@ let videos = [
   "vid/11.mp4","vid/12.mp4","vid/13.mp4","vid/14.mp4","vid/15.mp4"
 ];
 
-function shuffle(arr){
-  return arr.sort(() => Math.random() - 0.5);
-}
-
-videos = shuffle(videos);
+let likes = JSON.parse(localStorage.getItem("likes") || "{}");
+let comments = JSON.parse(localStorage.getItem("comments") || "{}");
 
 let index = 0;
 
-/* SOUND CONTROL */
-let soundEnabled = false;
-
-document.body.addEventListener("click", () => {
-  soundEnabled = !soundEnabled;
-
-  const vids = document.querySelectorAll("video");
-
-  vids.forEach(v => {
-    v.muted = !soundEnabled;
-  });
-
-});
-
 /* CREATE REEL */
-function createReel(src){
+function createReel(src,i){
+
+  if(!likes[i]) likes[i]=0;
+  if(!comments[i]) comments[i]=[];
+
   const reel = document.createElement("div");
   reel.className = "reel";
 
   reel.innerHTML = `
-    <video class="video" muted loop playsinline src="${src}"></video>
+    <video muted loop playsinline src="${src}"></video>
 
     <div class="overlay">
-      <h3>Aducate Reel</h3>
+      <h3>PRO Reels</h3>
       <p>#viral #trending</p>
     </div>
 
     <div class="actions">
-      <div class="btn">❤️</div>
-      <div class="btn">💬</div>
-      <div class="btn">🔗</div>
+
+      <div>
+        <div class="btn likeBtn">❤️</div>
+        <div class="count" id="like${i}">${likes[i]}</div>
+      </div>
+
+      <div class="btn commentBtn">💬</div>
+
+    </div>
+
+    <div class="commentBox">
+      <input placeholder="Add comment..." />
+      <button>Post</button>
+
+      <div class="comments" id="cmt${i}">
+        ${comments[i].map(c=>`<div>• ${c}</div>`).join("")}
+      </div>
     </div>
   `;
+
+  /* LIKE */
+  reel.querySelector(".likeBtn").onclick = () => {
+    likes[i]++;
+    localStorage.setItem("likes", JSON.stringify(likes));
+    document.getElementById("like"+i).innerText = likes[i];
+  };
+
+  /* COMMENT */
+  const box = reel.querySelector(".commentBox");
+  reel.querySelector(".commentBtn").onclick = () => {
+    box.style.display = box.style.display==="block" ? "none":"block";
+  };
+
+  const input = reel.querySelector("input");
+  reel.querySelector("button").onclick = () => {
+    if(input.value.trim()){
+      comments[i].push(input.value);
+      localStorage.setItem("comments", JSON.stringify(comments));
+
+      document.getElementById("cmt"+i).innerHTML +=
+        `<div>• ${input.value}</div>`;
+
+      input.value="";
+    }
+  };
 
   container.appendChild(reel);
 }
 
-/* INITIAL LOAD */
-for(let i=0;i<3;i++){
-  createReel(videos[index]);
-  index++;
+/* LOAD VIDEOS */
+for(let i=0;i<videos.length;i++){
+  createReel(videos[i], i);
 }
 
-/* LOAD MORE */
-function loadMore(){
-  for(let i=0;i<2;i++){
-    if(index >= videos.length){
-      videos = shuffle(videos);
-      index = 0;
+/* AUTO PLAY ONLY ACTIVE VIDEO */
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    const video = e.target.querySelector("video");
+
+    if(e.isIntersecting){
+      video.play();
+    } else {
+      video.pause();
     }
-    createReel(videos[index]);
-    index++;
-  }
-  observeVideos();
-}
+  });
+},{threshold:0.8});
 
-/* AUTO PLAY + SOUND CONTROL */
-function observeVideos(){
-  const vids = document.querySelectorAll("video");
-
-  const observer = new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.play();
-
-        if(soundEnabled){
-          e.target.muted = false;
-        } else {
-          e.target.muted = true;
-        }
-
-      } else {
-        e.target.pause();
-        e.target.muted = true;
-      }
-    });
-  }, { threshold:0.75 });
-
-  vids.forEach(v=>observer.observe(v));
-}
-
-/* INFINITE SCROLL */
-container.addEventListener("scroll", ()=>{
-  if(container.scrollTop + container.clientHeight >= container.scrollHeight - 50){
-    loadMore();
-  }
+document.querySelectorAll(".reel").forEach(r=>{
+  observer.observe(r);
 });
 
-observeVideos();
+/* ONE SWIPE LOCK (IMPORTANT) */
+let isScrolling = false;
+
+container.addEventListener("scroll", ()=>{
+  if(isScrolling) return;
+
+  isScrolling = true;
+
+  setTimeout(()=>{
+    const reels = document.querySelectorAll(".reel");
+
+    reels.forEach(r=>{
+      const rect = r.getBoundingClientRect();
+
+      if(rect.top === 0){
+        r.scrollIntoView({behavior:"smooth"});
+      }
+    });
+
+    isScrolling = false;
+  },120);
+});
 
 </script>
 
