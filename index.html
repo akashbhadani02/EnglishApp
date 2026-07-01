@@ -2239,7 +2239,9 @@
 
         <button onclick="studentLogin()">Login</button>
 
-        
+
+        <button class="btn" onclick="showScreen('register')">🎓 New Student Login</button>
+
         <div class="card" style="margin-top:10px;">
             <h3>Admin Login</h3>
 
@@ -2416,9 +2418,9 @@
 
         <div class="card">
 
-            <input id="profileName">
+            <input id="profileName" placeholder="Name">
 
-            <input id="profileMobile">
+            <input id="profileMobile" placeholder="Mobile Number">
 
             <button onclick="saveProfile()">
                 Save Profile
@@ -2659,14 +2661,6 @@ justify-content:space-between;
 
             ];
 
-            const STUDENTS = [
-                { username: "Admin", password: "12345" },
-                { username: "Admin1", password: "12345" },
-                { username: "Admin2", password: "12345" },
-                { username: "Admin3", password: "12345" },
-                { username: "Admin4", password: "12345" },
-                { username: "Admin5", password: "12345" },
-            ];
             window.onload = function () {
 
                 let currentStudent =
@@ -2788,31 +2782,23 @@ justify-content:space-between;
             /* -----------------------
             STUDENT LOGIN
             ----------------------- */
-
             function studentLogin() {
 
-                let username =
-                    document.getElementById("loginUser").value;
+                let username = document.getElementById("loginUser").value;
+                let password = document.getElementById("loginPass").value;
 
-                let password =
-                    document.getElementById("loginPass").value;
+                let students = JSON.parse(localStorage.getItem("students")) || [];
 
-                let user = STUDENTS.find(
-                    s =>
-                        s.username === username &&
-                        s.password === password
+                let user = students.find(s =>
+                    s.username === username &&
+                    s.password === password
                 );
 
                 if (user) {
 
-                    localStorage.setItem(
-                        "currentStudent",
-                        JSON.stringify(user)
-                    );
+                    localStorage.setItem("currentStudent", JSON.stringify(user));
 
-                    document.getElementById(
-                        "studentWelcome"
-                    ).innerHTML =
+                    document.getElementById("studentWelcome").innerHTML =
                         "Welcome, " + user.name;
 
                     showScreen("studentDashboard");
@@ -2822,12 +2808,6 @@ justify-content:space-between;
                     alert("Invalid Login");
 
                 }
-                history.replaceState(
-                    { screen: "studentDashboard" },
-                    "",
-                    "#studentDashboard"
-                );
-
             }
 
             /* -----------------------
@@ -2940,27 +2920,12 @@ justify-content:space-between;
 
             function showProfile() {
 
-                if (user) {
+                let user = JSON.parse(localStorage.getItem("currentStudent"));
 
-    user.name = user.name || "";
-    user.mobile = user.mobile || "";
+                document.getElementById("profileName").value = user.name;
+                document.getElementById("profileMobile").value = user.mobile;
 
-    localStorage.setItem(
-        "currentStudent",
-        JSON.stringify(user)
-    );
-
-    document.getElementById("studentWelcome").innerHTML =
-        "Welcome";
-
-    showScreen("studentDashboard");
-
-} else {
-
-    alert("Invalid Login");
-
-}
-
+                showScreen("profileScreen");
             }
 
             /* -----------------------
@@ -2969,63 +2934,26 @@ justify-content:space-between;
 
             function saveProfile() {
 
-                let user =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "currentStudent"
-                        )
-                    );
+                let user = JSON.parse(localStorage.getItem("currentStudent"));
 
-                let students =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "students"
-                        )
-                    );
+                let students = JSON.parse(localStorage.getItem("students")) || [];
 
-                let newName =
-                    document.getElementById(
-                        "profileName"
-                    ).value;
+                user.name = document.getElementById("profileName").value;
+                user.mobile = document.getElementById("profileMobile").value;
 
-                let newMobile =
-                    document.getElementById(
-                        "profileMobile"
-                    ).value;
+                students = students.map(s => {
+                    if (s.username === user.username) {
+                        s.name = user.name;
+                        s.mobile = user.mobile;
+                    }
+                    return s;
+                });
 
-                students =
-                    students.map(s => {
+                localStorage.setItem("students", JSON.stringify(students));
+                localStorage.setItem("currentStudent", JSON.stringify(user));
 
-                        if (s.id === user.id) {
-
-                            s.name = newName;
-                            s.mobile = newMobile;
-
-                        }
-
-                        return s;
-
-                    });
-
-                localStorage.setItem(
-                    "students",
-                    JSON.stringify(students)
-                );
-
-                user.name = newName;
-                user.mobile = newMobile;
-
-                localStorage.setItem(
-                    "currentStudent",
-                    JSON.stringify(user)
-                );
-
-                alert(
-                    "Profile Updated"
-                );
-
+                alert("Profile Updated");
             }
-
             /* -----------------------
             EXAM SYSTEM
             ----------------------- */
@@ -3545,6 +3473,7 @@ justify-content:space-between;
                 let user = JSON.parse(localStorage.getItem("currentStudent"));
 
                 let students = JSON.parse(localStorage.getItem("students"));
+
                 user = students.find(s => s.id === user.id);
 
                 if (!user.certificate) {
@@ -4058,7 +3987,7 @@ justify-content:space-between;
                 });
 
             }
-            
+
         </script>
 
 
