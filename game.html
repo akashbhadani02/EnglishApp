@@ -1,1067 +1,409 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>English Game</title>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/GLTFLoader.js"></script>  
-  <script type="module" src="main.js"></script>
-  <style>
-body {
-  margin: 0;
-  overflow: hidden;
-  font-family: Arial;
-  background: black;
+<meta charset="UTF-8">
+<title>GTA FULL PC + MOBILE GAME</title>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<style>
+body{margin:0;overflow:hidden;font-family:Arial;touch-action:none;}
+
+/* UI */
+#ui{
+position:absolute;top:10px;left:10px;
+background:rgba(0,0,0,0.6);
+color:white;padding:10px;border-radius:10px;
 }
 
-/* TOP UI */
-#ui {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  color: white;
-  z-index: 10;
-  background: rgba(0,0,0,0.6);
-  padding: 10px;
-  border-radius: 8px;
-  max-width: 90%;
-  font-size: 14px;
+/* BATTLE */
+#battleBox{
+position:absolute;bottom:10px;left:50%;
+transform:translateX(-50%) scale(0);
+background:rgba(0,0,0,0.9);
+color:white;
+padding:10px;
+width:300px;
+transition:0.3s;
+border-radius:10px;
+}
+#battleBox.active{
+transform:translateX(-50%) scale(1);
+}
+button{width:100%;margin:5px 0;padding:8px;}
+
+/* JOYSTICK */
+#joystickBase{
+position:absolute;
+bottom:40px;
+left:40px;
+width:120px;
+height:120px;
+background:rgba(255,255,255,0.2);
+border-radius:50%;
 }
 
-/* BATTLE BOX */
-#battleBox {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(90%, 320px);
-  background: rgba(0,0,0,0.85);
-  color: white;
-  padding: 12px;
-  border-radius: 10px;
-  text-align: center;
-  font-size: 14px;
+#joystickStick{
+position:absolute;
+top:40px;
+left:40px;
+width:40px;
+height:40px;
+background:white;
+border-radius:50%;
 }
-
-/* ANSWER BUTTONS */
-#answers button {
-  display: block;
-  width: 100%;
-  margin: 6px 0;
-  padding: 10px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-/* HIDDEN */
-.hidden {
-  display: none;
-}
-
-/* MOBILE CONTROLS (future use) */
-@media (max-width: 768px) {
-  #ui {
-    font-size: 12px;
-    padding: 8px;
-  }
-
-  #battleBox {
-    font-size: 13px;
-  }
-
-  #answers button {
-    padding: 12px;
-    font-size: 13px;
-  }
-}
-  </style>
+</style>
 </head>
 
 <body>
 
-  <div id="ui">
-    <h2>English Game</h2>
-    <p>Defeat robots by answering English questions</p>
-    <p id="robotCount">Robots left: 0</p>
-  </div>
-<div id="battleBox" class="hidden">
-  <h3>🤖 Robot Challenge!</h3>
-  <button id="voiceBtn">🎤 Speak Answer</button>
-  <p id="questionText"></p>
-
-  <div id="answers"></div>
-
-  <p id="result"></p>
+<div id="ui">
+Coins: <span id="coins">0</span> |
+Health: <span id="health">100</span>
 </div>
-  <script>
-    document.getElementById("voiceBtn").addEventListener("click", () => {
-  if (!inBattle) return;
 
-  resultText.innerText = "🎤 Listening...";
+<div id="battleBox">
+<h3>⚔ Battle</h3>
+<p id="qText"></p>
+<div id="opts"></div>
+</div>
 
-  voice.start((spokenText) => {
-    checkVoiceAnswer(spokenText);
-  });
-});
+<div id="joystickBase">
+<div id="joystickStick"></div>
+</div>
 
-// ----------------------
-// BATTLE SYSTEM
-// ----------------------
+<script>
 
-const battleBox = document.getElementById("battleBox");
-const questionText = document.getElementById("questionText");
-const answersDiv = document.getElementById("answers");
-const resultText = document.getElementById("result");
-const robotCountText = document.getElementById("robotCount");
+/* SCENE */
+let scene=new THREE.Scene();
+scene.background=new THREE.Color(0x87ceeb);
 
-let inBattle = false;
-let currentRobot = null;
+/* CAMERA */
+let camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
+camera.position.set(0,5,10);
 
-const questions = [
-  {
-    q: "What is the opposite of 'big'?",
-    options: ["Large", "Small", "Tall"],
-    answer: 1
-  },
-  {
-    q: "Choose the correct sentence.",
-    options: ["She go to school.", "She goes to school.", "She going school."],
-    answer: 1
-  },
-  {
-    q: "What is the plural of 'child'?",
-    options: ["Childs", "Children", "Childes"],
-    answer: 1
-  },
-  {
-    q: "Which word is a fruit?",
-    options: ["Apple", "Chair", "Book"],
-    answer: 0
-  },
-  {
-    q: "How do you greet someone in the morning?",
-    options: ["Good night", "Good morning", "Good evening"],
-    answer: 1
-  },
-  {
-    q: "What is the past tense of 'go'?",
-    options: ["Goed", "Gone", "Went"],
-    answer: 2
-  },
-  {
-    q: "Which sentence is correct?",
-    options: ["I am happy.", "I happy am.", "Happy I am."],
-    answer: 0
-  },
-  {
-    q: "What is the opposite of 'hot'?",
-    options: ["Cold", "Warm", "Cool"],
-    answer: 0
-  },
-  {
-    q: "How many days are there in a week?",
-    options: ["5", "6", "7"],
-    answer: 2
-  },
-  {
-    q: "Which is a color?",
-    options: ["Blue", "Table", "Pen"],
-    answer: 0
-  },
-  {
-    q: "What do you drink?",
-    options: ["Water", "Chair", "Pencil"],
-    answer: 0
-  },
-  {
-    q: "Complete: I ___ a student.",
-    options: ["is", "am", "are"],
-    answer: 1
-  },
-  {
-    q: "Choose the correct question.",
-    options: ["What is your name?", "What your name is?", "Your name what?"],
-    answer: 0
-  },
-  {
-    q: "Which animal says 'Meow'?",
-    options: ["Dog", "Cat", "Cow"],
-    answer: 1
-  },
-  {
-    q: "What is the opposite of 'up'?",
-    options: ["Down", "Over", "High"],
-    answer: 0
-  },
-  {
-    q: "What do you use to write?",
-    options: ["Pen", "Shoe", "Plate"],
-    answer: 0
-  },
-  {
-    q: "Choose the correct sentence.",
-    options: ["They are playing.", "They is playing.", "They playing are."],
-    answer: 0
-  },
-  {
-    q: "What comes after Monday?",
-    options: ["Sunday", "Tuesday", "Friday"],
-    answer: 1
-  },
-  {
-    q: "Which word is a vegetable?",
-    options: ["Potato", "Banana", "Orange"],
-    answer: 0
-  },
-  {
-    q: "How do you say thank you politely?",
-    options: ["Thanks!", "Thank you very much.", "Give me that."],
-    answer: 1
-  },
-{
-    q: "What is the opposite of 'fast'?",
-    options: ["Quick", "Slow", "Speed"],
-    answer: 1
-  },
-  {
-    q: "Which one is a bird?",
-    options: ["Tiger", "Parrot", "Fish"],
-    answer: 1
-  },
-  {
-    q: "Complete: She ___ my friend.",
-    options: ["am", "is", "are"],
-    answer: 1
-  },
-  {
-    q: "What color is the sky on a clear day?",
-    options: ["Blue", "Green", "Red"],
-    answer: 0
-  },
-  {
-    q: "Which word is a month?",
-    options: ["Monday", "January", "Morning"],
-    answer: 1
-  },
-  {
-    q: "What is the opposite of 'happy'?",
-    options: ["Sad", "Smile", "Laugh"],
-    answer: 0
-  },
-  {
-    q: "Choose the correct sentence.",
-    options: ["He likes apples.", "He like apples.", "He liking apples."],
-    answer: 0
-  },
-  {
-    q: "How many letters are there in the English alphabet?",
-    options: ["24", "25", "26"],
-    answer: 2
-  },
-  {
-    q: "Which one is a body part?",
-    options: ["Hand", "Table", "Bottle"],
-    answer: 0
-  },
-  {
-    q: "Complete: They ___ playing football.",
-    options: ["is", "am", "are"],
-    answer: 2
-  },
-  {
-    q: "Which is a profession?",
-    options: ["Teacher", "Banana", "River"],
-    answer: 0
-  },
-  {
-    q: "What do bees make?",
-    options: ["Milk", "Honey", "Juice"],
-    answer: 1
-  },
-  {
-    q: "What is the opposite of 'old'?",
-    options: ["Young", "Tall", "Long"],
-    answer: 0
-  },
-  {
-    q: "Which sentence is correct?",
-    options: ["I have a book.", "I book have.", "Book I have."],
-    answer: 0
-  },
-  {
-    q: "What do you wear on your feet?",
-    options: ["Shoes", "Hat", "Gloves"],
-    answer: 0
-  },
-  {
-    q: "Which animal gives us milk?",
-    options: ["Cow", "Lion", "Monkey"],
-    answer: 0
-  },
-  {
-    q: "Complete: We ___ students.",
-    options: ["is", "are", "am"],
-    answer: 1
-  },
-  {
-    q: "What comes after 9?",
-    options: ["8", "10", "11"],
-    answer: 1
-  },
-  {
-    q: "Which word means 'very large'?",
-    options: ["Tiny", "Huge", "Small"],
-    answer: 1
-  },
-  {
-    q: "What do you say when leaving someone?",
-    options: ["Goodbye", "Thank you", "Welcome"],
-    answer: 0
-  },
- {
-    q: "What is the opposite of 'open'?",
-    options: ["Close", "Closed", "Shut"],
-    answer: 1
-  },
-  {
-    q: "Which animal barks?",
-    options: ["Cat", "Dog", "Cow"],
-    answer: 1
-  },
-  {
-    q: "Complete: I ___ from India.",
-    options: ["am", "is", "are"],
-    answer: 0
-  },
-  {
-    q: "What is the color of grass?",
-    options: ["Blue", "Green", "Red"],
-    answer: 1
-  },
-  {
-    q: "Which one is a fruit?",
-    options: ["Mango", "Carrot", "Potato"],
-    answer: 0
-  },
-  {
-    q: "Complete: He ___ a doctor.",
-    options: ["am", "is", "are"],
-    answer: 1
-  },
-  {
-    q: "What is the opposite of 'day'?",
-    options: ["Night", "Morning", "Evening"],
-    answer: 0
-  },
-  {
-    q: "Which sentence is correct?",
-    options: ["She has a pen.", "She have a pen.", "She having a pen."],
-    answer: 0
-  },
-  {
-    q: "What do you use to cut paper?",
-    options: ["Scissors", "Plate", "Cup"],
-    answer: 0
-  },
-  {
-    q: "How many months are there in a year?",
-    options: ["10", "11", "12"],
-    answer: 2
-  },
-  {
-    q: "Which animal is called the king of the jungle?",
-    options: ["Tiger", "Lion", "Elephant"],
-    answer: 1
-  },
-  {
-    q: "Complete: They ___ my friends.",
-    options: ["is", "are", "am"],
-    answer: 1
-  },
-  {
-    q: "What is the opposite of 'rich'?",
-    options: ["Poor", "Big", "Small"],
-    answer: 0
-  },
-  {
-    q: "Which one is a vehicle?",
-    options: ["Car", "Tree", "Book"],
-    answer: 0
-  },
-  {
-    q: "What do you wear on your head?",
-    options: ["Shoes", "Hat", "Socks"],
-    answer: 1
-  },
-  {
-    q: "Choose the correct sentence.",
-    options: ["We are happy.", "We is happy.", "We happy are."],
-    answer: 0
-  },
-  {
-    q: "What is the opposite of 'long'?",
-    options: ["Tall", "Short", "Big"],
-    answer: 1
-  },
-  {
-    q: "Which season is the coldest?",
-    options: ["Summer", "Winter", "Rainy"],
-    answer: 1
-  },
-  {
-    q: "What do you drink in the morning?",
-    options: ["Tea", "Stone", "Book"],
-    answer: 0
-  },
-  {
-    q: "Complete: The sun ___ in the east.",
-    options: ["rise", "rises", "rising"],
-    answer: 1
-  },
-  {
-    q: "What is the opposite of 'clean'?",
-    options: ["Dirty", "Fresh", "Nice"],
-    answer: 0
-  },
-  {
-    q: "Which is a school object?",
-    options: ["Notebook", "Banana", "Bottle"],
-    answer: 0
-  },
-  {
-    q: "How many hours are there in a day?",
-    options: ["12", "24", "48"],
-    answer: 1
-  },
-  {
-    q: "What is the past tense of 'eat'?",
-    options: ["Ate", "Eated", "Eating"],
-    answer: 0
-  },
-  {
-    q: "Choose the correct sentence.",
-    options: ["I can swim.", "I can swims.", "I can swimming."],
-    answer: 0
-  },
-  {
-    q: "Which animal lives in water?",
-    options: ["Fish", "Horse", "Dog"],
-    answer: 0
-  },
-  {
-    q: "What do you say when someone helps you?",
-    options: ["Sorry", "Thank you", "Good night"],
-    answer: 1
-  },
-  {
-    q: "Complete: My mother ___ cooking.",
-    options: ["is", "are", "am"],
-    answer: 0
-  },
-  {
-    q: "What is the opposite of 'strong'?",
-    options: ["Weak", "Tall", "Fast"],
-    answer: 0
-  },
-  {
-    q: "Which one is a profession?",
-    options: ["Doctor", "River", "Apple"],
-    answer: 0
-  },
- { q: "What is the synonym of 'happy'?", options: ["Sad", "Joyful", "Angry"], answer: 1 },
-  { q: "What is the antonym of 'beautiful'?", options: ["Pretty", "Ugly", "Lovely"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["She doesn't like tea.", "She don't like tea.", "She not like tea."], answer: 0 },
-  { q: "What is the past tense of 'write'?", options: ["Written", "Wrote", "Writes"], answer: 1 },
-  { q: "Which word is an adjective?", options: ["Run", "Beautiful", "Quickly"], answer: 1 },
-  { q: "Complete: I have lived here ___ five years.", options: ["for", "since", "at"], answer: 0 },
-  { q: "Which sentence is in the future tense?", options: ["I eat lunch.", "I ate lunch.", "I will eat lunch."], answer: 2 },
-  { q: "What is the plural of 'mouse'?", options: ["Mouses", "Mice", "Mouse"], answer: 1 },
-  { q: "Choose the correct word: The sun ___ in the east.", options: ["rise", "rises", "rising"], answer: 1 },
-  { q: "What is the opposite of 'increase'?", options: ["Decrease", "Expand", "Grow"], answer: 0 },
-  { q: "Which is a pronoun?", options: ["Beautiful", "They", "School"], answer: 1 },
-  { q: "Complete: If it rains, I ___ at home.", options: ["stay", "will stay", "stayed"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["He has finished his work.", "He have finished his work.", "He finished has work."], answer: 0 },
-  { q: "What is the past participle of 'go'?", options: ["Went", "Gone", "Going"], answer: 1 },
-  { q: "Which word is a noun?", options: ["Quickly", "Teacher", "Happy"], answer: 1 },
-  { q: "What is the opposite of 'accept'?", options: ["Receive", "Reject", "Allow"], answer: 1 },
-  { q: "Complete: She ___ TV when I called.", options: ["watched", "was watching", "watch"], answer: 1 },
-  { q: "Which sentence is correct?", options: ["I have been to Delhi.", "I has been to Delhi.", "I am been to Delhi."], answer: 0 },
-  { q: "What is the comparative form of 'good'?", options: ["Gooder", "Better", "Best"], answer: 1 },
-  { q: "Which punctuation ends a question?", options: [".", "!", "?"], answer: 2 },
-  { q: "Choose the correct sentence.", options: ["There are many books.", "There is many books.", "There many books are."], answer: 0 },
-  { q: "What is the opposite of 'success'?", options: ["Victory", "Failure", "Achievement"], answer: 1 },
-  { q: "Which word is an adverb?", options: ["Slowly", "Slow", "Slowness"], answer: 0 },
-  { q: "Complete: They ___ dinner before we arrived.", options: ["had eaten", "have eaten", "eat"], answer: 0 },
-  { q: "What is the superlative form of 'small'?", options: ["Smaller", "Smallest", "More small"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["Neither of the boys is absent.", "Neither of the boys are absent.", "Neither boys is absent."], answer: 0 },
-  { q: "Which sentence uses passive voice?", options: ["The cat chased the mouse.", "The mouse was chased by the cat.", "The cat is chasing the mouse."], answer: 1 },
-  { q: "What is the synonym of 'begin'?", options: ["End", "Start", "Finish"], answer: 1 },
-  { q: "Complete: By next year, I ___ here for ten years.", options: ["will work", "will have worked", "worked"], answer: 1 },
-  { q: "Which sentence is grammatically correct?", options: ["Everyone has their book.", "Everyone have their book.", "Everyone are having books."], answer: 0 },
-  { q: "What is the opposite of 'early'?", options: ["Late", "Fast", "Soon"], answer: 0 },
-  { q: "Which animal has a long neck?", options: ["Elephant", "Giraffe", "Tiger"], answer: 1 },
-  { q: "Complete: We ___ going to the park.", options: ["is", "am", "are"], answer: 2 },
-  { q: "What is the capital of India?", options: ["Mumbai", "Delhi", "Kolkata"], answer: 1 },
-  { q: "Which word means 'very smart'?", options: ["Intelligent", "Weak", "Slow"], answer: 0 },
-  { q: "What is the opposite of 'dark'?", options: ["Black", "Bright", "Night"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["She can dance.", "She can dances.", "She can dancing."], answer: 0 },
-  { q: "What do you call a baby dog?", options: ["Kitten", "Puppy", "Calf"], answer: 1 },
-  { q: "Complete: I ___ my homework yesterday.", options: ["do", "did", "done"], answer: 1 },
-  { q: "Which season comes after summer?", options: ["Winter", "Spring", "Monsoon"], answer: 2 },
-  { q: "What is the opposite of 'inside'?", options: ["Outside", "Under", "Above"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["He was sleeping.", "He were sleeping.", "He sleeping was."], answer: 0 },
-  { q: "What is the synonym of 'quick'?", options: ["Fast", "Slow", "Weak"], answer: 0 },
-  { q: "Which one is a planet?", options: ["Moon", "Mars", "Star"], answer: 1 },
-  { q: "Complete: They ___ finished the work.", options: ["has", "have", "is"], answer: 1 },
-  { q: "What is the opposite of 'safe'?", options: ["Dangerous", "Secure", "Strong"], answer: 0 },
-  { q: "Which word is a verb?", options: ["Run", "Blue", "Table"], answer: 0 },
-  { q: "How many minutes are there in one hour?", options: ["30", "60", "90"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["I was born in India.", "I were born in India.", "I born was in India."], answer: 0 },
-  { q: "What is the plural of 'tooth'?", options: ["Tooths", "Teeth", "Toothes"], answer: 1 },
-  { q: "What is the opposite of 'cheap'?", options: ["Expensive", "Small", "Large"], answer: 0 },
-  { q: "Complete: She ___ English every day.", options: ["study", "studies", "studying"], answer: 1 },
-  { q: "Which word is an adverb?", options: ["Quickly", "Quick", "Quicker"], answer: 0 },
-  { q: "What do you call a person who teaches?", options: ["Doctor", "Teacher", "Farmer"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["There is a cat on the table.", "There are a cat on the table.", "There cat is on table."], answer: 0 },
-  { q: "What is the opposite of 'always'?", options: ["Never", "Often", "Sometimes"], answer: 0 },
-  { q: "Complete: I have ___ my breakfast.", options: ["eat", "eaten", "ate"], answer: 1 },
-  { q: "Which one is a natural satellite of Earth?", options: ["Mars", "Sun", "Moon"], answer: 2 },
-  { q: "What is the synonym of 'brave'?", options: ["Coward", "Courageous", "Weak"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["He doesn't play cricket.", "He don't play cricket.", "He not play cricket."], answer: 0 },
-  { q: "What is the opposite of 'full'?", options: ["Heavy", "Empty", "Large"], answer: 1 },
-  { q: "Complete: The children ___ playing outside.", options: ["is", "are", "am"], answer: 1 },
-  { q: "What is the past tense of 'see'?", options: ["Saw", "Seen", "Seed"], answer: 0 },
-  { q: "Which word is a conjunction?", options: ["And", "Beautiful", "Quickly"], answer: 0 },
-  { q: "What do you call the place where books are kept?", options: ["Hospital", "Library", "Market"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["She has two sisters.", "She have two sisters.", "She having two sisters."], answer: 0 },
-  { q: "What is the opposite of 'borrow'?", options: ["Lend", "Take", "Give"], answer: 0 },
-  { q: "Complete: We ___ dinner at 8 o'clock yesterday.", options: ["had", "have", "has"], answer: 0 },
-  { q: "What is the largest animal on Earth?", options: ["Elephant", "Blue Whale", "Shark"], answer: 1 },
- { q: "What is the opposite of 'high'?", options: ["Low", "Tall", "Big"], answer: 0 },
-  { q: "Which animal is known as man's best friend?", options: ["Dog", "Cat", "Horse"], answer: 0 },
-  { q: "Complete: She ___ a new dress.", options: ["have", "has", "had"], answer: 1 },
-  { q: "What is the synonym of 'tiny'?", options: ["Huge", "Small", "Long"], answer: 1 },
-  { q: "How many legs does a spider have?", options: ["6", "8", "10"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["I like reading books.", "I likes reading books.", "I liking books."], answer: 0 },
-  { q: "What is the opposite of 'strong'?", options: ["Weak", "Tall", "Fast"], answer: 0 },
-  { q: "Which word is a noun?", options: ["Happiness", "Quickly", "Beautiful"], answer: 0 },
-  { q: "Complete: They ___ to school every day.", options: ["go", "goes", "going"], answer: 0 },
-  { q: "What do you call a person who flies an airplane?", options: ["Driver", "Pilot", "Sailor"], answer: 1 },
-  { q: "What is the opposite of 'near'?", options: ["Far", "Close", "Beside"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["He is eating lunch.", "He are eating lunch.", "He eating lunch."], answer: 0 },
-  { q: "What is the past tense of 'take'?", options: ["Taked", "Taken", "Took"], answer: 2 },
-  { q: "Which one is a vegetable?", options: ["Carrot", "Apple", "Banana"], answer: 0 },
-  { q: "Complete: The baby ___ sleeping.", options: ["is", "are", "am"], answer: 0 },
-  { q: "What is the opposite of 'young'?", options: ["Old", "New", "Small"], answer: 0 },
-  { q: "Which word means 'to purchase'?", options: ["Sell", "Buy", "Give"], answer: 1 },
-  { q: "How many days are there in February in a leap year?", options: ["28", "29", "30"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["We were happy.", "We was happy.", "We happy were."], answer: 0 },
-  { q: "What is the plural of 'foot'?", options: ["Foots", "Feet", "Feets"], answer: 1 },
-  { q: "What is the opposite of 'begin'?", options: ["Continue", "End", "Start"], answer: 1 },
-  { q: "Complete: I ___ my friend yesterday.", options: ["meet", "met", "meeting"], answer: 1 },
-  { q: "Which one is a continent?", options: ["Asia", "India", "Delhi"], answer: 0 },
-  { q: "What is the synonym of 'angry'?", options: ["Happy", "Mad", "Excited"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["She was singing.", "She were singing.", "She singing was."], answer: 0 },
-  { q: "What is the opposite of 'laugh'?", options: ["Cry", "Smile", "Talk"], answer: 0 },
-  { q: "Which word is a preposition?", options: ["Under", "Quick", "Run"], answer: 0 },
-  { q: "Complete: We ___ finished our homework.", options: ["have", "has", "is"], answer: 0 },
-  { q: "What do you call a baby cat?", options: ["Puppy", "Kitten", "Cub"], answer: 1 },
-  { q: "What is the largest planet in the solar system?", options: ["Earth", "Saturn", "Jupiter"], answer: 2 },
-  { q: "Choose the correct sentence.", options: ["The sun is hot.", "The sun are hot.", "The sun hot is."], answer: 0 },
-  { q: "What is the opposite of 'same'?", options: ["Different", "Equal", "Similar"], answer: 0 },
-  { q: "Complete: He ___ television every evening.", options: ["watch", "watches", "watching"], answer: 1 },
-  { q: "Which one is a musical instrument?", options: ["Guitar", "Table", "Bottle"], answer: 0 },
-  { q: "What is the synonym of 'large'?", options: ["Big", "Tiny", "Short"], answer: 0 },
-  { q: "How many seconds are there in one minute?", options: ["30", "60", "100"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["I can ride a bicycle.", "I can rides a bicycle.", "I can riding a bicycle."], answer: 0 },
-  { q: "What is the opposite of 'success'?", options: ["Victory", "Failure", "Achievement"], answer: 1 },
-  { q: "Complete: They ___ a movie last night.", options: ["see", "saw", "seen"], answer: 1 },
- { q: "What is the opposite of 'busy'?", options: ["Free", "Fast", "Late"], answer: 0 },
-  { q: "Which animal can fly?", options: ["Bird", "Tiger", "Elephant"], answer: 0 },
-  { q: "Complete: I ___ a cup of tea every morning.", options: ["drink", "drinks", "drinking"], answer: 0 },
-  { q: "What is the synonym of 'begin'?", options: ["Start", "Stop", "Finish"], answer: 0 },
-  { q: "How many colors are there in a rainbow?", options: ["5", "7", "9"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["They have a car.", "They has a car.", "They having a car."], answer: 0 },
-  { q: "What is the opposite of 'clean'?", options: ["Dirty", "Fresh", "Nice"], answer: 0 },
-  { q: "Which one is a profession?", options: ["Engineer", "Banana", "River"], answer: 0 },
-  { q: "Complete: She ___ to music now.", options: ["listen", "listens", "is listening"], answer: 2 },
-  { q: "What is the past tense of 'run'?", options: ["Runned", "Ran", "Run"], answer: 1 },
-  { q: "Which planet do we live on?", options: ["Mars", "Earth", "Venus"], answer: 1 },
-  { q: "What is the opposite of 'light'?", options: ["Heavy", "Dark", "Big"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["He has a bicycle.", "He have a bicycle.", "He having a bicycle."], answer: 0 },
-  { q: "What do you call a person who cooks food?", options: ["Chef", "Pilot", "Teacher"], answer: 0 },
-  { q: "Complete: We ___ football every Sunday.", options: ["play", "plays", "playing"], answer: 0 },
-  { q: "What is the synonym of 'smart'?", options: ["Intelligent", "Weak", "Lazy"], answer: 0 },
-  { q: "How many sides does a triangle have?", options: ["3", "4", "5"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["I am reading a book.", "I reading a book.", "I am read a book."], answer: 0 },
-  { q: "What is the opposite of 'enter'?", options: ["Come", "Leave", "Exit"], answer: 2 },
-  { q: "Which animal is the tallest?", options: ["Lion", "Giraffe", "Horse"], answer: 1 },
-  { q: "Complete: The children ___ in the garden.", options: ["is", "are", "am"], answer: 1 },
-  { q: "What is the plural of 'woman'?", options: ["Womans", "Women", "Womens"], answer: 1 },
-  { q: "What is the opposite of 'cheap'?", options: ["Expensive", "Small", "Old"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["She was happy.", "She were happy.", "She happy was."], answer: 0 },
-  { q: "What do bees make?", options: ["Milk", "Honey", "Water"], answer: 1 },
-  { q: "Complete: He ___ his homework yesterday.", options: ["did", "does", "doing"], answer: 0 },
-  { q: "What is the synonym of 'brave'?", options: ["Courageous", "Weak", "Scared"], answer: 0 },
-  { q: "Which one is a body part?", options: ["Hand", "Chair", "Bottle"], answer: 0 },
-  { q: "What is the opposite of 'full'?", options: ["Empty", "Large", "Heavy"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["We are friends.", "We is friends.", "We friends are."], answer: 0 },
-  { q: "How many days are there in a year?", options: ["365", "300", "400"], answer: 0 },
-  { q: "What is the past tense of 'give'?", options: ["Gived", "Given", "Gave"], answer: 2 },
-  { q: "Complete: My father ___ a doctor.", options: ["is", "are", "am"], answer: 0 },
-  { q: "What is the opposite of 'old'?", options: ["Young", "Tall", "New"], answer: 0 },
-  { q: "Which one is a natural resource?", options: ["Water", "Computer", "Phone"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["They were playing.", "They was playing.", "They playing were."], answer: 0 },
-  { q: "What is the synonym of 'silent'?", options: ["Quiet", "Loud", "Noisy"], answer: 0 },
-  { q: "Complete: I ___ to school by bus.", options: ["go", "goes", "going"], answer: 0 },
-  { q: "Which animal is known for its black and white stripes?", options: ["Tiger", "Zebra", "Horse"], answer: 1 },
-  { q: "What is the opposite of 'remember'?", options: ["Forget", "Think", "Know"], answer: 0 },
-{ q: "What is the opposite of 'wet'?", options: ["Dry", "Cold", "Soft"], answer: 0 },
-  { q: "Which animal is called the Ship of the Desert?", options: ["Horse", "Camel", "Donkey"], answer: 1 },
-  { q: "Complete: She ___ her room every day.", options: ["clean", "cleans", "cleaning"], answer: 1 },
-  { q: "What is the synonym of 'big'?", options: ["Large", "Tiny", "Short"], answer: 0 },
-  { q: "How many fingers do humans usually have?", options: ["8", "10", "12"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["He goes to school.", "He go to school.", "He going school."], answer: 0 },
-  { q: "What is the opposite of 'happy'?", options: ["Excited", "Sad", "Funny"], answer: 1 },
-  { q: "Which one is a season?", options: ["Winter", "Monday", "Morning"], answer: 0 },
-  { q: "Complete: They ___ dinner at 8 PM.", options: ["eat", "eats", "eating"], answer: 0 },
-  { q: "What is the past tense of 'sing'?", options: ["Sang", "Sung", "Singed"], answer: 0 },
-  { q: "Which planet is known as the Red Planet?", options: ["Earth", "Mars", "Venus"], answer: 1 },
-  { q: "What is the opposite of 'strong'?", options: ["Weak", "Tall", "Wide"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["I have a dog.", "I has a dog.", "I having a dog."], answer: 0 },
-  { q: "What do you call a person who writes books?", options: ["Singer", "Writer", "Painter"], answer: 1 },
-  { q: "Complete: We ___ TV every evening.", options: ["watch", "watches", "watching"], answer: 0 },
-  { q: "What is the synonym of 'beautiful'?", options: ["Pretty", "Ugly", "Dirty"], answer: 0 },
-  { q: "How many days are there in a week?", options: ["5", "6", "7"], answer: 2 },
-  { q: "Choose the correct sentence.", options: ["She is my sister.", "She are my sister.", "She my sister is."], answer: 0 },
-  { q: "What is the opposite of 'up'?", options: ["Down", "Over", "Across"], answer: 0 },
-  { q: "Which animal gives us wool?", options: ["Sheep", "Cow", "Goat"], answer: 0 },
-  { q: "Complete: The boy ___ a kite.", options: ["fly", "flies", "flying"], answer: 1 },
-  { q: "What is the plural of 'man'?", options: ["Mans", "Mens", "Men"], answer: 2 },
-  { q: "What is the opposite of 'rich'?", options: ["Poor", "Old", "Small"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["They are students.", "They is students.", "They students are."], answer: 0 },
-  { q: "Which one is a flower?", options: ["Rose", "Mango", "Potato"], answer: 0 },
-  { q: "Complete: I ___ breakfast at 8 o'clock.", options: ["have", "has", "having"], answer: 0 },
-  { q: "What is the synonym of 'quick'?", options: ["Fast", "Slow", "Weak"], answer: 0 },
-  { q: "How many months are there in a year?", options: ["10", "11", "12"], answer: 2 },
-  { q: "Choose the correct sentence.", options: ["He can swim.", "He can swims.", "He can swimming."], answer: 0 },
-  { q: "What is the opposite of 'open'?", options: ["Close", "Closed", "Wide"], answer: 1 },
-  { q: "Which one is a fruit?", options: ["Orange", "Carrot", "Onion"], answer: 0 },
-  { q: "Complete: My friends ___ playing cricket.", options: ["is", "are", "am"], answer: 1 },
-  { q: "What is the past tense of 'eat'?", options: ["Ate", "Eated", "Eaten"], answer: 0 },
-  { q: "What is the synonym of 'angry'?", options: ["Mad", "Happy", "Calm"], answer: 0 },
-  { q: "Which one is a means of transport?", options: ["Bus", "Tree", "River"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["We were late.", "We was late.", "We late were."], answer: 0 },
-  { q: "What is the opposite of 'light'?", options: ["Heavy", "Bright", "White"], answer: 0 },
-  { q: "Complete: She ___ her homework now.", options: ["does", "is doing", "did"], answer: 1 },
-  { q: "Which bird cannot fly?", options: ["Penguin", "Parrot", "Sparrow"], answer: 0 },
-{ q: "What is the opposite of 'full'?", options: ["Empty", "Heavy", "Large"], answer: 0 },
-  { q: "Which animal is the largest land animal?", options: ["Elephant", "Tiger", "Horse"], answer: 0 },
-  { q: "Complete: He ___ his teeth every morning.", options: ["brush", "brushes", "brushing"], answer: 1 },
-  { q: "What is the synonym of 'begin'?", options: ["Start", "Stop", "Close"], answer: 0 },
-  { q: "How many hours are there in one day?", options: ["12", "24", "48"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["I am hungry.", "I hungry am.", "Hungry I am."], answer: 0 },
-  { q: "What is the opposite of 'young'?", options: ["Old", "Small", "Tall"], answer: 0 },
-  { q: "Which one is a vegetable?", options: ["Potato", "Apple", "Orange"], answer: 0 },
-  { q: "Complete: They ___ in the garden.", options: ["play", "plays", "playing"], answer: 0 },
-  { q: "What is the past tense of 'come'?", options: ["Comed", "Come", "Came"], answer: 2 },
-  { q: "Which planet is closest to the Sun?", options: ["Mercury", "Earth", "Mars"], answer: 0 },
-  { q: "What is the opposite of 'easy'?", options: ["Simple", "Hard", "Short"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["She likes ice cream.", "She like ice cream.", "She liking ice cream."], answer: 0 },
-  { q: "What do you call a person who paints?", options: ["Painter", "Doctor", "Farmer"], answer: 0 },
-  { q: "Complete: We ___ to music every day.", options: ["listen", "listens", "listening"], answer: 0 },
-  { q: "What is the synonym of 'sad'?", options: ["Unhappy", "Glad", "Happy"], answer: 0 },
-  { q: "How many days are there in a leap year?", options: ["364", "365", "366"], answer: 2 },
-  { q: "Choose the correct sentence.", options: ["He is my brother.", "He are my brother.", "He my brother is."], answer: 0 },
-  { q: "What is the opposite of 'cold'?", options: ["Hot", "Cool", "Warm"], answer: 0 },
-  { q: "Which animal lives in water?", options: ["Fish", "Tiger", "Monkey"], answer: 0 },
-  { q: "Complete: My mother ___ delicious food.", options: ["cook", "cooks", "cooking"], answer: 1 },
-  { q: "What is the plural of 'child'?", options: ["Childs", "Children", "Childrens"], answer: 1 },
-  { q: "What is the opposite of 'right'?", options: ["Wrong", "Correct", "True"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["They are friends.", "They is friends.", "They friends are."], answer: 0 },
-  { q: "Which one is a body part?", options: ["Leg", "Book", "Table"], answer: 0 },
-  { q: "Complete: I ___ my homework every evening.", options: ["do", "does", "doing"], answer: 0 },
-  { q: "What is the synonym of 'small'?", options: ["Tiny", "Huge", "Large"], answer: 0 },
-  { q: "How many minutes are there in two hours?", options: ["60", "120", "180"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["We can play football.", "We can plays football.", "We can playing football."], answer: 0 },
-  { q: "What is the opposite of 'strong'?", options: ["Weak", "Tall", "Fast"], answer: 0 },
-  { q: "Which one is a bird?", options: ["Parrot", "Lion", "Dog"], answer: 0 },
-  { q: "Complete: The sun ___ in the east.", options: ["rise", "rises", "rising"], answer: 1 },
-  { q: "What is the past tense of 'drink'?", options: ["Drank", "Drinked", "Drunk"], answer: 0 },
-  { q: "What is the synonym of 'clever'?", options: ["Intelligent", "Lazy", "Slow"], answer: 0 },
-  { q: "Which one is a school subject?", options: ["Mathematics", "Banana", "River"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["I have two sisters.", "I has two sisters.", "I having two sisters."], answer: 0 },
-  { q: "What is the opposite of 'before'?", options: ["After", "First", "Early"], answer: 0 },
-  { q: "Complete: She ___ a letter yesterday.", options: ["write", "wrote", "written"], answer: 1 },
-  { q: "Which animal is known as the King of the Jungle?", options: ["Lion", "Tiger", "Elephant"], answer: 0 },
-{ q: "What is the opposite of 'early'?", options: ["Late", "Soon", "Fast"], answer: 0 },
-  { q: "Which animal says 'moo'?", options: ["Cow", "Dog", "Cat"], answer: 0 },
-  { q: "Complete: I ___ to school every day.", options: ["go", "goes", "going"], answer: 0 },
-  { q: "What is the synonym of 'happy'?", options: ["Sad", "Joyful", "Angry"], answer: 1 },
-  { q: "How many wheels does a bicycle have?", options: ["2", "3", "4"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["She is playing.", "She are playing.", "She playing is."], answer: 0 },
-  { q: "What is the opposite of 'fast'?", options: ["Slow", "Quick", "Rapid"], answer: 0 },
-  { q: "Which one is a fruit?", options: ["Apple", "Potato", "Onion"], answer: 0 },
-  { q: "Complete: They ___ watching TV.", options: ["is", "are", "am"], answer: 1 },
-  { q: "What is the past tense of 'go'?", options: ["Went", "Gone", "Going"], answer: 0 },
-  { q: "Which planet is known as Earth’s satellite?", options: ["Sun", "Moon", "Mars"], answer: 1 },
-  { q: "What is the opposite of 'day'?", options: ["Night", "Morning", "Evening"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["He is reading.", "He are reading.", "He reading is."], answer: 0 },
-  { q: "What do you call a person who fixes cars?", options: ["Driver", "Mechanic", "Teacher"], answer: 1 },
-  { q: "Complete: She ___ a new phone.", options: ["have", "has", "had"], answer: 1 },
-  { q: "What is the synonym of 'big'?", options: ["Large", "Small", "Tiny"], answer: 0 },
-  { q: "How many days are there in a week?", options: ["5", "7", "10"], answer: 1 },
-  { q: "Choose the correct sentence.", options: ["I am tired.", "I tired am.", "Tired I am."], answer: 0 },
-  { q: "What is the opposite of 'hot'?", options: ["Cold", "Warm", "Cool"], answer: 0 },
-  { q: "Which one is a vehicle?", options: ["Car", "Tree", "Book"], answer: 0 },
-  { q: "Complete: We ___ happy.", options: ["is", "are", "am"], answer: 1 },
-  { q: "What is the past tense of 'eat'?", options: ["Ate", "Eaten", "Eats"], answer: 0 },
-  { q: "What is the synonym of 'smart'?", options: ["Clever", "Weak", "Slow"], answer: 0 },
-  { q: "Which one is a color?", options: ["Blue", "Table", "Dog"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["They were late.", "They was late.", "They late were."], answer: 0 },
-  { q: "What is the opposite of 'near'?", options: ["Far", "Close", "Next"], answer: 0 },
-  { q: "Complete: I ___ a book.", options: ["read", "reads", "reading"], answer: 0 },
-  { q: "What is the plural of 'book'?", options: ["Books", "Bookes", "Book"], answer: 0 },
-  { q: "Which animal is called the King of Jungle?", options: ["Tiger", "Lion", "Elephant"], answer: 1 },
-  { q: "What is the opposite of 'big'?", options: ["Small", "Large", "Huge"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["She likes apples.", "She like apples.", "She liking apples."], answer: 0 },
-  { q: "What is the synonym of 'fast'?", options: ["Quick", "Slow", "Late"], answer: 0 },
-  { q: "Complete: He ___ football.", options: ["play", "plays", "playing"], answer: 1 },
-  { q: "What is the past tense of 'see'?", options: ["Saw", "Seen", "Seed"], answer: 0 },
-  { q: "Which one is a school subject?", options: ["Science", "Banana", "Chair"], answer: 0 },
-  { q: "What is the opposite of 'rich'?", options: ["Poor", "Strong", "Big"], answer: 0 },
-  { q: "Choose the correct sentence.", options: ["We are friends.", "We is friends.", "We friend are."], answer: 0 },
-  { q: "What is the synonym of 'easy'?", options: ["Simple", "Hard", "Difficult"], answer: 0 },
-  { q: "Complete: The sun ___ bright.", options: ["is", "are", "am"], answer: 0 }
-];
-
-
-function updateRobotCount() {
-  robotCountText.innerText = `Robots left: ${robots.length}`;
-}
-
-function startBattle(robot) {
-    if (inBattle) return;
-
-    inBattle = true;
-    currentRobot = robot;
-
-    const q = questions[Math.floor(Math.random() * questions.length)];
-
-    questionText.innerText = q.q;
-    answersDiv.innerHTML = "";
-    resultText.innerText = "";
-
-    q.options.forEach((opt, index) => {
-        const btn = document.createElement("button");
-        btn.innerText = opt;
-
-        btn.onclick = () => {
-            if (index === q.answer) {
-                resultText.innerText = "✅ Correct! Robot defeated!";
-                scene.remove(robot);
-                robots.splice(robots.indexOf(robot), 1);
-                updateRobotCount();
-            } else {
-                resultText.innerText = "❌ Wrong answer! Try again!";
-            }
-
-            setTimeout(() => {
-                battleBox.classList.add("hidden");
-                inBattle = false;
-            }, 1000);
-        };
-
-        answersDiv.appendChild(btn);
-    });
-
-    battleBox.classList.remove("hidden");
-}
-
-// Scene setup
-const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x87ceeb); // sky blue
-
-// Camera
-const camera = new THREE.PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-);
-camera.position.set(0, 5, 10);
-
-// Renderer
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
+/* RENDER */
+let renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth,innerHeight);
 document.body.appendChild(renderer.domElement);
 
-// Light
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(10, 20, 10);
-scene.add(light);
+/* LIGHT */
+scene.add(new THREE.AmbientLight(0xffffff,1));
 
-// Ground (road + land)
-const groundGeometry = new THREE.PlaneGeometry(50, 50);
-const groundMaterial = new THREE.MeshStandardMaterial({ color: 0x228B22 });
-const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-ground.rotation.x = -Math.PI / 2;
+/* GROUND */
+let ground=new THREE.Mesh(
+new THREE.PlaneGeometry(200,200),
+new THREE.MeshStandardMaterial({color:0x2d6a4f})
+);
+ground.rotation.x=-Math.PI/2;
 scene.add(ground);
 
-// Road
-const roadGeometry = new THREE.PlaneGeometry(5, 50);
-const roadMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
-const road = new THREE.Mesh(roadGeometry, roadMaterial);
-road.rotation.x = -Math.PI / 2;
-road.position.y = 0.01;
-scene.add(road);
-
-// Buildings (India-style simple houses)
-function createBuilding(x, z) {
-    const geometry = new THREE.BoxGeometry(2, 3, 2);
-    const material = new THREE.MeshStandardMaterial({ color: 0xffcc99 });
-    const building = new THREE.Mesh(geometry, material);
-    building.position.set(x, 1.5, z);
-    scene.add(building);
+/* CITY */
+for(let i=0;i<25;i++){
+let b=new THREE.Mesh(
+new THREE.BoxGeometry(2+Math.random()*4,2+Math.random()*10,2+Math.random()*4),
+new THREE.MeshStandardMaterial({color:0x555555})
+);
+b.position.set((Math.random()-0.5)*100,1,(Math.random()-0.5)*100);
+scene.add(b);
 }
 
-// Add buildings
-createBuilding(-6, -5);
-createBuilding(6, -5);
-createBuilding(-6, 5);
-createBuilding(6, 5);
-
-// ----------------------
-// ROBOT ENEMIES
-// ----------------------
-
-const robots = [];
-
-function createRobot(x, z) {
-  const enemy = new THREE.Group();
-
-  // ========================
-  // BODY (cartoon capsule)
-  // ========================
-  const body = new THREE.Mesh(
-    new THREE.CapsuleGeometry(0.6, 1.2, 6, 12),
-    new THREE.MeshStandardMaterial({ color: 0xff4d4d })
-  );
-  body.position.y = 1;
-  enemy.add(body);
-
-  // ========================
-  // HEAD (big cartoon head)
-  // ========================
-  const head = new THREE.Mesh(
-    new THREE.SphereGeometry(0.7, 16, 16),
-    new THREE.MeshStandardMaterial({ color: 0xffcc66 })
-  );
-  head.position.y = 2.4;
-  enemy.add(head);
-
-  // ========================
-  // EYES
-  // ========================
-  const eyeMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
-
-  const eye1 = new THREE.Mesh(new THREE.SphereGeometry(0.1), eyeMaterial);
-  eye1.position.set(-0.25, 2.5, 0.55);
-
-  const eye2 = new THREE.Mesh(new THREE.SphereGeometry(0.1), eyeMaterial);
-  eye2.position.set(0.25, 2.5, 0.55);
-
-  enemy.add(eye1);
-  enemy.add(eye2);
-
-  // ========================
-  // ANGRY EYEBROWS (cartoon feel)
-  // ========================
-  const browMat = new THREE.MeshStandardMaterial({ color: 0x111111 });
-
-  const brow1 = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.05, 0.05), browMat);
-  brow1.position.set(-0.25, 2.7, 0.55);
-  brow1.rotation.z = 0.4;
-
-  const brow2 = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.05, 0.05), browMat);
-  brow2.position.set(0.25, 2.7, 0.55);
-  brow2.rotation.z = -0.4;
-
-  enemy.add(brow1);
-  enemy.add(brow2);
-
-  // ========================
-  // ARMS
-  // ========================
-  const armMat = new THREE.MeshStandardMaterial({ color: 0xff4d4d });
-
-  const arm1 = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 1), armMat);
-  arm1.position.set(-0.9, 1.2, 0);
-
-  const arm2 = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 1), armMat);
-  arm2.position.set(0.9, 1.2, 0);
-
-  enemy.add(arm1);
-  enemy.add(arm2);
-
-  // ========================
-  // POSITION
-  // ========================
-  enemy.position.set(x, 0, z);
-
-  // ========================
-  // AI DATA (WITH LAG)
-  // ========================
-  enemy.userData = {
-    speed: 0.02,
-    direction: Math.random() * Math.PI * 2,
-    lag: 0.05 // smooth movement
-  };
-
-  scene.add(enemy);
-  robots.push(enemy);
-}
-// ----------------------
-// SPAWN 30 ROBOTS
-// ----------------------
-
-for (let i = 0; i < 30; i++) {
-  const x = (Math.random() - 0.5) * 40; // spread in city
-  const z = (Math.random() - 0.5) * 40;
-
-  createRobot(x, z);
-}
-updateRobotCount(); 
-
-// Player (simple cube for now)
-const playerGeometry = new THREE.BoxGeometry(1, 1, 1);
-const playerMaterial = new THREE.MeshStandardMaterial({ color: 0x0000ff });
-const player = new THREE.Mesh(playerGeometry, playerMaterial);
-player.position.y = 0.5;
+/* PLAYER */
+let player=new THREE.Group();
 scene.add(player);
 
-// Controls
-const keys = {};
-document.addEventListener("keydown", (e) => keys[e.key.toLowerCase()] = true);
-document.addEventListener("keyup", (e) => keys[e.key.toLowerCase()] = false);
+let body=new THREE.Mesh(
+new THREE.CapsuleGeometry(0.5,1,4,8),
+new THREE.MeshStandardMaterial({color:0x0077ff})
+);
 
-// Movement speed
-const speed = 0.1;
+let head=new THREE.Mesh(
+new THREE.SphereGeometry(0.5),
+new THREE.MeshStandardMaterial({color:0xffcc99})
+);
 
-// Game loop
-function animate() {
-    requestAnimationFrame(animate);
+head.position.y=1.5;
+player.add(body);
+player.add(head);
 
-    // Movement
-    if (keys["w"]) player.position.z -= speed;
-    if (keys["s"]) player.position.z += speed;
-    if (keys["a"]) player.position.x -= speed;
-    if (keys["d"]) player.position.x += speed;
+/* DATA */
+let coins=0;
+let health=100;
 
-    // Camera follow (third person)
-    camera.position.x = player.position.x;
-    camera.position.z = player.position.z + 8;
-    camera.position.y = 5;
-    camera.lookAt(player.position);
+/* ENEMIES */
+let enemies=[];
 
-    // ----------------------
-    // ROBOT AI MOVEMENT
-    // ----------------------
+function spawnEnemy(){
+let e=new THREE.Group();
 
-    robots.forEach(robot => {
-        robot.position.x += Math.cos(robot.userData.direction) * robot.userData.speed;
-        robot.position.z += Math.sin(robot.userData.direction) * robot.userData.speed;
+let b=new THREE.Mesh(
+new THREE.CapsuleGeometry(0.5,1,4,8),
+new THREE.MeshStandardMaterial({color:0xff3333})
+);
 
-        // change direction randomly
-        if (Math.random() < 0.01) {
-            robot.userData.direction = Math.random() * Math.PI * 2;
-        }
+let h=new THREE.Mesh(
+new THREE.SphereGeometry(0.5),
+new THREE.MeshStandardMaterial({color:0xffcc99})
+);
 
-        // make robot face player
-        robot.lookAt(player.position);
-    });
-    robots.forEach(robot => {
-        const distance = player.position.distanceTo(robot.position);
+h.position.y=1.5;
+e.add(b); e.add(h);
 
-        if (distance < 2 && !inBattle) {
-            startBattle(robot);
-        }
-    });
-    renderer.render(scene, camera);
+e.position.set((Math.random()-0.5)*100,0,(Math.random()-0.5)*100);
+
+e.userData={
+speed:0.02+Math.random()*0.03,
+dir:Math.random()*Math.PI*2
+};
+
+scene.add(e);
+enemies.push(e);
+}
+
+/* 50 ENEMIES */
+for(let i=0;i<50;i++) spawnEnemy();
+
+/* QUESTIONS */
+let qList=[
+{q:"How are you?",o:["I am fine","I am 20","I am Delhi"],a:0},
+{q:"What is your name?",o:["My name is...","I am fine","Good morning"],a:0},
+{q:"Capital of India?",o:["Delhi","Mumbai","Goa"],a:0},
+{q:"Where do you live?",o:["I live in India","I am fine","Thank you"],a:0},
+{q:"Good morning means?",o:["Morning greeting","Night","Food"],a:0},
+{q:"Apple is a?",o:["Fruit","Animal","Car"],a:0},
+{q:"What is this?",o:["Question","Answer","Book"],a:0},
+{q:"He ___ playing",o:["is","are","am"],a:0},
+{q:"She ___ reading",o:["is","are","am"],a:0},
+{q:"2+2?",o:["3","4","5"],a:1},
+{q:"Thank you reply?",o:["Welcome","Sorry","Bye"],a:0},
+{q:"What is your age?",o:["I am 20","I am fine","Delhi"],a:0},
+{q:"Water formula?",o:["H2O","CO2","O2"],a:0},
+{q:"Where is Taj Mahal?",o:["Agra","Delhi","Mumbai"],a:0},
+{q:"Good night means?",o:["Sleep time","Morning","Food"],a:0},
+{q:"I am hungry means?",o:["Bhukh lagi","Sleep","Happy"],a:0},
+{q:"What is your hobby?",o:["Reading","Car","Apple"],a:0},
+{q:"How old are you?",o:["I am 15","I am Delhi","I am fine"],a:0},
+{q:"What is your favourite color?",o:["Blue","Dog","Run"],a:0},
+{q:"Where are you from?",o:["India","Apple","Car"],a:0},
+{q:"What is 5+5?",o:["10","9","11"],a:0},
+{q:"What is your school name?",o:["ABC School","Good morning","Fruit"],a:0},
+{q:"Do you like English?",o:["Yes","No answer","Car"],a:0},
+{q:"What is 10-2?",o:["8","9","7"],a:0},
+{q:"What is sun color?",o:["Yellow","Green","Blue"],a:0},
+{q:"What is water?",o:["Liquid","Animal","Car"],a:0},
+{q:"Where do birds live?",o:["Sky","Water","Road"],a:0},
+{q:"What is 3+4?",o:["7","6","8"],a:0},
+{q:"What is your father name?",o:["John","Apple","Car"],a:0},
+{q:"What is moon?",o:["Satellite","Star","Sun"],a:0},
+{q:"What is 6+2?",o:["8","7","9"],a:0},
+{q:"5+3?",o:["7","8","9"],a:1},
+{q:"Sun is a?",o:["Star","Planet","Moon"],a:0},
+{q:"Dog says?",o:["Bark","Meow","Crow"],a:0},
+{q:"How to greet?",o:["Hello","Bye","Food"],a:0},
+{q:"What do you eat?",o:["Food","Car","Stone"],a:0},
+{q:"Where is India?",o:["Asia","Europe","Africa"],a:0},
+{q:"What is 9-3?",o:["6","5","7"],a:0},
+{q:"What is dog sound?",o:["Bark","Meow","Chirp"],a:0},
+{q:"What is 2*2?",o:["4","3","5"],a:0},
+{q:"What is your favourite food?",o:["Pizza","Car","Book"],a:0},
+{q:"What is 7+3?",o:["10","11","9"],a:0},
+{q:"Do you like school?",o:["Yes","No answer","Apple"],a:0},
+{q:"What is 12-4?",o:["8","7","9"],a:0},
+{q:"What is your country?",o:["India","USA","Goa"],a:0},
+{q:"Where is water found?",o:["River","Sky","Fire"],a:0},
+{q:"What is 4+6?",o:["10","9","11"],a:0},
+{q:"What is cow gives?",o:["Milk","Oil","Water"],a:0},
+{q:"What is 8-3?",o:["5","6","4"],a:0},
+{q:"What is your age?",o:["I am 10","I am fine","Delhi"],a:0},
+{q:"What is sun gives?",o:["Light","Water","Food"],a:0},
+{q:"What is 6+6?",o:["12","11","13"],a:0},
+{q:"What is bird can do?",o:["Fly","Swim","Run only"],a:0},
+{q:"What is 10/2?",o:["5","4","6"],a:0},
+{q:"Where do fish live?",o:["Water","Air","Land"],a:0},
+{q:"What is 3+5?",o:["8","7","9"],a:0},
+{q:"What is your name?",o:["My name is...","I am fine","Good"],a:0},
+{q:"What is 9+1?",o:["10","11","9"],a:0},
+{q:"What is moon light?",o:["Reflection","Fire","Water"],a:0},
+{q:"What is 5*2?",o:["10","9","11"],a:0},
+];
+
+let battle=false;
+
+/* EXPLOSION */
+function boom(x,y,z){
+for(let i=0;i<15;i++){
+let p=new THREE.Mesh(
+new THREE.SphereGeometry(0.1),
+new THREE.MeshStandardMaterial({color:0xffaa00})
+);
+p.position.set(x,y,z);
+scene.add(p);
+
+let vx=(Math.random()-0.5)*0.4;
+let vy=Math.random()*0.3;
+let vz=(Math.random()-0.5)*0.4;
+
+let t=0;
+let id=setInterval(()=>{
+p.position.x+=vx;
+p.position.y+=vy;
+p.position.z+=vz;
+t++;
+if(t>20){
+clearInterval(id);
+scene.remove(p);
+}
+},20);
+}
+}
+
+/* BATTLE */
+function startBattle(enemy){
+if(battle) return;
+battle=true;
+
+let q=qList[Math.floor(Math.random()*qList.length)];
+
+document.getElementById("battleBox").classList.add("active");
+document.getElementById("qText").innerText=q.q;
+
+let div=document.getElementById("opts");
+div.innerHTML="";
+
+q.o.forEach((op,i)=>{
+let b=document.createElement("button");
+b.innerText=op;
+
+b.onclick=()=>{
+
+if(i===q.a){
+boom(enemy.position.x,enemy.position.y,enemy.position.z);
+scene.remove(enemy);
+enemies=enemies.filter(e=>e!==enemy);
+coins+=10;
+}
+else{
+health-=10;
+}
+
+setTimeout(()=>{
+document.getElementById("battleBox").classList.remove("active");
+battle=false;
+},500);
+
+updateUI();
+};
+
+div.appendChild(b);
+});
+}
+
+/* UI */
+function updateUI(){
+document.getElementById("coins").innerText=coins;
+document.getElementById("health").innerText=health;
+}
+
+/* KEYBOARD */
+let keys={};
+document.addEventListener("keydown",e=>keys[e.key]=true);
+document.addEventListener("keyup",e=>keys[e.key]=false);
+
+/* JOYSTICK */
+let joyBase=document.getElementById("joystickBase");
+let joyStick=document.getElementById("joystickStick");
+
+let joyX=0, joyY=0;
+let active=false;
+
+joyBase.addEventListener("touchstart",()=>active=true);
+
+joyBase.addEventListener("touchend",()=>{
+active=false;
+joyX=0; joyY=0;
+joyStick.style.transform="translate(0px,0px)";
+});
+
+joyBase.addEventListener("touchmove",(e)=>{
+if(!active) return;
+
+let rect=joyBase.getBoundingClientRect();
+let x=e.touches[0].clientX-rect.left-60;
+let y=e.touches[0].clientY-rect.top-60;
+
+joyX=Math.max(-1,Math.min(1,x/50));
+joyY=Math.max(-1,Math.min(1,y/50));
+
+joyStick.style.transform=`translate(${joyX*40}px,${joyY*40}px)`;
+});
+
+/* LOOP */
+function animate(){
+requestAnimationFrame(animate);
+
+/* PLAYER MOVE (PC + MOBILE) */
+let speed=0.25;
+
+let moveX=0;
+let moveZ=0;
+
+/* KEYBOARD */
+if(keys["ArrowUp"]) moveZ-=speed;
+if(keys["ArrowDown"]) moveZ+=speed;
+if(keys["ArrowLeft"]) moveX-=speed;
+if(keys["ArrowRight"]) moveX+=speed;
+
+/* JOYSTICK */
+moveX+=joyX*0.3;
+moveZ+=joyY*0.3;
+
+player.position.x+=moveX;
+player.position.z+=moveZ;
+
+/* ENEMY AI (RUN AWAY MODE) */
+enemies.forEach(e=>{
+
+let dx=player.position.x-e.position.x;
+let dz=player.position.z-e.position.z;
+let dist=Math.sqrt(dx*dx+dz*dz);
+
+let nx=dx/(dist+0.001);
+let nz=dz/(dist+0.001);
+
+/* RUN AWAY */
+if(dist<20){
+e.position.x-=nx*0.06;
+e.position.z-=nz*0.06;
+}
+else{
+e.position.x+=Math.cos(e.userData.dir)*e.userData.speed;
+e.position.z+=Math.sin(e.userData.dir)*e.userData.speed;
+
+if(Math.random()<0.01){
+e.userData.dir=Math.random()*Math.PI*2;
+}
+}
+
+/* BATTLE */
+if(dist<1.5){
+startBattle(e);
+}
+
+});
+
+/* CAMERA FOLLOW */
+camera.position.x=player.position.x;
+camera.position.z=player.position.z+8;
+camera.position.y=5;
+camera.lookAt(player.position);
+
+renderer.render(scene,camera);
 }
 
 animate();
+updateUI();
 
-// Resize support
-window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
-
-let move = {
-  forward: false,
-  back: false,
-  left: false,
-  right: false
-};
-
-// keyboard (PC)
-document.addEventListener("keydown", (e) => {
-  if (e.key === "w") move.forward = true;
-  if (e.key === "s") move.back = true;
-  if (e.key === "a") move.left = true;
-  if (e.key === "d") move.right = true;
-});
-
-document.addEventListener("keyup", (e) => {
-  if (e.key === "w") move.forward = false;
-  if (e.key === "s") move.back = false;
-  if (e.key === "a") move.left = false;
-  if (e.key === "d") move.right = false;
-});     
-
-class Voice {
-  constructor() {
-    this.recognition = null;
-    this.isListening = false;
-
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (SpeechRecognition) {
-      this.recognition = new SpeechRecognition();
-      this.recognition.lang = "en-US";
-      this.recognition.continuous = false;
-      this.recognition.interimResults = false;
-    }
-  }
-
-  start(onResult) {
-    if (!this.recognition) {
-      alert("Speech Recognition not supported in this browser");
-      return;
-    }
-
-    this.recognition.start();
-    this.isListening = true;
-
-    this.recognition.onresult = (event) => {
-      const text = event.results[0][0].transcript.toLowerCase();
-      onResult(text);
-    };
-
-    this.recognition.onend = () => {
-      this.isListening = false;
-    };
-  }
-}
-
-const voice = new Voice();
-  </script>
+</script>
 
 </body>
-
 </html>
