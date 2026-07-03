@@ -120,89 +120,623 @@ let inBattle = false;
 let currentRobot = null;
 
 const questions = [
-  // ---------------- BASIC GRAMMAR ----------------
-  { q: "What is correct?", options: ["I am fine", "I fine am", "Fine I am"], answer: 0 },
-  { q: "Choose correct sentence", options: ["He go to school", "He goes to school", "He going school"], answer: 1 },
-  { q: "Correct greeting?", options: ["Good morning", "Morning good you", "Good night morning"], answer: 0 },
-  { q: "Which is correct?", options: ["She are happy", "She is happy", "She happy is"], answer: 1 },
-  { q: "Select correct sentence", options: ["They is playing", "They are playing", "They playing are"], answer: 1 },
-
-  // ---------------- DAILY ENGLISH ----------------
-  { q: "How do you ask for water?", options: ["Give water", "I want water now", "Can I have some water?"], answer: 2 },
-  { q: "Polite request?", options: ["Open door", "Please open the door", "Door open now"], answer: 1 },
-  { q: "Correct sentence?", options: ["I am going home", "I going home am", "Going I home"], answer: 0 },
-  { q: "Ask time politely", options: ["What time it is?", "Can you tell me the time?", "Time tell me"], answer: 1 },
-  { q: "Correct response?", options: ["Yes, I can help you", "Yes help I", "I help yes"], answer: 0 },
-
-  // ---------------- SHOPPING ENGLISH ----------------
-  { q: "At shop you say?", options: ["Give this item", "I want buy this", "I would like to buy this"], answer: 2 },
-  { q: "Ask price politely", options: ["How much this?", "What is the price of this?", "Price tell"], answer: 1 },
-  { q: "Correct sentence", options: ["This is expensive", "This expensive is", "Expensive this is"], answer: 0 },
-
-  // ---------------- TRAVEL ENGLISH ----------------
-  { q: "At airport you say?", options: ["I want go", "I am going flight", "I would like to check in"], answer: 2 },
-  { q: "Ask direction?", options: ["Where bathroom is?", "Where is the bathroom?", "Bathroom where is"], answer: 1 },
-  { q: "Correct sentence", options: ["I need a ticket", "I ticket need", "Need I ticket"], answer: 0 },
-
-  // ---------------- SCHOOL ENGLISH ----------------
-  { q: "Teacher asks:", options: ["Sit down please", "Down sit please", "Please sit down"], answer: 2 },
-  { q: "Correct answer", options: ["I have done my homework", "I done homework have", "Homework I done"], answer: 0 },
-
-  // ---------------- GENERAL MIX ----------------
-  { q: "Best greeting", options: ["Hello", "Hell you", "Hi bye"], answer: 0 },
-  { q: "Correct sentence", options: ["I like English", "I English like", "Like I English"], answer: 0 },
-  { q: "Choose correct", options: ["He is my friend", "He my friend is", "Friend he is my"], answer: 0 },
-
-  // ---------------- EXPANDED (repeat pattern to grow game) ----------------
-  { q: "What is correct?", options: ["We are students", "We is students", "We students are"], answer: 0 },
-  { q: "Choose correct sentence", options: ["She is reading", "She reading is", "Reading she is"], answer: 0 },
-  { q: "Correct form?", options: ["I am learning English", "I learning English am", "Learning I English"], answer: 0 },
-  { q: "Polite English?", options: ["Help me", "Please help me", "Help now me"], answer: 1 },
-  { q: "Correct sentence", options: ["They are friends", "They is friends", "Friends they are"], answer: 0 },
-
-  // DAILY LIFE
-  { q: "What do you say when you meet someone?", options: ["Nice to meet you", "Meet you nice", "You meet nice"], answer: 0 },
-  { q: "How do you ask for help?", options: ["Help me now", "Can you help me?", "You help I"], answer: 1 },
-  { q: "Correct apology?", options: ["I am sorry", "Sorry I am", "I sorry am"], answer: 0 },
-  { q: "What do you say before eating?", options: ["Let's eat", "Eat now go", "Food start"], answer: 0 },
-
-  // SCHOOL ENGLISH
-  { q: "Teacher says to stand up?", options: ["Stand up please", "Up stand please", "Please stand up"], answer: 2 },
-  { q: "Correct classroom sentence?", options: ["I have a pen", "I pen have", "Pen I have"], answer: 0 },
-  { q: "Ask permission?", options: ["May I come in?", "I come may in", "Come I may"], answer: 0 },
-  { q: "Correct response to teacher", options: ["Yes ma'am", "Ma'am yes", "Yes I ma'am"], answer: 0 },
-
-  // TRAVEL ENGLISH
-  { q: "At hotel check-in you say?", options: ["I want room", "I need a room", "Room give me"], answer: 1 },
-  { q: "Ask for directions", options: ["Where is the station?", "Station where is?", "Where station"], answer: 0 },
-  { q: "At bus stop you say?", options: ["Bus when come?", "When will the bus come?", "Bus come when"], answer: 1 },
-
-  // SHOPPING
-  { q: "Ask for discount?", options: ["Any discount available?", "Discount give me", "Price low now"], answer: 0 },
-  { q: "Correct shop sentence", options: ["I want to return this", "I return this want", "This return I want"], answer: 0 },
-
-  // FRIEND TALK
-  { q: "Invite a friend", options: ["Come with me", "You come now me", "With me come"], answer: 0 },
-  { q: "Agree with someone", options: ["I agree", "Agree I", "I am agree you"], answer: 0 },
-  { q: "Disagree politely", options: ["I don't think so", "I not think", "Think not I"], answer: 0 },
-
-  // EMOTIONS
-  { q: "How do you express happiness?", options: ["I am happy", "Happy I am", "I happy am"], answer: 0 },
-  { q: "Express sadness", options: ["I feel sad", "Sad I feel", "I sad feel"], answer: 0 },
-
-  // GENERAL CONVERSATION
-  { q: "Ask someone's name", options: ["What is your name?", "Name your what?", "You name what"], answer: 0 },
-  { q: "Respond to thanks", options: ["You're welcome", "Welcome you are", "You welcome"], answer: 0 },
-  { q: "Say goodbye", options: ["Goodbye", "Bye hello", "Go now bye"], answer: 0 },
-
-  // PRACTICAL LIFE
-  { q: "Ask for time", options: ["What is the time?", "Time what is?", "Tell time me"], answer: 0 },
-  { q: "Ask for water politely", options: ["Can I have water?", "Water give me", "I water want"], answer: 0 },
-  { q: "Ask for price", options: ["How much is this?", "Price this what?", "This how much"], answer: 0 },
-
-
-  
+  {
+    q: "What is the opposite of 'big'?",
+    options: ["Large", "Small", "Tall"],
+    answer: 1
+  },
+  {
+    q: "Choose the correct sentence.",
+    options: ["She go to school.", "She goes to school.", "She going school."],
+    answer: 1
+  },
+  {
+    q: "What is the plural of 'child'?",
+    options: ["Childs", "Children", "Childes"],
+    answer: 1
+  },
+  {
+    q: "Which word is a fruit?",
+    options: ["Apple", "Chair", "Book"],
+    answer: 0
+  },
+  {
+    q: "How do you greet someone in the morning?",
+    options: ["Good night", "Good morning", "Good evening"],
+    answer: 1
+  },
+  {
+    q: "What is the past tense of 'go'?",
+    options: ["Goed", "Gone", "Went"],
+    answer: 2
+  },
+  {
+    q: "Which sentence is correct?",
+    options: ["I am happy.", "I happy am.", "Happy I am."],
+    answer: 0
+  },
+  {
+    q: "What is the opposite of 'hot'?",
+    options: ["Cold", "Warm", "Cool"],
+    answer: 0
+  },
+  {
+    q: "How many days are there in a week?",
+    options: ["5", "6", "7"],
+    answer: 2
+  },
+  {
+    q: "Which is a color?",
+    options: ["Blue", "Table", "Pen"],
+    answer: 0
+  },
+  {
+    q: "What do you drink?",
+    options: ["Water", "Chair", "Pencil"],
+    answer: 0
+  },
+  {
+    q: "Complete: I ___ a student.",
+    options: ["is", "am", "are"],
+    answer: 1
+  },
+  {
+    q: "Choose the correct question.",
+    options: ["What is your name?", "What your name is?", "Your name what?"],
+    answer: 0
+  },
+  {
+    q: "Which animal says 'Meow'?",
+    options: ["Dog", "Cat", "Cow"],
+    answer: 1
+  },
+  {
+    q: "What is the opposite of 'up'?",
+    options: ["Down", "Over", "High"],
+    answer: 0
+  },
+  {
+    q: "What do you use to write?",
+    options: ["Pen", "Shoe", "Plate"],
+    answer: 0
+  },
+  {
+    q: "Choose the correct sentence.",
+    options: ["They are playing.", "They is playing.", "They playing are."],
+    answer: 0
+  },
+  {
+    q: "What comes after Monday?",
+    options: ["Sunday", "Tuesday", "Friday"],
+    answer: 1
+  },
+  {
+    q: "Which word is a vegetable?",
+    options: ["Potato", "Banana", "Orange"],
+    answer: 0
+  },
+  {
+    q: "How do you say thank you politely?",
+    options: ["Thanks!", "Thank you very much.", "Give me that."],
+    answer: 1
+  },
+{
+    q: "What is the opposite of 'fast'?",
+    options: ["Quick", "Slow", "Speed"],
+    answer: 1
+  },
+  {
+    q: "Which one is a bird?",
+    options: ["Tiger", "Parrot", "Fish"],
+    answer: 1
+  },
+  {
+    q: "Complete: She ___ my friend.",
+    options: ["am", "is", "are"],
+    answer: 1
+  },
+  {
+    q: "What color is the sky on a clear day?",
+    options: ["Blue", "Green", "Red"],
+    answer: 0
+  },
+  {
+    q: "Which word is a month?",
+    options: ["Monday", "January", "Morning"],
+    answer: 1
+  },
+  {
+    q: "What is the opposite of 'happy'?",
+    options: ["Sad", "Smile", "Laugh"],
+    answer: 0
+  },
+  {
+    q: "Choose the correct sentence.",
+    options: ["He likes apples.", "He like apples.", "He liking apples."],
+    answer: 0
+  },
+  {
+    q: "How many letters are there in the English alphabet?",
+    options: ["24", "25", "26"],
+    answer: 2
+  },
+  {
+    q: "Which one is a body part?",
+    options: ["Hand", "Table", "Bottle"],
+    answer: 0
+  },
+  {
+    q: "Complete: They ___ playing football.",
+    options: ["is", "am", "are"],
+    answer: 2
+  },
+  {
+    q: "Which is a profession?",
+    options: ["Teacher", "Banana", "River"],
+    answer: 0
+  },
+  {
+    q: "What do bees make?",
+    options: ["Milk", "Honey", "Juice"],
+    answer: 1
+  },
+  {
+    q: "What is the opposite of 'old'?",
+    options: ["Young", "Tall", "Long"],
+    answer: 0
+  },
+  {
+    q: "Which sentence is correct?",
+    options: ["I have a book.", "I book have.", "Book I have."],
+    answer: 0
+  },
+  {
+    q: "What do you wear on your feet?",
+    options: ["Shoes", "Hat", "Gloves"],
+    answer: 0
+  },
+  {
+    q: "Which animal gives us milk?",
+    options: ["Cow", "Lion", "Monkey"],
+    answer: 0
+  },
+  {
+    q: "Complete: We ___ students.",
+    options: ["is", "are", "am"],
+    answer: 1
+  },
+  {
+    q: "What comes after 9?",
+    options: ["8", "10", "11"],
+    answer: 1
+  },
+  {
+    q: "Which word means 'very large'?",
+    options: ["Tiny", "Huge", "Small"],
+    answer: 1
+  },
+  {
+    q: "What do you say when leaving someone?",
+    options: ["Goodbye", "Thank you", "Welcome"],
+    answer: 0
+  },
+ {
+    q: "What is the opposite of 'open'?",
+    options: ["Close", "Closed", "Shut"],
+    answer: 1
+  },
+  {
+    q: "Which animal barks?",
+    options: ["Cat", "Dog", "Cow"],
+    answer: 1
+  },
+  {
+    q: "Complete: I ___ from India.",
+    options: ["am", "is", "are"],
+    answer: 0
+  },
+  {
+    q: "What is the color of grass?",
+    options: ["Blue", "Green", "Red"],
+    answer: 1
+  },
+  {
+    q: "Which one is a fruit?",
+    options: ["Mango", "Carrot", "Potato"],
+    answer: 0
+  },
+  {
+    q: "Complete: He ___ a doctor.",
+    options: ["am", "is", "are"],
+    answer: 1
+  },
+  {
+    q: "What is the opposite of 'day'?",
+    options: ["Night", "Morning", "Evening"],
+    answer: 0
+  },
+  {
+    q: "Which sentence is correct?",
+    options: ["She has a pen.", "She have a pen.", "She having a pen."],
+    answer: 0
+  },
+  {
+    q: "What do you use to cut paper?",
+    options: ["Scissors", "Plate", "Cup"],
+    answer: 0
+  },
+  {
+    q: "How many months are there in a year?",
+    options: ["10", "11", "12"],
+    answer: 2
+  },
+  {
+    q: "Which animal is called the king of the jungle?",
+    options: ["Tiger", "Lion", "Elephant"],
+    answer: 1
+  },
+  {
+    q: "Complete: They ___ my friends.",
+    options: ["is", "are", "am"],
+    answer: 1
+  },
+  {
+    q: "What is the opposite of 'rich'?",
+    options: ["Poor", "Big", "Small"],
+    answer: 0
+  },
+  {
+    q: "Which one is a vehicle?",
+    options: ["Car", "Tree", "Book"],
+    answer: 0
+  },
+  {
+    q: "What do you wear on your head?",
+    options: ["Shoes", "Hat", "Socks"],
+    answer: 1
+  },
+  {
+    q: "Choose the correct sentence.",
+    options: ["We are happy.", "We is happy.", "We happy are."],
+    answer: 0
+  },
+  {
+    q: "What is the opposite of 'long'?",
+    options: ["Tall", "Short", "Big"],
+    answer: 1
+  },
+  {
+    q: "Which season is the coldest?",
+    options: ["Summer", "Winter", "Rainy"],
+    answer: 1
+  },
+  {
+    q: "What do you drink in the morning?",
+    options: ["Tea", "Stone", "Book"],
+    answer: 0
+  },
+  {
+    q: "Complete: The sun ___ in the east.",
+    options: ["rise", "rises", "rising"],
+    answer: 1
+  },
+  {
+    q: "What is the opposite of 'clean'?",
+    options: ["Dirty", "Fresh", "Nice"],
+    answer: 0
+  },
+  {
+    q: "Which is a school object?",
+    options: ["Notebook", "Banana", "Bottle"],
+    answer: 0
+  },
+  {
+    q: "How many hours are there in a day?",
+    options: ["12", "24", "48"],
+    answer: 1
+  },
+  {
+    q: "What is the past tense of 'eat'?",
+    options: ["Ate", "Eated", "Eating"],
+    answer: 0
+  },
+  {
+    q: "Choose the correct sentence.",
+    options: ["I can swim.", "I can swims.", "I can swimming."],
+    answer: 0
+  },
+  {
+    q: "Which animal lives in water?",
+    options: ["Fish", "Horse", "Dog"],
+    answer: 0
+  },
+  {
+    q: "What do you say when someone helps you?",
+    options: ["Sorry", "Thank you", "Good night"],
+    answer: 1
+  },
+  {
+    q: "Complete: My mother ___ cooking.",
+    options: ["is", "are", "am"],
+    answer: 0
+  },
+  {
+    q: "What is the opposite of 'strong'?",
+    options: ["Weak", "Tall", "Fast"],
+    answer: 0
+  },
+  {
+    q: "Which one is a profession?",
+    options: ["Doctor", "River", "Apple"],
+    answer: 0
+  },
+ { q: "What is the synonym of 'happy'?", options: ["Sad", "Joyful", "Angry"], answer: 1 },
+  { q: "What is the antonym of 'beautiful'?", options: ["Pretty", "Ugly", "Lovely"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["She doesn't like tea.", "She don't like tea.", "She not like tea."], answer: 0 },
+  { q: "What is the past tense of 'write'?", options: ["Written", "Wrote", "Writes"], answer: 1 },
+  { q: "Which word is an adjective?", options: ["Run", "Beautiful", "Quickly"], answer: 1 },
+  { q: "Complete: I have lived here ___ five years.", options: ["for", "since", "at"], answer: 0 },
+  { q: "Which sentence is in the future tense?", options: ["I eat lunch.", "I ate lunch.", "I will eat lunch."], answer: 2 },
+  { q: "What is the plural of 'mouse'?", options: ["Mouses", "Mice", "Mouse"], answer: 1 },
+  { q: "Choose the correct word: The sun ___ in the east.", options: ["rise", "rises", "rising"], answer: 1 },
+  { q: "What is the opposite of 'increase'?", options: ["Decrease", "Expand", "Grow"], answer: 0 },
+  { q: "Which is a pronoun?", options: ["Beautiful", "They", "School"], answer: 1 },
+  { q: "Complete: If it rains, I ___ at home.", options: ["stay", "will stay", "stayed"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["He has finished his work.", "He have finished his work.", "He finished has work."], answer: 0 },
+  { q: "What is the past participle of 'go'?", options: ["Went", "Gone", "Going"], answer: 1 },
+  { q: "Which word is a noun?", options: ["Quickly", "Teacher", "Happy"], answer: 1 },
+  { q: "What is the opposite of 'accept'?", options: ["Receive", "Reject", "Allow"], answer: 1 },
+  { q: "Complete: She ___ TV when I called.", options: ["watched", "was watching", "watch"], answer: 1 },
+  { q: "Which sentence is correct?", options: ["I have been to Delhi.", "I has been to Delhi.", "I am been to Delhi."], answer: 0 },
+  { q: "What is the comparative form of 'good'?", options: ["Gooder", "Better", "Best"], answer: 1 },
+  { q: "Which punctuation ends a question?", options: [".", "!", "?"], answer: 2 },
+  { q: "Choose the correct sentence.", options: ["There are many books.", "There is many books.", "There many books are."], answer: 0 },
+  { q: "What is the opposite of 'success'?", options: ["Victory", "Failure", "Achievement"], answer: 1 },
+  { q: "Which word is an adverb?", options: ["Slowly", "Slow", "Slowness"], answer: 0 },
+  { q: "Complete: They ___ dinner before we arrived.", options: ["had eaten", "have eaten", "eat"], answer: 0 },
+  { q: "What is the superlative form of 'small'?", options: ["Smaller", "Smallest", "More small"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["Neither of the boys is absent.", "Neither of the boys are absent.", "Neither boys is absent."], answer: 0 },
+  { q: "Which sentence uses passive voice?", options: ["The cat chased the mouse.", "The mouse was chased by the cat.", "The cat is chasing the mouse."], answer: 1 },
+  { q: "What is the synonym of 'begin'?", options: ["End", "Start", "Finish"], answer: 1 },
+  { q: "Complete: By next year, I ___ here for ten years.", options: ["will work", "will have worked", "worked"], answer: 1 },
+  { q: "Which sentence is grammatically correct?", options: ["Everyone has their book.", "Everyone have their book.", "Everyone are having books."], answer: 0 },
+  { q: "What is the opposite of 'early'?", options: ["Late", "Fast", "Soon"], answer: 0 },
+  { q: "Which animal has a long neck?", options: ["Elephant", "Giraffe", "Tiger"], answer: 1 },
+  { q: "Complete: We ___ going to the park.", options: ["is", "am", "are"], answer: 2 },
+  { q: "What is the capital of India?", options: ["Mumbai", "Delhi", "Kolkata"], answer: 1 },
+  { q: "Which word means 'very smart'?", options: ["Intelligent", "Weak", "Slow"], answer: 0 },
+  { q: "What is the opposite of 'dark'?", options: ["Black", "Bright", "Night"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["She can dance.", "She can dances.", "She can dancing."], answer: 0 },
+  { q: "What do you call a baby dog?", options: ["Kitten", "Puppy", "Calf"], answer: 1 },
+  { q: "Complete: I ___ my homework yesterday.", options: ["do", "did", "done"], answer: 1 },
+  { q: "Which season comes after summer?", options: ["Winter", "Spring", "Monsoon"], answer: 2 },
+  { q: "What is the opposite of 'inside'?", options: ["Outside", "Under", "Above"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["He was sleeping.", "He were sleeping.", "He sleeping was."], answer: 0 },
+  { q: "What is the synonym of 'quick'?", options: ["Fast", "Slow", "Weak"], answer: 0 },
+  { q: "Which one is a planet?", options: ["Moon", "Mars", "Star"], answer: 1 },
+  { q: "Complete: They ___ finished the work.", options: ["has", "have", "is"], answer: 1 },
+  { q: "What is the opposite of 'safe'?", options: ["Dangerous", "Secure", "Strong"], answer: 0 },
+  { q: "Which word is a verb?", options: ["Run", "Blue", "Table"], answer: 0 },
+  { q: "How many minutes are there in one hour?", options: ["30", "60", "90"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["I was born in India.", "I were born in India.", "I born was in India."], answer: 0 },
+  { q: "What is the plural of 'tooth'?", options: ["Tooths", "Teeth", "Toothes"], answer: 1 },
+  { q: "What is the opposite of 'cheap'?", options: ["Expensive", "Small", "Large"], answer: 0 },
+  { q: "Complete: She ___ English every day.", options: ["study", "studies", "studying"], answer: 1 },
+  { q: "Which word is an adverb?", options: ["Quickly", "Quick", "Quicker"], answer: 0 },
+  { q: "What do you call a person who teaches?", options: ["Doctor", "Teacher", "Farmer"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["There is a cat on the table.", "There are a cat on the table.", "There cat is on table."], answer: 0 },
+  { q: "What is the opposite of 'always'?", options: ["Never", "Often", "Sometimes"], answer: 0 },
+  { q: "Complete: I have ___ my breakfast.", options: ["eat", "eaten", "ate"], answer: 1 },
+  { q: "Which one is a natural satellite of Earth?", options: ["Mars", "Sun", "Moon"], answer: 2 },
+  { q: "What is the synonym of 'brave'?", options: ["Coward", "Courageous", "Weak"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["He doesn't play cricket.", "He don't play cricket.", "He not play cricket."], answer: 0 },
+  { q: "What is the opposite of 'full'?", options: ["Heavy", "Empty", "Large"], answer: 1 },
+  { q: "Complete: The children ___ playing outside.", options: ["is", "are", "am"], answer: 1 },
+  { q: "What is the past tense of 'see'?", options: ["Saw", "Seen", "Seed"], answer: 0 },
+  { q: "Which word is a conjunction?", options: ["And", "Beautiful", "Quickly"], answer: 0 },
+  { q: "What do you call the place where books are kept?", options: ["Hospital", "Library", "Market"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["She has two sisters.", "She have two sisters.", "She having two sisters."], answer: 0 },
+  { q: "What is the opposite of 'borrow'?", options: ["Lend", "Take", "Give"], answer: 0 },
+  { q: "Complete: We ___ dinner at 8 o'clock yesterday.", options: ["had", "have", "has"], answer: 0 },
+  { q: "What is the largest animal on Earth?", options: ["Elephant", "Blue Whale", "Shark"], answer: 1 },
+ { q: "What is the opposite of 'high'?", options: ["Low", "Tall", "Big"], answer: 0 },
+  { q: "Which animal is known as man's best friend?", options: ["Dog", "Cat", "Horse"], answer: 0 },
+  { q: "Complete: She ___ a new dress.", options: ["have", "has", "had"], answer: 1 },
+  { q: "What is the synonym of 'tiny'?", options: ["Huge", "Small", "Long"], answer: 1 },
+  { q: "How many legs does a spider have?", options: ["6", "8", "10"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["I like reading books.", "I likes reading books.", "I liking books."], answer: 0 },
+  { q: "What is the opposite of 'strong'?", options: ["Weak", "Tall", "Fast"], answer: 0 },
+  { q: "Which word is a noun?", options: ["Happiness", "Quickly", "Beautiful"], answer: 0 },
+  { q: "Complete: They ___ to school every day.", options: ["go", "goes", "going"], answer: 0 },
+  { q: "What do you call a person who flies an airplane?", options: ["Driver", "Pilot", "Sailor"], answer: 1 },
+  { q: "What is the opposite of 'near'?", options: ["Far", "Close", "Beside"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["He is eating lunch.", "He are eating lunch.", "He eating lunch."], answer: 0 },
+  { q: "What is the past tense of 'take'?", options: ["Taked", "Taken", "Took"], answer: 2 },
+  { q: "Which one is a vegetable?", options: ["Carrot", "Apple", "Banana"], answer: 0 },
+  { q: "Complete: The baby ___ sleeping.", options: ["is", "are", "am"], answer: 0 },
+  { q: "What is the opposite of 'young'?", options: ["Old", "New", "Small"], answer: 0 },
+  { q: "Which word means 'to purchase'?", options: ["Sell", "Buy", "Give"], answer: 1 },
+  { q: "How many days are there in February in a leap year?", options: ["28", "29", "30"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["We were happy.", "We was happy.", "We happy were."], answer: 0 },
+  { q: "What is the plural of 'foot'?", options: ["Foots", "Feet", "Feets"], answer: 1 },
+  { q: "What is the opposite of 'begin'?", options: ["Continue", "End", "Start"], answer: 1 },
+  { q: "Complete: I ___ my friend yesterday.", options: ["meet", "met", "meeting"], answer: 1 },
+  { q: "Which one is a continent?", options: ["Asia", "India", "Delhi"], answer: 0 },
+  { q: "What is the synonym of 'angry'?", options: ["Happy", "Mad", "Excited"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["She was singing.", "She were singing.", "She singing was."], answer: 0 },
+  { q: "What is the opposite of 'laugh'?", options: ["Cry", "Smile", "Talk"], answer: 0 },
+  { q: "Which word is a preposition?", options: ["Under", "Quick", "Run"], answer: 0 },
+  { q: "Complete: We ___ finished our homework.", options: ["have", "has", "is"], answer: 0 },
+  { q: "What do you call a baby cat?", options: ["Puppy", "Kitten", "Cub"], answer: 1 },
+  { q: "What is the largest planet in the solar system?", options: ["Earth", "Saturn", "Jupiter"], answer: 2 },
+  { q: "Choose the correct sentence.", options: ["The sun is hot.", "The sun are hot.", "The sun hot is."], answer: 0 },
+  { q: "What is the opposite of 'same'?", options: ["Different", "Equal", "Similar"], answer: 0 },
+  { q: "Complete: He ___ television every evening.", options: ["watch", "watches", "watching"], answer: 1 },
+  { q: "Which one is a musical instrument?", options: ["Guitar", "Table", "Bottle"], answer: 0 },
+  { q: "What is the synonym of 'large'?", options: ["Big", "Tiny", "Short"], answer: 0 },
+  { q: "How many seconds are there in one minute?", options: ["30", "60", "100"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["I can ride a bicycle.", "I can rides a bicycle.", "I can riding a bicycle."], answer: 0 },
+  { q: "What is the opposite of 'success'?", options: ["Victory", "Failure", "Achievement"], answer: 1 },
+  { q: "Complete: They ___ a movie last night.", options: ["see", "saw", "seen"], answer: 1 },
+ { q: "What is the opposite of 'busy'?", options: ["Free", "Fast", "Late"], answer: 0 },
+  { q: "Which animal can fly?", options: ["Bird", "Tiger", "Elephant"], answer: 0 },
+  { q: "Complete: I ___ a cup of tea every morning.", options: ["drink", "drinks", "drinking"], answer: 0 },
+  { q: "What is the synonym of 'begin'?", options: ["Start", "Stop", "Finish"], answer: 0 },
+  { q: "How many colors are there in a rainbow?", options: ["5", "7", "9"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["They have a car.", "They has a car.", "They having a car."], answer: 0 },
+  { q: "What is the opposite of 'clean'?", options: ["Dirty", "Fresh", "Nice"], answer: 0 },
+  { q: "Which one is a profession?", options: ["Engineer", "Banana", "River"], answer: 0 },
+  { q: "Complete: She ___ to music now.", options: ["listen", "listens", "is listening"], answer: 2 },
+  { q: "What is the past tense of 'run'?", options: ["Runned", "Ran", "Run"], answer: 1 },
+  { q: "Which planet do we live on?", options: ["Mars", "Earth", "Venus"], answer: 1 },
+  { q: "What is the opposite of 'light'?", options: ["Heavy", "Dark", "Big"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["He has a bicycle.", "He have a bicycle.", "He having a bicycle."], answer: 0 },
+  { q: "What do you call a person who cooks food?", options: ["Chef", "Pilot", "Teacher"], answer: 0 },
+  { q: "Complete: We ___ football every Sunday.", options: ["play", "plays", "playing"], answer: 0 },
+  { q: "What is the synonym of 'smart'?", options: ["Intelligent", "Weak", "Lazy"], answer: 0 },
+  { q: "How many sides does a triangle have?", options: ["3", "4", "5"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["I am reading a book.", "I reading a book.", "I am read a book."], answer: 0 },
+  { q: "What is the opposite of 'enter'?", options: ["Come", "Leave", "Exit"], answer: 2 },
+  { q: "Which animal is the tallest?", options: ["Lion", "Giraffe", "Horse"], answer: 1 },
+  { q: "Complete: The children ___ in the garden.", options: ["is", "are", "am"], answer: 1 },
+  { q: "What is the plural of 'woman'?", options: ["Womans", "Women", "Womens"], answer: 1 },
+  { q: "What is the opposite of 'cheap'?", options: ["Expensive", "Small", "Old"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["She was happy.", "She were happy.", "She happy was."], answer: 0 },
+  { q: "What do bees make?", options: ["Milk", "Honey", "Water"], answer: 1 },
+  { q: "Complete: He ___ his homework yesterday.", options: ["did", "does", "doing"], answer: 0 },
+  { q: "What is the synonym of 'brave'?", options: ["Courageous", "Weak", "Scared"], answer: 0 },
+  { q: "Which one is a body part?", options: ["Hand", "Chair", "Bottle"], answer: 0 },
+  { q: "What is the opposite of 'full'?", options: ["Empty", "Large", "Heavy"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["We are friends.", "We is friends.", "We friends are."], answer: 0 },
+  { q: "How many days are there in a year?", options: ["365", "300", "400"], answer: 0 },
+  { q: "What is the past tense of 'give'?", options: ["Gived", "Given", "Gave"], answer: 2 },
+  { q: "Complete: My father ___ a doctor.", options: ["is", "are", "am"], answer: 0 },
+  { q: "What is the opposite of 'old'?", options: ["Young", "Tall", "New"], answer: 0 },
+  { q: "Which one is a natural resource?", options: ["Water", "Computer", "Phone"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["They were playing.", "They was playing.", "They playing were."], answer: 0 },
+  { q: "What is the synonym of 'silent'?", options: ["Quiet", "Loud", "Noisy"], answer: 0 },
+  { q: "Complete: I ___ to school by bus.", options: ["go", "goes", "going"], answer: 0 },
+  { q: "Which animal is known for its black and white stripes?", options: ["Tiger", "Zebra", "Horse"], answer: 1 },
+  { q: "What is the opposite of 'remember'?", options: ["Forget", "Think", "Know"], answer: 0 },
+{ q: "What is the opposite of 'wet'?", options: ["Dry", "Cold", "Soft"], answer: 0 },
+  { q: "Which animal is called the Ship of the Desert?", options: ["Horse", "Camel", "Donkey"], answer: 1 },
+  { q: "Complete: She ___ her room every day.", options: ["clean", "cleans", "cleaning"], answer: 1 },
+  { q: "What is the synonym of 'big'?", options: ["Large", "Tiny", "Short"], answer: 0 },
+  { q: "How many fingers do humans usually have?", options: ["8", "10", "12"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["He goes to school.", "He go to school.", "He going school."], answer: 0 },
+  { q: "What is the opposite of 'happy'?", options: ["Excited", "Sad", "Funny"], answer: 1 },
+  { q: "Which one is a season?", options: ["Winter", "Monday", "Morning"], answer: 0 },
+  { q: "Complete: They ___ dinner at 8 PM.", options: ["eat", "eats", "eating"], answer: 0 },
+  { q: "What is the past tense of 'sing'?", options: ["Sang", "Sung", "Singed"], answer: 0 },
+  { q: "Which planet is known as the Red Planet?", options: ["Earth", "Mars", "Venus"], answer: 1 },
+  { q: "What is the opposite of 'strong'?", options: ["Weak", "Tall", "Wide"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["I have a dog.", "I has a dog.", "I having a dog."], answer: 0 },
+  { q: "What do you call a person who writes books?", options: ["Singer", "Writer", "Painter"], answer: 1 },
+  { q: "Complete: We ___ TV every evening.", options: ["watch", "watches", "watching"], answer: 0 },
+  { q: "What is the synonym of 'beautiful'?", options: ["Pretty", "Ugly", "Dirty"], answer: 0 },
+  { q: "How many days are there in a week?", options: ["5", "6", "7"], answer: 2 },
+  { q: "Choose the correct sentence.", options: ["She is my sister.", "She are my sister.", "She my sister is."], answer: 0 },
+  { q: "What is the opposite of 'up'?", options: ["Down", "Over", "Across"], answer: 0 },
+  { q: "Which animal gives us wool?", options: ["Sheep", "Cow", "Goat"], answer: 0 },
+  { q: "Complete: The boy ___ a kite.", options: ["fly", "flies", "flying"], answer: 1 },
+  { q: "What is the plural of 'man'?", options: ["Mans", "Mens", "Men"], answer: 2 },
+  { q: "What is the opposite of 'rich'?", options: ["Poor", "Old", "Small"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["They are students.", "They is students.", "They students are."], answer: 0 },
+  { q: "Which one is a flower?", options: ["Rose", "Mango", "Potato"], answer: 0 },
+  { q: "Complete: I ___ breakfast at 8 o'clock.", options: ["have", "has", "having"], answer: 0 },
+  { q: "What is the synonym of 'quick'?", options: ["Fast", "Slow", "Weak"], answer: 0 },
+  { q: "How many months are there in a year?", options: ["10", "11", "12"], answer: 2 },
+  { q: "Choose the correct sentence.", options: ["He can swim.", "He can swims.", "He can swimming."], answer: 0 },
+  { q: "What is the opposite of 'open'?", options: ["Close", "Closed", "Wide"], answer: 1 },
+  { q: "Which one is a fruit?", options: ["Orange", "Carrot", "Onion"], answer: 0 },
+  { q: "Complete: My friends ___ playing cricket.", options: ["is", "are", "am"], answer: 1 },
+  { q: "What is the past tense of 'eat'?", options: ["Ate", "Eated", "Eaten"], answer: 0 },
+  { q: "What is the synonym of 'angry'?", options: ["Mad", "Happy", "Calm"], answer: 0 },
+  { q: "Which one is a means of transport?", options: ["Bus", "Tree", "River"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["We were late.", "We was late.", "We late were."], answer: 0 },
+  { q: "What is the opposite of 'light'?", options: ["Heavy", "Bright", "White"], answer: 0 },
+  { q: "Complete: She ___ her homework now.", options: ["does", "is doing", "did"], answer: 1 },
+  { q: "Which bird cannot fly?", options: ["Penguin", "Parrot", "Sparrow"], answer: 0 },
+{ q: "What is the opposite of 'full'?", options: ["Empty", "Heavy", "Large"], answer: 0 },
+  { q: "Which animal is the largest land animal?", options: ["Elephant", "Tiger", "Horse"], answer: 0 },
+  { q: "Complete: He ___ his teeth every morning.", options: ["brush", "brushes", "brushing"], answer: 1 },
+  { q: "What is the synonym of 'begin'?", options: ["Start", "Stop", "Close"], answer: 0 },
+  { q: "How many hours are there in one day?", options: ["12", "24", "48"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["I am hungry.", "I hungry am.", "Hungry I am."], answer: 0 },
+  { q: "What is the opposite of 'young'?", options: ["Old", "Small", "Tall"], answer: 0 },
+  { q: "Which one is a vegetable?", options: ["Potato", "Apple", "Orange"], answer: 0 },
+  { q: "Complete: They ___ in the garden.", options: ["play", "plays", "playing"], answer: 0 },
+  { q: "What is the past tense of 'come'?", options: ["Comed", "Come", "Came"], answer: 2 },
+  { q: "Which planet is closest to the Sun?", options: ["Mercury", "Earth", "Mars"], answer: 0 },
+  { q: "What is the opposite of 'easy'?", options: ["Simple", "Hard", "Short"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["She likes ice cream.", "She like ice cream.", "She liking ice cream."], answer: 0 },
+  { q: "What do you call a person who paints?", options: ["Painter", "Doctor", "Farmer"], answer: 0 },
+  { q: "Complete: We ___ to music every day.", options: ["listen", "listens", "listening"], answer: 0 },
+  { q: "What is the synonym of 'sad'?", options: ["Unhappy", "Glad", "Happy"], answer: 0 },
+  { q: "How many days are there in a leap year?", options: ["364", "365", "366"], answer: 2 },
+  { q: "Choose the correct sentence.", options: ["He is my brother.", "He are my brother.", "He my brother is."], answer: 0 },
+  { q: "What is the opposite of 'cold'?", options: ["Hot", "Cool", "Warm"], answer: 0 },
+  { q: "Which animal lives in water?", options: ["Fish", "Tiger", "Monkey"], answer: 0 },
+  { q: "Complete: My mother ___ delicious food.", options: ["cook", "cooks", "cooking"], answer: 1 },
+  { q: "What is the plural of 'child'?", options: ["Childs", "Children", "Childrens"], answer: 1 },
+  { q: "What is the opposite of 'right'?", options: ["Wrong", "Correct", "True"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["They are friends.", "They is friends.", "They friends are."], answer: 0 },
+  { q: "Which one is a body part?", options: ["Leg", "Book", "Table"], answer: 0 },
+  { q: "Complete: I ___ my homework every evening.", options: ["do", "does", "doing"], answer: 0 },
+  { q: "What is the synonym of 'small'?", options: ["Tiny", "Huge", "Large"], answer: 0 },
+  { q: "How many minutes are there in two hours?", options: ["60", "120", "180"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["We can play football.", "We can plays football.", "We can playing football."], answer: 0 },
+  { q: "What is the opposite of 'strong'?", options: ["Weak", "Tall", "Fast"], answer: 0 },
+  { q: "Which one is a bird?", options: ["Parrot", "Lion", "Dog"], answer: 0 },
+  { q: "Complete: The sun ___ in the east.", options: ["rise", "rises", "rising"], answer: 1 },
+  { q: "What is the past tense of 'drink'?", options: ["Drank", "Drinked", "Drunk"], answer: 0 },
+  { q: "What is the synonym of 'clever'?", options: ["Intelligent", "Lazy", "Slow"], answer: 0 },
+  { q: "Which one is a school subject?", options: ["Mathematics", "Banana", "River"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["I have two sisters.", "I has two sisters.", "I having two sisters."], answer: 0 },
+  { q: "What is the opposite of 'before'?", options: ["After", "First", "Early"], answer: 0 },
+  { q: "Complete: She ___ a letter yesterday.", options: ["write", "wrote", "written"], answer: 1 },
+  { q: "Which animal is known as the King of the Jungle?", options: ["Lion", "Tiger", "Elephant"], answer: 0 },
+{ q: "What is the opposite of 'early'?", options: ["Late", "Soon", "Fast"], answer: 0 },
+  { q: "Which animal says 'moo'?", options: ["Cow", "Dog", "Cat"], answer: 0 },
+  { q: "Complete: I ___ to school every day.", options: ["go", "goes", "going"], answer: 0 },
+  { q: "What is the synonym of 'happy'?", options: ["Sad", "Joyful", "Angry"], answer: 1 },
+  { q: "How many wheels does a bicycle have?", options: ["2", "3", "4"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["She is playing.", "She are playing.", "She playing is."], answer: 0 },
+  { q: "What is the opposite of 'fast'?", options: ["Slow", "Quick", "Rapid"], answer: 0 },
+  { q: "Which one is a fruit?", options: ["Apple", "Potato", "Onion"], answer: 0 },
+  { q: "Complete: They ___ watching TV.", options: ["is", "are", "am"], answer: 1 },
+  { q: "What is the past tense of 'go'?", options: ["Went", "Gone", "Going"], answer: 0 },
+  { q: "Which planet is known as Earth’s satellite?", options: ["Sun", "Moon", "Mars"], answer: 1 },
+  { q: "What is the opposite of 'day'?", options: ["Night", "Morning", "Evening"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["He is reading.", "He are reading.", "He reading is."], answer: 0 },
+  { q: "What do you call a person who fixes cars?", options: ["Driver", "Mechanic", "Teacher"], answer: 1 },
+  { q: "Complete: She ___ a new phone.", options: ["have", "has", "had"], answer: 1 },
+  { q: "What is the synonym of 'big'?", options: ["Large", "Small", "Tiny"], answer: 0 },
+  { q: "How many days are there in a week?", options: ["5", "7", "10"], answer: 1 },
+  { q: "Choose the correct sentence.", options: ["I am tired.", "I tired am.", "Tired I am."], answer: 0 },
+  { q: "What is the opposite of 'hot'?", options: ["Cold", "Warm", "Cool"], answer: 0 },
+  { q: "Which one is a vehicle?", options: ["Car", "Tree", "Book"], answer: 0 },
+  { q: "Complete: We ___ happy.", options: ["is", "are", "am"], answer: 1 },
+  { q: "What is the past tense of 'eat'?", options: ["Ate", "Eaten", "Eats"], answer: 0 },
+  { q: "What is the synonym of 'smart'?", options: ["Clever", "Weak", "Slow"], answer: 0 },
+  { q: "Which one is a color?", options: ["Blue", "Table", "Dog"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["They were late.", "They was late.", "They late were."], answer: 0 },
+  { q: "What is the opposite of 'near'?", options: ["Far", "Close", "Next"], answer: 0 },
+  { q: "Complete: I ___ a book.", options: ["read", "reads", "reading"], answer: 0 },
+  { q: "What is the plural of 'book'?", options: ["Books", "Bookes", "Book"], answer: 0 },
+  { q: "Which animal is called the King of Jungle?", options: ["Tiger", "Lion", "Elephant"], answer: 1 },
+  { q: "What is the opposite of 'big'?", options: ["Small", "Large", "Huge"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["She likes apples.", "She like apples.", "She liking apples."], answer: 0 },
+  { q: "What is the synonym of 'fast'?", options: ["Quick", "Slow", "Late"], answer: 0 },
+  { q: "Complete: He ___ football.", options: ["play", "plays", "playing"], answer: 1 },
+  { q: "What is the past tense of 'see'?", options: ["Saw", "Seen", "Seed"], answer: 0 },
+  { q: "Which one is a school subject?", options: ["Science", "Banana", "Chair"], answer: 0 },
+  { q: "What is the opposite of 'rich'?", options: ["Poor", "Strong", "Big"], answer: 0 },
+  { q: "Choose the correct sentence.", options: ["We are friends.", "We is friends.", "We friend are."], answer: 0 },
+  { q: "What is the synonym of 'easy'?", options: ["Simple", "Hard", "Difficult"], answer: 0 },
+  { q: "Complete: The sun ___ bright.", options: ["is", "are", "am"], answer: 0 }
 ];
+
 
 function updateRobotCount() {
   robotCountText.innerText = `Robots left: ${robots.length}`;
