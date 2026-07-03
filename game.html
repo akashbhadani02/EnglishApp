@@ -1,408 +1,1186 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GTA FULL PC + MOBILE GAME</title>
+    <title>English Game</title>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js">        animate();
+    </script>
 
-<style>
-body{margin:0;overflow:hidden;font-family:Arial;touch-action:none;}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* UI */
-#ui{
-position:absolute;top:10px;left:10px;
-background:rgba(0,0,0,0.6);
-color:white;padding:10px;border-radius:10px;
-}
+        body {
 
-/* BATTLE */
-#battleBox{
-position:absolute;bottom:10px;left:50%;
-transform:translateX(-50%) scale(0);
-background:rgba(0,0,0,0.9);
-color:white;
-padding:10px;
-width:300px;
-transition:0.3s;
-border-radius:10px;
-}
-#battleBox.active{
-transform:translateX(-50%) scale(1);
-}
-button{width:100%;margin:5px 0;padding:8px;}
+            overflow: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+            touch-action: none;
+            background: #000;
 
-/* JOYSTICK */
-#joystickBase{
-position:absolute;
-bottom:40px;
-left:40px;
-width:120px;
-height:120px;
-background:rgba(255,255,255,0.2);
-border-radius:50%;
-}
+        }
 
-#joystickStick{
-position:absolute;
-top:50%;
-left:50%;
-width:40px;
-height:40px;
-background:white;
-border-radius:50%;
-transform:translate(-50%,-50%);
-}
-</style>
+        /* ---------------- UI ---------------- */
+
+        #ui {
+
+            position: absolute;
+
+            top: 10px;
+            left: 10px;
+
+            background: rgba(0, 0, 0, .6);
+
+            color: #fff;
+
+            padding: 10px;
+
+            border-radius: 10px;
+
+            z-index: 100;
+
+            font-size: 18px;
+
+        }
+
+        #ui span {
+
+            color: yellow;
+
+        }
+
+        /* ---------------- Battle ---------------- */
+
+        #battleBox {
+
+            position: absolute;
+
+            left: 50%;
+
+            bottom: 20px;
+
+            transform: translateX(-50%) scale(0);
+
+            width: 320px;
+
+            background: rgba(0, 0, 0, .9);
+
+            color: white;
+
+            padding: 15px;
+
+            border-radius: 15px;
+
+            transition: .25s;
+
+            z-index: 200;
+
+        }
+
+        #battleBox.active {
+
+            transform: translateX(-50%) scale(1);
+
+        }
+
+        #battleBox button {
+
+            width: 100%;
+
+            padding: 10px;
+
+            margin-top: 8px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+        }
+
+        /* ---------------- Joystick ---------------- */
+
+        #joystickBase {
+
+            position: absolute;
+
+            bottom: 35px;
+
+            left: 35px;
+
+            width: 130px;
+
+            height: 130px;
+
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, .15);
+
+            border: 2px solid rgba(255, 255, 255, .4);
+
+            z-index: 150;
+
+        }
+
+        #joystickStick {
+
+            position: absolute;
+
+            width: 45px;
+
+            height: 45px;
+
+            left: 50%;
+
+            top: 50%;
+
+            border-radius: 50%;
+
+            background: white;
+
+            transform: translate(-50%, -50%);
+
+        }
+
+        /* Desktop */
+
+        @media(min-width:900px) {
+
+            #joystickBase {
+
+                left: 40px;
+                bottom: 40px;
+
+            }
+
+        }
+
+        canvas {
+
+            display: block;
+
+        }
+    </style>
+
 </head>
 
 <body>
 
-<div id="ui">
-Coins: <span id="coins">0</span> |
-Health: <span id="health">100</span>
-</div>
+    <div id="ui">
 
-<div id="battleBox">
-<h3>⚔ Battle</h3>
-<p id="qText"></p>
-<div id="opts"></div>
-</div>
+        Coins :
+        <span id="coins">0</span>
 
-<div id="joystickBase">
-<div id="joystickStick"></div>
-</div>
+        <br>
 
-<script>
+        Health :
+        <span id="health">100</span>
 
-/* SCENE */
-let scene=new THREE.Scene();
-scene.background=new THREE.Color(0x87ceeb);
+    </div>
 
-/* CAMERA */
-let camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,1000);
-camera.position.set(0,5,10);
+    <div id="battleBox">
 
-/* RENDER */
-let renderer=new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(innerWidth,innerHeight);
-document.body.appendChild(renderer.domElement);
+        <h3>Battle</h3>
 
-/* LIGHT */
-scene.add(new THREE.AmbientLight(0xffffff,1));
+        <p id="qText"></p>
 
-/* GROUND */
-let ground=new THREE.Mesh(
-new THREE.PlaneGeometry(200,200),
-new THREE.MeshStandardMaterial({color:0x2d6a4f})
-);
-ground.rotation.x=-Math.PI/2;
-scene.add(ground);
+        <div id="opts"></div>
 
-/* CITY */
-for(let i=0;i<25;i++){
-let b=new THREE.Mesh(
-new THREE.BoxGeometry(2+Math.random()*4,2+Math.random()*10,2+Math.random()*4),
-new THREE.MeshStandardMaterial({color:0x555555})
-);
-b.position.set((Math.random()-0.5)*100,1,(Math.random()-0.5)*100);
-scene.add(b);
-}
+    </div>
 
-/* PLAYER */
-let player=new THREE.Group();
-scene.add(player);
+    <div id="joystickBase">
 
-let body=new THREE.Mesh(
-new THREE.CapsuleGeometry(0.5,1,4,8),
-new THREE.MeshStandardMaterial({color:0x0077ff})
-);
+        <div id="joystickStick"></div>
 
-let head=new THREE.Mesh(
-new THREE.SphereGeometry(0.5),
-new THREE.MeshStandardMaterial({color:0xffcc99})
-);
+    </div>
 
-head.position.y=1.5;
-player.add(body);
-player.add(head);
+    <script>
 
-/* DATA */
-let coins=0;
-let health=100;
+        /* ===================================
+           GLOBAL VARIABLES
+        =================================== */
 
-/* ENEMIES */
-let enemies=[];
+        let scene;
+        let camera;
+        let renderer;
 
-function spawnEnemy(){
-let e=new THREE.Group();
+        let player;
 
-let b=new THREE.Mesh(
-new THREE.CapsuleGeometry(0.5,1,4,8),
-new THREE.MeshStandardMaterial({color:0xff3333})
-);
+        let coins = 0;
+        let health = 100;
 
-let h=new THREE.Mesh(
-new THREE.SphereGeometry(0.5),
-new THREE.MeshStandardMaterial({color:0xffcc99})
-);
+        let enemies = [];
 
-h.position.y=1.5;
-e.add(b); e.add(h);
+        let battle = false;
 
-e.position.set((Math.random()-0.5)*100,0,(Math.random()-0.5)*100);
+        /* ===================================
+           CREATE SCENE
+        =================================== */
 
-e.userData={
-speed:0.02+Math.random()*0.03,
-dir:Math.random()*Math.PI*2
-};
+        scene = new THREE.Scene();
 
-scene.add(e);
-enemies.push(e);
-}
+        scene.background = new THREE.Color(0x87CEEB);
 
-for(let i=0;i<30;i++) spawnEnemy();
+        /* ===================================
+           CAMERA
+        =================================== */
 
-/* ⭐ FIXED QLIST (NOW QUESTIONS WILL SHOW) */
-let qList=[
-{q:"How are you?",o:["I am fine","I am 20","I am Delhi"],a:0},
-{q:"What is your name?",o:["My name is...","I am fine","Good morning"],a:0},
-{q:"Capital of India?",o:["Delhi","Mumbai","Goa"],a:0},
-{q:"Where do you live?",o:["I live in India","I am fine","Thank you"],a:0},
-{q:"Good morning means?",o:["Morning greeting","Night","Food"],a:0},
-{q:"Apple is a?",o:["Fruit","Animal","Car"],a:0},
-{q:"What is this?",o:["Question","Answer","Book"],a:0},
-{q:"He ___ playing",o:["is","are","am"],a:0},
-{q:"She ___ reading",o:["is","are","am"],a:0},
-{q:"2+2?",o:["3","4","5"],a:1},
-{q:"Thank you reply?",o:["Welcome","Sorry","Bye"],a:0},
-{q:"What is your age?",o:["I am 20","I am fine","Delhi"],a:0},
-{q:"Water formula?",o:["H2O","CO2","O2"],a:0},
-{q:"Where is Taj Mahal?",o:["Agra","Delhi","Mumbai"],a:0},
-{q:"Good night means?",o:["Sleep time","Morning","Food"],a:0},
-{q:"I am hungry means?",o:["Bhukh lagi","Sleep","Happy"],a:0},
-{q:"What is your hobby?",o:["Reading","Car","Apple"],a:0},
-{q:"How old are you?",o:["I am 15","I am Delhi","I am fine"],a:0},
-{q:"What is your favourite color?",o:["Blue","Dog","Run"],a:0},
-{q:"Where are you from?",o:["India","Apple","Car"],a:0},
-{q:"What is 5+5?",o:["10","9","11"],a:0},
-{q:"What is your school name?",o:["ABC School","Good morning","Fruit"],a:0},
-{q:"Do you like English?",o:["Yes","No answer","Car"],a:0},
-{q:"What is 10-2?",o:["8","9","7"],a:0},
-{q:"What is sun color?",o:["Yellow","Green","Blue"],a:0},
-{q:"What is water?",o:["Liquid","Animal","Car"],a:0},
-{q:"Where do birds live?",o:["Sky","Water","Road"],a:0},
-{q:"What is 3+4?",o:["7","6","8"],a:0},
-{q:"What is your father name?",o:["John","Apple","Car"],a:0},
-{q:"What is moon?",o:["Satellite","Star","Sun"],a:0},
-{q:"What is 6+2?",o:["8","7","9"],a:0},
-{q:"5+3?",o:["7","8","9"],a:1},
-{q:"Sun is a?",o:["Star","Planet","Moon"],a:0},
-{q:"Dog says?",o:["Bark","Meow","Crow"],a:0},
-{q:"How to greet?",o:["Hello","Bye","Food"],a:0},
-{q:"What do you eat?",o:["Food","Car","Stone"],a:0},
-{q:"Where is India?",o:["Asia","Europe","Africa"],a:0},
-{q:"What is 9-3?",o:["6","5","7"],a:0},
-{q:"What is dog sound?",o:["Bark","Meow","Chirp"],a:0},
-{q:"What is 2*2?",o:["4","3","5"],a:0},
-{q:"What is your favourite food?",o:["Pizza","Car","Book"],a:0},
-{q:"What is 7+3?",o:["10","11","9"],a:0},
-{q:"Do you like school?",o:["Yes","No answer","Apple"],a:0},
-{q:"What is 12-4?",o:["8","7","9"],a:0},
-{q:"What is your country?",o:["India","USA","Goa"],a:0},
-{q:"Where is water found?",o:["River","Sky","Fire"],a:0},
-{q:"What is 4+6?",o:["10","9","11"],a:0},
-{q:"What is cow gives?",o:["Milk","Oil","Water"],a:0},
-{q:"What is 8-3?",o:["5","6","4"],a:0},
-{q:"What is your age?",o:["I am 10","I am fine","Delhi"],a:0},
-{q:"What is sun gives?",o:["Light","Water","Food"],a:0},
-{q:"What is 6+6?",o:["12","11","13"],a:0},
-{q:"What is bird can do?",o:["Fly","Swim","Run only"],a:0},
-{q:"What is 10/2?",o:["5","4","6"],a:0},
-{q:"Where do fish live?",o:["Water","Air","Land"],a:0},
-{q:"What is 3+5?",o:["8","7","9"],a:0},
-{q:"What is your name?",o:["My name is...","I am fine","Good"],a:0},
-{q:"What is 9+1?",o:["10","11","9"],a:0},
-{q:"What is moon light?",o:["Reflection","Fire","Water"],a:0},
-{q:"What is 5*2?",o:["10","9","11"],a:0},
-];
+        camera = new THREE.PerspectiveCamera(
 
-let battle=false;
+            75,
 
-/* EXPLOSION */
-function boom(x,y,z){
-for(let i=0;i<15;i++){
-let p=new THREE.Mesh(
-new THREE.SphereGeometry(0.1),
-new THREE.MeshStandardMaterial({color:0xffaa00})
-);
-p.position.set(x,y,z);
-scene.add(p);
+            window.innerWidth / window.innerHeight,
 
-let vx=(Math.random()-0.5)*0.4;
-let vy=Math.random()*0.3;
-let vz=(Math.random()-0.5)*0.4;
+            0.1,
 
-let t=0;
-let id=setInterval(()=>{
-p.position.x+=vx;
-p.position.y+=vy;
-p.position.z+=vz;
-t++;
-if(t>20){
-clearInterval(id);
-scene.remove(p);
-}
-},20);
-}
-}
+            2000
 
-/* BATTLE (SAFE FIX) */
-function startBattle(enemy){
-if(battle || !enemy) return;
+        );
 
-battle=true;
+        camera.position.set(
 
-let q=qList[Math.floor(Math.random()*qList.length)];
+            0,
 
-document.getElementById("battleBox").classList.add("active");
-document.getElementById("qText").innerText=q.q;
+            8,
 
-let div=document.getElementById("opts");
-div.innerHTML="";
+            12
 
-q.o.forEach((op,i)=>{
-let b=document.createElement("button");
-b.innerText=op;
+        );
 
-b.onclick=()=>{
+        /* ===================================
+           RENDERER
+        =================================== */
 
-if(i===q.a){
-boom(enemy.position.x,enemy.position.y,enemy.position.z);
-scene.remove(enemy);
-enemies=enemies.filter(e=>e!==enemy);
-coins+=10;
+        renderer = new THREE.WebGLRenderer({
+
+            antialias: true
+
+        });
+
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        renderer.setSize(
+
+            window.innerWidth,
+
+            window.innerHeight
+
+        );
+
+        renderer.shadowMap.enabled = true;
+
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+        document.body.appendChild(
+
+            renderer.domElement
+
+        );
+
+        /* ===================================
+           LIGHTS
+        =================================== */
+
+        /* Ambient */
+
+        const ambient =
+
+            new THREE.AmbientLight(
+
+                0xffffff,
+
+                1
+
+            );
+
+        scene.add(
+
+            ambient
+
+        );
+
+        /* Sun */
+
+        const sun =
+
+            new THREE.DirectionalLight(
+
+                0xffffff,
+
+                2
+
+            );
+
+        sun.position.set(
+
+            20,
+
+            40,
+
+            20
+
+        );
+
+        sun.castShadow = true;
+
+        sun.shadow.mapSize.width = 2048;
+
+        sun.shadow.mapSize.height = 2048;
+
+        scene.add(
+
+            sun
+
+        );
+
+        /* Fill */
+
+        const fill =
+
+            new THREE.HemisphereLight(
+
+                0xffffff,
+
+                0x444444,
+
+                0.8
+
+            );
+
+        scene.add(
+
+            fill
+
+        );
+
+        /* ===================================
+           WINDOW RESIZE
+        =================================== */
+
+        window.addEventListener(
+
+            "resize",
+
+            () => {
+
+                camera.aspect =
+
+                    window.innerWidth /
+
+                    window.innerHeight;
+
+                camera.updateProjectionMatrix();
+
+                renderer.setSize(
+
+                    window.innerWidth,
+
+                    window.innerHeight
+
+                );
+
+            }
+
+        );
+
+        /* ===================================
+    GROUND
+ =================================== */
+
+        const ground = new THREE.Mesh(
+            new THREE.PlaneGeometry(300, 300),
+            new THREE.MeshStandardMaterial({
+                color: 0x2d8f3f
+            })
+        );
+
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        /* ===================================
+           CITY BUILDINGS
+        =================================== */
+
+        const buildingMaterial = new THREE.MeshStandardMaterial({
+            color: 0x666666
+        });
+
+        for (let i = 0; i < 80; i++) {
+
+            const w = 2 + Math.random() * 4;
+            const h = 4 + Math.random() * 20;
+            const d = 2 + Math.random() * 4;
+
+            const building = new THREE.Mesh(
+                new THREE.BoxGeometry(w, h, d),
+                buildingMaterial
+            );
+
+            building.castShadow = true;
+            building.receiveShadow = true;
+
+            building.position.set(
+                (Math.random() - 0.5) * 250,
+                h / 2,
+                (Math.random() - 0.5) * 250
+            );
+
+            scene.add(building);
+        }
+
+        /* ===================================
+           TREES
+        =================================== */
+
+        for (let i = 0; i < 60; i++) {
+
+            const tree = new THREE.Group();
+
+            const trunk = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.25, 0.35, 2),
+                new THREE.MeshStandardMaterial({
+                    color: 0x6b3e26
+                })
+            );
+
+            trunk.position.y = 1;
+
+            const leaves = new THREE.Mesh(
+                new THREE.SphereGeometry(1.2, 16, 16),
+                new THREE.MeshStandardMaterial({
+                    color: 0x2ecc71
+                })
+            );
+
+            leaves.position.y = 2.8;
+
+            tree.add(trunk);
+            tree.add(leaves);
+
+            tree.position.set(
+                (Math.random() - 0.5) * 260,
+                0,
+                (Math.random() - 0.5) * 260
+            );
+
+            scene.add(tree);
+        }
+
+        /* ===================================
+           PLAYER
+        =================================== */
+
+        player = new THREE.Group();
+
+        const body = new THREE.Mesh(
+            new THREE.CapsuleGeometry(0.5, 1.2, 6, 12),
+            new THREE.MeshStandardMaterial({
+                color: 0x0077ff
+            })
+        );
+
+        body.position.y = 1;
+
+        const head = new THREE.Mesh(
+            new THREE.SphereGeometry(0.45, 20, 20),
+            new THREE.MeshStandardMaterial({
+                color: 0xffd4aa
+            })
+        );
+
+        head.position.y = 2.2;
+
+        const leftArm = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.12, 0.12, 1),
+            new THREE.MeshStandardMaterial({
+                color: 0x0077ff
+            })
+        );
+
+        leftArm.rotation.z = Math.PI / 2;
+        leftArm.position.set(-0.8, 1.3, 0);
+
+        const rightArm = leftArm.clone();
+        rightArm.position.x = 0.8;
+
+        const leftLeg = new THREE.Mesh(
+            new THREE.CylinderGeometry(0.15, 0.15, 1),
+            new THREE.MeshStandardMaterial({
+                color: 0x222222
+            })
+        );
+
+        leftLeg.position.set(-0.25, 0.3, 0);
+
+        const rightLeg = leftLeg.clone();
+        rightLeg.position.x = 0.25;
+
+        player.add(body);
+        player.add(head);
+        player.add(leftArm);
+        player.add(rightArm);
+        player.add(leftLeg);
+        player.add(rightLeg);
+
+        player.position.set(0, 0, 0);
+
+        scene.add(player);
+
+        /* ===================================
+           CAMERA FOLLOW
+        =================================== */
+
+        const cameraOffset = new THREE.Vector3(
+            0,
+            7,
+            10
+        );
+
+        function updateCamera() {
+
+            const desired = new THREE.Vector3(
+                player.position.x + cameraOffset.x,
+                player.position.y + cameraOffset.y,
+                player.position.z + cameraOffset.z
+            );
+
+            camera.position.lerp(desired, 0.08);
+
+            camera.lookAt(
+                player.position.x,
+                player.position.y + 1.5,
+                player.position.z
+            );
+        }
+
+        /* ===================================
+           PLAYER MOVEMENT
+        =================================== */
+
+        let keys = {};
+
+        let moveSpeed = 0.18;
+        let rotateSpeed = 0.15;
+
+        let joyX = 0;
+        let joyY = 0;
+
+        /* Keyboard */
+
+        document.addEventListener("keydown", (e) => {
+            keys[e.key.toLowerCase()] = true;
+        });
+
+        document.addEventListener("keyup", (e) => {
+            keys[e.key.toLowerCase()] = false;
+        });
+
+        /* ===================================
+           JOYSTICK
+        =================================== */
+
+        const joyBase = document.getElementById("joystickBase");
+        const joyStick = document.getElementById("joystickStick");
+
+        let joystickActive = false;
+
+        joyBase.addEventListener("touchstart", () => {
+            joystickActive = true;
+        });
+
+        joyBase.addEventListener("touchend", () => {
+
+            joystickActive = false;
+
+            joyX = 0;
+            joyY = 0;
+
+            joyStick.style.transform =
+                "translate(-50%,-50%)";
+        });
+
+        joyBase.addEventListener("touchmove", (e) => {
+
+            if (!joystickActive) return;
+
+            e.preventDefault();
+
+            const rect = joyBase.getBoundingClientRect();
+
+            let x =
+                e.touches[0].clientX -
+                rect.left -
+                rect.width / 2;
+
+            let y =
+                e.touches[0].clientY -
+                rect.top -
+                rect.height / 2;
+
+            const max = 45;
+
+            x = Math.max(-max, Math.min(max, x));
+            y = Math.max(-max, Math.min(max, y));
+
+            joyX = x / max;
+            joyY = y / max;
+
+            joyStick.style.transform =
+                `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+
+        });
+
+        /* ===================================
+           MOVE PLAYER
+        =================================== */
+
+        function movePlayer() {
+
+            let dx = 0;
+            let dz = 0;
+
+            /* WASD */
+
+            if (keys["w"]) dz -= 1;
+            if (keys["s"]) dz += 1;
+            if (keys["a"]) dx -= 1;
+            if (keys["d"]) dx += 1;
+
+            /* Arrow Keys */
+
+            if (keys["arrowup"]) dz -= 1;
+            if (keys["arrowdown"]) dz += 1;
+            if (keys["arrowleft"]) dx -= 1;
+            if (keys["arrowright"]) dx += 1;
+
+            /* Mobile Joystick */
+
+            dx += joyX;
+            dz += joyY;
+
+            if (dx !== 0 || dz !== 0) {
+
+                const len = Math.hypot(dx, dz);
+
+                dx /= len;
+                dz /= len;
+
+                player.position.x += dx * moveSpeed;
+                player.position.z += dz * moveSpeed;
+
+                player.rotation.y =
+                    Math.atan2(dx, dz);
+
+            }
+
+        }
+
+        /* ===================================
+           ANIMATION LOOP
+        =================================== */
+
+        function animate() {
+
+            requestAnimationFrame(animate);
+
+            movePlayer();
+
+            updateCamera();
+
+            updateEnemies();
+
+            checkBattle();
+
+            renderer.render(scene, camera);
+
+        }
+
+
+
+        /* ==========================================
+           ENEMY SYSTEM
+        ========================================== */
+
+
+        const MAX_ENEMIES = 30;
+
+        /* ==========================================
+           CREATE ENEMY
+        ========================================== */
+
+        function createEnemy(x, z) {
+
+            const enemy = new THREE.Group();
+
+            // Body
+            const body = new THREE.Mesh(
+                new THREE.CapsuleGeometry(0.55, 1.2, 6, 12),
+                new THREE.MeshStandardMaterial({
+                    color: 0xff3333
+                })
+            );
+
+            body.position.y = 1;
+
+            // Head
+            const head = new THREE.Mesh(
+                new THREE.SphereGeometry(0.45, 16, 16),
+                new THREE.MeshStandardMaterial({
+                    color: 0xffd4aa
+                })
+            );
+
+            head.position.y = 2.2;
+
+            // Left Arm
+            const leftArm = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.12, 0.12, 1),
+                new THREE.MeshStandardMaterial({
+                    color: 0xff3333
+                })
+            );
+
+            leftArm.rotation.z = Math.PI / 2;
+            leftArm.position.set(-0.8, 1.3, 0);
+
+            // Right Arm
+            const rightArm = leftArm.clone();
+            rightArm.position.x = 0.8;
+
+            // Left Leg
+            const leftLeg = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.15, 0.15, 1),
+                new THREE.MeshStandardMaterial({
+                    color: 0x222222
+                })
+            );
+
+            leftLeg.position.set(-0.25, 0.3, 0);
+
+            // Right Leg
+            const rightLeg = leftLeg.clone();
+            rightLeg.position.x = 0.25;
+
+            enemy.add(body);
+            enemy.add(head);
+            enemy.add(leftArm);
+            enemy.add(rightArm);
+            enemy.add(leftLeg);
+            enemy.add(rightLeg);
+
+            enemy.position.set(x, 0, z);
+
+            enemy.userData = {
+
+                speed: 0.04 + Math.random() * 0.03,
+
+                health: 100,
+
+                walkTime: Math.random() * 10,
+
+                leftArm,
+
+                rightArm,
+
+                leftLeg,
+
+                rightLeg,
+
+                head
+
+            };
+
+            scene.add(enemy);
+
+            enemies.push(enemy);
+
+        }
+
+        /* ==========================================
+           SPAWN ENEMIES
+        ========================================== */
+
+        function spawnEnemies() {
+
+            for (let i = 0; i < MAX_ENEMIES; i++) {
+
+                createEnemy(
+
+                    (Math.random() - 0.5) * 220,
+
+                    (Math.random() - 0.5) * 220
+
+                );
+
+            }
+
+        }
+
+        spawnEnemies();
+        /* ==========================================
+           ENEMY AI
+        ========================================== */
+
+        function updateEnemies() {
+
+            enemies.forEach(enemy => {
+
+                let dx =
+                    player.position.x -
+                    enemy.position.x;
+
+                let dz =
+                    player.position.z -
+                    enemy.position.z;
+
+                let dist = Math.sqrt(
+                    dx * dx + dz * dz
+                );
+
+                /* Follow Player */
+
+                if (dist > 0 && dist < 40) {
+
+    dx /= dist;
+    dz /= dist;
+
+    enemy.position.x += dx * enemy.userData.speed;
+    enemy.position.z += dz * enemy.userData.speed;
+
+    enemy.rotation.y = Math.atan2(dx, dz);
+
 }
 else{
-health-=10;
+
+    enemy.rotation.y += 0.01;
+
+}
+                /* Walking Animation */
+
+                enemy.userData.walkTime += 0.15;
+
+                const walk =
+                    Math.sin(
+                        enemy.userData.walkTime
+                    ) * 0.7;
+
+                enemy.userData.leftArm.rotation.x =
+                    walk;
+
+                enemy.userData.rightArm.rotation.x =
+                    -walk;
+
+                enemy.userData.leftLeg.rotation.x =
+                    -walk;
+
+                enemy.userData.rightLeg.rotation.x =
+                    walk;
+
+                enemy.userData.head.position.y =
+                    2.2 +
+                    Math.sin(
+                        enemy.userData.walkTime * 2
+                    ) * 0.05;
+
+
+                enemy.position.y =
+
+                    Math.sin(
+
+                        Date.now() * 0.004 +
+
+                        enemy.userData.walkTime
+
+                    ) * 0.08;
+            });
+
+
+
+        }
+
+        /* ==========================================
+           BATTLE SYSTEM
+        ========================================== */
+
+        let currentEnemy = null;
+
+        /* Sample Questions
+           (પછી 100+ Questions અહીં ઉમેરતા જઈશું)
+        */
+
+        const questions = [
+
+            {
+                q: "2 + 2 = ?",
+                o: ["3", "4", "5"],
+                a: 1
+            },
+
+            {
+                q: "Capital of India?",
+                o: ["Delhi", "Mumbai", "Surat"],
+                a: 0
+            },
+
+            {
+                q: "Sun is a ?",
+                o: ["Planet", "Star", "Moon"],
+                a: 1
+            },
+
+            {
+                q: "Water Formula?",
+                o: ["CO2", "H2O", "O2"],
+                a: 1
+            },
+
+            {
+                q: "5 x 2 = ?",
+                o: ["10", "8", "12"],
+                a: 0
+            }
+
+        ];
+
+        /* ==========================================
+           START BATTLE
+        ========================================== */
+
+        function startBattle(enemy) {
+
+            if (battle) return;
+
+            battle = true;
+
+            currentEnemy = enemy;
+
+            const q =
+                questions[
+                Math.floor(
+                    Math.random() * questions.length
+                )
+                ];
+
+            currentEnemy.userData.question = q;
+
+            document
+                .getElementById("battleBox")
+                .classList
+                .add("active");
+
+            document
+                .getElementById("qText")
+                .innerHTML = q.q;
+
+            const opts =
+                document.getElementById("opts");
+
+            opts.innerHTML = "";
+
+            q.o.forEach((text, index) => {
+
+                const btn =
+                    document.createElement("button");
+
+                btn.innerHTML = text;
+
+                btn.onclick = () => {
+
+                    answerQuestion(index);
+
+                };
+
+                opts.appendChild(btn);
+
+            });
+
+        }
+
+        /* ==========================================
+           ANSWER
+        ========================================== */
+
+        function answerQuestion(index) {
+
+            if (!currentEnemy) return;
+
+            const q =
+                currentEnemy.userData.question;
+
+            if (index === q.a) {
+
+                coins += 10;
+                updateCoins();
+
+                explosion(
+
+                    currentEnemy.position.x,
+
+                    currentEnemy.position.y,
+
+                    currentEnemy.position.z
+
+                );
+
+                scene.remove(currentEnemy);
+
+                enemies = enemies.filter(
+                    e => e !== currentEnemy
+                );
+
+                setTimeout(()=>{
+
+    respawnEnemy();
+
+},3000);
+
+            }
+
+            else {
+
+                health -= 10;
+                updateHealth();
+
+                if (health < 0)
+                    health = 0;
+                updateHealth();
+
+                if (health <= 0) {
+
+                    alert("GAME OVER");
+
+                    location.reload();
+
+                }
+
+            }
+
+            currentEnemy = null;
+
+            battle = false;
+
+            document
+                .getElementById("battleBox")
+                .classList
+                .remove("active");
+
+        }
+
+        /* ==========================================
+           CHECK DISTANCE
+        ========================================== */
+
+        function checkBattle() {
+
+            if (battle) return;
+
+            enemies.forEach(enemy => {
+
+                const d =
+                    player.position.distanceTo(
+                        enemy.position
+                    );
+
+                if (d < 2) {
+
+                    startBattle(enemy);
+
+                }
+
+            });
+
+        }
+
+        /* ==========================================
+           EXPLOSION
+        ========================================== */
+
+        function explosion(x, y, z) {
+
+            for (let i = 0; i < 20; i++) {
+
+                const p = new THREE.Mesh(
+
+                    new THREE.SphereGeometry(0.08, 8, 8),
+
+                    new THREE.MeshBasicMaterial({
+                        color: 0xffaa00
+                    })
+
+                );
+
+                p.position.set(x, y + 1, z);
+
+                scene.add(p);
+
+                const vx = (Math.random() - 0.5) * 0.35;
+                const vy = Math.random() * 0.25;
+                const vz = (Math.random() - 0.5) * 0.35;
+
+                let t = 0;
+
+                const id = setInterval(() => {
+
+                    p.position.x += vx;
+                    p.position.y += vy;
+                    p.position.z += vz;
+
+                    t++;
+
+                    if(t>25){
+
+    clearInterval(id);
+
+    scene.remove(p);
+
 }
 
-setTimeout(()=>{
-document.getElementById("battleBox").classList.remove("active");
-battle=false;
-},500);
+                }, 16);
 
-updateUI();
-};
+            }
 
-div.appendChild(b);
-});
-}
+        }
 
-/* UI */
-function updateUI(){
-document.getElementById("coins").innerText=coins;
-document.getElementById("health").innerText=health;
-}
 
-/* KEYBOARD */
-let keys={};
-document.addEventListener("keydown",e=>keys[e.key]=true);
-document.addEventListener("keyup",e=>keys[e.key]=false);
 
-/* JOYSTICK */
-let joyBase=document.getElementById("joystickBase");
-let joyStick=document.getElementById("joystickStick");
 
-let joyX=0, joyY=0;
-let active=false;
 
-joyBase.addEventListener("touchstart",()=>active=true);
 
-joyBase.addEventListener("touchend",()=>{
-active=false;
-joyX=0; joyY=0;
-joyStick.style.transform="translate(-50%,-50%)";
-});
+        
+        function updateCoins() {
+            document.getElementById("coins").textContent = coins;
+        }
 
-joyBase.addEventListener("touchmove",(e)=>{
-if(!active) return;
+        function updateHealth() {
+            document.getElementById("health").textContent = health;
+        }
 
-let rect=joyBase.getBoundingClientRect();
-let x=e.touches[0].clientX-rect.left-rect.width/2;
-let y=e.touches[0].clientY-rect.top-rect.height/2;
+        /* ==========================================
+           RESPAWN
+        ========================================== */
 
-joyX=Math.max(-1,Math.min(1,x/50));
-joyY=Math.max(-1,Math.min(1,y/50));
+        function respawnEnemy() {
 
-joyStick.style.transform=
-`translate(calc(-50% + ${joyX*40}px),calc(-50% + ${joyY*40}px))`;
-});
+            createEnemy(
 
-/* LOOP */
-function animate(){
-requestAnimationFrame(animate);
+                (Math.random() - 0.5) * 220,
 
-/* PLAYER MOVE */
-let speed=0.25;
+                (Math.random() - 0.5) * 220
 
-let moveX=0;
-let moveZ=0;
+            );
 
-if(keys["ArrowUp"]) moveZ-=speed;
-if(keys["ArrowDown"]) moveZ+=speed;
-if(keys["ArrowLeft"]) moveX-=speed;
-if(keys["ArrowRight"]) moveX+=speed;
-
-moveX+=joyX*0.3;
-moveZ+=joyY*0.3;
-
-player.position.x+=moveX;
-player.position.z+=moveZ;
-
-/* ENEMY AI */
-enemies.forEach(e=>{
-
-let dx=player.position.x-e.position.x;
-let dz=player.position.z-e.position.z;
-let dist=Math.sqrt(dx*dx+dz*dz);
-
-let nx=dx/(dist+0.001);
-let nz=dz/(dist+0.001);
-
-if(dist<20){
-e.position.x-=nx*0.06;
-e.position.z-=nz*0.06;
-}
-else{
-e.position.x+=Math.cos(e.userData.dir)*e.userData.speed;
-e.position.z+=Math.sin(e.userData.dir)*e.userData.speed;
-
-if(Math.random()<0.01){
-e.userData.dir=Math.random()*Math.PI*2;
-}
-}
-
-if(dist<1.5){
-startBattle(e);
-}
-});
-
-/* CAMERA */
-camera.position.x=player.position.x;
-camera.position.z=player.position.z+8;
-camera.position.y=5;
-camera.lookAt(player.position);
-
-renderer.render(scene,camera);
-}
-
-animate();
-updateUI();
-
-</script>
+        }
+            animate();
+    </script>
 
 </body>
+
 </html>
