@@ -916,40 +916,7 @@ else{
            (પછી 100+ Questions અહીં ઉમેરતા જઈશું)
         */
 
-        const questions = [
-
-            {
-                q: "2 + 2 = ?",
-                o: ["3", "4", "5"],
-                a: 1
-            },
-
-            {
-                q: "Capital of India?",
-                o: ["Delhi", "Mumbai", "Surat"],
-                a: 0
-            },
-
-            {
-                q: "Sun is a ?",
-                o: ["Planet", "Star", "Moon"],
-                a: 1
-            },
-
-            {
-                q: "Water Formula?",
-                o: ["CO2", "H2O", "O2"],
-                a: 1
-            },
-
-            {
-                q: "5 x 2 = ?",
-                o: ["10", "8", "12"],
-                a: 0
-            }
-
-        ];
-
+       const questions = [{q:"2 + 2 = ?",o:["3","4","5"],a:1},{q:"Capital of India?",o:["Delhi","Mumbai","Surat"],a:0},{q:"Sun is a ?",o:["Planet","Star","Moon"],a:1},{q:"Water Formula?",o:["CO2","H2O","O2"],a:1},{q:"5 x 2 = ?",o:["10","8","12"],a:0},{q:"7 + 3 = ?",o:["9","10","11"],a:1},{q:"10 - 4 = ?",o:["6","5","7"],a:0},{q:"3 x 3 = ?",o:["6","9","12"],a:1},{q:"15 / 3 = ?",o:["4","5","6"],a:1},{q:"8 + 1 = ?",o:["9","10","8"],a:0},{q:"Largest planet?",o:["Mars","Earth","Jupiter"],a:2},{q:"National animal of India?",o:["Tiger","Lion","Elephant"],a:0},{q:"How many days in a week?",o:["6","7","8"],a:1},{q:"How many months in a year?",o:["10","12","11"],a:1},{q:"Color of the sky?",o:["Blue","Green","Red"],a:0},{q:"Which is a fruit?",o:["Potato","Apple","Onion"],a:1},{q:"5 + 5 = ?",o:["10","11","12"],a:0},{q:"9 - 2 = ?",o:["6","7","8"],a:1},{q:"6 x 2 = ?",o:["10","12","14"],a:1},{q:"12 / 4 = ?",o:["2","3","4"],a:1},{q:"First month of the year?",o:["January","March","June"],a:0},{q:"Which animal barks?",o:["Cat","Dog","Cow"],a:1},{q:"How many legs does a spider have?",o:["6","8","10"],a:1},{q:"Which bird can fly?",o:["Sparrow","Penguin","Ostrich"],a:0},{q:"Which is a programming language?",o:["HTML","CSS","JavaScript"],a:2},{q:"HTML stands for?",o:["Hyper Text Markup Language","High Text Machine Language","Home Tool Markup Language"],a:0},{q:"CSS is used for?",o:["Styling","Database","Server"],a:0},{q:"JavaScript is used for?",o:["Design","Interactivity","Printing"],a:1},{q:"Which tag creates a paragraph?",o:["<p>","<h1>","<div>"],a:0},{q:"Which tag creates a line break?",o:["<br>","<hr>","<li>"],a:0},{q:"1 + 1 = ?",o:["1","2","3"],a:1},{q:"20 - 5 = ?",o:["15","10","20"],a:0},{q:"4 x 4 = ?",o:["12","16","20"],a:1},{q:"18 / 2 = ?",o:["8","9","10"],a:1},{q:"Square has how many sides?",o:["3","4","5"],a:1},{q:"Triangle has how many sides?",o:["2","3","4"],a:1},{q:"Which is a color?",o:["Apple","Blue","Chair"],a:1},{q:"Which is a vegetable?",o:["Carrot","Banana","Mango"],a:0},{q:"Which planet do we live on?",o:["Mars","Earth","Venus"],a:1},{q:"How many hours in a day?",o:["24","12","48"],a:0},{q:"Which is an ocean?",o:["Pacific","Himalaya","Sahara"],a:0},{q:"Fastest land animal?",o:["Tiger","Cheetah","Horse"],a:1},{q:"Which gas do plants need?",o:["Oxygen","Carbon Dioxide","Nitrogen"],a:1},{q:"Which gas do humans breathe?",o:["Oxygen","Hydrogen","Helium"],a:0},{q:"Which is a mammal?",o:["Whale","Shark","Octopus"],a:0},{q:"How many continents are there?",o:["5","6","7"],a:2},{q:"Which is the biggest ocean?",o:["Indian","Pacific","Atlantic"],a:1},{q:"How many colors in a rainbow?",o:["5","7","9"],a:1},{q:"Who invented the telephone?",o:["Newton","Bell","Edison"],a:1},{q:"Which is a search engine?",o:["Google","Excel","Word"],a:0},{q:"Which company made Windows?",o:["Apple","Microsoft","Google"],a:1},{q:"CPU stands for?",o:["Central Processing Unit","Computer Processing User","Central Program Unit"],a:0},{q:"Which device is used to type?",o:["Mouse","Keyboard","Monitor"],a:1},{q:"Which device shows output?",o:["Monitor","Keyboard","CPU"],a:0},{q:"How many fingers on one hand?",o:["4","5","6"],a:1},{q:"How many minutes in an hour?",o:["30","60","90"],a:1},{q:"Which season is very cold?",o:["Summer","Winter","Rainy"],a:1},{q:"Which season is very hot?",o:["Winter","Spring","Summer"],a:2},{q:"Which festival is known as the festival of lights?",o:["Holi","Diwali","Eid"],a:1},{q:"Which is India's national bird?",o:["Peacock","Parrot","Crow"],a:0},{q:"Who wrote the Ramayana?",o:["Valmiki","Kalidas","Tulsidas"],a:0},{q:"How many zeros are in 100?",o:["1","2","3"],a:1},{q:"100 / 10 = ?",o:["5","10","20"],a:1},{q:"11 + 11 = ?",o:["21","22","23"],a:1},{q:"9 x 9 = ?",o:["81","72","99"],a:0},{q:"What is the opposite of hot?",o:["Warm","Cold","Cool"],a:1},{q:"What is the opposite of up?",o:["Down","Left","Right"],a:0},{q:"Which animal gives milk?",o:["Cow","Tiger","Dog"],a:0},{q:"Which fruit is yellow?",o:["Apple","Banana","Grapes"],a:1},{q:"Which shape is round?",o:["Circle","Square","Triangle"],a:0},{q:"How many wheels does a bicycle have?",o:["2","3","4"],a:0},{q:"Which is used to cut paper?",o:["Pen","Scissors","Book"],a:1},{q:"How many letters are in the English alphabet?",o:["24","25","26"],a:2},{q:"Which is the largest mammal?",o:["Elephant","Blue Whale","Giraffe"],a:1},{q:"Which organ pumps blood?",o:["Liver","Heart","Lungs"],a:1},{q:"Which planet is known as the Red Planet?",o:["Mars","Venus","Jupiter"],a:0},{q:"How many seconds in a minute?",o:["30","60","90"],a:1},{q:"Which metal is liquid at room temperature?",o:["Mercury","Iron","Gold"],a:0},{q:"Which country is famous for the Eiffel Tower?",o:["Italy","France","Germany"],a:1},{q:"Who painted Mona Lisa?",o:["Picasso","Da Vinci","Van Gogh"],a:1},{q:"What is the boiling point of water?",o:["100°C","50°C","200°C"],a:0},{q:"Which is the smallest prime number?",o:["1","2","3"],a:1},{q:"Which is the largest desert?",o:["Sahara","Gobi","Thar"],a:0},{q:"How many players in a cricket team?",o:["9","10","11"],a:2},{q:"Which instrument measures temperature?",o:["Thermometer","Barometer","Scale"],a:0},{q:"Which planet is closest to the Sun?",o:["Mercury","Earth","Mars"],a:0},{q:"Which is the national game of India (traditionally)?",o:["Cricket","Hockey","Football"],a:1},{q:"What do bees make?",o:["Milk","Honey","Juice"],a:1},{q:"Which is a web browser?",o:["Chrome","Windows","Android"],a:0},{q:"Which language is used for styling web pages?",o:["HTML","CSS","Python"],a:1},{q:"Which symbol is used for comments in JavaScript?",o:["//","##","**"],a:0},{q:"Which method displays a message in JavaScript?",o:["alert()","show()","print()"],a:0},{q:"Which operator is used for addition?",o:["-","+","*"],a:1},{q:"Which keyword declares a variable in JavaScript?",o:["let","print","show"],a:0},{q:"JSON stands for?",o:["JavaScript Object Notation","Java Source Object Network","Java Standard Output Name"],a:0},{q:"Which company developed JavaScript?",o:["Microsoft","Netscape","Google"],a:1},{q:"Which tag is used for images?",o:["<img>","<image>","<pic>"],a:0},{q:"Which attribute specifies an image source?",o:["src","href","alt"],a:0}];
         /* ==========================================
            START BATTLE
         ========================================== */
