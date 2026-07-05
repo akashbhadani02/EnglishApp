@@ -2,408 +2,573 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>FPS CLEAN IMPROVED GAME</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🦜 Talking Parrot Pro</title>
 
 <style>
-body{
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
 overflow:hidden;
-font-family:Arial;
-background:linear-gradient(135deg,#ff9a9e,#a18cd1,#fad0c4);
-touch-action:none;
-cursor:crosshair;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(to top,#87CEEB,#dff8ff);
 }
 
-#ui{
+/* Sky */
+.sky{
+position:fixed;
+width:100%;
+height:100%;
+left:0;
+top:0;
+overflow:hidden;
+z-index:0;
+}
+
+/* Clouds */
+.cloud{
 position:absolute;
-top:10px;
-left:10px;
-background:rgba(0,0,0,0.6);
-color:white;
-padding:12px;
+font-size:70px;
+opacity:.8;
+animation:cloudMove linear infinite;
+}
+
+.cloud:nth-child(1){
+top:10%;
+left:-200px;
+animation-duration:40s;
+}
+
+.cloud:nth-child(2){
+top:30%;
+left:-300px;
+animation-duration:55s;
+}
+
+.cloud:nth-child(3){
+top:60%;
+left:-250px;
+animation-duration:48s;
+}
+
+@keyframes cloudMove{
+0%{
+transform:translateX(0);
+}
+100%{
+transform:translateX(calc(100vw + 500px));
+}
+}
+
+/* Flying Parrot */
+.parrot{
+position:fixed;
+left:-150px;
+top:20%;
+font-size:90px;
+z-index:100;
+pointer-events:none;
+animation:
+fly 16s linear infinite,
+flap .35s ease-in-out infinite alternate,
+floatBird 2s ease-in-out infinite;
+}
+
+@keyframes fly{
+
+0%{
+left:-150px;
+top:18%;
+transform:scaleX(1);
+}
+
+20%{
+top:8%;
+}
+
+40%{
+top:30%;
+}
+
+49%{
+left:105%;
+transform:scaleX(1);
+}
+
+50%{
+left:105%;
+transform:scaleX(-1);
+}
+
+70%{
+top:15%;
+}
+
+90%{
+top:35%;
+}
+
+100%{
+left:-150px;
+top:18%;
+transform:scaleX(-1);
+}
+
+}
+
+@keyframes flap{
+from{
+rotate:-8deg;
+}
+to{
+rotate:8deg;
+}
+}
+
+@keyframes floatBird{
+0%{margin-top:0;}
+50%{margin-top:-12px;}
+100%{margin-top:0;}
+}
+
+/* Game Box */
+
+.game{
+
+position:relative;
+z-index:10;
+
+width:520px;
+max-width:95%;
+
+background:white;
+
+padding:25px;
+
+border-radius:25px;
+
+box-shadow:0 20px 40px rgba(0,0,0,.3);
+
+text-align:center;
+
+}
+
+h1{
+
+color:#2c3e50;
+margin-bottom:10px;
+
+}
+
+.info{
+
+font-size:18px;
+margin-bottom:15px;
+
+}
+
+#sentence{
+
+min-height:70px;
+
+font-size:26px;
+
+font-weight:bold;
+
+color:#1976d2;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:15px;
+
 border-radius:12px;
-width:260px;
-z-index:2;
+
+background:#eef8ff;
+
+margin-bottom:20px;
+
 }
 
-#crosshair{
-position:absolute;
-top:50%;
-left:50%;
-width:12px;
-height:12px;
-margin-left:-6px;
-margin-top:-6px;
-border:2px solid #00ffcc;
-border-radius:50%;
-z-index:999;
+.buttons{
+
+display:flex;
+
+justify-content:center;
+
+gap:10px;
+
+flex-wrap:wrap;
+
 }
 
 button{
-width:100%;
-padding:8px;
-margin-top:6px;
+
+padding:14px 24px;
+
+font-size:18px;
+
 border:none;
-border-radius:8px;
-background:linear-gradient(90deg,#ff00cc,#3333ff,#00ffcc);
+
+border-radius:12px;
+
+cursor:pointer;
+
+transition:.3s;
+
 color:white;
+
+}
+
+.next{
+
+background:#27ae60;
+
+}
+
+.next:hover{
+
+background:#219150;
+
+}
+
+.repeat{
+
+background:#e67e22;
+
+}
+
+.repeat:hover{
+
+background:#cf6f18;
+
+}
+
+#mic{
+
+display:none;
+
+font-size:32px;
+
+margin-top:20px;
+
+animation:blink .6s infinite;
+
+}
+
+@keyframes blink{
+
+50%{
+
+opacity:.2;
+
+}
+
+}
+
+#result{
+
+margin-top:20px;
+
+font-size:22px;
+
+min-height:60px;
+
+}
+
+.score{
+
+margin-top:15px;
+
+font-size:18px;
+
 font-weight:bold;
+
+color:#555;
+
 }
 
-#joystick{
-position:absolute;
-bottom:20px;
-left:20px;
-width:120px;
-height:120px;
-border-radius:50%;
-border:2px solid #00ffcc;
-background:rgba(255,255,255,0.1);
+/* Mobile */
+
+@media(max-width:600px){
+
+.parrot{
+
+font-size:70px;
+
 }
 
-#stick{
-position:absolute;
-width:50px;
-height:50px;
-background:#00ffcc;
-border-radius:50%;
-top:35px;
-left:35px;
+#sentence{
+
+font-size:21px;
+
+}
+
+button{
+
+width:100%;
+
+}
+
+.buttons{
+
+display:block;
+
+}
+
+.buttons button{
+
+margin-top:10px;
+
+}
+
 }
 </style>
 </head>
 
 <body>
 
-<div id="ui">
-🎮 Score: <span id="score">0</span><br>
-⏱ Time: <span id="time">500</span><br>
-🎯 Find: <span id="word">-</span><br>
+<div class="sky">
 
-<button onclick="startGame()">START</button>
-<button onclick="toggleMode()">MODE</button>
+<div class="cloud">☁️</div>
+<div class="cloud">☁️</div>
+<div class="cloud">☁️</div>
+
 </div>
 
-<div id="crosshair"></div>
-
-<div id="joystick">
-<div id="stick"></div>
+<div class="parrot">
+🦜
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+<div class="game">
+
+<h1>🦜 Talking Parrot Pro</h1>
+
+<div class="info">
+Press <b>Next Sentence</b><br>
+Listen Carefully & Repeat
+</div>
+
+<div id="sentence">
+Loading...
+</div>
+
+<div class="buttons">
+
+<button class="next" onclick="nextSentence()">
+🔊 Next Sentence
+</button>
+
+<button class="repeat" onclick="startSpeech()">
+🎤 Repeat
+</button>
+
+</div>
+
+<div id="mic">
+🎙️ Listening...
+</div>
+
+<div id="result"></div>
+
+<div class="score">
+Sentence:
+<span id="count">1</span>
+/
+<span id="total">30</span>
+</div>
 
 <script>
-
-// ================= SETUP =================
-let scene = new THREE.Scene();
-scene.background = new THREE.Color(0xffffff);
-
-let camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
-camera.position.set(0,2,5);
-
-let renderer = new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(innerWidth,innerHeight);
-document.body.appendChild(renderer.domElement);
-
-scene.add(new THREE.AmbientLight(0xffffff,1.5));
-
-// ================= DATA =================
-let items=[
-{word:"FIRE", emoji:"🔥"},
-{word:"BALL", emoji:"⚽"},
-{word:"RAIN", emoji:"🌧️"},
-{word:"TREE", emoji:"🌳"},
-{word:"FISH", emoji:"🐟"},
-{word:"BIRD", emoji:"🐦"},
-{word:"MOON", emoji:"🌙"},
-{word:"STAR", emoji:"⭐"},
-{word:"WIND", emoji:"💨"},
-{word:"SNOW", emoji:"❄️"},
-{word:"LAKE", emoji:"🏞️"},
-{word:"SHIP", emoji:"🚢"},
-{word:"BEAR", emoji:"🐻"},
-{word:"WOLF", emoji:"🐺"},
-{word:"FROG", emoji:"🐸"},
-{word:"DEER", emoji:"🦌"},
-{word:"DUCK", emoji:"🦆"},
-{word:"PIGS", emoji:"🐷"},
-{word:"COW", emoji:"🐮"},
-{word:"LAMB", emoji:"🐑"},
-{word:"CAKE", emoji:"🍰"},
-{word:"MILK", emoji:"🥛"},
-{word:"RICE", emoji:"🍚"},
-{word:"SALT", emoji:"🧂"},
-{word:"TEA", emoji:"🍵"},
-{word:"JUCE", emoji:"🧃"},
-{word:"BOOK", emoji:"📘"},
-{word:"GAME", emoji:"🎮"},
-{word:"GIFT", emoji:"🎁"},
-{word:"CASH", emoji:"💰"},
-{word:"GOLD", emoji:"🥇"},
-{word:"FARM", emoji:"🚜"},
-{word:"HOME", emoji:"🏠"},
-{word:"DOOR", emoji:"🚪"},
-{word:"ROAD", emoji:"🛣️"},
-{word:"CITY", emoji:"🏙️"},
-{word:"PARK", emoji:"🌳"},
-{word:"SAND", emoji:"🏖️"},
-{word:"WAVE", emoji:"🌊"},
-{word:"CUBE", emoji:"🧊"}
+    const sentences = [
+"Every small step brings me closer to my goals",
+"I believe every challenge is an opportunity to grow",
+"Learning English has changed the way I communicate",
+"Consistency is more important than perfection",
+"I enjoy exploring new ideas and solving problems",
+"I always try to stay positive in difficult situations",
+"Confidence comes from regular practice",
+"I am improving my communication skills every day",
+"Success requires patience and determination",
+"I prefer spending my free time reading books",
+"I like meeting people from different cultures",
+"I believe honesty is the foundation of every relationship",
+"Technology has made our lives more convenient",
+"I enjoy learning something new every single day",
+"Hard work always pays off in the long run",
+"I never stop trying until I achieve my goal",
+"I can adapt to new environments very quickly",
+"I believe that time is our most valuable resource",
+"I enjoy helping others whenever I can",
+"I stay calm even under pressure",
+"My dream is to become financially independent",
+"I focus on improving myself instead of comparing with others",
+"I like taking responsibility for my actions",
+"I always look for solutions instead of excuses",
+"Every experience teaches us an important lesson",
+"Communication is the key to success",
+"I enjoy working with creative people",
+"I am becoming more confident in speaking English",
+"I believe that knowledge is true power",
+"I always give my best in everything I do"
 ];
 
-let objects=[];
-let target={answer:""};
+let index = 0;
 
-let score=0;
-let time=500;
-let running=false;
-let mode="wordToEmoji";
-let combo=0;
+document.getElementById("total").innerText = sentences.length;
 
-let keys={};
+function speak(text){
 
-// ================= UI =================
-let scoreEl=document.getElementById("score");
-let timeEl=document.getElementById("time");
-let wordEl=document.getElementById("word");
+speechSynthesis.cancel();
 
-// ================= MODE =================
-function toggleMode(){
-mode = (mode==="wordToEmoji") ? "emojiToWord" : "wordToEmoji";
-newRound();
+const speech = new SpeechSynthesisUtterance(text);
+
+speech.lang = "en-US";
+speech.rate = 0.9;
+speech.pitch = 1;
+speech.volume = 1;
+
+speechSynthesis.speak(speech);
+
 }
 
-// ================= OBJECTS =================
-function createObjects(){
+function nextSentence(){
 
-objects.forEach(o=>scene.remove(o));
-objects=[];
+document.getElementById("result").innerHTML = "";
 
-let gridSize=3;
+document.getElementById("sentence").innerHTML =
+sentences[index];
 
-for(let i=0;i<items.length;i++){
+document.getElementById("count").innerHTML =
+index+1;
 
-let item = items[i];
+speak(sentences[index]);
 
-let canvas=document.createElement("canvas");
-canvas.width=256;
-canvas.height=256;
-let ctx=canvas.getContext("2d");
-
-// background
-ctx.fillStyle="#111";
-ctx.fillRect(0,0,256,256);
-
-let display = (mode==="wordToEmoji") ? item.emoji : item.word;
-
-// 🔥 AUTO SIZE FIX
-let size = display.length > 6 ? 55 : 85;
-
-// emoji extra big
-if(/[\u{1F300}-\u{1FAFF}]/u.test(display)){
-size = 95;
 }
 
-ctx.font = "bold " + size + "px Arial";
-ctx.textAlign = "center";
-ctx.textBaseline = "middle";
+function normalize(str){
 
-// glow effect
-ctx.fillStyle="white";
-ctx.shadowColor="black";
-ctx.shadowBlur=18;
+return str
+.toLowerCase()
+.replace(/[.,!?]/g,"")
+.replace(/\s+/g," ")
+.trim();
 
-ctx.fillText(display,128,128);
+}
 
-let tex=new THREE.CanvasTexture(canvas);
-let mat=new THREE.MeshBasicMaterial({map:tex});
+function startSpeech(){
 
-let cube=new THREE.Mesh(new THREE.BoxGeometry(),mat);
+const SpeechRecognition =
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
 
-cube.position.set(
-(i%gridSize-1)*4,
-Math.random()*2+1,
-(Math.floor(i/gridSize)-1)*4
-);
+if(!SpeechRecognition){
 
-cube.userData={
-...item,
-vx:(Math.random()-0.5)*0.05,
-vz:(Math.random()-0.5)*0.05
+alert("Please use Google Chrome");
+
+return;
+
+}
+
+const recognition = new SpeechRecognition();
+
+recognition.lang = "en-US";
+recognition.continuous = false;
+recognition.interimResults = false;
+recognition.maxAlternatives = 1;
+
+document.getElementById("mic").style.display = "block";
+
+recognition.start();
+
+recognition.onresult = function(e){
+
+document.getElementById("mic").style.display = "none";
+
+const spoken =
+e.results[0][0].transcript;
+
+document.getElementById("result").innerHTML =
+"<b>You Said:</b><br>"+spoken;
+
+if(
+normalize(spoken) ===
+normalize(sentences[index])
+){
+
+document.getElementById("result").innerHTML +=
+"<br><br>✅ Excellent!";
+
+index++;
+
+if(index >= sentences.length){
+
+setTimeout(()=>{
+
+alert("🎉 Congratulations!\nYou completed all sentences.");
+
+index = 0;
+
+nextSentence();
+
+},700);
+
+}else{
+
+setTimeout(()=>{
+
+nextSentence();
+
+},700);
+
+}
+
+}else{
+
+document.getElementById("result").innerHTML +=
+"<br><br>❌ Try Again";
+
+setTimeout(()=>{
+
+speak(sentences[index]);
+
+},1000);
+
+}
+
 };
 
-scene.add(cube);
-objects.push(cube);
-}
-}
+recognition.onerror = function(){
 
-// ================= GAME =================
-function startGame(){
+document.getElementById("mic").style.display = "none";
 
-score=0;
-time=500;
-combo=0;
-running=true;
+alert("🎤 Microphone Error");
 
-newRound();
+};
 
-setInterval(()=>{
-if(!running) return;
-time--;
-if(time<=0) running=false;
-updateUI();
-},1000);
+recognition.onend = function(){
+
+document.getElementById("mic").style.display = "none";
+
+};
+
 }
 
-function newRound(){
+window.onload = function(){
 
-let item = items[Math.floor(Math.random()*items.length)];
+nextSentence();
 
-if(mode==="wordToEmoji"){
-target.answer = item.emoji;
-wordEl.innerText = item.word;
-}else{
-target.answer = item.word;
-wordEl.innerText = item.emoji;
-}
-
-createObjects();
-}
-
-function updateUI(){
-scoreEl.innerText=score;
-timeEl.innerText=time;
-}
-
-// ================= SHOOT =================
-function shoot(e){
-
-if(!running) return;
-
-let x = e.clientX || (e.touches && e.touches[0].clientX);
-let y = e.clientY || (e.touches && e.touches[0].clientY);
-
-let mouse = new THREE.Vector2(
-(x/innerWidth)*2-1,
--(y/innerHeight)*2+1
-);
-
-let raycaster = new THREE.Raycaster();
-raycaster.setFromCamera(mouse,camera);
-
-let hits = raycaster.intersectObjects(objects);
-
-if(hits.length>0){
-
-let obj = hits[0].object;
-
-let correct =
-(mode==="wordToEmoji")
-? obj.userData.emoji === target.answer
-: obj.userData.word === target.answer;
-
-if(correct){
-combo++;
-score += 10 * combo;
-obj.scale.set(1.5,1.5,1.5);
-setTimeout(()=>obj.scale.set(1,1,1),120);
-}else{
-combo=0;
-score -= 5;
-camera.position.x += (Math.random()-0.5)*0.3;
-camera.position.y += (Math.random()-0.5)*0.3;
-}
-
-scene.remove(obj);
-newRound();
-updateUI();
-}
-}
-
-document.addEventListener("mousedown",shoot);
-document.addEventListener("touchstart",shoot,{passive:false});
-
-// ================= MOVEMENT =================
-let move={x:0,z:0};
-
-document.addEventListener("keydown",(e)=>{
-let k=e.key.toLowerCase();
-if(k==="w") move.z=-1;
-if(k==="s") move.z=1;
-if(k==="a") move.x=-1;
-if(k==="d") move.x=1;
-});
-
-document.addEventListener("keyup",()=>move={x:0,z:0});
-
-// ================= JOYSTICK =================
-let moveX=0,moveZ=0;
-
-let joy=document.getElementById("joystick");
-let stick=document.getElementById("stick");
-
-joy.addEventListener("touchmove",(e)=>{
-let t=e.touches[0];
-let r=joy.getBoundingClientRect();
-
-let x=t.clientX-r.left-60;
-let y=t.clientY-r.top-60;
-
-x=Math.max(-40,Math.min(40,x));
-y=Math.max(-40,Math.min(40,y));
-
-moveX=x/40;
-moveZ=y/40;
-
-stick.style.left=(60+x-25)+"px";
-stick.style.top=(60+y-25)+"px";
-});
-
-joy.addEventListener("touchend",()=>{
-moveX=0;
-moveZ=0;
-stick.style.left="35px";
-stick.style.top="35px";
-});
-
-// ================= LOOK =================
-let yaw=0,pitch=0;
-
-document.addEventListener("mousemove",(e)=>{
-yaw -= e.movementX*0.002;
-pitch -= e.movementY*0.002;
-});
-
-// ================= LOOP =================
-function animate(){
-requestAnimationFrame(animate);
-
-camera.rotation.set(pitch,yaw,0);
-
-camera.position.x += move.x*0.08 + moveX*0.08;
-camera.position.z += move.z*0.08 + moveZ*0.08;
-
-objects.forEach(o=>{
-o.rotation.y += 0.03;
-
-o.position.x += o.userData.vx;
-o.position.z += o.userData.vz;
-
-if(o.position.x>10||o.position.x<-10) o.userData.vx*=-1;
-if(o.position.z>10||o.position.z<-10) o.userData.vz*=-1;
-});
-
-renderer.render(scene,camera);
-}
-animate();
-
-window.addEventListener("resize",()=>{
-camera.aspect=innerWidth/innerHeight;
-camera.updateProjectionMatrix();
-renderer.setSize(innerWidth,innerHeight);
-});
-
+};
 </script>
 
 </body>
