@@ -395,7 +395,7 @@
  =================================== */
 
         const ground = new THREE.Mesh(
-            new THREE.PlaneGeometry(300, 300),
+            new THREE.PlaneGeometry(1000, 1000),
             new THREE.MeshStandardMaterial({
                 color: 0x2d8f3f
             })
@@ -697,8 +697,7 @@
 
             updateEnemies();
 
-            checkBattle();
-
+            checkBattle();
             renderer.render(scene, camera);
 
         }
@@ -710,7 +709,7 @@
         ========================================== */
 
 
-        const MAX_ENEMIES = 300;
+        const MAX_ENEMIES = 1000;
 
         /* ==========================================
            CREATE ENEMY
