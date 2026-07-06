@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Advanced Preposition Exam</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #fff;
+            width: 100%;
+            max-width: 900px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        #studentSection {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 18px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .startBtn {
+            background: #27ae60;
+            color: white;
+            width: 100%;
+        }
+
+        #quizSection {
+            display: none;
+        }
+
+        #progressText {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            height: 18px;
+            background: #ddd;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: #27ae60;
+            transition: .4s;
+        }
+
+        #timer {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: right;
+            color: #e74c3c;
+            margin-bottom: 15px;
+        }
+
+        #question {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .option {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin: 8px 0;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+        }
+
+        .option:hover {
+            background: #2980b9;
+        }
+
+        .correct {
+            background: #27ae60 !important;
+        }
+
+        .wrong {
+            background: #e74c3c !important;
+        }
+
+        #scoreBoard {
+            margin-top: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        #certificate {
+            display: none;
+            padding: 30px;
+            text-align: center;
+            border: 10px solid gold;
+            border-radius: 20px;
+        }
+
+        #certificate h2 {
+            font-size: 40px;
+            color: green;
+            margin-bottom: 20px;
+        }
+
+        #certificate h3 {
+            font-size: 28px;
+            margin: 15px 0;
+        }
+
+        #printBtn {
+            background: #27ae60;
+            color: white;
+            margin-top: 20px;
+        }
+
+        body {
+            user-select: none;
+        }
+
+        /* certificate */
+        #certificate {
+            display: none;
+            padding: 20px;
+        }
+
+        .cert-box {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 40px;
+            border: 10px double gold;
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .cert-box h1 {
+            color: #2c3e50;
+            margin: 10px 0;
+            font-size: 32px;
+        }
+
+        .cert-box h2 {
+            font-size: 30px;
+            color: #27ae60;
+            margin: 20px 0;
+            border-bottom: 2px solid #27ae60;
+            display: inline-block;
+            padding: 5px 20px;
+        }
+
+        .cert-box h3 {
+            color: #34495e;
+            margin: 10px 0;
+        }
+
+        .line {
+            color: #555;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .resultBox {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #222;
+        }
+
+        .signs {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 50px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .signs div {
+            border-top: 2px solid black;
+            width: 180px;
+            padding-top: 5px;
+        }
+
+        #printBtn {
+            margin-top: 20px;
+            padding: 12px 20px;
+            border: none;
+            background: #27ae60;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:600px) {
+            .cert-box {
+                padding: 20px;
+            }
+
+            .cert-box h1 {
+                font-size: 22px;
+            }
+
+            .cert-box h2 {
+                font-size: 22px;
+            }
+
+            .signs {
+                justify-content: center;
+            }
+        }
+
+        /* PRINT FIX */
+        @media print {
+
+            body * {
+                visibility: hidden;
+            }
+
+            #certificate,
+            #certificate * {
+                visibility: visible;
+            }
+
+            #certificate {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+            }
+
+            /* Q&A Hide */
+            #reviewSection,
+            #reviewSection * {
+                display: none !important;
+                visibility: hidden !important;
+            }
+
+            /* Buttons Hide */
+            #downloadQA,
+            #certificateBtn {
+                display: none !important;
+            }
+        }
+
+        #downloadBtn,
+        #certificateBtn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        #reviewSection {
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+
+        #reviewTable {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #reviewTable th {
+            background: #27ae60;
+            color: white;
+            padding: 10px;
+        }
+
+        #reviewTable td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div id="studentSection">
+
+            <h1>📚 Final Exam</h1>
+
+            <input id="studentName" placeholder="Enter student full Name (Surname,Name,Father's name)">
+
+            <button class="startBtn" onclick="startExam()">
+                Start Exam
+            </button>
+
+        </div>
+
+        <div id="quizSection">
+
+            <div id="progressText"></div>
+
+            <div class="progress">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+
+            <div id="timer">30</div>
+
+            <div id="question"></div>
+
+            <div id="options"></div>
+
+            <div id="scoreBoard">
+                Score: 0
+            </div>
+
+        </div>
+
+        <div id="certificate">
+
+            <div class="cert-box">
+
+                <img id="schoolLogo" src="https://cdn-icons-png.flaticon.com/512/3135/3135755.png" width="80">
+
+                <h1>🏆 CERTIFICATE OF ACHIEVEMENT</h1>
+
+                <p class="line">This is proudly awarded to</p>
+
+                <h2 id="certName">Student Name</h2>
+
+                <p class="line">For successfully completing</p>
+
+                <h3>Final Exam</h3>
+
+                <div class="resultBox">
+
+                    <p id="certPercent"></p>
+                    <p id="certStatus"></p>
+                    <p id="certGrade"></p>
+                    <p id="certDate"></p>
+
+                </div>
+
+                <div class="signs">
+                    <div>Teacher Signature</div>
+                    <div>Principal Signature</div>
+                </div>
+
+                <!-- <button id="printBtn" onclick="window.print()">🖨 Print Certificate</button> -->
+
+
+                <button id="downloadQA" style="background:#f39c12;color:white;margin:5px;">
+                    📄 Download Q & A
+                </button>
+
+                <button onclick="window.open('certificate.html','_blank')"
+                    style="background:#3498db;color:white;margin:5px;">
+                    🏆 Open Certificate
+                </button>
+
+
+            </div> <!-- cert-box -->
+        </div> <!-- certificate -->
+        <div id="reviewSection" style="display:none;margin-top:30px;">
+
+            <h2>📊 Answer Review</h2>
+
+            <table border="1" width="100%" id="reviewTable">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Question</th>
+                        <th>Your Answer</th>
+                        <th>Correct Answer</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+        </div>
+    </div> <!-- container -->
+
+
+    </div>
+
+    </div>
+    <script>
+
+        // Print Screen Detection
+        document.addEventListener("keyup", function (e) {
+
+            if (e.key === "PrintScreen") {
+
+                cheatCount++;
+
+                navigator.clipboard.writeText("");
+
+                alert("⚠ Screenshot detected! Cheating attempt: " + cheatCount);
+
+                if (cheatCount >= 3) {
+                    alert("❌ Exam terminated due to cheating.");
+                    finishExam();
+                }
+            }
+        });
+
+        // Windows Snipping Tool (partial detection)
+        document.addEventListener("keydown", function (e) {
+
+            if (
+                e.key === "PrintScreen" ||
+                (e.ctrlKey && e.shiftKey && e.key === "S")
+            ) {
+
+                cheatCount++;
+
+                alert("⚠ Screenshot tool detected!");
+
+                if (cheatCount >= 3) {
+                    alert("❌ Exam terminated due to cheating.");
+                    finishExam();
+                }
+            }
+        });
+
+        let cheatCount = 0;
+
+        const allQuestions = [
+            { q: "She ___ to school every day.", options: ["go", "goes", "going", "gone"], answer: "goes" },
+            { q: "They ___ playing cricket now.", options: ["is", "are", "was", "be"], answer: "are" },
+            { q: "I ___ my homework yesterday.", options: ["do", "did", "done", "doing"], answer: "did" },
+            { q: "He ___ English very well.", options: ["speak", "speaks", "speaking", "spoken"], answer: "speaks" },
+            { q: "We ___ dinner at 8 PM.", options: ["have", "has", "having", "had"], answer: "have" },
+
+            { q: "She has ___ her work.", options: ["finish", "finished", "finishing", "finishes"], answer: "finished" },
+            { q: "There ___ a book on the table.", options: ["is", "are", "were", "be"], answer: "is" },
+            { q: "There ___ many students in the class.", options: ["is", "are", "was", "be"], answer: "are" },
+            { q: "I have lived here ___ 2019.", options: ["for", "since", "at", "in"], answer: "since" },
+            { q: "He has worked here ___ five years.", options: ["since", "for", "at", "on"], answer: "for" },
+
+            { q: "Can you ___ the window?", options: ["open", "opened", "opening", "opens"], answer: "open" },
+            { q: "This bag is ___ than mine.", options: ["heavy", "heavier", "heaviest", "more heavy"], answer: "heavier" },
+            { q: "She is the ___ student in the class.", options: ["smart", "smarter", "smartest", "more smart"], answer: "smartest" },
+            { q: "I don't have ___ money.", options: ["some", "any", "many", "few"], answer: "any" },
+            { q: "Would you like ___ coffee?", options: ["some", "any", "many", "few"], answer: "some" },
+
+            { q: "How ___ books do you have?", options: ["much", "many", "little", "less"], answer: "many" },
+            { q: "How ___ water do you drink?", options: ["many", "much", "few", "little"], answer: "much" },
+            { q: "He is interested ___ music.", options: ["at", "in", "on", "to"], answer: "in" },
+            { q: "Please listen ___ me.", options: ["to", "at", "on", "for"], answer: "to" },
+            { q: "The train arrives ___ 9 o'clock.", options: ["on", "in", "at", "for"], answer: "at" },
+
+            { q: "She lives ___ Mumbai.", options: ["in", "on", "at", "to"], answer: "in" },
+            { q: "The meeting is ___ Monday.", options: ["at", "on", "in", "for"], answer: "on" },
+            { q: "I was born ___ 2005.", options: ["at", "on", "in", "to"], answer: "in" },
+            { q: "If it rains, we ___ stay home.", options: ["will", "would", "can", "did"], answer: "will" },
+            { q: "You ___ wear a helmet while riding.", options: ["must", "may", "can", "could"], answer: "must" },
+
+            { q: "He ___ his keys yesterday.", options: ["lose", "loses", "lost", "losing"], answer: "lost" },
+            { q: "They ___ TV when I arrived.", options: ["watch", "watched", "were watching", "are watching"], answer: "were watching" },
+            { q: "I ___ never been to London.", options: ["has", "have", "had", "having"], answer: "have" },
+            { q: "She ___ already finished her homework.", options: ["has", "have", "had", "is"], answer: "has" },
+            { q: "The baby is sleeping. Please be ___.", options: ["quiet", "quite", "loud", "fast"], answer: "quiet" },
+
+            { q: "He drives ___.", options: ["careful", "carefully", "care", "more careful"], answer: "carefully" },
+            { q: "The food tastes ___.", options: ["good", "well", "better", "best"], answer: "good" },
+            { q: "She made me ___.", options: ["laugh", "laughed", "laughing", "to laugh"], answer: "laugh" },
+            { q: "I want ___ a doctor.", options: ["be", "being", "to be", "been"], answer: "to be" },
+            { q: "He enjoys ___ football.", options: ["play", "playing", "played", "plays"], answer: "playing" },
+
+            { q: "Neither Ram nor Shyam ___ present.", options: ["are", "is", "were", "be"], answer: "is" },
+            { q: "Everyone ___ happy.", options: ["are", "is", "were", "have"], answer: "is" },
+            { q: "Each student ___ a book.", options: ["have", "has", "had", "having"], answer: "has" },
+            { q: "The news ___ surprising.", options: ["are", "is", "were", "have"], answer: "is" },
+            { q: "She ___ to the market every Sunday.", options: ["go", "goes", "going", "gone"], answer: "goes" },
+
+            { q: "I ___ a letter now.", options: ["write", "writes", "am writing", "wrote"], answer: "am writing" },
+            { q: "They ___ the match last week.", options: ["win", "won", "wins", "winning"], answer: "won" },
+            { q: "He ___ finished the project before dinner.", options: ["has", "had", "have", "is"], answer: "had" },
+            { q: "The sun ___ in the east.", options: ["rise", "rises", "rose", "rising"], answer: "rises" },
+            { q: "Water ___ at 100°C.", options: ["boil", "boils", "boiled", "boiling"], answer: "boils" },
+
+            { q: "She is afraid ___ dogs.", options: ["of", "from", "to", "with"], answer: "of" },
+            { q: "He is good ___ Mathematics.", options: ["in", "at", "on", "for"], answer: "at" },
+            { q: "I prefer tea ___ coffee.", options: ["than", "to", "with", "for"], answer: "to" },
+            { q: "This is ___ interesting story.", options: ["a", "an", "the", "no article"], answer: "an" },
+            { q: "___ Earth moves around the Sun.", options: ["A", "An", "The", "No article"], answer: "The" },
+
+            { q: "She ___ a beautiful dress yesterday.", options: ["wear", "wore", "wears", "wearing"], answer: "wore" },
+            { q: "They ___ to the park every Sunday.", options: ["go", "goes", "going", "gone"], answer: "go" },
+            { q: "I ___ my friend tomorrow.", options: ["meet", "will meet", "met", "meeting"], answer: "will meet" },
+            { q: "He ___ his homework before dinner.", options: ["finish", "finished", "had finished", "finishes"], answer: "had finished" },
+            { q: "The baby ___ peacefully.", options: ["sleep", "sleeps", "is sleeping", "slept"], answer: "is sleeping" },
+
+            { q: "We ___ football every evening.", options: ["play", "plays", "playing", "played"], answer: "play" },
+            { q: "She ___ never seen snow.", options: ["has", "have", "had", "is"], answer: "has" },
+            { q: "The boys ___ making noise.", options: ["is", "are", "was", "be"], answer: "are" },
+            { q: "I ___ coffee every morning.", options: ["drink", "drinks", "drank", "drinking"], answer: "drink" },
+            { q: "He ___ to London last year.", options: ["go", "went", "gone", "goes"], answer: "went" },
+
+            { q: "She is taller ___ her sister.", options: ["than", "then", "to", "from"], answer: "than" },
+            { q: "This is ___ easiest question.", options: ["a", "an", "the", "no article"], answer: "the" },
+            { q: "There ___ some apples on the table.", options: ["is", "are", "was", "be"], answer: "are" },
+            { q: "He can ___ very fast.", options: ["run", "runs", "ran", "running"], answer: "run" },
+            { q: "You should ___ hard.", options: ["study", "studied", "studies", "studying"], answer: "study" },
+
+            { q: "I am afraid ___ snakes.", options: ["of", "from", "to", "with"], answer: "of" },
+            { q: "She arrived ___ the station on time.", options: ["at", "in", "on", "to"], answer: "at" },
+            { q: "He lives ___ Ahmedabad.", options: ["at", "in", "on", "for"], answer: "in" },
+            { q: "The class starts ___ 9:00 AM.", options: ["at", "on", "in", "for"], answer: "at" },
+            { q: "We celebrate Independence Day ___ August.", options: ["at", "in", "on", "for"], answer: "in" },
+
+            { q: "I have ___ friends in this city.", options: ["much", "many", "little", "less"], answer: "many" },
+            { q: "There is ___ sugar in the jar.", options: ["many", "much", "few", "several"], answer: "much" },
+            { q: "He speaks English ___.", options: ["good", "well", "better", "best"], answer: "well" },
+            { q: "The weather is ___ today.", options: ["nicely", "nice", "better", "best"], answer: "nice" },
+            { q: "She sings ___ than me.", options: ["good", "well", "better", "best"], answer: "better" },
+
+            { q: "This is the ___ building in town.", options: ["tall", "taller", "tallest", "more tall"], answer: "tallest" },
+            { q: "Would you like ___ water?", options: ["some", "any", "few", "many"], answer: "some" },
+            { q: "Do you have ___ questions?", options: ["some", "any", "many", "few"], answer: "any" },
+            { q: "He ___ not like spicy food.", options: ["do", "does", "did", "doing"], answer: "does" },
+            { q: "___ you ever visited Goa?", options: ["Did", "Have", "Has", "Do"], answer: "Have" },
+
+            { q: "She ___ TV when I called.", options: ["watched", "was watching", "watch", "is watching"], answer: "was watching" },
+            { q: "If I were rich, I ___ travel the world.", options: ["will", "would", "can", "am"], answer: "would" },
+            { q: "Neither of them ___ ready.", options: ["are", "is", "were", "have"], answer: "is" },
+            { q: "Everybody ___ welcome.", options: ["are", "is", "were", "have"], answer: "is" },
+            { q: "One of my friends ___ a doctor.", options: ["are", "is", "were", "have"], answer: "is" },
+
+            { q: "He asked me ___ help him.", options: ["to", "for", "of", "with"], answer: "to" },
+            { q: "I enjoy ___ novels.", options: ["read", "reading", "reads", "to read"], answer: "reading" },
+            { q: "She decided ___ abroad.", options: ["study", "studying", "to study", "studied"], answer: "to study" },
+            { q: "The letter was ___ yesterday.", options: ["send", "sent", "sending", "sends"], answer: "sent" },
+            { q: "English ___ all over the world.", options: ["speak", "speaks", "is spoken", "spoken"], answer: "is spoken" },
+
+            { q: "He has been here ___ Monday.", options: ["since", "for", "from", "at"], answer: "since" },
+            { q: "We have waited ___ two hours.", options: ["since", "for", "from", "at"], answer: "for" },
+            { q: "She is married ___ a doctor.", options: ["with", "to", "for", "at"], answer: "to" },
+            { q: "The cat jumped ___ the wall.", options: ["over", "under", "between", "among"], answer: "over" },
+            { q: "The keys are ___ the table.", options: ["on", "at", "to", "for"], answer: "on" },
+
+            { q: "He is looking ___ his keys.", options: ["for", "at", "to", "with"], answer: "for" },
+            { q: "She depends ___ her parents.", options: ["on", "at", "in", "for"], answer: "on" },
+            { q: "I agree ___ you.", options: ["with", "to", "for", "at"], answer: "with" },
+            { q: "He apologized ___ being late.", options: ["for", "to", "at", "on"], answer: "for" },
+            { q: "She laughed ___ my joke.", options: ["at", "on", "to", "with"], answer: "at" },
+
+            { q: "The teacher explained the lesson ___.", options: ["clear", "clearly", "clearest", "more clear"], answer: "clearly" },
+            { q: "He works very ___.", options: ["hard", "hardly", "harder", "hardest"], answer: "hard" },
+            { q: "I ___ finished my homework.", options: ["have just", "just have", "had just", "am just"], answer: "have just" },
+            { q: "She ___ already left.", options: ["has", "have", "had", "is"], answer: "has" },
+            { q: "We ___ lunch yet.", options: ["haven't had", "didn't have", "don't have", "aren't having"], answer: "haven't had" },
+
+            { q: "He ___ be at home now.", options: ["must", "can", "may", "should"], answer: "must" },
+            { q: "You ___ smoke here.", options: ["mustn't", "must", "can", "could"], answer: "mustn't" },
+            { q: "___ I come in?", options: ["May", "Must", "Should", "Need"], answer: "May" },
+            { q: "You ___ apologize for the mistake.", options: ["should", "can", "may", "might"], answer: "should" },
+            { q: "We ___ finish this work today.", options: ["have to", "has to", "had", "having"], answer: "have to" },
+
+            { q: "She is one of the ___ students.", options: ["good", "better", "best", "well"], answer: "best" },
+            { q: "This pen is different ___ mine.", options: ["from", "than", "to", "with"], answer: "from" },
+            { q: "He is famous ___ his paintings.", options: ["for", "to", "at", "with"], answer: "for" },
+            { q: "The book belongs ___ me.", options: ["to", "for", "with", "at"], answer: "to" },
+            { q: "She succeeded ___ passing the exam.", options: ["in", "on", "at", "for"], answer: "in" },
+
+            { q: "He is proud ___ his son.", options: ["of", "for", "to", "at"], answer: "of" },
+            { q: "The movie was ___ interesting.", options: ["very", "much", "too much", "more"], answer: "very" },
+            { q: "She is ___ honest person.", options: ["a", "an", "the", "no article"], answer: "an" },
+            { q: "I bought ___ umbrella yesterday.", options: ["a", "an", "the", "no article"], answer: "an" },
+            { q: "Mount Everest is ___ highest mountain.", options: ["a", "an", "the", "no article"], answer: "the" },
+
+
+            { q: "If I ___ enough money, I would buy a new car.", options: ["have", "had", "has", "having"], answer: "had" },
+            { q: "She ___ her homework before going to bed.", options: ["finish", "finished", "finishes", "finishing"], answer: "finished" },
+            { q: "The sun ___ in the east.", options: ["rise", "rises", "rose", "rising"], answer: "rises" },
+            { q: "My father ___ in a bank.", options: ["work", "works", "worked", "working"], answer: "works" },
+            { q: "They ___ lunch when I arrived.", options: ["have", "had", "were having", "are having"], answer: "were having" },
+
+            { q: "He ___ to London three times.", options: ["has been", "has gone", "went", "goes"], answer: "has been" },
+            { q: "I am looking ___ my keys.", options: ["at", "for", "to", "of"], answer: "for" },
+            { q: "She is good ___ singing.", options: ["at", "on", "for", "to"], answer: "at" },
+            { q: "This pen belongs ___ me.", options: ["for", "to", "with", "at"], answer: "to" },
+            { q: "He insisted ___ paying the bill.", options: ["on", "at", "for", "to"], answer: "on" },
+
+            { q: "Neither of the boys ___ present.", options: ["are", "is", "were", "have"], answer: "is" },
+            { q: "Everyone ___ happy today.", options: ["are", "is", "were", "have"], answer: "is" },
+            { q: "The police ___ investigating the case.", options: ["is", "are", "was", "be"], answer: "are" },
+            { q: "Mathematics ___ my favorite subject.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "Each player ___ a uniform.", options: ["have", "has", "had", "having"], answer: "has" },
+
+            { q: "I have known him ___ ten years.", options: ["since", "for", "at", "from"], answer: "for" },
+            { q: "She has lived here ___ 2020.", options: ["for", "since", "at", "on"], answer: "since" },
+            { q: "He is afraid ___ heights.", options: ["from", "of", "to", "with"], answer: "of" },
+            { q: "She apologized ___ being late.", options: ["for", "to", "at", "with"], answer: "for" },
+            { q: "He succeeded ___ passing the exam.", options: ["at", "on", "in", "for"], answer: "in" },
+
+            { q: "The baby is sleeping. Please speak ___.", options: ["quiet", "quietly", "quieter", "quietest"], answer: "quietly" },
+            { q: "He runs very ___.", options: ["fast", "fastly", "faster", "fastest"], answer: "fast" },
+            { q: "She is ___ than her sister.", options: ["more intelligent", "most intelligent", "intelligent", "intelligently"], answer: "more intelligent" },
+            { q: "This is the ___ movie I have ever seen.", options: ["funny", "funnier", "funniest", "more funny"], answer: "funniest" },
+            { q: "Would you like ___ cup of tea?", options: ["a", "an", "the", "no article"], answer: "a" },
+
+            { q: "English ___ all over the world.", options: ["speak", "speaks", "is spoken", "spoken"], answer: "is spoken" },
+            { q: "The letter ___ yesterday.", options: ["send", "sent", "was sent", "sending"], answer: "was sent" },
+            { q: "The work ___ before noon.", options: ["completed", "was completed", "completing", "completes"], answer: "was completed" },
+            { q: "The room ___ every day.", options: ["clean", "cleans", "is cleaned", "cleaning"], answer: "is cleaned" },
+            { q: "Rice ___ in many countries.", options: ["grow", "grows", "is grown", "grown"], answer: "is grown" },
+
+            { q: "He said that he ___ tired.", options: ["is", "was", "were", "has"], answer: "was" },
+            { q: "She told me ___ the door.", options: ["open", "to open", "opened", "opening"], answer: "to open" },
+            { q: "The teacher asked us ___ quietly.", options: ["sit", "to sit", "sat", "sitting"], answer: "to sit" },
+            { q: "He told me that he ___ the movie.", options: ["watched", "had watched", "watches", "watch"], answer: "had watched" },
+            { q: "She asked if I ___ ready.", options: ["am", "was", "were", "be"], answer: "was" },
+
+            { q: "If you study hard, you ___ the exam.", options: ["pass", "will pass", "passed", "would pass"], answer: "will pass" },
+            { q: "If I were you, I ___ this job.", options: ["accept", "will accept", "would accept", "accepted"], answer: "would accept" },
+            { q: "If they had left early, they ___ the train.", options: ["catch", "would catch", "would have caught", "caught"], answer: "would have caught" },
+            { q: "Unless you hurry, you ___ late.", options: ["are", "will be", "were", "have"], answer: "will be" },
+            { q: "If it ___ tomorrow, we will stay home.", options: ["rain", "rains", "rained", "raining"], answer: "rains" },
+
+            { q: "You ___ wear a seat belt while driving.", options: ["must", "may", "can", "might"], answer: "must" },
+            { q: "___ I borrow your pen?", options: ["Must", "May", "Should", "Need"], answer: "May" },
+            { q: "You ___ smoke in the hospital.", options: ["mustn't", "can", "may", "could"], answer: "mustn't" },
+            { q: "We ___ finish this work today.", options: ["have to", "has to", "had to", "having"], answer: "have to" },
+            { q: "She ___ speak three languages.", options: ["can", "must", "should", "need"], answer: "can" },
+
+            { q: "He is ___ honest man.", options: ["a", "an", "the", "no article"], answer: "an" },
+            { q: "I saw ___ elephant at the zoo.", options: ["a", "an", "the", "no article"], answer: "an" },
+            { q: "___ Pacific Ocean is the largest ocean.", options: ["A", "An", "The", "No article"], answer: "The" },
+            { q: "She was born ___ July.", options: ["on", "in", "at", "by"], answer: "in" },
+            { q: "The train arrived ___ time.", options: ["at", "on", "in", "for"], answer: "on" },
+            { q: "She ___ up early every morning.", options: ["wake", "wakes", "woke", "waking"], answer: "wakes" },
+            { q: "Please ___ your shoes before entering.", options: ["take off", "take up", "take in", "take over"], answer: "take off" },
+            { q: "The meeting was ___ because of the rain.", options: ["put off", "put on", "put up", "put out"], answer: "put off" },
+            { q: "He ___ the lights before leaving.", options: ["turned off", "turned on", "turned into", "turned over"], answer: "turned off" },
+            { q: "She ___ her grandmother.", options: ["takes after", "takes off", "takes over", "takes down"], answer: "takes after" },
+
+            { q: "I was tired, ___ I went to bed early.", options: ["so", "but", "because", "although"], answer: "so" },
+            { q: "He stayed home ___ he was sick.", options: ["because", "although", "unless", "while"], answer: "because" },
+            { q: "___ it was raining, they continued playing.", options: ["Although", "Because", "So", "If"], answer: "Although" },
+            { q: "You can have tea ___ coffee.", options: ["or", "and", "but", "because"], answer: "or" },
+            { q: "She is smart ___ hardworking.", options: ["and", "or", "but", "because"], answer: "and" },
+
+            { q: "___ book is this?", options: ["Whose", "Who's", "Who", "Whom"], answer: "Whose" },
+            { q: "The teacher gave ___ some homework.", options: ["us", "we", "our", "ours"], answer: "us" },
+            { q: "This bag is ___, not mine.", options: ["hers", "her", "she", "herself"], answer: "hers" },
+            { q: "He hurt ___ while playing.", options: ["himself", "him", "his", "he"], answer: "himself" },
+            { q: "Everyone should do ___ best.", options: ["their", "his", "her", "its"], answer: "their" },
+
+            { q: "She speaks English very ___.", options: ["well", "good", "better", "best"], answer: "well" },
+            { q: "The soup smells ___.", options: ["delicious", "deliciously", "more delicious", "most delicious"], answer: "delicious" },
+            { q: "He completed the work ___.", options: ["quickly", "quick", "quicker", "quickest"], answer: "quickly" },
+            { q: "This road is ___ than that one.", options: ["wider", "wide", "widest", "more wide"], answer: "wider" },
+            { q: "She is the ___ player on the team.", options: ["best", "better", "good", "well"], answer: "best" },
+
+            { q: "There are ___ students absent today.", options: ["a few", "a little", "much", "less"], answer: "a few" },
+            { q: "I have ___ information about the project.", options: ["a little", "a few", "many", "several"], answer: "a little" },
+            { q: "___ of the answers is correct.", options: ["None", "No", "Nothing", "Never"], answer: "None" },
+            { q: "She has ___ friends in the city.", options: ["several", "much", "little", "less"], answer: "several" },
+            { q: "There isn't ___ sugar left.", options: ["any", "some", "many", "few"], answer: "any" },
+            { q: "She has been ___ here for five years.", options: ["work", "worked", "working", "works"], answer: "working" },
+            { q: "I look forward to ___ you soon.", options: ["see", "seeing", "seen", "saw"], answer: "seeing" },
+            { q: "He decided ___ abroad.", options: ["study", "studying", "to study", "studied"], answer: "to study" },
+            { q: "Would you mind ___ the window?", options: ["open", "opening", "opened", "to open"], answer: "opening" },
+            { q: "She wants ___ a doctor.", options: ["be", "being", "to be", "been"], answer: "to be" },
+
+            { q: "The man ___ lives next door is a doctor.", options: ["who", "which", "whose", "where"], answer: "who" },
+            { q: "This is the book ___ I bought yesterday.", options: ["who", "which", "where", "whose"], answer: "which" },
+            { q: "The girl ___ father is a teacher won the prize.", options: ["who", "whose", "which", "whom"], answer: "whose" },
+            { q: "This is the place ___ we met.", options: ["where", "who", "whose", "which"], answer: "where" },
+            { q: "The person ___ helped me was very kind.", options: ["who", "which", "where", "whose"], answer: "who" },
+
+            { q: "You're coming with us, ___?", options: ["aren't you", "are you", "don't you", "won't you"], answer: "aren't you" },
+            { q: "She isn't busy, ___?", options: ["is she", "isn't she", "does she", "doesn't she"], answer: "is she" },
+            { q: "Let's go, ___?", options: ["shall we", "will we", "do we", "don't we"], answer: "shall we" },
+            { q: "Open the door, ___?", options: ["will you", "shall you", "do you", "don't you"], answer: "will you" },
+            { q: "He can swim, ___?", options: ["can't he", "can he", "doesn't he", "isn't he"], answer: "can't he" },
+
+            { q: "I am interested ___ learning English.", options: ["in", "on", "at", "for"], answer: "in" },
+            { q: "She is married ___ an engineer.", options: ["to", "with", "for", "by"], answer: "to" },
+            { q: "He apologized ___ his mistake.", options: ["for", "to", "at", "on"], answer: "for" },
+            { q: "The cat is hiding ___ the table.", options: ["under", "above", "between", "against"], answer: "under" },
+            { q: "Please divide the cake ___ four children.", options: ["among", "between", "with", "into"], answer: "among" },
+
+            { q: "Neither Ram nor his friends ___ coming.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "Each of the students ___ a notebook.", options: ["has", "have", "had", "having"], answer: "has" },
+            { q: "One of my cousins ___ in Canada.", options: ["lives", "live", "living", "have lived"], answer: "lives" },
+            { q: "The furniture ___ very expensive.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "News ___ spread quickly these days.", options: ["has", "have", "are", "were"], answer: "has" },
+            { q: "By next year, I ___ here for ten years.", options: ["will work", "will have worked", "worked", "have worked"], answer: "will have worked" },
+            { q: "She ___ dinner before the guests arrived.", options: ["cooks", "had cooked", "has cooked", "is cooking"], answer: "had cooked" },
+            { q: "The children ___ in the garden now.", options: ["play", "are playing", "played", "plays"], answer: "are playing" },
+            { q: "He usually ___ to work by bus.", options: ["go", "goes", "going", "gone"], answer: "goes" },
+            { q: "I ___ this movie three times.", options: ["see", "have seen", "saw", "seeing"], answer: "have seen" },
+
+            { q: "We ___ our grandparents last weekend.", options: ["visit", "visited", "visiting", "visits"], answer: "visited" },
+            { q: "She ___ when the phone rang.", options: ["slept", "was sleeping", "sleeps", "is sleeping"], answer: "was sleeping" },
+            { q: "They ___ a new house next year.", options: ["buy", "bought", "will buy", "buying"], answer: "will buy" },
+            { q: "You ___ your homework before watching TV.", options: ["should finish", "should finished", "should finishing", "should finishes"], answer: "should finish" },
+            { q: "He ___ speak French when he was young.", options: ["can", "could", "may", "must"], answer: "could" },
+
+            { q: "She is looking forward to ___ from you.", options: ["hear", "hearing", "heard", "hears"], answer: "hearing" },
+            { q: "I enjoy ___ with my friends.", options: ["travel", "travelling", "travelled", "travels"], answer: "travelling" },
+            { q: "Would you like ___ some coffee?", options: ["have", "having", "to have", "had"], answer: "to have" },
+            { q: "He made me ___ the truth.", options: ["tell", "told", "telling", "to tell"], answer: "tell" },
+            { q: "She let the children ___ outside.", options: ["play", "played", "playing", "to play"], answer: "play" },
+
+            { q: "The train is ___ time.", options: ["on", "in", "at", "for"], answer: "on" },
+            { q: "He was absent ___ school yesterday.", options: ["from", "at", "in", "on"], answer: "from" },
+            { q: "She is responsible ___ this project.", options: ["for", "to", "with", "on"], answer: "for" },
+            { q: "I am proud ___ my achievements.", options: ["of", "for", "to", "with"], answer: "of" },
+            { q: "The meeting starts ___ 10 a.m.", options: ["at", "on", "in", "by"], answer: "at" },
+
+            { q: "Hardly ___ he arrived when it started raining.", options: ["had", "has", "have", "was"], answer: "had" },
+            { q: "No sooner had she entered ___ everyone stood up.", options: ["when", "than", "then", "while"], answer: "than" },
+            { q: "Scarcely had I sat down ___ the phone rang.", options: ["when", "than", "while", "if"], answer: "when" },
+            { q: "He speaks as if he ___ everything.", options: ["knows", "knew", "know", "known"], answer: "knew" },
+            { q: "I wish I ___ more time.", options: ["have", "had", "has", "having"], answer: "had" },
+            { q: "If I ___ harder, I would have passed the exam.", options: ["study", "studied", "had studied", "have studied"], answer: "had studied" },
+            { q: "Had I known the truth, I ___ differently.", options: ["act", "would act", "would have acted", "acted"], answer: "would have acted" },
+            { q: "Unless you ___ now, you will miss the bus.", options: ["leave", "left", "leaving", "will leave"], answer: "leave" },
+            { q: "If she ___ earlier, she wouldn't be late now.", options: ["left", "had left", "leaves", "has left"], answer: "had left" },
+            { q: "Were I rich, I ___ around the world.", options: ["travel", "would travel", "traveled", "will travel"], answer: "would travel" },
+
+            { q: "Neither the teacher nor the students ___ ready.", options: ["was", "were", "is", "has"], answer: "were" },
+            { q: "Either my brother or my father ___ coming.", options: ["are", "is", "were", "have"], answer: "is" },
+            { q: "A number of students ___ absent today.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "The number of students ___ increasing.", options: ["are", "is", "were", "have"], answer: "is" },
+            { q: "Ten kilometers ___ a long distance to walk.", options: ["are", "is", "were", "have"], answer: "is" },
+
+            { q: "She is one of the girls who ___ always on time.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "He is the only one who ___ completed the task.", options: ["have", "has", "had", "were"], answer: "has" },
+            { q: "This is the boy ___ won the competition.", options: ["who", "which", "whose", "whom"], answer: "who" },
+            { q: "The woman ___ purse was stolen reported it.", options: ["who", "whose", "which", "whom"], answer: "whose" },
+            { q: "This is the house ___ we lived for years.", options: ["where", "which", "who", "whose"], answer: "where" },
+
+            { q: "He speaks English ___ than his brother.", options: ["fluent", "fluently", "more fluently", "most fluently"], answer: "more fluently" },
+            { q: "She completed the work ___.", options: ["successful", "success", "successfully", "succeed"], answer: "successfully" },
+            { q: "The soup tastes ___.", options: ["well", "good", "better", "best"], answer: "good" },
+            { q: "He looked at me ___.", options: ["angry", "angrily", "anger", "angrier"], answer: "angrily" },
+            { q: "The exam was ___ than I expected.", options: ["easy", "easier", "easiest", "more easiest"], answer: "easier" },
+
+            { q: "She has ___ finished her project.", options: ["already", "yet", "still", "ever"], answer: "already" },
+            { q: "Have you finished your homework ___?", options: ["already", "yet", "still", "ever"], answer: "yet" },
+            { q: "I have ___ visited Kashmir.", options: ["ever", "never", "yet", "already"], answer: "never" },
+            { q: "He is ___ late for work.", options: ["always", "already", "yet", "ever"], answer: "always" },
+            { q: "We have lived here ___ 2015.", options: ["for", "since", "from", "during"], answer: "since" },
+            { q: "If she ___ harder, she would have passed the exam.", options: ["studied", "had studied", "studies", "has studied"], answer: "had studied" },
+            { q: "If I ___ your phone number, I would call you.", options: ["know", "knew", "known", "knows"], answer: "knew" },
+            { q: "Had they left earlier, they ___ the flight.", options: ["would catch", "would have caught", "caught", "will catch"], answer: "would have caught" },
+            { q: "Unless you ___ faster, you will miss the bus.", options: ["run", "ran", "running", "runs"], answer: "run" },
+            { q: "If it ___ sunny tomorrow, we will go to the beach.", options: ["is", "was", "were", "be"], answer: "is" },
+
+            { q: "The woman ___ lives next door is my aunt.", options: ["who", "which", "whose", "where"], answer: "who" },
+            { q: "This is the house ___ Jack built.", options: ["who", "which", "where", "whose"], answer: "which" },
+            { q: "The boy ___ bicycle was stolen is crying.", options: ["who", "whose", "which", "whom"], answer: "whose" },
+            { q: "I know the place ___ they first met.", options: ["where", "who", "which", "whose"], answer: "where" },
+            { q: "The reason ___ he was late is unknown.", options: ["why", "who", "where", "which"], answer: "why" },
+
+            { q: "Either John or his brothers ___ coming.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "Neither the students nor the teacher ___ ready.", options: ["are", "is", "were", "have"], answer: "is" },
+            { q: "A number of students ___ absent today.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "The number of students ___ increasing.", options: ["are", "is", "were", "have"], answer: "is" },
+            { q: "Ten kilometers ___ a long distance to walk.", options: ["is", "are", "were", "have"], answer: "is" },
+
+            { q: "She is ___ than I expected.", options: ["more intelligent", "most intelligent", "intelligent", "intelligently"], answer: "more intelligent" },
+            { q: "This is ___ best restaurant in town.", options: ["a", "an", "the", "no article"], answer: "the" },
+            { q: "He has ___ useful information.", options: ["a", "an", "some", "many"], answer: "some" },
+            { q: "There were ___ people at the concert.", options: ["hundreds of", "hundred of", "hundreds", "hundreds off"], answer: "hundreds of" },
+            { q: "Only ___ students passed the test.", options: ["a few", "a little", "much", "less"], answer: "a few" },
+
+            { q: "She not only sings ___ dances beautifully.", options: ["but", "and", "or", "so"], answer: "but" },
+            { q: "He is too tired ___ continue working.", options: ["to", "for", "with", "at"], answer: "to" },
+            { q: "I'd rather ___ at home tonight.", options: ["stay", "stayed", "staying", "to stay"], answer: "stay" },
+            { q: "You had better ___ a doctor.", options: ["see", "seeing", "to see", "saw"], answer: "see" },
+            { q: "Neither of the answers ___ correct.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "He ___ his breakfast before leaving for work.", options: ["has", "had", "have", "having"], answer: "had" },
+            { q: "She ___ in this company since 2022.", options: ["works", "worked", "has worked", "working"], answer: "has worked" },
+            { q: "The students ___ their assignments tomorrow.", options: ["submit", "submitted", "will submit", "submitting"], answer: "will submit" },
+            { q: "I ___ a letter when the lights went out.", options: ["wrote", "was writing", "write", "am writing"], answer: "was writing" },
+            { q: "He ___ the answer before anyone else.", options: ["knows", "knew", "had known", "know"], answer: "knew" },
+
+            { q: "The train ___ before we reached the station.", options: ["left", "had left", "leaves", "leaving"], answer: "had left" },
+            { q: "By next month, she ___ her project.", options: ["finishes", "will finish", "will have finished", "finished"], answer: "will have finished" },
+            { q: "They ___ dinner by the time we arrived.", options: ["finished", "had finished", "finish", "have finished"], answer: "had finished" },
+            { q: "She ___ English for five years.", options: ["studies", "has studied", "studied", "study"], answer: "has studied" },
+            { q: "We ___ a movie this weekend.", options: ["watch", "watched", "will watch", "watching"], answer: "will watch" },
+
+            { q: "I am tired ___ working all day.", options: ["of", "from", "with", "at"], answer: "from" },
+            { q: "She is famous ___ her beautiful voice.", options: ["for", "to", "with", "on"], answer: "for" },
+            { q: "He apologized ___ his rude behavior.", options: ["for", "to", "at", "about"], answer: "for" },
+            { q: "The manager agreed ___ our proposal.", options: ["to", "with", "on", "for"], answer: "to" },
+            { q: "She insisted ___ paying the bill.", options: ["on", "for", "to", "at"], answer: "on" },
+
+            { q: "Neither my brother nor my sisters ___ coming.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "Every student ___ a notebook.", options: ["have", "has", "had", "having"], answer: "has" },
+            { q: "The team ___ playing well today.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "Physics ___ an interesting subject.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "One of my friends ___ in Australia.", options: ["live", "lives", "living", "have lived"], answer: "lives" },
+
+            { q: "The weather is getting ___.", options: ["cold", "colder", "coldest", "more cold"], answer: "colder" },
+            { q: "This is the ___ building in the city.", options: ["high", "higher", "highest", "more high"], answer: "highest" },
+            { q: "She completed the work ___.", options: ["successful", "successfully", "success", "more successful"], answer: "successfully" },
+            { q: "He speaks more ___ than his brother.", options: ["clear", "clearly", "clearest", "clearing"], answer: "clearly" },
+            { q: "The baby was sleeping ___.", options: ["peaceful", "peacefully", "peace", "more peaceful"], answer: "peacefully" },
+            { q: "She enjoys ___ novels in her free time.", options: ["read", "reading", "to read", "reads"], answer: "reading" },
+            { q: "I hope ___ you again soon.", options: ["see", "seeing", "to see", "seen"], answer: "to see" },
+            { q: "They decided ___ the meeting until Monday.", options: ["postpone", "to postpone", "postponing", "postponed"], answer: "to postpone" },
+            { q: "He avoided ___ the question.", options: ["answer", "answering", "answered", "to answer"], answer: "answering" },
+            { q: "Would you like ___ with us?", options: ["come", "coming", "to come", "came"], answer: "to come" },
+
+            { q: "You ___ finish your homework before playing.", options: ["must", "can", "may", "might"], answer: "must" },
+            { q: "Students ___ wear their ID cards at school.", options: ["should", "could", "might", "would"], answer: "should" },
+            { q: "___ I use your mobile phone?", options: ["May", "Must", "Need", "Should"], answer: "May" },
+            { q: "He ___ solve the problem yesterday.", options: ["can", "could", "must", "may"], answer: "could" },
+            { q: "You ___ not park your car here.", options: ["must", "should", "need", "can"], answer: "must" },
+
+            { q: "The cake ___ by my mother yesterday.", options: ["made", "was made", "is made", "making"], answer: "was made" },
+            { q: "The road ___ last year.", options: ["built", "was built", "is built", "building"], answer: "was built" },
+            { q: "The homework ___ every Friday.", options: ["checks", "is checked", "checked", "checking"], answer: "is checked" },
+            { q: "The invitation ___ tomorrow.", options: ["will send", "will be sent", "sending", "sent"], answer: "will be sent" },
+            { q: "The room ___ before the guests arrived.", options: ["had cleaned", "had been cleaned", "cleaned", "was cleaning"], answer: "had been cleaned" },
+
+            { q: "Choose the correct sentence.", options: ["She don't like coffee.", "She doesn't likes coffee.", "She doesn't like coffee.", "She not like coffee."], answer: "She doesn't like coffee." },
+            { q: "Choose the correct sentence.", options: ["He have finished.", "He has finished.", "He having finished.", "He finish."], answer: "He has finished." },
+            { q: "Choose the correct sentence.", options: ["I am agree.", "I agree.", "I am agreeing.", "I agreeding."], answer: "I agree." },
+            { q: "Choose the correct sentence.", options: ["She is married with a doctor.", "She is married to a doctor.", "She married to a doctor.", "She married with a doctor."], answer: "She is married to a doctor." },
+            { q: "Choose the correct sentence.", options: ["He explained me the answer.", "He explained the answer to me.", "He explained to me answer.", "He explain the answer me."], answer: "He explained the answer to me." },
+
+            { q: "I have no money, ___ I can't buy it.", options: ["so", "because", "although", "unless"], answer: "so" },
+            { q: "She was tired, ___ she completed her work.", options: ["but", "so", "because", "unless"], answer: "but" },
+            { q: "___ you study hard, you will fail.", options: ["Unless", "If", "Although", "Since"], answer: "Unless" },
+            { q: "He is ___ honest employee.", options: ["a", "an", "the", "no article"], answer: "an" },
+            { q: "Mount Everest is ___ highest peak in the world.", options: ["a", "an", "the", "no article"], answer: "the" },
+            { q: "Neither the teacher nor the students ___ ready.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "Each of the boys ___ a prize.", options: ["have", "has", "had", "having"], answer: "has" },
+            { q: "The committee ___ its decision tomorrow.", options: ["announce", "announces", "will announce", "announced"], answer: "will announce" },
+            { q: "One of the girls ___ absent today.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "Everybody ___ invited to the party.", options: ["is", "are", "were", "have"], answer: "is" },
+
+            { q: "She has been waiting ___ two hours.", options: ["since", "for", "from", "during"], answer: "for" },
+            { q: "I have known him ___ childhood.", options: ["for", "since", "at", "from"], answer: "since" },
+            { q: "The train will arrive ___ 6:30 p.m.", options: ["at", "on", "in", "by"], answer: "at" },
+            { q: "He was born ___ March.", options: ["at", "in", "on", "by"], answer: "in" },
+            { q: "We have a meeting ___ Monday.", options: ["on", "in", "at", "for"], answer: "on" },
+
+            { q: "She is afraid ___ spiders.", options: ["of", "from", "to", "with"], answer: "of" },
+            { q: "He apologized ___ being rude.", options: ["for", "to", "with", "at"], answer: "for" },
+            { q: "I believe ___ hard work.", options: ["in", "on", "at", "for"], answer: "in" },
+            { q: "The cat jumped ___ the wall.", options: ["over", "under", "between", "inside"], answer: "over" },
+            { q: "The picture is hanging ___ the wall.", options: ["on", "in", "at", "over"], answer: "on" },
+
+            { q: "She speaks English more ___ than her brother.", options: ["fluent", "fluently", "fluency", "fluently"], answer: "fluently" },
+            { q: "He completed the task ___.", options: ["easy", "easily", "ease", "easier"], answer: "easily" },
+            { q: "The soup tastes ___.", options: ["well", "good", "better", "best"], answer: "good" },
+            { q: "He is the ___ player on the team.", options: ["strong", "stronger", "strongest", "more strong"], answer: "strongest" },
+            { q: "My bag is ___ than yours.", options: ["heavy", "heavier", "heaviest", "more heavier"], answer: "heavier" },
+
+            { q: "I would rather ___ at home.", options: ["stay", "stayed", "staying", "to stay"], answer: "stay" },
+            { q: "She made me ___ the truth.", options: ["tell", "told", "telling", "to tell"], answer: "tell" },
+            { q: "We were allowed ___ early.", options: ["leave", "leaving", "to leave", "left"], answer: "to leave" },
+            { q: "He kept ___ until midnight.", options: ["work", "working", "worked", "to work"], answer: "working" },
+            { q: "I forgot ___ the door.", options: ["lock", "locking", "to lock", "locked"], answer: "to lock" },
+            { q: "She remembered ___ the lights before leaving.", options: ["switch off", "to switch off", "switching off", "switched off"], answer: "to switch off" },
+            { q: "I stopped ___ a cup of coffee on my way home.", options: ["have", "having", "to have", "had"], answer: "to have" },
+            { q: "He admitted ___ the window.", options: ["break", "breaking", "to break", "broke"], answer: "breaking" },
+            { q: "They refused ___ the invitation.", options: ["accept", "accepting", "accepted", "to accept"], answer: "to accept" },
+            { q: "She promised ___ me tomorrow.", options: ["call", "calling", "to call", "called"], answer: "to call" },
+
+            { q: "I prefer tea ___ coffee.", options: ["than", "to", "from", "over"], answer: "to" },
+            { q: "He is interested ___ learning French.", options: ["on", "in", "at", "for"], answer: "in" },
+            { q: "She is responsible ___ the project.", options: ["to", "for", "with", "about"], answer: "for" },
+            { q: "The children laughed ___ the joke.", options: ["at", "on", "with", "about"], answer: "at" },
+            { q: "He succeeded ___ solving the problem.", options: ["at", "in", "for", "to"], answer: "in" },
+
+            { q: "Neither of the answers ___ correct.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "The furniture ___ very expensive.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "Bread and butter ___ my favorite breakfast.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "The news ___ surprising.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "Five thousand rupees ___ a good salary.", options: ["is", "are", "were", "have"], answer: "is" },
+
+            { q: "She speaks English ___ than I do.", options: ["more fluently", "more fluent", "most fluently", "fluent"], answer: "more fluently" },
+            { q: "This is the ___ book I have ever read.", options: ["interesting", "more interesting", "most interesting", "interestingest"], answer: "most interesting" },
+            { q: "He arrived ___ than expected.", options: ["early", "earlier", "earliest", "more early"], answer: "earlier" },
+            { q: "She solved the puzzle ___.", options: ["quick", "quickly", "quicker", "quickest"], answer: "quickly" },
+            { q: "The exam was ___ than last year's.", options: ["easy", "easier", "easiest", "more easier"], answer: "easier" },
+
+            { q: "By this time tomorrow, I ___ to Delhi.", options: ["travel", "will travel", "will be travelling", "travelled"], answer: "will be travelling" },
+            { q: "By next week, they ___ the bridge.", options: ["complete", "completed", "will have completed", "have completed"], answer: "will have completed" },
+            { q: "When I reached the station, the train ___.", options: ["left", "had left", "leaves", "has left"], answer: "had left" },
+            { q: "She ___ here since 2018.", options: ["lives", "lived", "has lived", "living"], answer: "has lived" },
+            { q: "I ___ him before, but I can't remember where.", options: ["met", "have met", "had met", "meet"], answer: "have met" },
+            { q: "She denied ___ the money.", options: ["take", "taking", "to take", "took"], answer: "taking" },
+            { q: "He suggested ___ by train.", options: ["go", "going", "to go", "went"], answer: "going" },
+            { q: "I can't help ___ when I watch this movie.", options: ["laugh", "laughing", "to laugh", "laughed"], answer: "laughing" },
+            { q: "They offered ___ us to the airport.", options: ["drive", "driving", "to drive", "drove"], answer: "to drive" },
+            { q: "She pretended ___ asleep.", options: ["be", "being", "to be", "was"], answer: "to be" },
+
+            { q: "He is capable ___ solving difficult problems.", options: ["of", "for", "to", "with"], answer: "of" },
+            { q: "She is fond ___ classical music.", options: ["of", "for", "to", "with"], answer: "of" },
+            { q: "The teacher was angry ___ the students.", options: ["with", "to", "for", "at"], answer: "with" },
+            { q: "I am grateful ___ your support.", options: ["for", "to", "with", "of"], answer: "for" },
+            { q: "He congratulated me ___ my success.", options: ["on", "for", "to", "with"], answer: "on" },
+
+            { q: "Either my father or my brothers ___ coming.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "Neither the players nor the coach ___ ready.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "Every one of the books ___ interesting.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "The audience ___ clapping loudly.", options: ["was", "were", "is", "has"], answer: "were" },
+            { q: "A pair of shoes ___ under the bed.", options: ["is", "are", "were", "have"], answer: "is" },
+
+            { q: "She answered the question ___.", options: ["correct", "correctly", "correction", "correctness"], answer: "correctly" },
+            { q: "The baby smiled ___.", options: ["happy", "happily", "happiness", "happier"], answer: "happily" },
+            { q: "This road is ___ than the old one.", options: ["safe", "safer", "safest", "more safer"], answer: "safer" },
+            { q: "He is the ___ student in our class.", options: ["more intelligent", "most intelligent", "intelligent", "intelligently"], answer: "most intelligent" },
+            { q: "She finished the race ___ than expected.", options: ["fast", "faster", "fastest", "more fast"], answer: "faster" }, { q: "The teacher advised us ___ harder.", options: ["study", "studying", "to study", "studied"], answer: "to study" },
+            { q: "She expects ___ the exam.", options: ["pass", "passing", "to pass", "passed"], answer: "to pass" },
+            { q: "He avoided ___ about the accident.", options: ["talk", "talking", "to talk", "talked"], answer: "talking" },
+            { q: "I remember ___ him at the conference.", options: ["meet", "meeting", "to meet", "met"], answer: "meeting" },
+            { q: "They agreed ___ together.", options: ["work", "working", "to work", "worked"], answer: "to work" },
+
+            { q: "She suffers ___ asthma.", options: ["from", "with", "at", "to"], answer: "from" },
+            { q: "He is famous ___ his honesty.", options: ["for", "to", "at", "with"], answer: "for" },
+            { q: "The manager approved ___ my request.", options: ["of", "for", "to", "at"], answer: "of" },
+            { q: "I am familiar ___ this software.", options: ["with", "to", "at", "from"], answer: "with" },
+            { q: "She apologized ___ her mistake.", options: ["for", "to", "at", "on"], answer: "for" },
+
+            { q: "Neither the manager nor the employees ___ aware of the problem.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "Every child ___ a gift.", options: ["receive", "receives", "receiving", "received"], answer: "receives" },
+            { q: "One of the teachers ___ absent today.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "The cattle ___ grazing in the field.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "The jury ___ divided in their opinions.", options: ["is", "are", "was", "has"], answer: "are" },
+
+            { q: "She danced ___.", options: ["graceful", "gracefully", "grace", "gracious"], answer: "gracefully" },
+            { q: "He speaks ___ than his father.", options: ["more politely", "more polite", "most politely", "polite"], answer: "more politely" },
+            { q: "This is the ___ movie of the year.", options: ["exciting", "more exciting", "most exciting", "excited"], answer: "most exciting" },
+            { q: "The child answered ___.", options: ["polite", "politely", "politeness", "more polite"], answer: "politely" },
+            { q: "My new phone is ___ than the old one.", options: ["better", "best", "good", "well"], answer: "better" },
+
+            { q: "By next month, she ___ her training.", options: ["completes", "will complete", "will have completed", "completed"], answer: "will have completed" },
+            { q: "The documents ___ before the deadline.", options: ["must submit", "must be submitted", "must submitted", "must submitting"], answer: "must be submitted" },
+            { q: "The room ___ when we entered.", options: ["was being cleaned", "was cleaned", "cleaned", "is cleaning"], answer: "was being cleaned" },
+            { q: "The decision ___ tomorrow.", options: ["will announce", "will be announced", "announced", "announcing"], answer: "will be announced" },
+            { q: "The bridge ___ by the end of this year.", options: ["will complete", "will have completed", "will be completed", "completed"], answer: "will be completed" },
+            { q: "The project ___ by next Friday.", options: ["will finish", "will be finished", "finished", "is finishing"], answer: "will be finished" },
+            { q: "The report ___ before the meeting started.", options: ["had been prepared", "prepared", "was preparing", "has prepared"], answer: "had been prepared" },
+            { q: "The windows ___ every weekend.", options: ["clean", "are cleaned", "cleaned", "cleaning"], answer: "are cleaned" },
+            { q: "A new hospital ___ in our town next year.", options: ["builds", "will build", "will be built", "built"], answer: "will be built" },
+            { q: "The email ___ before I reached the office.", options: ["had been sent", "sent", "was sending", "has sent"], answer: "had been sent" },
+            { q: "I regret ___ those harsh words.", options: ["say", "saying", "to say", "said"], answer: "saying" },
+            { q: "She hopes ___ a scholarship.", options: ["get", "getting", "to get", "got"], answer: "to get" },
+            { q: "He failed ___ the answer.", options: ["remember", "remembering", "to remember", "remembered"], answer: "to remember" },
+            { q: "We enjoyed ___ by the beach.", options: ["walk", "walking", "to walk", "walked"], answer: "walking" },
+            { q: "The doctor advised him ___ smoking.", options: ["stop", "stopping", "to stop", "stopped"], answer: "to stop" },
+
+            { q: "She is looking ___ her lost necklace.", options: ["for", "at", "after", "to"], answer: "for" },
+            { q: "He is proud ___ his achievements.", options: ["of", "for", "to", "with"], answer: "of" },
+            { q: "The manager is satisfied ___ your work.", options: ["with", "to", "for", "of"], answer: "with" },
+            { q: "This book belongs ___ my brother.", options: ["to", "for", "with", "at"], answer: "to" },
+            { q: "They are discussing ___ the new policy.", options: ["about", "on", "the", "for"], answer: "the" },
+
+            { q: "The quality of these products ___ excellent.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "None of the students ___ late today.", options: ["was", "were", "are", "have"], answer: "was" },
+            { q: "The United States ___ a developed country.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "A number of books ___ missing.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "The number of applicants ___ increasing every year.", options: ["is", "are", "were", "have"], answer: "is" },
+
+            { q: "She sang ___.", options: ["beautiful", "beautifully", "beauty", "more beautiful"], answer: "beautifully" },
+            { q: "He solved the problem ___.", options: ["easy", "easily", "ease", "easier"], answer: "easily" },
+            { q: "This road is ___ than the highway.", options: ["narrow", "narrower", "narrowest", "more narrower"], answer: "narrower" },
+            { q: "Today is the ___ day of my life.", options: ["happy", "happier", "happiest", "more happy"], answer: "happiest" },
+            { q: "She speaks ___ than anyone in the class.", options: ["more confidently", "confident", "most confidently", "confidence"], answer: "more confidently" },
+
+            { q: "The assignment ___ by tomorrow morning.", options: ["must finish", "must be finished", "must finished", "must finishing"], answer: "must be finished" },
+            { q: "The guests ___ when we arrived.", options: ["were being served", "served", "were served", "serving"], answer: "were being served" },
+            { q: "The road ___ after the flood.", options: ["has repaired", "was repaired", "repaired", "repair"], answer: "was repaired" },
+            { q: "The final result ___ next week.", options: ["will declare", "will be declared", "declared", "declaring"], answer: "will be declared" },
+            { q: "The classroom ___ before the students arrived.", options: ["had cleaned", "had been cleaned", "cleaned", "has cleaned"], answer: "had been cleaned" },
+            { q: "She asked me ___ I was feeling.", options: ["what", "which", "whose", "where"], answer: "what" },
+            { q: "He told me ___ the window.", options: ["close", "to close", "closing", "closed"], answer: "to close" },
+            { q: "The teacher warned us ___ late again.", options: ["not be", "not to be", "don't be", "not being"], answer: "not to be" },
+            { q: "She reminded me ___ the meeting.", options: ["about", "of", "for", "with"], answer: "about" },
+            { q: "I forgot ___ my wallet at home.", options: ["leave", "leaving", "to leave", "left"], answer: "to leave" },
+
+            { q: "He insisted ___ paying for dinner.", options: ["on", "in", "at", "to"], answer: "on" },
+            { q: "She is capable ___ solving difficult problems.", options: ["of", "for", "with", "to"], answer: "of" },
+            { q: "They objected ___ the new rule.", options: ["to", "for", "with", "about"], answer: "to" },
+            { q: "He is married ___ a famous singer.", options: ["with", "to", "for", "at"], answer: "to" },
+            { q: "The children are excited ___ the picnic.", options: ["about", "at", "to", "for"], answer: "about" },
+
+            { q: "Every member of the team ___ present.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "Neither the boys nor the girl ___ absent.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "A pair of spectacles ___ on the table.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "The scissors ___ on the desk.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "Fifty dollars ___ enough for the ticket.", options: ["is", "are", "were", "have"], answer: "is" },
+
+            { q: "She completed the work more ___ than expected.", options: ["quick", "quickly", "quicker", "quickest"], answer: "quickly" },
+            { q: "This question is ___ than the previous one.", options: ["difficult", "more difficult", "most difficult", "difficulty"], answer: "more difficult" },
+            { q: "He is the ___ runner in the team.", options: ["fast", "faster", "fastest", "more fast"], answer: "fastest" },
+            { q: "She smiled ___.", options: ["sweet", "sweetly", "sweeter", "sweetest"], answer: "sweetly" },
+            { q: "The weather became ___ after sunset.", options: ["cool", "cooler", "coolest", "more cool"], answer: "cooler" },
+
+            { q: "The project ___ before the inspection.", options: ["had completed", "had been completed", "completed", "completing"], answer: "had been completed" },
+            { q: "The report ___ by the manager tomorrow.", options: ["will review", "will be reviewed", "reviewed", "reviewing"], answer: "will be reviewed" },
+            { q: "The floor ___ when I entered the room.", options: ["was being cleaned", "cleaned", "was cleaned", "is cleaning"], answer: "was being cleaned" },
+            { q: "The invitations ___ last week.", options: ["sent", "were sent", "are sent", "sending"], answer: "were sent" },
+            { q: "The match ___ because of heavy rain.", options: ["was cancelled", "cancelled", "is cancelled", "cancelling"], answer: "was cancelled" },
+            { q: "He advised me ___ more water.", options: ["drink", "drinking", "to drink", "drank"], answer: "to drink" },
+            { q: "She promised ___ on time.", options: ["come", "coming", "to come", "came"], answer: "to come" },
+            { q: "They refused ___ the offer.", options: ["accept", "accepting", "to accept", "accepted"], answer: "to accept" },
+            { q: "I enjoy ___ new languages.", options: ["learn", "learning", "to learn", "learned"], answer: "learning" },
+            { q: "He forgot ___ the email yesterday.", options: ["send", "sending", "to send", "sent"], answer: "to send" },
+
+            { q: "She is interested ___ photography.", options: ["in", "on", "at", "for"], answer: "in" },
+            { q: "He succeeded ___ winning the competition.", options: ["at", "in", "for", "to"], answer: "in" },
+            { q: "The manager agreed ___ our suggestion.", options: ["to", "with", "for", "about"], answer: "to" },
+            { q: "She apologized ___ the misunderstanding.", options: ["for", "to", "at", "with"], answer: "for" },
+            { q: "He is famous ___ his inventions.", options: ["for", "with", "to", "of"], answer: "for" },
+
+            { q: "None of the information ___ useful.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "The staff ___ working hard.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "One-third of the cake ___ left.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "A number of employees ___ absent today.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "The number of visitors ___ increasing.", options: ["is", "are", "were", "have"], answer: "is" },
+
+            { q: "She answered all the questions ___.", options: ["correct", "correctly", "correctness", "corrected"], answer: "correctly" },
+            { q: "He works very ___.", options: ["hard", "hardly", "harder", "hardest"], answer: "hard" },
+            { q: "This exercise is ___ than the last one.", options: ["easy", "easier", "easiest", "more easier"], answer: "easier" },
+            { q: "She is the ___ singer in the choir.", options: ["talented", "more talented", "most talented", "talent"], answer: "most talented" },
+            { q: "The river flows ___.", options: ["slow", "slowly", "slower", "slowest"], answer: "slowly" },
+
+            { q: "The homework ___ before the teacher arrived.", options: ["had finished", "had been finished", "finished", "was finishing"], answer: "had been finished" },
+            { q: "The road ___ next month.", options: ["will repair", "will be repaired", "repaired", "repairing"], answer: "will be repaired" },
+            { q: "The decision ___ by the committee yesterday.", options: ["made", "was made", "is made", "making"], answer: "was made" },
+            { q: "The documents ___ before they were signed.", options: ["checked", "had been checked", "were checking", "check"], answer: "had been checked" },
+            { q: "The house ___ every weekend.", options: ["cleans", "is cleaned", "cleaned", "cleaning"], answer: "is cleaned" },
+            { q: "She encouraged me ___ harder.", options: ["study", "studying", "to study", "studied"], answer: "to study" },
+            { q: "He avoided ___ to strangers.", options: ["talk", "talking", "to talk", "talked"], answer: "talking" },
+            { q: "I hope ___ you again soon.", options: ["meet", "meeting", "to meet", "met"], answer: "to meet" },
+            { q: "They decided ___ another chance.", options: ["give", "giving", "to give", "gave"], answer: "to give" },
+            { q: "She admitted ___ the truth.", options: ["hide", "hiding", "to hide", "hid"], answer: "hiding" },
+
+            { q: "He is afraid ___ losing his job.", options: ["of", "from", "to", "with"], answer: "of" },
+            { q: "She is good ___ solving puzzles.", options: ["at", "in", "on", "to"], answer: "at" },
+            { q: "I am satisfied ___ your performance.", options: ["with", "for", "to", "about"], answer: "with" },
+            { q: "The teacher was pleased ___ the students.", options: ["with", "to", "at", "about"], answer: "with" },
+            { q: "He apologized ___ arriving late.", options: ["for", "to", "about", "with"], answer: "for" },
+
+            { q: "Each of the answers ___ correct.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "Neither of my sisters ___ a doctor.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "The rich ___ not always happy.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "The poor ___ in need of help.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "A bouquet of flowers ___ on the table.", options: ["is", "are", "were", "have"], answer: "is" },
+
+            { q: "She spoke ___.", options: ["soft", "softly", "softer", "softest"], answer: "softly" },
+            { q: "He completed the exam ___.", options: ["quick", "quickly", "quicker", "quickest"], answer: "quickly" },
+            { q: "This road is ___ than that one.", options: ["wide", "wider", "widest", "more wider"], answer: "wider" },
+            { q: "She is the ___ dancer in the group.", options: ["graceful", "more graceful", "most graceful", "gracefully"], answer: "most graceful" },
+            { q: "He runs ___ than his brother.", options: ["fast", "faster", "fastest", "more fast"], answer: "faster" },
+
+            { q: "The bridge ___ before the rainy season.", options: ["had completed", "had been completed", "completed", "was completing"], answer: "had been completed" },
+            { q: "The exam papers ___ tomorrow.", options: ["will distribute", "will be distributed", "distributed", "distributing"], answer: "will be distributed" },
+            { q: "The classroom ___ when the principal arrived.", options: ["was being decorated", "decorated", "was decorated", "decorating"], answer: "was being decorated" },
+            { q: "The contract ___ by both companies yesterday.", options: ["signed", "was signed", "is signed", "signing"], answer: "was signed" },
+            { q: "The tickets ___ online every day.", options: ["sell", "are sold", "sold", "selling"], answer: "are sold" },
+            { q: "The train ___ before we reached the station.", options: ["left", "had left", "has left", "leaves"], answer: "had left" },
+            { q: "She is good ___ English.", options: ["at", "in", "on", "with"], answer: "at" },
+            { q: "I have lived here ___ 2018.", options: ["for", "since", "from", "at"], answer: "since" },
+            { q: "Would you like ___ cup of tea?", options: ["a", "an", "the", "no article"], answer: "a" },
+            { q: "He ___ TV when I called him.", options: ["watched", "was watching", "has watched", "is watching"], answer: "was watching" },
+
+            { q: "The book ___ by my teacher.", options: ["was written", "wrote", "is write", "writing"], answer: "was written" },
+            { q: "If I ___ rich, I would travel the world.", options: ["am", "were", "was", "be"], answer: "were" },
+            { q: "She enjoys ___ classical music.", options: ["listen", "listening to", "to listen", "listened"], answer: "listening to" },
+            { q: "You ___ wear a helmet while riding a bike.", options: ["must", "can", "might", "could"], answer: "must" },
+            { q: "Neither Ram nor his friends ___ coming.", options: ["is", "are", "was", "has"], answer: "are" },
+
+            { q: "The children are playing ___ the garden.", options: ["in", "on", "at", "by"], answer: "in" },
+            { q: "She has ___ finished her homework.", options: ["already", "yet", "still", "just now"], answer: "already" },
+            { q: "Choose the correct sentence.", options: ["He don't know.", "He doesn't know.", "He doesn't knows.", "He not know."], answer: "He doesn't know." },
+            { q: "I prefer coffee ___ tea.", options: ["than", "to", "from", "over"], answer: "to" },
+            { q: "He is the ___ player on the team.", options: ["better", "best", "good", "well"], answer: "best" },
+
+            { q: "The teacher asked us ___ quietly.", options: ["sit", "to sit", "sitting", "sat"], answer: "to sit" },
+            { q: "How ___ sugar do you need?", options: ["many", "much", "few", "several"], answer: "much" },
+            { q: "She has been working here ___ five years.", options: ["since", "for", "from", "during"], answer: "for" },
+            { q: "The meeting will start ___ 9:30 AM.", options: ["at", "on", "in", "by"], answer: "at" },
+            { q: "He made me ___ the truth.", options: ["tell", "to tell", "telling", "told"], answer: "tell" },
+
+            { q: "The news ___ very surprising.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "I wish I ___ speak French.", options: ["can", "could", "will", "may"], answer: "could" },
+            { q: "She is interested ___ painting.", options: ["on", "in", "at", "for"], answer: "in" },
+            { q: "The room ___ every morning.", options: ["cleans", "is cleaned", "cleaned", "cleaning"], answer: "is cleaned" },
+            { q: "Hardly had I reached home ___ it started raining.", options: ["when", "than", "then", "while"], answer: "when" },
+            { q: "She ___ to school every day.", options: ["go", "goes", "going", "gone"], answer: "goes" },
+            { q: "I have never ___ such a beautiful place.", options: ["see", "seen", "saw", "seeing"], answer: "seen" },
+            { q: "The baby is afraid ___ the dark.", options: ["of", "from", "at", "with"], answer: "of" },
+            { q: "He is taller ___ his brother.", options: ["than", "then", "from", "to"], answer: "than" },
+            { q: "Choose the correct sentence.", options: ["She can sings well.", "She can sing well.", "She can singing well.", "She can sang well."], answer: "She can sing well." },
+
+            { q: "The movie was ___ interesting than I expected.", options: ["more", "most", "much", "very"], answer: "more" },
+            { q: "There isn't ___ milk in the fridge.", options: ["many", "much", "few", "several"], answer: "much" },
+            { q: "He apologized ___ being late.", options: ["for", "to", "at", "on"], answer: "for" },
+            { q: "If she studies hard, she ___ the exam.", options: ["passes", "will pass", "passed", "would pass"], answer: "will pass" },
+            { q: "The cake ___ by my grandmother.", options: ["made", "was made", "making", "is make"], answer: "was made" },
+
+            { q: "They have been friends ___ childhood.", options: ["since", "for", "from", "during"], answer: "since" },
+            { q: "She asked me ___ I was busy.", options: ["if", "what", "who", "why"], answer: "if" },
+            { q: "He is looking forward to ___ you.", options: ["meet", "meeting", "met", "meets"], answer: "meeting" },
+            { q: "The students ___ their homework now.", options: ["do", "are doing", "did", "have done"], answer: "are doing" },
+            { q: "Choose the correct sentence.", options: ["I am agree.", "I agree.", "I agreeing.", "I agreed."], answer: "I agree." },
+
+            { q: "She is married ___ a doctor.", options: ["to", "with", "for", "by"], answer: "to" },
+            { q: "Neither of the answers ___ correct.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "He speaks English very ___.", options: ["good", "well", "better", "best"], answer: "well" },
+            { q: "I would rather ___ at home tonight.", options: ["stay", "stayed", "staying", "to stay"], answer: "stay" },
+            { q: "The train arrived ___ time.", options: ["on", "in", "at", "for"], answer: "on" },
+
+            { q: "She doesn't have ___ friends in this city.", options: ["much", "many", "little", "less"], answer: "many" },
+            { q: "He ___ in London for five years.", options: ["lived", "has lived", "living", "lives"], answer: "has lived" },
+            { q: "The teacher made us ___ the homework again.", options: ["do", "to do", "doing", "did"], answer: "do" },
+            { q: "Choose the correct sentence.", options: ["He explained me the lesson.", "He explained the lesson to me.", "He explained to me the lessoned.", "He explain the lesson me."], answer: "He explained the lesson to me." },
+            { q: "The police ___ investigating the case.", options: ["is", "are", "was", "has"], answer: "are" },
+            { q: "I haven't seen him ___ Monday.", options: ["for", "since", "from", "during"], answer: "since" },
+            { q: "She insisted ___ paying the bill.", options: ["on", "at", "to", "for"], answer: "on" },
+            { q: "The teacher asked the students ___ their books.", options: ["open", "to open", "opened", "opening"], answer: "to open" },
+            { q: "By next year, she ___ her degree.", options: ["will complete", "will have completed", "completes", "completed"], answer: "will have completed" },
+            { q: "Choose the correct sentence.", options: ["There is many books.", "There are many books.", "There have many books.", "There were many book."], answer: "There are many books." },
+
+            { q: "He is responsible ___ managing the team.", options: ["for", "to", "with", "at"], answer: "for" },
+            { q: "The baby ___ when the phone rang.", options: ["slept", "was sleeping", "has slept", "sleeps"], answer: "was sleeping" },
+            { q: "You ___ smoke inside the hospital.", options: ["mustn't", "can", "could", "may"], answer: "mustn't" },
+            { q: "Neither John nor Mary ___ coming today.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "The meeting has been ___ until tomorrow.", options: ["put off", "put on", "put up", "put away"], answer: "put off" },
+
+            { q: "How ___ students are present today?", options: ["much", "many", "little", "less"], answer: "many" },
+            { q: "She is one of the best ___ in the company.", options: ["employee", "employees", "employ", "employment"], answer: "employees" },
+            { q: "He suggested ___ a taxi.", options: ["take", "taking", "to take", "took"], answer: "taking" },
+            { q: "The match ___ because of heavy rain.", options: ["cancelled", "was cancelled", "is cancelling", "has cancel"], answer: "was cancelled" },
+            { q: "Choose the correct sentence.", options: ["She has gone to school.", "She has went to school.", "She have gone to school.", "She gone to school."], answer: "She has gone to school." },
+
+            { q: "The teacher explained the lesson ___ the students.", options: ["to", "for", "with", "at"], answer: "to" },
+            { q: "He drives ___ than his brother.", options: ["careful", "more carefully", "carefully", "most carefully"], answer: "more carefully" },
+            { q: "I am looking forward to ___ from you.", options: ["hear", "hearing", "heard", "hears"], answer: "hearing" },
+            { q: "The room ___ before the guests arrived.", options: ["had cleaned", "had been cleaned", "cleaned", "was cleaning"], answer: "had been cleaned" },
+            { q: "She works ___ a software engineer.", options: ["as", "like", "for", "with"], answer: "as" },
+
+            { q: "Choose the correct sentence.", options: ["He don't like coffee.", "He doesn't like coffee.", "He doesn't likes coffee.", "He not like coffee."], answer: "He doesn't like coffee." },
+            { q: "If I ___ enough money, I would buy a new car.", options: ["have", "had", "has", "having"], answer: "had" },
+            { q: "The old man walked very ___.", options: ["slow", "slowly", "slower", "slowest"], answer: "slowly" },
+            { q: "She has lived in Mumbai ___ ten years.", options: ["since", "for", "from", "at"], answer: "for" },
+            { q: "Everybody ___ excited about the trip.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "She ___ her homework before going to bed.", options: ["finish", "finished", "had finished", "finishing"], answer: "had finished" },
+            { q: "I am interested ___ learning new languages.", options: ["in", "on", "at", "for"], answer: "in" },
+            { q: "He ___ to the gym every Sunday.", options: ["go", "goes", "going", "gone"], answer: "goes" },
+            { q: "The letter ___ yesterday.", options: ["sent", "was sent", "is sent", "sending"], answer: "was sent" },
+            { q: "Choose the correct sentence.", options: ["She doesn't has a car.", "She doesn't have a car.", "She don't have a car.", "She not have a car."], answer: "She doesn't have a car." },
+
+            { q: "We have been waiting ___ two hours.", options: ["since", "for", "from", "during"], answer: "for" },
+            { q: "He is afraid ___ dogs.", options: ["of", "from", "with", "at"], answer: "of" },
+            { q: "If they hurry, they ___ the train.", options: ["catch", "will catch", "caught", "would catch"], answer: "will catch" },
+            { q: "She made me ___ my mistake.", options: ["realize", "to realize", "realizing", "realized"], answer: "realize" },
+            { q: "The children are playing ___ the playground.", options: ["in", "on", "at", "for"], answer: "in" },
+
+            { q: "He speaks English more ___ than his friend.", options: ["fluent", "fluently", "fluency", "most fluently"], answer: "fluently" },
+            { q: "The teacher told us ___ quietly.", options: ["work", "to work", "working", "worked"], answer: "to work" },
+            { q: "Choose the correct sentence.", options: ["I have seen him yesterday.", "I saw him yesterday.", "I have saw him yesterday.", "I seen him yesterday."], answer: "I saw him yesterday." },
+            { q: "She prefers tea ___ coffee.", options: ["than", "to", "over", "from"], answer: "to" },
+            { q: "One of the boys ___ absent today.", options: ["is", "are", "were", "have"], answer: "is" },
+
+            { q: "The doctor advised him ___ smoking.", options: ["stop", "stopping", "to stop", "stopped"], answer: "to stop" },
+            { q: "This is the ___ movie I have ever seen.", options: ["good", "better", "best", "well"], answer: "best" },
+            { q: "The documents ___ before the meeting.", options: ["had been prepared", "prepared", "was preparing", "prepare"], answer: "had been prepared" },
+            { q: "She is married ___ an engineer.", options: ["with", "to", "for", "by"], answer: "to" },
+            { q: "He apologized ___ being rude.", options: ["for", "to", "at", "about"], answer: "for" },
+
+            { q: "Choose the correct sentence.", options: ["She enjoys to swim.", "She enjoys swimming.", "She enjoy swimming.", "She enjoying swimming."], answer: "She enjoys swimming." },
+            { q: "Neither of my friends ___ coming tonight.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "The meeting starts ___ 10 o'clock.", options: ["at", "in", "on", "by"], answer: "at" },
+            { q: "I wish I ___ taller.", options: ["am", "were", "was", "be"], answer: "were" },
+            { q: "The manager was pleased ___ our performance.", options: ["with", "to", "for", "on"], answer: "with" },
+            { q: "She ___ her homework before going to bed.", options: ["finish", "finished", "had finished", "finishing"], answer: "had finished" },
+            { q: "I am interested ___ learning new languages.", options: ["in", "on", "at", "for"], answer: "in" },
+            { q: "He ___ to the gym every Sunday.", options: ["go", "goes", "going", "gone"], answer: "goes" },
+            { q: "The letter ___ yesterday.", options: ["sent", "was sent", "is sent", "sending"], answer: "was sent" },
+            { q: "Choose the correct sentence.", options: ["She doesn't has a car.", "She doesn't have a car.", "She don't have a car.", "She not have a car."], answer: "She doesn't have a car." },
+
+            { q: "We have been waiting ___ two hours.", options: ["since", "for", "from", "during"], answer: "for" },
+            { q: "He is afraid ___ dogs.", options: ["of", "from", "with", "at"], answer: "of" },
+            { q: "If they hurry, they ___ the train.", options: ["catch", "will catch", "caught", "would catch"], answer: "will catch" },
+            { q: "She made me ___ my mistake.", options: ["realize", "to realize", "realizing", "realized"], answer: "realize" },
+            { q: "The children are playing ___ the playground.", options: ["in", "on", "at", "for"], answer: "in" },
+
+            { q: "He speaks English more ___ than his friend.", options: ["fluent", "fluently", "fluency", "most fluently"], answer: "fluently" },
+            { q: "The teacher told us ___ quietly.", options: ["work", "to work", "working", "worked"], answer: "to work" },
+            { q: "Choose the correct sentence.", options: ["I have seen him yesterday.", "I saw him yesterday.", "I have saw him yesterday.", "I seen him yesterday."], answer: "I saw him yesterday." },
+            { q: "She prefers tea ___ coffee.", options: ["than", "to", "over", "from"], answer: "to" },
+            { q: "One of the boys ___ absent today.", options: ["is", "are", "were", "have"], answer: "is" },
+
+            { q: "The doctor advised him ___ smoking.", options: ["stop", "stopping", "to stop", "stopped"], answer: "to stop" },
+            { q: "This is the ___ movie I have ever seen.", options: ["good", "better", "best", "well"], answer: "best" },
+            { q: "The documents ___ before the meeting.", options: ["had been prepared", "prepared", "was preparing", "prepare"], answer: "had been prepared" },
+            { q: "She is married ___ an engineer.", options: ["with", "to", "for", "by"], answer: "to" },
+            { q: "He apologized ___ being rude.", options: ["for", "to", "at", "about"], answer: "for" },
+
+            { q: "Choose the correct sentence.", options: ["She enjoys to swim.", "She enjoys swimming.", "She enjoy swimming.", "She enjoying swimming."], answer: "She enjoys swimming." },
+            { q: "Neither of my friends ___ coming tonight.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "The meeting starts ___ 10 o'clock.", options: ["at", "in", "on", "by"], answer: "at" },
+            { q: "I wish I ___ taller.", options: ["am", "were", "was", "be"], answer: "were" },
+            { q: "The manager was pleased ___ our performance.", options: ["with", "to", "for", "on"], answer: "with" },
+            { q: "I can't afford ___ a new car right now.", options: ["buy", "buying", "to buy", "bought"], answer: "to buy" },
+            { q: "She is famous ___ her beautiful paintings.", options: ["for", "with", "to", "at"], answer: "for" },
+            { q: "The meeting has been ___ until next Monday.", options: ["called off", "called up", "called in", "called out"], answer: "called off" },
+            { q: "He has worked here ___ 2019.", options: ["since", "for", "from", "during"], answer: "since" },
+            { q: "Choose the correct sentence.", options: ["She doesn't need no help.", "She doesn't need any help.", "She don't need any help.", "She no need any help."], answer: "She doesn't need any help." },
+
+            { q: "The children laughed ___ the clown.", options: ["at", "on", "with", "about"], answer: "at" },
+            { q: "If I had seen you, I ___ hello.", options: ["would say", "would have said", "will say", "said"], answer: "would have said" },
+            { q: "The report ___ by Friday.", options: ["must submit", "must be submitted", "must submitted", "must submitting"], answer: "must be submitted" },
+            { q: "He is the ___ student in the class.", options: ["more hardworking", "most hardworking", "hardworking", "hardwork"], answer: "most hardworking" },
+            { q: "She speaks English ___ than her sister.", options: ["more confidently", "most confidently", "confident", "confidence"], answer: "more confidently" },
+
+            { q: "Neither of the books ___ mine.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "He accused me ___ lying.", options: ["of", "for", "to", "with"], answer: "of" },
+            { q: "The baby stopped ___ when it saw its mother.", options: ["cry", "crying", "to cry", "cried"], answer: "crying" },
+            { q: "The bus arrived ___ the station on time.", options: ["at", "in", "on", "for"], answer: "at" },
+            { q: "Choose the correct sentence.", options: ["I have been to Delhi last year.", "I went to Delhi last year.", "I have gone to Delhi last year.", "I had went to Delhi last year."], answer: "I went to Delhi last year." },
+
+            { q: "By the end of this month, she ___ her training.", options: ["completes", "will complete", "will have completed", "completed"], answer: "will have completed" },
+            { q: "He insisted ___ driving the car.", options: ["on", "in", "to", "for"], answer: "on" },
+            { q: "The room ___ when we entered.", options: ["was being painted", "painted", "was painted", "is painting"], answer: "was being painted" },
+            { q: "Everyone in the class ___ excited.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "She prefers ___ at home on weekends.", options: ["stay", "staying", "to staying", "stayed"], answer: "staying" },
+
+            { q: "Choose the correct sentence.", options: ["He is married with a teacher.", "He is married to a teacher.", "He married with a teacher.", "He married to teacher."], answer: "He is married to a teacher." },
+            { q: "The teacher praised me ___ my hard work.", options: ["for", "to", "at", "with"], answer: "for" },
+            { q: "She could hardly ___ what he was saying.", options: ["understand", "understood", "understanding", "to understand"], answer: "understand" },
+            { q: "The old building ___ last year.", options: ["was destroyed", "destroyed", "is destroyed", "destroying"], answer: "was destroyed" },
+            { q: "He always arrives ___ than everyone else.", options: ["early", "earlier", "earliest", "more early"], answer: "earlier" },
+            { q: "She is used to ___ early in the morning.", options: ["wake", "waking", "to wake", "woke"], answer: "waking" },
+            { q: "He apologized ___ breaking the vase.", options: ["for", "to", "with", "at"], answer: "for" },
+            { q: "The meeting will be held ___ Monday.", options: ["on", "at", "in", "for"], answer: "on" },
+            { q: "If I ___ you, I would accept the offer.", options: ["am", "was", "were", "be"], answer: "were" },
+            { q: "Choose the correct sentence.", options: ["She has fewer money than me.", "She has less money than I do.", "She has lesser money than me.", "She has few money than me."], answer: "She has less money than I do." },
+
+            { q: "He is interested ___ computers.", options: ["in", "on", "at", "to"], answer: "in" },
+            { q: "The thief ___ by the police yesterday.", options: ["caught", "was caught", "is caught", "catching"], answer: "was caught" },
+            { q: "She has been waiting ___ 8 o'clock.", options: ["since", "for", "from", "during"], answer: "since" },
+            { q: "I would rather ___ at home today.", options: ["stay", "stayed", "staying", "to stay"], answer: "stay" },
+            { q: "Neither the teacher nor the principal ___ available.", options: ["is", "are", "were", "have"], answer: "is" },
+
+            { q: "Choose the correct sentence.", options: ["He can drives a car.", "He can drive a car.", "He can drove a car.", "He can driving a car."], answer: "He can drive a car." },
+            { q: "She is proud ___ her daughter.", options: ["of", "for", "to", "with"], answer: "of" },
+            { q: "The students were asked ___ silently.", options: ["work", "working", "to work", "worked"], answer: "to work" },
+            { q: "This is the ___ book I have ever read.", options: ["more interesting", "most interesting", "interesting", "interest"], answer: "most interesting" },
+            { q: "The baby is sleeping ___.", options: ["peaceful", "peacefully", "peace", "more peacefully"], answer: "peacefully" },
+
+            { q: "By next year, they ___ a new factory.", options: ["build", "will build", "will have built", "built"], answer: "will have built" },
+            { q: "She succeeded ___ solving the puzzle.", options: ["at", "in", "for", "to"], answer: "in" },
+            { q: "The documents ___ before the meeting started.", options: ["had been printed", "printed", "were printing", "print"], answer: "had been printed" },
+            { q: "One of my cousins ___ in Canada.", options: ["live", "lives", "living", "have lived"], answer: "lives" },
+            { q: "Choose the correct sentence.", options: ["She suggested to go home.", "She suggested going home.", "She suggested go home.", "She suggest going home."], answer: "She suggested going home." },
+
+            { q: "The teacher explained the lesson ___ great detail.", options: ["in", "at", "on", "for"], answer: "in" },
+            { q: "He is taller ___ any other boy in the class.", options: ["than", "then", "from", "to"], answer: "than" },
+            { q: "She forgot ___ the lights before leaving.", options: ["switch off", "switching off", "to switch off", "switched off"], answer: "to switch off" },
+            { q: "The match ___ due to bad weather.", options: ["was postponed", "postponed", "is postponing", "postpone"], answer: "was postponed" },
+            { q: "Everybody ___ welcome to join the event.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "She objected ___ the proposal.", options: ["to", "for", "with", "at"], answer: "to" },
+            { q: "The plane ___ before we reached the airport.", options: ["took off", "had taken off", "has taken off", "takes off"], answer: "had taken off" },
+            { q: "Choose the correct sentence.", options: ["He is senior than me.", "He is senior to me.", "He is senior from me.", "He is senior with me."], answer: "He is senior to me." },
+            { q: "I look forward to ___ your reply.", options: ["receive", "receiving", "received", "receives"], answer: "receiving" },
+            { q: "The children were divided ___ four groups.", options: ["into", "in", "among", "between"], answer: "into" },
+
+            { q: "No sooner had he arrived ___ it started raining.", options: ["when", "than", "then", "while"], answer: "than" },
+            { q: "She is capable ___ doing the job.", options: ["of", "for", "to", "with"], answer: "of" },
+            { q: "The homework ___ by tomorrow.", options: ["should complete", "should be completed", "should completed", "should completing"], answer: "should be completed" },
+            { q: "Neither of the girls ___ interested.", options: ["is", "are", "were", "have"], answer: "is" },
+            { q: "He speaks English as ___ as his teacher.", options: ["good", "well", "better", "best"], answer: "well" },
+
+            { q: "Choose the correct sentence.", options: ["I am used to wake up early.", "I am used to waking up early.", "I am used to woke up early.", "I am used to wake early."], answer: "I am used to waking up early." },
+            { q: "The train arrived ___ the platform.", options: ["at", "on", "in", "to"], answer: "at" },
+            { q: "She advised me ___ regularly.", options: ["exercise", "to exercise", "exercising", "exercised"], answer: "to exercise" },
+            { q: "If they had left earlier, they ___ the bus.", options: ["would catch", "would have caught", "will catch", "caught"], answer: "would have caught" },
+            { q: "The movie was much ___ than I expected.", options: ["interesting", "more interesting", "most interesting", "interest"], answer: "more interesting" },
+
+            { q: "He has been working here ___ ten years.", options: ["since", "for", "from", "during"], answer: "for" },
+            { q: "The thief managed to ___ from the police.", options: ["get away", "get over", "get up", "get on"], answer: "get away" },
+            { q: "Choose the correct sentence.", options: ["She has been married since ten years.", "She has been married for ten years.", "She is married since ten years.", "She married for ten years."], answer: "She has been married for ten years." },
+            { q: "The old man walks very ___.", options: ["slow", "slowly", "slower", "slowest"], answer: "slowly" },
+            { q: "A number of people ___ waiting outside.", options: ["is", "are", "was", "has"], answer: "are" },
+
+            { q: "He insisted ___ helping us.", options: ["on", "in", "at", "to"], answer: "on" },
+            { q: "The road ___ before the rainy season.", options: ["will repair", "will be repaired", "repaired", "repairing"], answer: "will be repaired" },
+            { q: "She is the ___ intelligent student in the class.", options: ["more", "most", "much", "very"], answer: "most" },
+            { q: "I couldn't help ___ when I heard the joke.", options: ["laugh", "laughing", "to laugh", "laughed"], answer: "laughing" },
+            { q: "Each of the players ___ given a certificate.", options: ["was", "were", "have", "are"], answer: "was" },
+
+
+        ];
+
+        function removeDuplicateQuestions(arr) {
+            const seen = new Set();
+
+            return arr.filter(q => {
+                const key = q.q.trim().toLowerCase();
+
+                if (seen.has(key)) {
+                    return false;
+                }
+
+                seen.add(key);
+                return true;
+            });
+        }
+
+        let questions = removeDuplicateQuestions(allQuestions);
+        let currentQuestion = 0;
+        let score = 0;
+        let timer = 30;
+        let timerInterval;
+        let studentName = "";
+        let reviewData = [];
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function startExam() {
+
+            studentName =
+                document.getElementById("studentName").value.trim();
+
+            if (studentName === "") {
+                alert("Please enter student name");
+                return;
+            }
+
+            document.getElementById("studentSection").style.display = "none";
+            document.getElementById("quizSection").style.display = "block";
+
+            shuffleArray(questions);
+            questions = shuffleArray(
+                removeDuplicateQuestions(allQuestions)
+            ).slice(0, 100);
+
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+
+            if (currentQuestion >= questions.length) {
+                finishExam();
+                return;
+            }
+
+            let q = questions[currentQuestion];
+
+            document.getElementById("progressText").innerHTML =
+                `Question ${currentQuestion + 1} of ${questions.length}`;
+
+            document.getElementById("progressBar").style.width =
+                ((currentQuestion / questions.length) * 100) + "%";
+
+            document.getElementById("question").innerHTML = q.q;
+
+            let options = [...q.options];
+            shuffleArray(options);
+
+            let html = "";
+
+            options.forEach(option => {
+
+                html += `
+        <button class="option"
+        onclick="checkAnswer('${option}')">
+        ${option}
+        </button>
+        `;
+
+            });
+
+            document.getElementById("options").innerHTML = html;
+
+            startTimer();
+        }
+
+        function startTimer() {
+
+            clearInterval(timerInterval);
+
+            timer = 30;
+
+            document.getElementById("timer").innerHTML =
+                `⏳ ${timer}`;
+
+            timerInterval = setInterval(() => {
+
+                timer--;
+
+                document.getElementById("timer").innerHTML =
+                    `⏳ ${timer}`;
+
+                if (timer <= 0) {
+
+                    clearInterval(timerInterval);
+
+                    let q = questions[currentQuestion];
+
+                    reviewData.push({
+                        question: q.q,
+                        selected: "No Answer",
+                        correct: q.answer
+                    });
+
+                    currentQuestion++;
+
+                    loadQuestion();
+                }
+
+            }, 1000);
+        }
+
+        function checkAnswer(selected) {
+
+            clearInterval(timerInterval);
+
+            let q = questions[currentQuestion];
+
+            let buttons =
+                document.querySelectorAll(".option");
+
+            buttons.forEach(btn => {
+
+                btn.disabled = true;
+
+                if (btn.innerText === q.answer) {
+                    btn.classList.add("correct");
+                }
+
+                if (
+                    btn.innerText === selected &&
+                    selected !== q.answer
+                ) {
+                    btn.classList.add("wrong");
+                }
+
+            });
+
+            reviewData.push({
+                question: q.q,
+                selected: selected,
+                correct: q.answer
+            });
+
+            if (selected === q.answer) {
+
+                score++;
+
+                let sound =
+                    document.getElementById("correctSound");
+
+                if (sound) sound.play();
+
+            } else {
+
+                let sound =
+                    document.getElementById("wrongSound");
+
+                if (sound) sound.play();
+
+            }
+
+            document.getElementById("scoreBoard").innerHTML =
+                `Score: ${score}`;
+
+            currentQuestion++;
+
+            setTimeout(loadQuestion, 1200);
+        }
+
+        function finishExam() {
+
+            document.getElementById("quizSection").style.display = "none";
+
+            document.getElementById("certificate").style.display = "block";
+
+            let percentage =
+                Math.round((score / questions.length) * 100);
+
+            document.getElementById("certName").innerHTML =
+                studentName;
+
+            document.getElementById("certPercent").innerHTML =
+                `Percentage : ${percentage}%`;
+
+            document.getElementById("certStatus").innerHTML =
+                percentage >= 40 ? "✅ PASS" : "❌ FAIL";
+
+            if (cheatCount >= 3) {
+                document.getElementById("certStatus").innerHTML =
+                    "❌ FAILED (CHEATING DETECTED)";
+            }
+
+            let grade = "";
+
+            if (percentage >= 90) {
+                grade = "🥇 GOLD";
+            }
+            else if (percentage >= 70) {
+                grade = "🥈 SILVER";
+            }
+            else if (percentage >= 50) {
+                grade = "🥉 BRONZE";
+            }
+            else {
+                grade = "📚 PARTICIPATION";
+            }
+
+            document.getElementById("certGrade").innerHTML =
+                `Grade : ${grade}`;
+
+            document.getElementById("certDate").innerHTML =
+                new Date().toLocaleDateString();
+
+            let certGrade = "";
+
+            if (percentage >= 90) {
+                certGrade = "A+";
+            }
+            else if (percentage >= 70) {
+                certGrade = "A";
+            }
+            else if (percentage >= 50) {
+                certGrade = "B";
+            }
+            else {
+                certGrade = "C";
+            }
+
+            let user = JSON.parse(
+                localStorage.getItem("currentStudent")
+            );
+
+            let students = JSON.parse(
+                localStorage.getItem("students")
+            );
+
+            if (!user.examResults) {
+                user.examResults = [];
+            }
+
+            user.examResults.push({
+                userName: user.name,
+                score: score,
+                total: questions.length,
+                percentage: percentage,
+                grade: certGrade,
+                date: new Date().toLocaleString()
+            });
+
+            user.examScore = score;
+            user.percentage = percentage;
+            user.grade = certGrade;
+
+            students = students.map(s => {
+
+                if (s.id === user.id) {
+
+                    s.examResults = user.examResults;
+                    s.examScore = score;
+                    s.percentage = percentage;
+                    s.grade = certGrade;
+                }
+
+                return s;
+            });
+
+            localStorage.setItem(
+                "students",
+                JSON.stringify(students)
+            );
+
+            localStorage.setItem(
+                "currentStudent",
+                JSON.stringify(user)
+            );
+
+            let tbody =
+                document.querySelector("#reviewTable tbody");
+
+            let html = "";
+
+            reviewData.forEach((r, index) => {
+
+                html += `
+<tr style="${r.selected !== r.correct
+                        ? 'background:#ffe5e5;'
+                        : 'background:#e8ffe8;'
+                    }">
+<td>${index + 1}</td>
+<td>${r.question}</td>
+<td style="color:${r.selected !== r.correct ? 'red' : 'green'
+                    };font-weight:bold;">
+${r.selected}
+</td>
+<td style="color:green;font-weight:bold;">
+${r.correct}
+</td>
+</tr>
+`;
+
+            });
+
+            tbody.innerHTML = html;
+
+            document.getElementById("reviewSection").style.display =
+                "block";
+
+        }
+
+
+        document.addEventListener("contextmenu", e => {
+            e.preventDefault();
+        });
+
+
+
+        document.addEventListener("copy", e => {
+            e.preventDefault();
+            alert("⚠ Copying is not allowed.");
+        });
+
+        document.addEventListener("selectstart", e => {
+            e.preventDefault();
+        });
+
+
+
+
+
+
+
+        document.addEventListener("click", function (e) {
+
+            if (e.target.id === "downloadQA") {
+
+
+                let content = "EXAM REPORT\n\n";
+
+                content += "========================\n";
+                content += "✅ CORRECT ANSWERS\n";
+                content += "========================\n\n";
+
+                reviewData.forEach((r, index) => {
+
+                    if (r.selected === r.correct) {
+
+                        content += (index + 1) + ". " + r.question + "\n";
+                        content += "Your Answer: " + r.selected + "\n";
+                        content += "Correct Answer: " + r.correct + "\n";
+                        content += "-------------------------\n\n";
+
+                    }
+
+                });
+
+                content += "\n\n========================\n";
+                content += "❌ WRONG ANSWERS\n";
+                content += "========================\n\n";
+
+                reviewData.forEach((r, index) => {
+
+                    if (r.selected !== r.correct) {
+
+                        content += (index + 1) + ". " + r.question + "\n";
+                        content += "Your Answer: " + r.selected + "\n";
+                        content += "Correct Answer: " + r.correct + "\n";
+                        content += "-------------------------\n\n";
+
+                    }
+
+                });
+
+                const blob = new Blob([content], {
+                    type: "text/plain"
+                });
+
+                const a = document.createElement("a");
+
+                a.href = URL.createObjectURL(blob);
+
+                a.download = "Exam_Report.txt";
+
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+
+
+            }
+
+
+        });
+    </script>
+    <audio id="correctSound">
+        <source src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg">
+    </audio>
+
+    <audio id="wrongSound">
+        <source src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg">
+    </audio>
+</body>
+
+</html>
