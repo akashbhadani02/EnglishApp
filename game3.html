@@ -14,54 +14,49 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 10px; /* નાની સ્ક્રીન માટે પેડિંગ */
     }
 
-    /* કન્ટેનર સ્ટાઈલ */
+    /* કન્ટેનર સ્ટાઈલ (Responsive) */
     .container { 
         background: white; 
-        padding: 40px; 
+        padding: 30px; 
         border-radius: 25px; 
         box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
-        width: 90%; 
-        max-width: 450px;
-        transition: transform 0.3s ease;
+        width: 100%; 
+        max-width: 450px; /* મોટી સ્ક્રીન પર બહુ મોટી નહીં થાય */
+        box-sizing: border-box; /* પેડિંગને કારણે પહોળાઈ ન વધે તે માટે */
     }
 
-    /* હેડિંગ */
-    h1 { color: #333; margin-bottom: 25px; }
+    /* હેડિંગ રિસ્પોન્સિવ */
+    h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
 
     /* બટન સ્ટાઈલ */
     .btn { 
         display: block; 
         width: 100%; 
-        padding: 15px; 
-        margin: 12px 0; 
+        padding: 14px; 
+        margin: 10px 0; 
         border: none; 
         background: #4e54c8; 
         color: white; 
         border-radius: 12px; 
         cursor: pointer; 
-        font-size: 17px; 
+        font-size: 1rem; 
         font-weight: 600;
         transition: all 0.3s ease;
     }
 
-    .btn:hover { 
-        background: #8f94fb; 
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
+    .btn:hover { background: #8f94fb; transform: translateY(-2px); }
 
-    /* ટોપિક બટન અલગ દેખાય તે માટે */
-    .topic-btn { 
-        background: #f8f9fa; 
-        color: #4e54c8; 
-        border: 2px solid #4e54c8;
-    }
+    .topic-btn { background: #f8f9fa; color: #4e54c8; border: 2px solid #4e54c8; }
+    .topic-btn:hover { background: #4e54c8; color: white; }
 
-    .topic-btn:hover { 
-        background: #4e54c8; 
-        color: white; 
+    /* ટેબ્લેટ અને મોબાઈલ માટે રિસ્પોન્સિવ ટ્વીક્સ */
+    @media (max-width: 480px) {
+        .container { padding: 20px; }
+        h1 { font-size: 1.2rem; }
+        .btn { padding: 12px; font-size: 0.9rem; }
     }
 </style>
 </head>
