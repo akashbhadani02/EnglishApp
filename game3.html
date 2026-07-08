@@ -5,60 +5,515 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Topic-Based English Learning</title>
    <style>
-    /* બેઝિક સેટઅપ */
-    html, body {
-        margin: 0;
-        padding: 0;
-        width: 100%;
-        height: 100%;
-        font-family: 'Segoe UI', sans-serif;
+    *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+}
+
+body{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+
+    background:linear-gradient(
+        -45deg,
+        #2563eb,
+        #7c3aed,
+        #06b6d4,
+        #10b981
+    );
+
+    background-size:400% 400%;
+    animation:bg 12s ease infinite;
+}
+
+
+@keyframes bg{
+    0%{
+        background-position:0% 50%;
     }
 
-    body {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    50%{
+        background-position:100% 50%;
     }
 
-    /* કન્ટેનર સ્ટાઈલ - મોબાઈલ માટે ખાસ */
-    .container {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        width: 100%;       /* આખી પહોળાઈ */
-        height: 100vh;     /* આખી ઊંચાઈ */
-        padding: 20px;
-        box-sizing: border-box; /* જેથી પેડિંગને લીધે બહાર ન નીકળે */
-        display: flex;
-        flex-direction: column;
-        justify-content: center; /* કન્ટેન્ટ વચ્ચે રહે તે માટે */
+    100%{
+        background-position:0% 50%;
     }
+}
 
-    h1 { font-size: 1.5rem; margin-bottom: 20px; }
 
-    .btn {
-        width: 100%;
-        padding: 20px;
-        margin: 10px 0;
-        border: none;
-        background: #4e54c8;
-        color: white;
-        border-radius: 12px;
-        font-size: 1.2rem;
-        font-weight: 600;
-        cursor: pointer;
-    }
+/* Main Box */
 
-    /* મોટી સ્ક્રીન માટે (Desktop) સેટિંગ - ડેસ્કટોપ પર જો સેન્ટરમાં રાખવું હોય તો */
-    @media (min-width: 600px) {
-        .container {
-            width: 90%;
-            max-width: 500px;
-            height: auto; /* ડેસ્કટોપ પર કન્ટેનર નાનું થઈ જશે */
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-        }
-    }
-</style>
+.container{
+
+    width:100%;
+    max-width:850px;
+    min-height:90vh;
+
+    padding:35px;
+
+    background:rgba(255,255,255,0.18);
+    backdrop-filter:blur(20px);
+
+    border-radius:30px;
+
+    border:1px solid rgba(255,255,255,.25);
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.35);
+
+    overflow-y:auto;
+
+    animation:show .5s ease;
+}
+
+
+@keyframes show{
+
+from{
+    opacity:0;
+    transform:translateY(30px);
+}
+
+to{
+    opacity:1;
+    transform:translateY(0);
+}
+
+}
+
+
+/* Heading */
+
+h1,
+h2{
+
+    width:100%;
+
+    text-align:center;
+
+    color:white;
+
+    line-height:1.5;
+
+    text-shadow:
+    0 3px 10px rgba(0,0,0,.4);
+
+}
+
+
+h1{
+
+    font-size:42px;
+
+    margin-bottom:20px;
+
+}
+
+
+h2{
+
+    font-size:32px;
+
+    margin-bottom:25px;
+
+}
+
+
+
+/* Paragraph */
+
+p{
+
+    color:white;
+
+    text-align:center;
+
+    font-size:22px;
+
+    margin-bottom:30px;
+
+}
+
+
+
+/* All Buttons */
+
+
+.btn{
+
+    width:100%;
+
+    padding:18px;
+
+    margin-bottom:16px;
+
+    border:none;
+
+    border-radius:18px;
+
+
+    font-size:20px;
+
+    font-weight:700;
+
+
+    color:white;
+
+    cursor:pointer;
+
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.25);
+
+
+    transition:.3s;
+
+}
+
+
+.btn:hover{
+
+    transform:translateY(-4px);
+
+}
+
+
+.btn:active{
+
+    transform:scale(.96);
+
+}
+
+
+
+/* Topic Buttons */
+
+.topic-btn:nth-child(3){
+
+background:
+linear-gradient(
+135deg,
+#ff6b35,
+#ff9800
+);
+
+}
+
+
+
+.topic-btn:nth-child(4){
+
+background:
+linear-gradient(
+135deg,
+#00c853,
+#00bfa5
+);
+
+}
+
+
+
+.topic-btn:nth-child(5){
+
+background:
+linear-gradient(
+135deg,
+#2979ff,
+#7c4dff
+);
+
+}
+
+
+
+
+/* Question Area */
+
+
+#main{
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+
+
+/* Question Text */
+
+#q-text{
+
+
+width:100%;
+
+
+padding:25px;
+
+
+margin-top:30px;
+
+margin-bottom:25px;
+
+
+border-radius:22px;
+
+
+background:
+rgba(255,255,255,.20);
+
+
+
+font-size:34px;
+
+
+color:white;
+
+
+text-align:center;
+
+
+line-height:1.5;
+
+
+box-shadow:
+0 15px 35px rgba(0,0,0,.25);
+
+
+}
+
+
+
+/* Listen Button */
+
+button[style]{
+
+
+background:
+linear-gradient(
+135deg,
+#ffd54f,
+#ff9800
+)!important;
+
+
+color:#222!important;
+
+
+margin-bottom:25px;
+
+}
+
+
+
+/* Options */
+
+
+#opts{
+
+width:100%;
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+}
+
+
+
+/* Scrollbar */
+
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+
+::-webkit-scrollbar-thumb{
+
+background:white;
+
+border-radius:10px;
+
+}
+
+
+
+/* Tablet */
+
+
+@media(max-width:768px){
+
+
+body{
+
+padding:0;
+
+}
+
+
+.container{
+
+width:100%;
+
+height:100vh;
+
+min-height:100vh;
+
+border-radius:0;
+
+padding:20px;
+
+}
+
+
+
+h1{
+
+font-size:32px;
+
+}
+
+
+h2{
+
+font-size:26px;
+
+}
+
+
+
+p{
+
+font-size:18px;
+
+}
+
+
+
+.btn{
+
+font-size:18px;
+
+padding:16px;
+
+}
+
+
+
+#q-text{
+
+margin-top:60px;
+
+font-size:25px;
+
+padding:20px;
+
+}
+
+
+
+}
+
+
+
+
+/* Mobile */
+
+
+@media(max-width:480px){
+
+
+.container{
+
+padding:15px;
+
+}
+
+
+h1{
+
+font-size:28px;
+
+}
+
+
+h2{
+
+font-size:22px;
+
+}
+
+
+p{
+
+font-size:17px;
+
+}
+
+
+.btn{
+
+font-size:17px;
+
+padding:15px;
+
+border-radius:15px;
+
+}
+
+
+
+#q-text{
+
+
+font-size:21px;
+
+
+margin-top:70px;
+
+
+padding:18px;
+
+
+line-height:1.6;
+
+
+}
+
+
+
+}
+   </style>
 </head>
 <body>
 
