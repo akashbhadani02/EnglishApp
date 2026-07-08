@@ -185,11 +185,65 @@
 };
 
     const phonicRules = {
-        "sh": "શ", "ch": "ચ", "ph": "ફ", "th": "થ/ધ", "wh": "વ", 
-        "ck": "ક", "ee": "ઈ", "oo": "ઉ", "oa": "ઓ", 
-        "ai": "એ", "ar": "આર", "or": "ઓર", "er": "અર",
-        "igh": "આઈ", "tion": "શન"
-    };
+    // Digraphs
+    "sh": "શ",
+    "ch": "ચ",
+    "th": "થ/ધ",
+    "ph": "ફ",
+    "wh": "વ",
+    "ck": "ક",
+    "ng": "ંગ",
+    "qu": "ક્વ",
+
+    // Vowel Teams
+    "ee": "ઈ",
+    "oo": "ઉ",
+    "ai": "એ",
+    "oa": "ઓ",
+    "ea": "ઈ",
+    "igh": "આઈ",
+    "ay": "એ",
+    "oy": "ઓય",
+    "oi": "ઓય",
+    "ou": "આઉ",
+    "ow": "આઉ",
+    "au": "ઓ",
+    "aw": "ઓ",
+    "ew": "યૂ / ઊ",
+    "ue": "યૂ / ઊ",
+
+    // Magic E
+    "a_e": "એ",
+    "i_e": "આઈ",
+    "o_e": "ઓ",
+    "u_e": "યૂ",
+
+    // R-Controlled
+    "ar": "આર",
+    "er": "અર",
+    "or": "ઓર",
+    "ir": "અર",
+
+    // Double Letters
+    "ss": "સ",
+    "ll": "લ",
+    "ff": "ફ",
+    "zz": "ઝ",
+
+    // Others & Silent
+    "kn": "ન",
+    "wr": "ર",
+    "tion": "શન",
+    "ed": "ડ/ટ/ઈડ",
+    "mb": "મ",
+    "gn": "ન",
+
+    // Soft/Hard
+    "c_soft": "સ", // e, i, y
+    "c_hard": "ક",
+    "g_soft": "જ", // e, i, y
+    "g_hard": "ગ"
+};  
 
     function learnWord() {
         const word = document.getElementById('wordInput').value.trim().toLowerCase();
