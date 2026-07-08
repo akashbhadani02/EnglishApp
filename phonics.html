@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonics</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f4f8; display: flex; justify-content: center; padding: 20px; }
+        .box { background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 500px; text-align: center; }
+        input { width: 90%; padding: 15px; margin: 10px 0; border: 2px solid #3498db; border-radius: 10px; font-size: 18px; }
+        select { width: 95%; padding: 10px; margin-bottom: 10px; border-radius: 10px; }
+        .btn-group { display: flex; gap: 10px; }
+        button { padding: 15px; flex: 1; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .speak-btn { background: #e67e22; color: white; }
+        .clear-btn { background: #95a5a6; color: white; }
+        .display-word { font-size: 3em; color: #2c3e50; margin: 10px 0; }
+        .phonics-guide { font-size: 1.2em; background: #fff3cd; padding: 15px; border-radius: 10px; margin-top: 10px; line-height: 1.6; }
+        .meaning { color: #27ae60; font-weight: bold; margin-top: 10px; }
+        /* ટેબલ સ્ટાઇલ */
+        .chart-box { margin-top: 30px; text-align: left; background: #fff; padding: 15px; border-radius: 15px; border: 1px solid #ddd; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
+        th, td { padding: 8px; border: 1px solid #ddd; }
+         @page {
+            size: A4;
+            margin: 15mm 12mm;
+            background-color: #fdfbf7;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fdfbf7;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+            text-transform: uppercase;
+        }
+        /* Color Coding */
+        .digraphs { background-color: #e8f6f3; }
+        .vowel-teams { background-color: #fff3cd; }
+        .magic-e { background-color: #e1f5fe; }
+        .r-controlled { background-color: #fce4e4; }
+        .double-letters { background-color: #f3e5f5; }
+        .others { background-color: #f0f0f0; }
+        .soft-hard { background-color: #fffde7; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>Phonics</h1>
+    
+    <select onchange="document.getElementById('wordInput').value=this.value; learnWord();">
+    <option value="">-- શબ્દ પસંદ કરો --</option>
+    <!-- આ હવે JavaScript દ્વારા ભરાઈ જશે -->
+</select>
+
+    <input type="text" id="wordInput" placeholder="સ્પેલિંગ લખો...">
+    
+    <div class="control-group" style="margin-bottom:10px;">
+        <label>ઝડપ: </label>
+        <input type="range" id="speedRange" min="0.1" max="1.0" step="0.1" value="0.5">
+    </div>
+
+    <div class="btn-group">
+        <button class="speak-btn" onclick="learnWord()">સાંભળો</button>
+        <button class="clear-btn" onclick="clearAll()">સાફ કરો</button>
+    </div>
+
+    <div id="outputArea" style="display:none; margin-top: 20px;">
+        <div class="display-word" id="wordDisplay"></div>
+        <div class="meaning" id="meaningDisplay"></div>
+        <div class="phonics-guide" id="phonicsDisplay"></div>
+    </div>
+
+    <!-- Phonics Chart -->
+    <div class="chart-box">
+        <h2 style="text-align: center;">Phonics ચાર્ટ</h2>
+        <table>
+    <thead>
+        <tr style="background-color: #2c3e50; color: white;">
+            <th>પ્રકાર</th>
+            <th>નિયમ</th>
+            <th>અવાજ</th>
+            <th>ઉદાહરણ</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="digraphs"><td>Digraphs</td><td>SH</td><td>શ</td><td>Ship</td></tr>
+        <tr class="digraphs"><td>Digraphs</td><td>CH</td><td>ચ</td><td>Chair</td></tr>
+        <tr class="digraphs"><td>Digraphs</td><td>TH</td><td>થ/ધ</td><td>Think / That</td></tr>
+        <tr class="digraphs"><td>Digraphs</td><td>PH</td><td>ફ</td><td>Phone</td></tr>
+        <tr class="digraphs"><td>Digraphs</td><td>WH</td><td>વ</td><td>What</td></tr>
+        <tr class="digraphs"><td>Digraphs</td><td>CK</td><td>ક</td><td>Duck</td></tr>
+        <tr class="digraphs"><td>Digraphs</td><td>NG</td><td>ંગ</td><td>King</td></tr>
+        <tr class="digraphs"><td>Digraphs</td><td>QU</td><td>ક્વ</td><td>Queen</td></tr>
+        
+        <tr class="vowel-teams"><td>Vowel Teams</td><td>EE</td><td>ઈ</td><td>Tree</td></tr>
+        <tr class="vowel-teams"><td>Vowel Teams</td><td>OO</td><td>ઉ</td><td>Book</td></tr>
+        <tr class="vowel-teams"><td>Vowel Teams</td><td>AI</td><td>એ</td><td>Rain</td></tr>
+        <tr class="vowel-teams"><td>Vowel Teams</td><td>OA</td><td>ઓ</td><td>Boat</td></tr>
+        <tr class="vowel-teams"><td>Vowel Teams</td><td>EA</td><td>ઈ</td><td>Leaf</td></tr>
+        <tr class="vowel-teams"><td>Vowel Teams</td><td>IGH</td><td>આઈ</td><td>High</td></tr>
+        <tr class="vowel-teams"><td>Vowel Teams</td><td>AY</td><td>એ</td><td>Play</td></tr>
+        <tr class="vowel-teams"><td>Vowel Teams</td><td>OY / OI</td><td>ઓય</td><td>Boy / Coin</td></tr>
+        <tr class="vowel-teams"><td>Vowel Teams</td><td>OU / OW</td><td>આઉ</td><td>Cloud / Cow</td></tr>
+        <tr class="vowel-teams"><td>Vowel Teams</td><td>AU / AW</td><td>ઓ</td><td>Autumn / Saw</td></tr>
+        <tr class="vowel-teams"><td>Vowel Teams</td><td>EW / UE</td><td>યૂ / ઊ</td><td>New / Blue</td></tr>
+        
+        <tr class="magic-e"><td>Magic E</td><td>A_E</td><td>એ</td><td>Make</td></tr>
+        <tr class="magic-e"><td>Magic E</td><td>I_E</td><td>આઈ</td><td>Like</td></tr>
+        <tr class="magic-e"><td>Magic E</td><td>O_E</td><td>ઓ</td><td>Home</td></tr>
+        <tr class="magic-e"><td>Magic E</td><td>U_E</td><td>યૂ</td><td>Cube</td></tr>
+        
+        <tr class="r-controlled"><td>R-Controlled</td><td>AR</td><td>આર</td><td>Star</td></tr>
+        <tr class="r-controlled"><td>R-Controlled</td><td>ER</td><td>અર</td><td>Flower</td></tr>
+        <tr class="r-controlled"><td>R-Controlled</td><td>OR</td><td>ઓર</td><td>Fork</td></tr>
+        <tr class="r-controlled"><td>R-Controlled</td><td>IR</td><td>અર</td><td>Bird</td></tr>
+        
+        <tr class="double-letters"><td>Double Letters</td><td>SS</td><td>સ</td><td>Glass</td></tr>
+        <tr class="double-letters"><td>Double Letters</td><td>LL</td><td>લ</td><td>Ball</td></tr>
+        <tr class="double-letters"><td>Double Letters</td><td>FF</td><td>ફ</td><td>Off</td></tr>
+        <tr class="double-letters"><td>Double Letters</td><td>ZZ</td><td>ઝ</td><td>Buzz</td></tr>
+        
+        <tr class="others"><td>Others & Silent</td><td>KN</td><td>ન</td><td>Know</td></tr>
+        <tr class="others"><td>Others & Silent</td><td>WR</td><td>ર</td><td>Write</td></tr>
+        <tr class="others"><td>Others & Silent</td><td>TION</td><td>શન</td><td>Action</td></tr>
+        <tr class="others"><td>Others & Silent</td><td>ED</td><td>ડ/ટ/ઈડ</td><td>Played</td></tr>
+        <tr class="others"><td>Others & Silent</td><td>MB</td><td>મ</td><td>Comb</td></tr>
+        <tr class="others"><td>Others & Silent</td><td>GN</td><td>ન</td><td>Sign</td></tr>
+        
+        <tr class="soft-hard"><td>Soft/Hard</td><td>C (e,i,y)</td><td>સ</td><td>City</td></tr>
+        <tr class="soft-hard"><td>Soft/Hard</td><td>C (others)</td><td>ક</td><td>Cat</td></tr>
+        <tr class="soft-hard"><td>Soft/Hard</td><td>G (e,i,y)</td><td>જ</td><td>Giant</td></tr>
+        <tr class="soft-hard"><td>Soft/Hard</td><td>G (others)</td><td>ગ</td><td>Goat</td></tr>
+    </tbody>
+</table>
+    </div>
+    <div style="font-size: 0.9em; margin-bottom: 10px; background: #f9f9f9; padding: 10px; border-radius: 8px; text-align: left;">
+        <strong>નોંધ:</strong> ઉપર આપેલા નિયમો અને ઉદાહરણો સામાન્ય રીતે અંગ્રેજી ભાષામાં જોવા મળે છે. કેટલાક શબ્દોમાં નિયમો લાગુ ન પડી શકે, તેથી દરેક શબ્દ માટે વ્યાકરણ અને ઉચ્ચારણની તપાસ કરવી જરૂરી છે.
+</div>
+
+<script>
+    const dictionary = {
+    // Digraphs (SH, CH, TH, PH, WH, CK)
+    "ship": "વહાણ", "fish": "માછલી", "shop": "દુકાન", "brush": "બ્રશ", "wash": "ધોવું",
+    "chair": "ખુરશી", "chat": "વાતચીત", "chin": "હડપચી", "bench": "બેન્ચ", "lunch": "બપોરનું ભોજન",
+    "think": "વિચારવું", "bath": "સ્નાન", "thin": "પાતળું", "with": "સાથે", "path": "રસ્તો",
+    "phone": "ફોન", "photo": "ફોટો", "graph": "આલેખ", "dolphin": "ડોલ્ફિન", "phase": "તબક્કો",
+    "what": "શું", "when": "ક્યારે", "where": "ક્યાં", "white": "સફેદ", "wheel": "પૈડું",
+    "duck": "બતક", "back": "પાછળ", "rock": "પથ્થર", "sick": "બીમાર", "lock": "તાળું",
+
+    // Vowel Teams (EE, OO, AI, OA, EA, IGH)
+    "tree": "ઝાડ", "feet": "પગ", "seed": "બીજ", "deep": "ઊંડું", "keep": "રાખવું",
+    "book": "પુસ્તક", "food": "ખોરાક", "cool": "ઠંડું", "moon": "ચંદ્ર", "pool": "તળાવ",
+    "rain": "વરસાદ", "wait": "રાહ જોવી", "paint": "રંગવું", "train": "ટ્રેન", "tail": "પૂંછડી",
+    "boat": "હોડી", "goat": "બકરી", "coat": "કોટ", "road": "રસ્તો", "soap": "સાબુ",
+    "leaf": "પાંદડું", "eat": "ખાવું", "team": "ટીમ", "read": "વાંચવું", "beach": "દરિયાકિનારો",
+    "high": "ઊંચું", "light": "પ્રકાશ", "night": "રાત", "bright": "તેજસ્વી", "fight": "લડવું",
+
+    // R-Controlled Vowels (AR, ER, OR, IR)
+    "star": "તારો", "car": "ગાડી", "farm": "ખેતર", "park": "બગીચો", "dark": "અંધારું",
+    "flower": "ફૂલ", "water": "પાણી", "mother": "માતા", "teacher": "શિક્ષક", "paper": "કાગળ",
+    "fork": "કાંટો", "born": "જન્મ", "corn": "મકાઈ", "sport": "રમત", "short": "ટુંકું",
+    "bird": "પક્ષી", "girl": "છોકરી", "dirt": "ધૂળ", "shirt": "શર્ટ", "first": "પહેલું",
+
+    // CVC Words (Basic)
+    "cat": "બિલાડી", "dog": "કૂતરો", "bat": "બેટ", "map": "નકશો", "sun": "સૂર્ય",
+    "pen": "પેન", "net": "જાળી", "box": "બોક્સ", "cup": "કપ", "pig": "ડુક્કર",
+
+    // Silent Letters (KN, WR, MB)
+    "know": "જાણવું", "knee": "ગોઠણ", "knife": "ચપ્પુ", "knock": "ખખડાવવું",
+    "write": "લખવું", "wrong": "ખોટું", "wrist": "કાંડું", "wrap": "પેક કરવું",
+    "lamb": "ઘેટાનું બચ્ચું", "comb": "કાંસકો", "thumb": "અંગૂઠો", "climb": "ચઢવું"
+};
+
+    const phonicRules = {
+        "sh": "શ", "ch": "ચ", "ph": "ફ", "th": "થ/ધ", "wh": "વ", 
+        "ck": "ક", "ee": "ઈ", "oo": "ઉ", "oa": "ઓ", 
+        "ai": "એ", "ar": "આર", "or": "ઓર", "er": "અર",
+        "igh": "આઈ", "tion": "શન"
+    };
+
+    function learnWord() {
+        const word = document.getElementById('wordInput').value.trim().toLowerCase();
+        if (!word) return;
+
+        let breakdown = word;
+        let rulesFound = [];
+
+        for(let rule in phonicRules) {
+            if(word.includes(rule)) {
+                breakdown = breakdown.replace(rule, "<span style='color:red; font-weight:bold;'>" + rule + "</span>");
+                rulesFound.push(rule + " (" + phonicRules[rule] + ")");
+            }
+        }
+        
+        document.getElementById('outputArea').style.display = 'block';
+        document.getElementById('wordDisplay').innerText = word.toUpperCase();
+        document.getElementById('meaningDisplay').innerText = dictionary[word] ? "અર્થ: " + dictionary[word] : "";
+        
+        let guideHtml = "ઉચ્ચાર નિયમ: " + breakdown + "<br>";
+        if(rulesFound.length > 0) {
+            guideHtml += "<small>મળેલા નિયમો: " + rulesFound.join(", ") + "</small>";
+        } else {
+            guideHtml += "<small>સામાન્ય શબ્દ</small>";
+        }
+        document.getElementById('phonicsDisplay').innerHTML = guideHtml;
+
+        const u = new SpeechSynthesisUtterance(word);
+        u.lang = 'en-US';
+        u.rate = document.getElementById('speedRange').value;
+        window.speechSynthesis.speak(u);
+    }
+
+    function clearAll() {
+        document.getElementById('wordInput').value = "";
+        document.getElementById('outputArea').style.display = 'none';
+    }
+    // આ ફંક્શન ડ્રોપડાઉનને ડિક્શનરી મુજબ ઓટોમેટિક અપડેટ કરશે
+function updateDropdown() {
+    const select = document.querySelector('select');
+    // જૂના ઓપ્શન્સ સાફ કરો (પહેલું ઓપ્શન રાખીને)
+    select.innerHTML = '<option value="">-- શબ્દ પસંદ કરો --</option>';
+    
+    // ડિક્શનરીમાંથી નવા ઓપ્શન્સ ઉમેરો
+    for (let word in dictionary) {
+        let option = document.createElement('option');
+        option.value = word;
+        option.text = word.charAt(0).toUpperCase() + word.slice(1);
+        select.appendChild(option);
+    }
+}
+
+// પેજ લોડ થાય ત્યારે ડ્રોપડાઉન બનાવી દો
+updateDropdown();
+</script>
+
+</body>
+</html>
