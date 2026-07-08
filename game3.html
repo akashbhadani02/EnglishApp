@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Topic-Based English Learning</title>
    <style>
-    /* ગ્લોબલ સ્ટાઈલ */
+    /* આ લાઈન ખાસ ઉમેરવી જેથી મોબાઈલ પર બધું બરાબર દેખાય */
+    html { font-size: 16px; } 
+
     body { 
         font-family: 'Segoe UI', Roboto, sans-serif; 
         text-align: center; 
@@ -14,49 +16,49 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 10px; /* નાની સ્ક્રીન માટે પેડિંગ */
+        padding: 15px;
     }
 
-    /* કન્ટેનર સ્ટાઈલ (Responsive) */
     .container { 
         background: white; 
-        padding: 30px; 
-        border-radius: 25px; 
-        box-shadow: 0 15px 35px rgba(0,0,0,0.2); 
+        padding: 25px; 
+        border-radius: 20px; 
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3); 
         width: 100%; 
-        max-width: 450px; /* મોટી સ્ક્રીન પર બહુ મોટી નહીં થાય */
-        box-sizing: border-box; /* પેડિંગને કારણે પહોળાઈ ન વધે તે માટે */
+        max-width: 500px;
     }
 
-    /* હેડિંગ રિસ્પોન્સિવ */
-    h1 { font-size: 1.5rem; color: #333; margin-bottom: 20px; }
+    h1 { 
+        font-size: 1.8rem; /* થોડું મોટું હેડિંગ */
+        color: #333; 
+        margin-bottom: 20px; 
+    }
 
-    /* બટન સ્ટાઈલ */
     .btn { 
         display: block; 
         width: 100%; 
-        padding: 14px; 
-        margin: 10px 0; 
+        padding: 18px; /* બટનને ઊંચાઈ આપી */
+        margin: 12px 0; 
         border: none; 
         background: #4e54c8; 
         color: white; 
-        border-radius: 12px; 
+        border-radius: 15px; 
         cursor: pointer; 
-        font-size: 1rem; 
+        font-size: 1.1rem; /* ફોન્ટ સાઈઝ મોટી કરી */
         font-weight: 600;
-        transition: all 0.3s ease;
+        box-sizing: border-box; /* જેથી બટન સ્ક્રીન બહાર ન જાય */
     }
 
-    .btn:hover { background: #8f94fb; transform: translateY(-2px); }
+    .topic-btn { 
+        background: #f8f9fa; 
+        color: #4e54c8; 
+        border: 2px solid #4e54c8;
+    }
 
-    .topic-btn { background: #f8f9fa; color: #4e54c8; border: 2px solid #4e54c8; }
-    .topic-btn:hover { background: #4e54c8; color: white; }
-
-    /* ટેબ્લેટ અને મોબાઈલ માટે રિસ્પોન્સિવ ટ્વીક્સ */
-    @media (max-width: 480px) {
-        .container { padding: 20px; }
-        h1 { font-size: 1.2rem; }
-        .btn { padding: 12px; font-size: 0.9rem; }
+    /* મોબાઈલ માટે ખાસ સેટિંગ્સ */
+    @media (max-width: 600px) {
+        html { font-size: 18px; } /* બેઝ ફોન્ટ વધાર્યો */
+        .btn { padding: 20px; font-size: 1.2rem; } /* મોબાઈલ પર બટન વધુ મોટા */
     }
 </style>
 </head>
