@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Object Speak Learning</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#4facfe,#00f2fe);
+    min-height:100vh;
+    padding:20px;
+}
+
+h1{
+    color:#fff;
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
+    max-width:1100px;
+    margin:auto;
+}
+
+.item{
+    background:#fff;
+    border-radius:20px;
+    padding:20px;
+    text-align:center;
+    cursor:pointer;
+    transition:.25s;
+    user-select:none;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+
+.item:hover{
+    transform:translateY(-8px);
+}
+
+.item:active{
+    transform:scale(.95);
+}
+
+.item img{
+    width:120px;
+    height:120px;
+    object-fit:contain;
+}
+
+.name{
+    margin-top:15px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.info{
+    text-align:center;
+    color:white;
+    margin-bottom:25px;
+    font-size:18px;
+}
+
+#status{
+    margin-top:20px;
+    text-align:center;
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<h1>📚 Speak Object Name</h1>
+
+<div class="info">
+Desktop: Hover the object 🖱️<br>
+Mobile: Tap the object 👆
+</div>
+
+<div class="container">
+
+<!-- ========== PART 1 (Items 1-25) ========== -->
+
+<div class="item" data-name="Apple">
+<img src="https://img.icons8.com/color/96/apple.png">
+<div class="name">Apple</div>
+</div>
+
+<div class="item" data-name="Banana">
+<img src="https://img.icons8.com/color/96/banana.png">
+<div class="name">Banana</div>
+</div>
+
+<div class="item" data-name="Orange">
+<img src="https://img.icons8.com/color/96/orange.png">
+<div class="name">Orange</div>
+</div>
+
+<div class="item" data-name="Grapes">
+<img src="https://img.icons8.com/color/96/grapes.png">
+<div class="name">Grapes</div>
+</div>
+
+<div class="item" data-name="Strawberry">
+<img src="https://img.icons8.com/color/96/strawberry.png">
+<div class="name">Strawberry</div>
+</div>
+
+<div class="item" data-name="Watermelon">
+<img src="https://img.icons8.com/color/96/watermelon.png">
+<div class="name">Watermelon</div>
+</div>
+
+<div class="item" data-name="Pineapple">
+<img src="https://img.icons8.com/color/96/pineapple.png">
+<div class="name">Pineapple</div>
+</div>
+
+<div class="item" data-name="Cherry">
+<img src="https://img.icons8.com/color/96/cherry.png">
+<div class="name">Cherry</div>
+</div>
+
+<div class="item" data-name="Pear">
+<img src="https://img.icons8.com/color/96/pear.png">
+<div class="name">Pear</div>
+</div>
+
+<div class="item" data-name="Dog">
+<img src="https://img.icons8.com/color/96/dog.png">
+<div class="name">Dog</div>
+</div>
+
+<div class="item" data-name="Cat">
+<img src="https://img.icons8.com/color/96/cat.png">
+<div class="name">Cat</div>
+</div>
+
+<div class="item" data-name="Lion">
+<img src="https://img.icons8.com/color/96/lion.png">
+<div class="name">Lion</div>
+</div>
+
+<div class="item" data-name="Elephant">
+<img src="https://img.icons8.com/color/96/elephant.png">
+<div class="name">Elephant</div>
+</div>
+
+<div class="item" data-name="Rabbit">
+<img src="https://img.icons8.com/color/96/rabbit.png">
+<div class="name">Rabbit</div>
+</div>
+
+<div class="item" data-name="Horse">
+<img src="https://img.icons8.com/color/96/horse.png">
+<div class="name">Horse</div>
+</div>
+
+<div class="item" data-name="Cow">
+<img src="https://img.icons8.com/color/96/cow.png">
+<div class="name">Cow</div>
+</div>
+
+<div class="item" data-name="Sheep">
+<img src="https://img.icons8.com/color/96/sheep.png">
+<div class="name">Sheep</div>
+</div>
+
+<div class="item" data-name="Pig">
+<img src="https://img.icons8.com/color/96/pig.png">
+<div class="name">Pig</div>
+</div>
+
+<div class="item" data-name="Bird">
+<img src="https://img.icons8.com/color/96/bird.png">
+<div class="name">Bird</div>
+</div>
+
+<div class="item" data-name="Fish">
+<img src="https://img.icons8.com/color/96/fish.png">
+<div class="name">Fish</div>
+</div>
+
+<div class="item" data-name="Duck">
+<img src="https://img.icons8.com/color/96/duck.png">
+<div class="name">Duck</div>
+</div>
+
+<div class="item" data-name="Chicken">
+<img src="https://img.icons8.com/color/96/chicken.png">
+<div class="name">Chicken</div>
+</div>
+<!-- ========== PART 2 (Items 26–50) ========== -->
+
+<div class="item" data-name="Car">
+<img src="https://img.icons8.com/color/96/car.png">
+<div class="name">Car</div>
+</div>
+
+<div class="item" data-name="Bus">
+<img src="https://img.icons8.com/color/96/bus.png">
+<div class="name">Bus</div>
+</div>
+
+<div class="item" data-name="Truck">
+<img src="https://img.icons8.com/color/96/truck.png">
+<div class="name">Truck</div>
+</div>
+
+<div class="item" data-name="Bicycle">
+<img src="https://img.icons8.com/color/96/bicycle.png">
+<div class="name">Bicycle</div>
+</div>
+
+<div class="item" data-name="Motorcycle">
+<img src="https://img.icons8.com/color/96/motorcycle.png">
+<div class="name">Motorcycle</div>
+</div>
+
+<div class="item" data-name="Airplane">
+<img src="https://img.icons8.com/color/96/airplane-take-off.png">
+<div class="name">Airplane</div>
+</div>
+
+<div class="item" data-name="Helicopter">
+<img src="https://img.icons8.com/color/96/helicopter.png">
+<div class="name">Helicopter</div>
+</div>
+
+<div class="item" data-name="Train">
+<img src="https://img.icons8.com/color/96/train.png">
+<div class="name">Train</div>
+</div>
+
+<div class="item" data-name="Rocket">
+<img src="https://img.icons8.com/color/96/rocket.png">
+<div class="name">Rocket</div>
+</div>
+
+<div class="item" data-name="Book">
+<img src="https://img.icons8.com/color/96/book.png">
+<div class="name">Book</div>
+</div>
+
+<div class="item" data-name="Pencil">
+<img src="https://img.icons8.com/color/96/pencil.png">
+<div class="name">Pencil</div>
+</div>
+
+<div class="item" data-name="Pen">
+<img src="https://img.icons8.com/color/96/pen.png">
+<div class="name">Pen</div>
+</div>
+
+<div class="item" data-name="Eraser">
+<img src="https://img.icons8.com/color/96/eraser.png">
+<div class="name">Eraser</div>
+</div>
+
+<div class="item" data-name="Ruler">
+<img src="https://img.icons8.com/color/96/ruler.png">
+<div class="name">Ruler</div>
+</div>
+
+<div class="item" data-name="Scissors">
+<img src="https://img.icons8.com/color/96/scissors.png">
+<div class="name">Scissors</div>
+</div>
+
+<div class="item" data-name="Backpack">
+<img src="https://img.icons8.com/color/96/backpack.png">
+<div class="name">Backpack</div>
+</div>
+
+<div class="item" data-name="School">
+<img src="https://img.icons8.com/color/96/school.png">
+<div class="name">School</div>
+</div>
+
+<div class="item" data-name="Computer">
+<img src="https://img.icons8.com/color/96/computer.png">
+<div class="name">Computer</div>
+</div>
+
+<div class="item" data-name="Laptop">
+<img src="https://img.icons8.com/color/96/laptop.png">
+<div class="name">Laptop</div>
+</div>
+
+<div class="item" data-name="Keyboard">
+<img src="https://img.icons8.com/color/96/keyboard.png">
+<div class="name">Keyboard</div>
+</div>
+
+<div class="item" data-name="Mouse">
+<img src="https://img.icons8.com/color/96/mouse.png">
+<div class="name">Mouse</div>
+</div>
+
+<div class="item" data-name="Camera">
+<img src="https://img.icons8.com/color/96/camera.png">
+<div class="name">Camera</div>
+</div>
+<!-- ========== PART 3 (Items 51–75) ========== -->
+
+<div class="item" data-name="House">
+<img src="https://img.icons8.com/color/96/home.png">
+<div class="name">House</div>
+</div>
+
+<div class="item" data-name="Building">
+<img src="https://img.icons8.com/color/96/city-buildings.png">
+<div class="name">Building</div>
+</div>
+
+<div class="item" data-name="Hospital">
+<img src="https://img.icons8.com/color/96/hospital-3.png">
+<div class="name">Hospital</div>
+</div>
+
+<div class="item" data-name="Bank">
+<img src="https://img.icons8.com/color/96/bank-building.png">
+<div class="name">Bank</div>
+</div>
+
+<div class="item" data-name="Store">
+<img src="https://img.icons8.com/color/96/shop.png">
+<div class="name">Store</div>
+</div>
+
+<div class="item" data-name="Flower">
+<img src="https://img.icons8.com/color/96/flower.png">
+<div class="name">Flower</div>
+</div>
+
+<div class="item" data-name="Leaf">
+<img src="https://img.icons8.com/color/96/leaf.png">
+<div class="name">Leaf</div>
+</div>
+
+<div class="item" data-name="Grass">
+<img src="https://img.icons8.com/color/96/grass.png">
+<div class="name">Grass</div>
+</div>
+
+<div class="item" data-name="Mountain">
+<img src="https://img.icons8.com/color/96/mountain.png">
+<div class="name">Mountain</div>
+</div>
+
+<div class="item" data-name="Beach">
+<img src="https://img.icons8.com/color/96/beach.png">
+<div class="name">Beach</div>
+</div>
+
+<div class="item" data-name="Sun">
+<img src="https://img.icons8.com/color/96/sun.png">
+<div class="name">Sun</div>
+</div>
+
+<div class="item" data-name="Moon">
+<img src="https://img.icons8.com/color/96/full-moon.png">
+<div class="name">Moon</div>
+</div>
+
+<div class="item" data-name="Star">
+<img src="https://img.icons8.com/color/96/star.png">
+<div class="name">Star</div>
+</div>
+
+<div class="item" data-name="Cloud">
+<img src="https://img.icons8.com/color/96/cloud.png">
+<div class="name">Cloud</div>
+</div>
+
+<div class="item" data-name="Rain">
+<img src="https://img.icons8.com/color/96/rain.png">
+<div class="name">Rain</div>
+</div>
+
+<div class="item" data-name="Snow">
+<img src="https://img.icons8.com/color/96/snow.png">
+<div class="name">Snow</div>
+</div>
+
+<div class="item" data-name="Rainbow">
+<img src="https://img.icons8.com/color/96/rainbow.png">
+<div class="name">Rainbow</div>
+</div>
+
+<div class="item" data-name="Fire">
+<img src="https://img.icons8.com/color/96/fire-element.png">
+<div class="name">Fire</div>
+</div>
+
+<div class="item" data-name="Water">
+<img src="https://img.icons8.com/color/96/water.png">
+<div class="name">Water</div>
+</div>
+
+<div class="item" data-name="Ball">
+<img src="https://img.icons8.com/color/96/football2.png">
+<div class="name">Ball</div>
+</div>
+
+<div class="item" data-name="Gift">
+<img src="https://img.icons8.com/color/96/gift.png">
+<div class="name">Gift</div>
+</div>
+
+<div class="item" data-name="Clock">
+<img src="https://img.icons8.com/color/96/clock.png">
+<div class="name">Clock</div>
+</div>
+
+<div class="item" data-name="Key">
+<img src="https://img.icons8.com/color/96/key.png">
+<div class="name">Key</div>
+</div>
+<!-- ========== PART 4 (Items 76–100) ========== -->
+
+<div class="item" data-name="Lock">
+<img src="https://img.icons8.com/color/96/lock.png">
+<div class="name">Lock</div>
+</div>
+
+<div class="item" data-name="Phone">
+<img src="https://img.icons8.com/color/96/iphone.png">
+<div class="name">Phone</div>
+</div>
+
+<div class="item" data-name="Television">
+<img src="https://img.icons8.com/color/96/tv.png">
+<div class="name">Television</div>
+</div>
+
+<div class="item" data-name="Radio">
+<img src="https://img.icons8.com/color/96/radio.png">
+<div class="name">Radio</div>
+</div>
+
+<div class="item" data-name="Headphones">
+<img src="https://img.icons8.com/color/96/headphones.png">
+<div class="name">Headphones</div>
+</div>
+
+<div class="item" data-name="Speaker">
+<img src="https://img.icons8.com/color/96/speaker.png">
+<div class="name">Speaker</div>
+</div>
+
+<div class="item" data-name="Microphone">
+<img src="https://img.icons8.com/color/96/microphone.png">
+<div class="name">Microphone</div>
+</div>
+
+<div class="item" data-name="Light Bulb">
+<img src="https://img.icons8.com/color/96/light-on.png">
+<div class="name">Light Bulb</div>
+</div>
+
+<div class="item" data-name="Umbrella">
+<img src="https://img.icons8.com/color/96/umbrella.png">
+<div class="name">Umbrella</div>
+</div>
+
+<div class="item" data-name="Shirt">
+<img src="https://img.icons8.com/color/96/t-shirt.png">
+<div class="name">Shirt</div>
+</div>
+
+<div class="item" data-name="Pants">
+<img src="https://img.icons8.com/color/96/trousers.png">
+<div class="name">Pants</div>
+</div>
+
+<div class="item" data-name="Shoes">
+<img src="https://img.icons8.com/color/96/trainers.png">
+<div class="name">Shoes</div>
+</div>
+
+<div class="item" data-name="Socks">
+<img src="https://img.icons8.com/color/96/socks.png">
+<div class="name">Socks</div>
+</div>
+
+<div class="item" data-name="Watch">
+<img src="https://img.icons8.com/color/96/apple-watch.png">
+<div class="name">Watch</div>
+</div>
+
+<div class="item" data-name="Pizza">
+<img src="https://img.icons8.com/color/96/pizza.png">
+<div class="name">Pizza</div>
+</div>
+
+<div class="item" data-name="Hamburger">
+<img src="https://img.icons8.com/color/96/hamburger.png">
+<div class="name">Hamburger</div>
+</div>
+
+<div class="item" data-name="Ice Cream">
+<img src="https://img.icons8.com/color/96/ice-cream-cone.png">
+<div class="name">Ice Cream</div>
+</div>
+
+<div class="item" data-name="Cake">
+<img src="https://img.icons8.com/color/96/birthday-cake.png">
+<div class="name">Cake</div>
+</div>
+
+<div class="item" data-name="Coffee">
+<img src="https://img.icons8.com/color/96/coffee-to-go.png">
+<div class="name">Coffee</div>
+</div>
+
+<div class="item" data-name="Milk">
+<img src="https://img.icons8.com/color/96/milk-bottle.png">
+<div class="name">Milk</div>
+</div>
+
+<div class="item" data-name="Egg">
+<img src="https://img.icons8.com/color/96/egg.png">
+<div class="name">Egg</div>
+</div>
+<div class="item" data-name="Mango">
+<img src="https://img.icons8.com/color/96/mango.png">
+<div class="name">Mango</div>
+</div>
+
+<div class="item" data-name="Kiwi">
+<img src="https://img.icons8.com/color/96/kiwi.png">
+<div class="name">Kiwi</div>
+</div>
+
+<div class="item" data-name="Peach">
+<img src="https://img.icons8.com/color/96/peach.png">
+<div class="name">Peach</div>
+</div>
+
+<div class="item" data-name="Coconut">
+<img src="https://img.icons8.com/color/96/coconut.png">
+<div class="name">Coconut</div>
+</div>
+
+<div class="item" data-name="Avocado">
+<img src="https://img.icons8.com/color/96/avocado.png">
+<div class="name">Avocado</div>
+</div>
+
+<div class="item" data-name="Tomato">
+<img src="https://img.icons8.com/color/96/tomato.png">
+<div class="name">Tomato</div>
+</div>
+
+<div class="item" data-name="Potato">
+<img src="https://img.icons8.com/color/96/potato.png">
+<div class="name">Potato</div>
+</div>
+
+<div class="item" data-name="Corn">
+<img src="https://img.icons8.com/color/96/corn.png">
+<div class="name">Corn</div>
+</div>
+
+<div class="item" data-name="Carrot">
+<img src="https://img.icons8.com/color/96/carrot.png">
+<div class="name">Carrot</div>
+</div>
+
+<div class="item" data-name="Broccoli">
+<img src="https://img.icons8.com/color/96/broccoli.png">
+<div class="name">Broccoli</div>
+</div>
+
+<div class="item" data-name="Onion">
+<img src="https://img.icons8.com/color/96/onion.png">
+<div class="name">Onion</div>
+</div>
+
+<div class="item" data-name="Garlic">
+<img src="https://img.icons8.com/color/96/garlic.png">
+<div class="name">Garlic</div>
+</div>
+
+<div class="item" data-name="Cucumber">
+<img src="https://img.icons8.com/color/96/cucumber.png">
+<div class="name">Cucumber</div>
+</div>
+
+<div class="item" data-name="Pumpkin">
+<img src="https://img.icons8.com/color/96/pumpkin.png">
+<div class="name">Pumpkin</div>
+</div>
+
+<div class="item" data-name="Mushroom">
+<img src="https://img.icons8.com/color/96/mushroom.png">
+<div class="name">Mushroom</div>
+</div>
+
+<div class="item" data-name="Pepper">
+<img src="https://img.icons8.com/color/96/chili-pepper.png">
+<div class="name">Pepper</div>
+</div>
+
+<div class="item" data-name="Peas">
+<img src="https://img.icons8.com/color/96/peas.png">
+<div class="name">Peas</div>
+</div>
+
+<div class="item" data-name="Cabbage">
+<img src="https://img.icons8.com/color/96/cabbage.png">
+<div class="name">Cabbage</div>
+</div>
+
+<div class="item" data-name="Cauliflower">
+<img src="https://img.icons8.com/color/96/cauliflower.png">
+<div class="name">Cauliflower</div>
+</div>
+
+<div class="item" data-name="Spinach">
+<img src="https://img.icons8.com/color/96/spinach.png">
+<div class="name">Spinach</div>
+</div>
+
+<div class="item" data-name="Bottle">
+<img src="https://img.icons8.com/color/96/water-bottle.png">
+<div class="name">Bottle</div>
+</div>
+
+<div class="item" data-name="Cup">
+<img src="https://img.icons8.com/color/96/cup.png">
+<div class="name">Cup</div>
+</div>
+
+<div class="item" data-name="Glass">
+<img src="https://img.icons8.com/color/96/wine-glass.png">
+<div class="name">Glass</div>
+</div>
+
+<div class="item" data-name="Plate">
+<img src="https://img.icons8.com/color/96/plate.png">
+<div class="name">Plate</div>
+</div>
+
+<div class="item" data-name="Spoon">
+<img src="https://img.icons8.com/color/96/spoon.png">
+<div class="name">Spoon</div>
+</div>
+
+<div class="item" data-name="Fork">
+<img src="https://img.icons8.com/color/96/fork.png">
+<div class="name">Fork</div>
+</div>
+
+<div class="item" data-name="Chair">
+<img src="https://img.icons8.com/color/96/chair.png">
+<div class="name">Chair</div>
+</div>
+
+<div class="item" data-name="Table">
+<img src="https://img.icons8.com/color/96/table.png">
+<div class="name">Table</div>
+</div>
+
+<div class="item" data-name="Bed">
+<img src="https://img.icons8.com/color/96/bed.png">
+<div class="name">Bed</div>
+</div>
+
+<div class="item" data-name="Sofa">
+<img src="https://img.icons8.com/color/96/sofa.png">
+<div class="name">Sofa</div>
+</div>
+
+<div class="item" data-name="Door">
+<img src="https://img.icons8.com/color/96/door.png">
+<div class="name">Door</div>
+</div>
+
+<div class="item" data-name="Mirror">
+<img src="https://img.icons8.com/color/96/mirror.png">
+<div class="name">Mirror</div>
+</div>
+
+<div class="item" data-name="Fan">
+<img src="https://img.icons8.com/color/96/fan.png">
+<div class="name">Fan</div>
+</div>
+
+<div class="item" data-name="Clock">
+<img src="https://img.icons8.com/color/96/clock.png">
+<div class="name">Clock</div>
+</div>
+
+<div class="item" data-name="Toothbrush">
+<img src="https://img.icons8.com/color/96/toothbrush.png">
+<div class="name">Toothbrush</div>
+</div>
+
+<div class="item" data-name="Toothpaste">
+<img src="https://img.icons8.com/color/96/toothpaste.png">
+<div class="name">Toothpaste</div>
+</div>
+
+<div class="item" data-name="Soap">
+<img src="https://img.icons8.com/color/96/soap.png">
+<div class="name">Soap</div>
+</div>
+
+<div class="item" data-name="Shampoo">
+<img src="https://img.icons8.com/color/96/shampoo.png">
+<div class="name">Shampoo</div>
+</div>
+
+<div class="item" data-name="Towel">
+<img src="https://img.icons8.com/color/96/towel.png">
+<div class="name">Towel</div>
+</div>
+
+<div class="item" data-name="Comb">
+<img src="https://img.icons8.com/color/96/comb.png">
+<div class="name">Comb</div>
+</div>
+
+<div class="item" data-name="Basket">
+<img src="https://img.icons8.com/color/96/shopping-basket.png">
+<div class="name">Basket</div>
+</div>
+
+<div class="item" data-name="Kite">
+<img src="https://img.icons8.com/color/96/kite.png">
+<div class="name">Kite</div>
+</div>
+
+<div class="item" data-name="Guitar">
+<img src="https://img.icons8.com/color/96/guitar.png">
+<div class="name">Guitar</div>
+</div>
+
+<div class="item" data-name="Piano">
+<img src="https://img.icons8.com/color/96/piano.png">
+<div class="name">Piano</div>
+</div>
+
+<div class="item" data-name="Violin">
+<img src="https://img.icons8.com/color/96/violin.png">
+<div class="name">Violin</div>
+</div>
+
+<div class="item" data-name="Bell">
+<img src="https://img.icons8.com/color/96/bell.png">
+<div class="name">Bell</div>
+</div>
+
+<div class="item" data-name="Gift Box">
+<img src="https://img.icons8.com/color/96/gift.png">
+<div class="name">Gift Box</div>
+</div>
+
+<div class="item" data-name="Dice">
+<img src="https://img.icons8.com/color/96/dice.png">
+<div class="name">Dice</div>
+</div>
+
+<div class="item" data-name="Robot">
+<img src="https://img.icons8.com/color/96/robot-2.png">
+<div class="name">Robot</div>
+</div>
+
+<div class="item" data-name="Robot Head">
+<img src="https://img.icons8.com/color/96/robot.png">
+<div class="name">Robot Head</div>
+</div>
+
+<div class="item" data-name="Treasure">
+<img src="https://img.icons8.com/color/96/treasure-chest.png">
+<div class="name">Treasure</div>
+</div>
+
+<div class="item" data-name="Compass">
+<img src="https://img.icons8.com/color/96/compass.png">
+<div class="name">Compass</div>
+</div>
+
+<div class="item" data-name="Map">
+<img src="https://img.icons8.com/color/96/treasure-map.png">
+<div class="name">Map</div>
+</div>
+<div class="item" data-name="Anchor">
+<img src="https://img.icons8.com/color/96/anchor.png">
+<div class="name">Anchor</div>
+</div>
+
+<div class="item" data-name="Hammer">
+<img src="https://img.icons8.com/color/96/hammer.png">
+<div class="name">Hammer</div>
+</div>
+
+<div class="item" data-name="Wrench">
+<img src="https://img.icons8.com/color/96/wrench.png">
+<div class="name">Wrench</div>
+</div>
+
+<div class="item" data-name="Screwdriver">
+<img src="https://img.icons8.com/color/96/screwdriver.png">
+<div class="name">Screwdriver</div>
+</div>
+
+<div class="item" data-name="Paint Brush">
+<img src="https://img.icons8.com/color/96/paint-brush.png">
+<div class="name">Paint Brush</div>
+</div>
+
+<div class="item" data-name="Paint Bucket">
+<img src="https://img.icons8.com/color/96/paint-bucket.png">
+<div class="name">Paint Bucket</div>
+</div>
+
+<div class="item" data-name="Palette">
+<img src="https://img.icons8.com/color/96/paint-palette.png">
+<div class="name">Palette</div>
+</div>
+
+<div class="item" data-name="Calculator">
+<img src="https://img.icons8.com/color/96/calculator.png">
+<div class="name">Calculator</div>
+</div>
+
+<div class="item" data-name="Calendar">
+<img src="https://img.icons8.com/color/96/calendar.png">
+<div class="name">Calendar</div>
+</div>
+
+<div class="item" data-name="Clipboard">
+<img src="https://img.icons8.com/color/96/clipboard.png">
+<div class="name">Clipboard</div>
+</div>
+
+<div class="item" data-name="Folder">
+<img src="https://img.icons8.com/color/96/folder-invoices.png">
+<div class="name">Folder</div>
+</div>
+
+<div class="item" data-name="File">
+<img src="https://img.icons8.com/color/96/document.png">
+<div class="name">File</div>
+</div>
+
+<div class="item" data-name="Envelope">
+<img src="https://img.icons8.com/color/96/new-post.png">
+<div class="name">Envelope</div>
+</div>
+
+<div class="item" data-name="Magnifying Glass">
+<img src="https://img.icons8.com/color/96/search.png">
+<div class="name">Magnifying Glass</div>
+</div>
+
+<div class="item" data-name="Binoculars">
+<img src="https://img.icons8.com/color/96/binoculars.png">
+<div class="name">Binoculars</div>
+</div>
+
+<div class="item" data-name="Globe">
+<img src="https://img.icons8.com/color/96/globe-earth.png">
+<div class="name">Globe</div>
+</div>
+
+<div class="item" data-name="Flag">
+<img src="https://img.icons8.com/color/96/flag.png">
+<div class="name">Flag</div>
+</div>
+
+<div class="item" data-name="Tent">
+<img src="https://img.icons8.com/color/96/tent.png">
+<div class="name">Tent</div>
+</div>
+
+<div class="item" data-name="Volcano">
+<img src="https://img.icons8.com/color/96/volcano.png">
+<div class="name">Volcano</div>
+</div>
+
+<div class="item" data-name="Island">
+<img src="https://img.icons8.com/color/96/island-on-water.png">
+<div class="name">Island</div>
+</div>
+
+<div class="item" data-name="Bridge">
+<img src="https://img.icons8.com/color/96/bridge.png">
+<div class="name">Bridge</div>
+</div>
+
+<div class="item" data-name="Castle">
+<img src="https://img.icons8.com/color/96/castle.png">
+<div class="name">Castle</div>
+</div>
+
+<div class="item" data-name="Crown">
+<img src="https://img.icons8.com/color/96/crown.png">
+<div class="name">Crown</div>
+</div>
+
+<div class="item" data-name="Diamond">
+<img src="https://img.icons8.com/color/96/diamond.png">
+<div class="name">Diamond</div>
+</div>
+
+<div class="item" data-name="Coin">
+<img src="https://img.icons8.com/color/96/coins.png">
+<div class="name">Coin</div>
+</div>
+
+<div class="item" data-name="Money Bag">
+<img src="https://img.icons8.com/color/96/money-bag.png">
+<div class="name">Money Bag</div>
+</div>
+
+<div class="item" data-name="Safe">
+<img src="https://img.icons8.com/color/96/safe.png">
+<div class="name">Safe</div>
+</div>
+
+<div class="item" data-name="Shopping Cart">
+<img src="https://img.icons8.com/color/96/shopping-cart.png">
+<div class="name">Shopping Cart</div>
+</div>
+
+<div class="item" data-name="Shopping Bag">
+<img src="https://img.icons8.com/color/96/shopping-bag.png">
+<div class="name">Shopping Bag</div>
+</div>
+
+<div class="item" data-name="Gift Card">
+<img src="https://img.icons8.com/color/96/gift-card.png">
+<div class="name">Gift Card</div>
+</div>
+
+<div class="item" data-name="Cookie">
+<img src="https://img.icons8.com/color/96/cookie.png">
+<div class="name">Cookie</div>
+</div>
+
+<div class="item" data-name="Donut">
+<img src="https://img.icons8.com/color/96/doughnut.png">
+<div class="name">Donut</div>
+</div>
+
+<div class="item" data-name="Bread">
+<img src="https://img.icons8.com/color/96/bread.png">
+<div class="name">Bread</div>
+</div>
+
+<div class="item" data-name="Cheese">
+<img src="https://img.icons8.com/color/96/cheese.png">
+<div class="name">Cheese</div>
+</div>
+
+<div class="item" data-name="Hot Dog">
+<img src="https://img.icons8.com/color/96/hot-dog.png">
+<div class="name">Hot Dog</div>
+</div>
+
+<div class="item" data-name="French Fries">
+<img src="https://img.icons8.com/color/96/french-fries.png">
+<div class="name">French Fries</div>
+</div>
+
+<div class="item" data-name="Sandwich">
+<img src="https://img.icons8.com/color/96/sandwich.png">
+<div class="name">Sandwich</div>
+</div>
+
+<div class="item" data-name="Taco">
+<img src="https://img.icons8.com/color/96/taco.png">
+<div class="name">Taco</div>
+</div>
+<div class="item" data-name="Stethoscope">
+<img src="https://img.icons8.com/color/96/stethoscope.png">
+<div class="name">Stethoscope</div>
+</div>
+
+<div class="item" data-name="Syringe">
+<img src="https://img.icons8.com/color/96/syringe.png">
+<div class="name">Syringe</div>
+</div>
+
+<div class="item" data-name="Pill">
+<img src="https://img.icons8.com/color/96/pill.png">
+<div class="name">Pill</div>
+</div>
+
+<div class="item" data-name="Bandage">
+<img src="https://img.icons8.com/color/96/bandage.png">
+<div class="name">Bandage</div>
+</div>
+
+<div class="item" data-name="Thermometer">
+<img src="https://img.icons8.com/color/96/thermometer.png">
+<div class="name">Thermometer</div>
+</div>
+
+<div class="item" data-name="Mask">
+<img src="https://img.icons8.com/color/96/protection-mask.png">
+<div class="name">Mask</div>
+</div>
+
+<div class="item" data-name="Wheelchair">
+<img src="https://img.icons8.com/color/96/wheelchair.png">
+<div class="name">Wheelchair</div>
+</div>
+
+<div class="item" data-name="Basketball">
+<img src="https://img.icons8.com/color/96/basketball.png">
+<div class="name">Basketball</div>
+</div>
+
+<div class="item" data-name="Volleyball">
+<img src="https://img.icons8.com/color/96/volleyball.png">
+<div class="name">Volleyball</div>
+</div>
+
+<div class="item" data-name="Tennis Ball">
+<img src="https://img.icons8.com/color/96/tennis-ball.png">
+<div class="name">Tennis Ball</div>
+</div>
+
+<div class="item" data-name="Baseball">
+<img src="https://img.icons8.com/color/96/baseball.png">
+<div class="name">Baseball</div>
+</div>
+
+<div class="item" data-name="Cricket Bat">
+<img src="https://img.icons8.com/color/96/cricket.png">
+<div class="name">Cricket Bat</div>
+</div>
+
+<div class="item" data-name="Football">
+<img src="https://img.icons8.com/color/96/american-football.png">
+<div class="name">Football</div>
+</div>
+
+<div class="item" data-name="Trophy">
+<img src="https://img.icons8.com/color/96/trophy.png">
+<div class="name">Trophy</div>
+</div>
+
+<div class="item" data-name="Medal">
+<img src="https://img.icons8.com/color/96/medal.png">
+<div class="name">Medal</div>
+</div>
+
+<div class="item" data-name="Whistle">
+<img src="https://img.icons8.com/color/96/whistle.png">
+<div class="name">Whistle</div>
+</div>
+
+<div class="item" data-name="Backpack">
+<img src="https://img.icons8.com/color/96/backpack.png">
+<div class="name">Backpack</div>
+</div>
+
+<div class="item" data-name="Suitcase">
+<img src="https://img.icons8.com/color/96/suitcase.png">
+<div class="name">Suitcase</div>
+</div>
+
+<div class="item" data-name="Wallet">
+<img src="https://img.icons8.com/color/96/wallet.png">
+<div class="name">Wallet</div>
+</div>
+
+<div class="item" data-name="Passport">
+<img src="https://img.icons8.com/color/96/passport.png">
+<div class="name">Passport</div>
+</div>
+
+<div class="item" data-name="Ticket">
+<img src="https://img.icons8.com/color/96/ticket.png">
+<div class="name">Ticket</div>
+</div>
+
+<div class="item" data-name="Map Pin">
+<img src="https://img.icons8.com/color/96/marker.png">
+<div class="name">Map Pin</div>
+</div>
+
+<div class="item" data-name="Traffic Light">
+<img src="https://img.icons8.com/color/96/traffic-light.png">
+<div class="name">Traffic Light</div>
+</div>
+
+<div class="item" data-name="Stop Sign">
+<img src="https://img.icons8.com/color/96/stop-sign.png">
+<div class="name">Stop Sign</div>
+</div>
+
+<div class="item" data-name="Broom">
+<img src="https://img.icons8.com/color/96/broom.png">
+<div class="name">Broom</div>
+</div>
+
+<div class="item" data-name="Vacuum Cleaner">
+<img src="https://img.icons8.com/color/96/vacuum-cleaner.png">
+<div class="name">Vacuum Cleaner</div>
+</div>
+
+<div class="item" data-name="Washing Machine">
+<img src="https://img.icons8.com/color/96/washing-machine.png">
+<div class="name">Washing Machine</div>
+</div>
+
+<div class="item" data-name="Refrigerator">
+<img src="https://img.icons8.com/color/96/fridge.png">
+<div class="name">Refrigerator</div>
+</div>
+
+<div class="item" data-name="Microwave">
+<img src="https://img.icons8.com/color/96/microwave.png">
+<div class="name">Microwave</div>
+</div>
+
+<div class="item" data-name="Toaster">
+<img src="https://img.icons8.com/color/96/toaster.png">
+<div class="name">Toaster</div>
+</div>
+
+<div class="item" data-name="Kettle">
+<img src="https://img.icons8.com/color/96/kettle.png">
+<div class="name">Kettle</div>
+</div>
+
+<div class="item" data-name="Teapot">
+<img src="https://img.icons8.com/color/96/teapot.png">
+<div class="name">Teapot</div>
+</div>
+
+<div class="item" data-name="Cooking Pot">
+<img src="https://img.icons8.com/color/96/cooking-pot.png">
+<div class="name">Cooking Pot</div>
+</div>
+
+<div class="item" data-name="Rolling Pin">
+<img src="https://img.icons8.com/color/96/rolling-pin.png">
+<div class="name">Rolling Pin</div>
+</div>
+
+<div class="item" data-name="Chef Hat">
+<img src="https://img.icons8.com/color/96/chef-hat.png">
+<div class="name">Chef Hat</div>
+</div>
+
+<div class="item" data-name="Apron">
+<img src="https://img.icons8.com/color/96/apron.png">
+<div class="name">Apron</div>
+</div>
+<div class="item" data-name="Bee">
+<img src="https://img.icons8.com/color/96/bee.png">
+<div class="name">Bee</div>
+</div>
+
+<div class="item" data-name="Butterfly">
+<img src="https://img.icons8.com/color/96/butterfly.png">
+<div class="name">Butterfly</div>
+</div>
+
+<div class="item" data-name="Spider">
+<img src="https://img.icons8.com/color/96/spider.png">
+<div class="name">Spider</div>
+</div>
+
+<div class="item" data-name="Ant">
+<img src="https://img.icons8.com/color/96/ant.png">
+<div class="name">Ant</div>
+</div>
+
+<div class="item" data-name="Snail">
+<img src="https://img.icons8.com/color/96/snail.png">
+<div class="name">Snail</div>
+</div>
+
+<div class="item" data-name="Frog">
+<img src="https://img.icons8.com/color/96/frog.png">
+<div class="name">Frog</div>
+</div>
+
+<div class="item" data-name="Turtle">
+<img src="https://img.icons8.com/color/96/turtle.png">
+<div class="name">Turtle</div>
+</div>
+
+<div class="item" data-name="Snake">
+<img src="https://img.icons8.com/color/96/snake.png">
+<div class="name">Snake</div>
+</div>
+
+<div class="item" data-name="Shark">
+<img src="https://img.icons8.com/color/96/shark.png">
+<div class="name">Shark</div>
+</div>
+
+<div class="item" data-name="Whale">
+<img src="https://img.icons8.com/color/96/whale.png">
+<div class="name">Whale</div>
+</div>
+
+<div class="item" data-name="Dolphin">
+<img src="https://img.icons8.com/color/96/dolphin.png">
+<div class="name">Dolphin</div>
+</div>
+
+<div class="item" data-name="Octopus">
+<img src="https://img.icons8.com/color/96/octopus.png">
+<div class="name">Octopus</div>
+</div>
+
+<div class="item" data-name="Crab">
+<img src="https://img.icons8.com/color/96/crab.png">
+<div class="name">Crab</div>
+</div>
+
+<div class="item" data-name="Lobster">
+<img src="https://img.icons8.com/color/96/lobster.png">
+<div class="name">Lobster</div>
+</div>
+
+<div class="item" data-name="Owl">
+<img src="https://img.icons8.com/color/96/owl.png">
+<div class="name">Owl</div>
+</div>
+
+<div class="item" data-name="Parrot">
+<img src="https://img.icons8.com/color/96/parrot.png">
+<div class="name">Parrot</div>
+</div>
+
+<div class="item" data-name="Swan">
+<img src="https://img.icons8.com/color/96/swan.png">
+<div class="name">Swan</div>
+</div>
+
+<div class="item" data-name="Goat">
+<img src="https://img.icons8.com/color/96/goat.png">
+<div class="name">Goat</div>
+</div>
+
+<div class="item" data-name="Deer">
+<img src="https://img.icons8.com/color/96/deer.png">
+<div class="name">Deer</div>
+</div>
+
+<div class="item" data-name="Giraffe">
+<img src="https://img.icons8.com/color/96/giraffe.png">
+<div class="name">Giraffe</div>
+</div>
+
+<div class="item" data-name="Kangaroo">
+<img src="https://img.icons8.com/color/96/kangaroo.png">
+<div class="name">Kangaroo</div>
+</div>
+
+<div class="item" data-name="Panda">
+<img src="https://img.icons8.com/color/96/panda.png">
+<div class="name">Panda</div>
+</div>
+
+<div class="item" data-name="Bear">
+<img src="https://img.icons8.com/color/96/bear.png">
+<div class="name">Bear</div>
+</div>
+
+<div class="item" data-name="Fox">
+<img src="https://img.icons8.com/color/96/fox.png">
+<div class="name">Fox</div>
+</div>
+
+<div class="item" data-name="Wolf">
+<img src="https://img.icons8.com/color/96/wolf.png">
+<div class="name">Wolf</div>
+</div>
+
+<div class="item" data-name="Squirrel">
+<img src="https://img.icons8.com/color/96/squirrel.png">
+<div class="name">Squirrel</div>
+</div>
+
+<div class="item" data-name="Hedgehog">
+<img src="https://img.icons8.com/color/96/hedgehog.png">
+<div class="name">Hedgehog</div>
+</div>
+
+<div class="item" data-name="Bat">
+<img src="https://img.icons8.com/color/96/bat.png">
+<div class="name">Bat</div>
+</div>
+
+<div class="item" data-name="Mouse">
+<img src="https://img.icons8.com/color/96/mouse-animal.png">
+<div class="name">Mouse</div>
+</div>
+
+<div class="item" data-name="Seal">
+<img src="https://img.icons8.com/color/96/seal.png">
+<div class="name">Seal</div>
+</div>
+
+<div class="item" data-name="Jellyfish">
+<img src="https://img.icons8.com/color/96/jellyfish.png">
+<div class="name">Jellyfish</div>
+</div>
+
+<div class="item" data-name="Starfish">
+<img src="https://img.icons8.com/color/96/starfish.png">
+<div class="name">Starfish</div>
+</div>
+
+<div class="item" data-name="Seahorse">
+<img src="https://img.icons8.com/color/96/seahorse.png">
+<div class="name">Seahorse</div>
+</div>
+<div class="item" data-name="Doctor">
+<img src="https://img.icons8.com/color/96/doctor-male.png">
+<div class="name">Doctor</div>
+</div>
+
+<div class="item" data-name="Nurse">
+<img src="https://img.icons8.com/color/96/nurse-female.png">
+<div class="name">Nurse</div>
+</div>
+
+<div class="item" data-name="Teacher">
+<img src="https://img.icons8.com/color/96/teacher.png">
+<div class="name">Teacher</div>
+</div>
+
+<div class="item" data-name="Police">
+<img src="https://img.icons8.com/color/96/policeman-male.png">
+<div class="name">Police</div>
+</div>
+
+<div class="item" data-name="Farmer">
+<img src="https://img.icons8.com/color/96/farmer-male.png">
+<div class="name">Farmer</div>
+</div>
+
+<div class="item" data-name="Astronaut">
+<img src="https://img.icons8.com/color/96/astronaut.png">
+<div class="name">Astronaut</div>
+</div>
+
+<div class="item" data-name="Engineer">
+<img src="https://img.icons8.com/color/96/engineer.png">
+<div class="name">Engineer</div>
+</div>
+
+<div class="item" data-name="Mechanic">
+<img src="https://img.icons8.com/color/96/mechanic.png">
+<div class="name">Mechanic</div>
+</div>
+
+<div class="item" data-name="Plumber">
+<img src="https://img.icons8.com/color/96/plumber.png">
+<div class="name">Plumber</div>
+</div>
+
+<div class="item" data-name="Builder">
+<img src="https://img.icons8.com/color/96/construction-worker.png">
+<div class="name">Builder</div>
+</div>
+
+<div class="item" data-name="Dancer">
+<img src="https://img.icons8.com/color/96/dancing.png">
+<div class="name">Dancer</div>
+</div>
+
+<div class="item" data-name="King">
+<img src="https://img.icons8.com/color/96/king.png">
+<div class="name">King</div>
+</div>
+
+<div class="item" data-name="Queen">
+<img src="https://img.icons8.com/color/96/queen.png">
+<div class="name">Queen</div>
+</div>
+
+<div class="item" data-name="Clown">
+<img src="https://img.icons8.com/color/96/clown.png">
+<div class="name">Clown</div>
+</div>
+
+<div class="item" data-name="Pirate">
+<img src="https://img.icons8.com/color/96/pirate.png">
+<div class="name">Pirate</div>
+</div>
+
+<div class="item" data-name="Knight">
+<img src="https://img.icons8.com/color/96/knight.png">
+<div class="name">Knight</div>
+</div>
+
+<div class="item" data-name="Wizard">
+<img src="https://img.icons8.com/color/96/wizard.png">
+<div class="name">Wizard</div>
+</div>
+
+<div class="item" data-name="Fairy">
+<img src="https://img.icons8.com/color/96/fairy.png">
+<div class="name">Fairy</div>
+</div>
+
+<div class="item" data-name="Ghost">
+<img src="https://img.icons8.com/color/96/ghost.png">
+<div class="name">Ghost</div>
+</div>
+
+<div class="item" data-name="Alien">
+<img src="https://img.icons8.com/color/96/alien.png">
+<div class="name">Alien</div>
+</div>
+
+<div class="item" data-name="Planet">
+<img src="https://img.icons8.com/color/96/planet.png">
+<div class="name">Planet</div>
+</div>
+
+<div class="item" data-name="Satellite">
+<img src="https://img.icons8.com/color/96/satellite.png">
+<div class="name">Satellite</div>
+</div>
+
+<div class="item" data-name="Galaxy">
+<img src="https://img.icons8.com/color/96/galaxy.png">
+<div class="name">Galaxy</div>
+</div>
+
+<div class="item" data-name="Comet">
+<img src="https://img.icons8.com/color/96/comet.png">
+<div class="name">Comet</div>
+</div>
+
+<div class="item" data-name="Space Shuttle">
+<img src="https://img.icons8.com/color/96/space-shuttle.png">
+<div class="name">Space Shuttle</div>
+</div>
+
+<div class="item" data-name="Orange Juice">
+<img src="https://img.icons8.com/color/96/orange-juice.png">
+<div class="name">Orange Juice</div>
+</div>
+
+<div class="item" data-name="Tea">
+<img src="https://img.icons8.com/color/96/tea.png">
+<div class="name">Tea</div>
+</div>
+
+<div class="item" data-name="Burger">
+<img src="https://img.icons8.com/color/96/hamburger.png">
+<div class="name">Burger</div>
+</div>
+
+<div class="item" data-name="Rice">
+<img src="https://img.icons8.com/color/96/rice-bowl.png">
+<div class="name">Rice</div>
+</div>
+
+<div class="item" data-name="Noodles">
+<img src="https://img.icons8.com/color/96/noodles.png">
+<div class="name">Noodles</div>
+</div>
+
+<div class="item" data-name="Soup">
+<img src="https://img.icons8.com/color/96/soup-plate.png">
+<div class="name">Soup</div>
+</div>
+
+<div class="item" data-name="Salad">
+<img src="https://img.icons8.com/color/96/salad.png">
+<div class="name">Salad</div>
+</div>
+
+<div class="item" data-name="Apple Pie">
+<img src="https://img.icons8.com/color/96/apple-pie.png">
+<div class="name">Apple Pie</div>
+</div>
+
+<div class="item" data-name="Cupcake">
+<img src="https://img.icons8.com/color/96/cupcake.png">
+<div class="name">Cupcake</div>
+</div>
+
+<div class="item" data-name="Popcorn">
+<img src="https://img.icons8.com/color/96/popcorn.png">
+<div class="name">Popcorn</div>
+</div>
+
+<div class="item" data-name="Candy">
+<img src="https://img.icons8.com/color/96/candy.png">
+<div class="name">Candy</div>
+</div>
+
+<div class="item" data-name="Chocolate">
+<img src="https://img.icons8.com/color/96/chocolate-bar.png">
+<div class="name">Chocolate</div>
+</div>
+
+<div class="item" data-name="Honey">
+<img src="https://img.icons8.com/color/96/honey.png">
+<div class="name">Honey</div>
+</div>
+
+<div class="item" data-name="Jam">
+<img src="https://img.icons8.com/color/96/jam.png">
+<div class="name">Jam</div>
+</div>
+
+<div class="item" data-name="Butter">
+<img src="https://img.icons8.com/color/96/butter.png">
+<div class="name">Butter</div>
+</div>
+
+<div class="item" data-name="Bacon">
+<img src="https://img.icons8.com/color/96/bacon.png">
+<div class="name">Bacon</div>
+</div>
+
+<div class="item" data-name="Steak">
+<img src="https://img.icons8.com/color/96/steak.png">
+<div class="name">Steak</div>
+</div>
+
+<div class="item" data-name="Fish Food">
+<img src="https://img.icons8.com/color/96/fish-food.png">
+<div class="name">Fish Food</div>
+</div>
+
+<div class="item" data-name="Game Controller">
+<img src="https://img.icons8.com/color/96/controller.png">
+<div class="name">Game Controller</div>
+</div>
+
+<div class="item" data-name="Joystick">
+<img src="https://img.icons8.com/color/96/joystick.png">
+<div class="name">Joystick</div>
+</div>
+
+<div class="item" data-name="Drone">
+<img src="https://img.icons8.com/color/96/drone.png">
+<div class="name">Drone</div>
+</div>
+
+<div class="item" data-name="Robot Arm">
+<img src="https://img.icons8.com/color/96/robot.png">
+<div class="name">Robot Arm</div>
+</div>
+
+<div class="item" data-name="Battery">
+<img src="https://img.icons8.com/color/96/battery.png">
+<div class="name">Battery</div>
+</div>
+
+<div class="item" data-name="USB Flash Drive">
+<img src="https://img.icons8.com/color/96/usb-connected.png">
+<div class="name">USB Flash Drive</div>
+</div>
+
+<div class="item" data-name="Hard Drive">
+<img src="https://img.icons8.com/color/96/hdd.png">
+<div class="name">Hard Drive</div>
+</div>
+
+<div class="item" data-name="Memory Card">
+<img src="https://img.icons8.com/color/96/sd.png">
+<div class="name">Memory Card</div>
+</div>
+
+<div class="item" data-name="Scanner">
+<img src="https://img.icons8.com/color/96/scanner.png">
+<div class="name">Scanner</div>
+</div>
+
+</div>
+
+<div id="status">Ready</div>
+
+<script>
+
+const status=document.getElementById("status");
+
+let lastWord="";
+let lastTime=0;
+
+function speak(word){
+
+    const now=Date.now();
+
+    if(word===lastWord && now-lastTime<700){
+        return;
+    }
+
+    lastWord=word;
+    lastTime=now;
+
+    speechSynthesis.cancel();
+
+    const speech=new SpeechSynthesisUtterance(word);
+
+    speech.lang="en-US";
+    speech.rate=0.9;
+    speech.pitch=1;
+    speech.volume=1;
+
+    status.innerHTML="🔊 "+word;
+
+    speech.onend=function(){
+        status.innerHTML="Ready";
+    };
+
+    speechSynthesis.speak(speech);
+
+}
+
+document.querySelectorAll(".item").forEach(item=>{
+
+    // Desktop hover
+    item.addEventListener("mouseenter",function(){
+
+        if(window.matchMedia("(hover:hover)").matches){
+            speak(item.dataset.name);
+        }
+
+    });
+
+    // Mobile tap + Desktop click
+    item.addEventListener("click",function(){
+
+        speak(item.dataset.name);
+
+    });
+
+});
+
+</script>
+
+</body>
+</html>
