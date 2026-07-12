@@ -712,7 +712,7 @@
 
         function render() {
             while (coins >= 100) { coins -= 100; wallet += 10; }
-            while (coins < 0 && wallet > 0) { coins += 100; wallet -= 10; }
+            while (coins < 0 && wallet > 0) { coins += 100; wallet -= 1; }
             document.getElementById("c").textContent = coins;
             document.getElementById("w").textContent = wallet;
             save();
