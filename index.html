@@ -2286,14 +2286,13 @@
 
         <h3 style="color: var(--text);">Student Login</h3>
 
-        <input type="text" id="loginUser" placeholder="Username">
+        <input type="text" id="loginUser" placeholder="Student ID">
 
         <input type="password" id="loginPass" placeholder="Password">
 
         <button onclick="studentLogin()">Login</button>
 
 
-        <button class="btn" onclick="showScreen('register')">🎓 New Student Login</button>
 
         <div class="card" style="margin-top:10px;">
             <h3>Admin Login</h3>
@@ -2315,32 +2314,6 @@
     </div>
     <a href="server_loaded_please_wait...........">.</a>
     <!-- REGISTER -->
-    <div class="screen" id="register">
-
-        <div class="header">
-            <h2>Student Registration</h2>
-        </div>
-        <div class="card">
-
-            <input type="text" id="regName" placeholder="Full Name">
-
-            <input type="text" id="regUsername" placeholder="Username">
-
-            <input type="password" id="regPassword" placeholder="Password">
-
-            <input type="text" id="regMobile" placeholder="Mobile Number">
-
-            <button onclick="registerStudent()">
-                Register Student
-            </button>
-
-            <div class="link" onclick="showScreen('home')">
-                Back To Login
-            </div>
-
-        </div>
-
-    </div>
 
     <!-- STUDENT DASHBOARD -->
     <div class="screen" id="studentDashboard">
@@ -2349,7 +2322,7 @@
             <h2>Student Dashboard</h2>
             <p id="studentWelcome"></p>
         </div>
-        
+
         <marquee>LAST MONTH WINNERS BELOW:</marquee>
 
         <div class="marquee-container">
@@ -2464,7 +2437,9 @@
 
             <div class="tile" onclick="window.open('./earn.html','_blank')"><span>🤑</span><strong>Earn</strong></div>
 
-            <div class="tile" onclick="window.open('./meeting.html','_blank')"><span>👨‍🏫</span><strong>Lacture</strong></div>
+            <div class="tile" onclick="window.open('./meeting.html','_blank')">
+                <span>👨‍🏫</span><strong>Lacture</strong>
+            </div>
 
         </div>
 
@@ -2490,6 +2465,12 @@
         </div>
 
         <div class="card">
+
+            <button onclick="addStudent()">
+                Add Student
+            </button>
+
+
 
             <button onclick="viewStudents()">
                 View Students
@@ -2848,81 +2829,23 @@ justify-content:space-between;
             REGISTER
             ----------------------- */
 
-            function registerStudent() {
-
-                let name =
-                    document.getElementById("regName").value;
-
-                let username =
-                    document.getElementById("regUsername").value;
-
-                let password =
-                    document.getElementById("regPassword").value;
-
-                let mobile =
-                    document.getElementById("regMobile").value;
-
-                if (
-                    name === "" ||
-                    username === "" ||
-                    password === ""
-                ) {
-                    alert("Fill all fields");
-                    return;
-                }
-
-                let students =
-                    JSON.parse(
-                        localStorage.getItem("students")
-                    );
-
-                let exists =
-                    students.find(
-                        s => s.username === username
-                    );
-
-                if (exists) {
-                    alert("Username already exists");
-                    return;
-                }
-
-                students.push({
-                    id: Date.now(),
-                    name: name,
-                    username: username,
-                    password: password,
-                    mobile: mobile,
-                    attendance: 0,
-                    fees: "Pending",
-                    examScore: 0,
-                    examResults: [], // ADD THIS
-                    certificate: false,
-                    joined: new Date().toLocaleDateString()
-                });
-
-                localStorage.setItem(
-                    "students",
-                    JSON.stringify(students)
-                );
-
-                alert("Registration Successful");
-
-                showScreen("home");
-
-            }
 
             /* -----------------------
             STUDENT LOGIN
             ----------------------- */
             function studentLogin() {
 
-                let username = document.getElementById("loginUser").value;
-                let password = document.getElementById("loginPass").value;
 
                 let students = JSON.parse(localStorage.getItem("students")) || [];
 
+                let studentId =
+                    document.getElementById("loginUser").value;
+
+                let password =
+                    document.getElementById("loginPass").value;
+
                 let user = students.find(s =>
-                    s.username === username &&
+                    s.id === studentId &&
                     s.password === password
                 );
 
@@ -2999,13 +2922,20 @@ justify-content:space-between;
             border-radius:8px;
         ">
             <b>${s.name}</b><br>
-            ${s.username}<br>
-            ${s.mobile}<br><br>
+            ID : ${s.id}<br>
+            Password : ${s.password}<br>
+            Mobile : ${s.mobile}<br><br>
 
             <button onclick="deleteStudent('${s.username}')"
                 style="background:red;color:white;padding:6px 10px;border:none;border-radius:6px;cursor:pointer;">
                 Delete
             </button>
+
+            <button onclick="resetPassword('${s.id}')"
+style="background:#ff9800;color:white;padding:6px 10px;border:none;border-radius:6px;cursor:pointer;margin-left:5px;">
+🔑 Change Password
+</button>
+
         </div>
         `;
                 });
@@ -3525,7 +3455,7 @@ justify-content:space-between;
                 students =
                     students.map(s => {
 
-                        if (s.username === username) {
+                        if (s.id === username) {
 
                             s.attendance =
                                 parseInt(percent) || 0;
@@ -3575,7 +3505,7 @@ justify-content:space-between;
                 students =
                     students.map(s => {
 
-                        if (s.username === username) {
+                        if (s.id === username) {
 
                             s.fees = status;
 
@@ -3668,7 +3598,7 @@ justify-content:space-between;
                 students =
                     students.map(s => {
 
-                        if (s.username === username) {
+                        if (s.id === username) {
 
                             s.certificate = true;
 
@@ -3710,9 +3640,91 @@ justify-content:space-between;
 
                 showScreen("home");
             }
-            /* -----------------------
-     BOOK SYSTEM
-     ----------------------- */
+
+            // new student function/* -----------------------
+            function addStudent() {
+
+                let name = prompt("Student Name");
+                if (!name) return;
+
+                let mobile = prompt("Mobile Number");
+
+                let students =
+                    JSON.parse(localStorage.getItem("students")) || [];
+
+                let studentId =
+                    "STU" + String(students.length + 1).padStart(3, "0");
+
+                let password =
+                    Math.random().toString(36).substring(2, 8).toUpperCase();
+
+                students.push({
+
+                    id: studentId,
+                    name: name,
+                    username: studentId,
+                    password: password,
+                    mobile: mobile,
+                    attendance: 0,
+                    fees: "Pending",
+                    examScore: 0,
+                    examResults: [],
+                    certificate: false,
+                    joined: new Date().toLocaleDateString()
+
+                });
+
+                localStorage.setItem(
+                    "students",
+                    JSON.stringify(students)
+                );
+
+                alert(
+                    `Student Created
+
+ID : ${studentId}
+
+Password : ${password}`
+                );
+
+                updateDashboard();
+
+            }
+
+
+            // reset studentLogin password
+
+
+            function resetPassword(studentId) {
+
+    let adminPassword = prompt("Enter Admin Password");
+
+    // તમારો Admin Password
+    if (adminPassword !== "Akash123") {
+        alert("Wrong Admin Password");
+        return;
+    }
+
+    let newPassword = prompt("Enter New Student Password");
+
+    if (!newPassword) return;
+
+    let students = JSON.parse(localStorage.getItem("students")) || [];
+
+    students.forEach(student => {
+        if (student.id === studentId) {
+            student.password = newPassword;
+        }
+    });
+
+    localStorage.setItem("students", JSON.stringify(students));
+
+    alert("Student Password Changed Successfully");
+}
+
+
+            //  BOOK SYSTEM
+
 
             function showBooks() {
                 showScreen("bookScreen");
