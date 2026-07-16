@@ -57,35 +57,34 @@
 
         /* ---------------- Battle ---------------- */
 
-        #battleBox {
+        #battleBox{
 
-            position: absolute;
+    position:absolute;
 
-            left: 50%;
+    left:50%;
+    top:50%;
 
-            bottom: 20px;
+    transform:translate(-50%,-50%) scale(0);
 
-            transform: translateX(-50%) scale(0);
+    width:320px;
 
-            width: 320px;
+    background:rgba(0,0,0,.9);
 
-            background: rgba(0, 0, 0, .9);
+    color:#fff;
 
-            color: white;
+    padding:15px;
 
-            padding: 15px;
+    border-radius:15px;
 
-            border-radius: 15px;
+    transition:.25s;
 
-            transition: .25s;
+    z-index:200;
 
-            z-index: 200;
-
-        }
+}
 
         #battleBox.active {
 
-            transform: translateX(-50%) scale(1);
+             transform:translate(-50%,-50%) scale(1);
 
         }
 
@@ -128,6 +127,26 @@
             z-index: 150;
 
         }
+        @media (max-width:768px){
+
+#joystickBase{
+
+    width:90px;
+    height:90px;
+
+    left:15px;
+    bottom:15px;
+
+}
+
+#joystickStick{
+
+    width:35px;
+    height:35px;
+
+}
+
+}
 
         #joystickStick {
 
@@ -167,6 +186,36 @@
             display: block;
 
         }
+        @media (max-width:768px){
+
+#ui{
+
+    font-size:14px;
+    padding:8px;
+
+}
+
+}
+@media (max-width:768px){
+
+#battleBox{
+
+    width:90%;
+    bottom:10px;
+
+}
+
+}
+@media (max-width:768px){
+
+#battleBox button{
+
+    font-size:15px;
+    padding:12px;
+
+}
+
+}
     </style>
 
 </head>
@@ -264,8 +313,9 @@
 
         });
 
-        renderer.setPixelRatio(window.devicePixelRatio);
-
+        renderer.setPixelRatio(
+            Math.min(window.devicePixelRatio, 1.5)
+        );
         renderer.setSize(
 
             window.innerWidth,
@@ -330,10 +380,8 @@
 
         sun.castShadow = true;
 
-        sun.shadow.mapSize.width = 2048;
-
-        sun.shadow.mapSize.height = 2048;
-
+        sun.shadow.mapSize.width = 1024;
+        sun.shadow.mapSize.height = 1024;
         scene.add(
 
             sun
@@ -413,7 +461,7 @@
             color: 0x666666
         });
 
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 30; i++) {
 
             const w = 2 + Math.random() * 4;
             const h = 4 + Math.random() * 20;
@@ -441,7 +489,7 @@
            TREES
         =================================== */
 
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 25; i++) {
 
             const tree = new THREE.Group();
 
@@ -727,16 +775,33 @@
         /* POSITION */
 
         player.position.set(0, 0, 0);
+        if (window.innerWidth < 768) {
+            player.scale.set(0.7, 0.7, 0.7);
+        }
         scene.add(player);
         /* ===================================
            CAMERA FOLLOW
         =================================== */
 
-        const cameraOffset = new THREE.Vector3(
-            0,
-            7,
-            10
-        );
+        let cameraOffset;
+
+if (window.innerWidth < 768) {
+
+    cameraOffset = new THREE.Vector3(
+        0,
+        10,
+        16
+    );
+
+} else {
+
+    cameraOffset = new THREE.Vector3(
+        0,
+        7,
+        10
+    );
+
+}
 
         function updateCamera() {
 
@@ -838,365 +903,367 @@
 
         function movePlayer() {
 
-            let dx = 0;
-            let dz = 0;
+            let dx = joyX;
+            let dz = joyY;
 
-            /* WASD */
-
+            // Desktop Keyboard
             if (keys["w"]) dz -= 1;
             if (keys["s"]) dz += 1;
             if (keys["a"]) dx -= 1;
             if (keys["d"]) dx += 1;
-
-            /* Arrow Keys */
 
             if (keys["arrowup"]) dz -= 1;
             if (keys["arrowdown"]) dz += 1;
             if (keys["arrowleft"]) dx -= 1;
             if (keys["arrowright"]) dx += 1;
 
-            /* Mobile Joystick */
-
             if (dx !== 0 || dz !== 0) {
+
                 const len = Math.hypot(dx, dz);
-                dx /= len; dz /= len;
+                dx /= len;
+                dz /= len;
 
-                let nextX = player.position.x + (dx * moveSpeed);
-                let nextZ = player.position.z + (dz * moveSpeed);
+                const nextX = player.position.x + dx * moveSpeed;
+                const nextZ = player.position.z + dz * moveSpeed;
 
-                // જો ટક્કર ન થતી હોય તો જ આગળ વધો[cite: 2]
                 if (!checkCollision({ x: nextX, z: nextZ })) {
+
                     player.position.x = nextX;
                     player.position.z = nextZ;
+
                     player.rotation.y = Math.atan2(dx, dz);
                 }
             }
         }
 
-            /* ===================================
-               ANIMATION LOOP
-            =================================== */
+        /* ===================================
+           ANIMATION LOOP
+        =================================== */
 
-            function animate() {
+        function animate() {
 
-                requestAnimationFrame(animate);
+            requestAnimationFrame(animate);
 
-                movePlayer();
+            movePlayer();
 
-                updateCamera();
+            updateCamera();
 
-                updateEnemies();
+            updateEnemies();
 
-                checkBattle();
-                renderer.render(scene, camera);
+            checkBattle();
+            renderer.render(scene, camera);
+
+        }
+
+
+
+        /* ==========================================
+           ENEMY SYSTEM
+        ========================================== */
+
+
+        const MAX_ENEMIES = 20;
+
+        /* ==========================================
+           CREATE ENEMY
+        ========================================== */
+        function createEnemy(x, z) {
+
+            const enemy = new THREE.Group();
+
+            const skinMat = new THREE.MeshStandardMaterial({ color: 0x2b2b2b });
+            const armorMat = new THREE.MeshStandardMaterial({
+                color: 0xaa0000,
+                metalness: 0.4,
+                roughness: 0.4
+            });
+            const blackMat = new THREE.MeshStandardMaterial({ color: 0x222222 });
+            const eyeMat = new THREE.MeshStandardMaterial({
+                color: 0xff0000,
+                emissive: 0xff0000,
+                emissiveIntensity: 2
+            });
+
+            //================ BODY ==================
+
+            const body = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.45, 0.35, 1.5, 8),
+                armorMat
+            );
+            body.position.y = 1.7;
+            enemy.add(body);
+
+            //================ NECK ==================
+
+            const neck = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.12, 0.12, 0.18, 8),
+                skinMat
+            );
+            neck.position.y = 2.55;
+            enemy.add(neck);
+
+            //================ HEAD GROUP ==================
+
+            const headGroup = new THREE.Group();
+            headGroup.position.set(0, 2.75, 0);
+            enemy.add(headGroup);
+
+            // Head
+
+            const head = new THREE.Mesh(
+                new THREE.SphereGeometry(0.38, 20, 20),
+                skinMat
+            );
+            headGroup.add(head);
+
+            // Helmet
+
+            const helmet = new THREE.Mesh(
+                new THREE.SphereGeometry(0.42, 20, 20, 0, Math.PI * 2, 0, Math.PI / 2),
+                blackMat
+            );
+            helmet.position.y = 0.08;
+            headGroup.add(helmet);
+
+            // Eyes
+
+            const leftEye = new THREE.Mesh(
+                new THREE.SphereGeometry(0.05, 8, 8),
+                eyeMat
+            );
+            leftEye.position.set(-0.12, 0.02, 0.34);
+            headGroup.add(leftEye);
+
+            const rightEye = leftEye.clone();
+            rightEye.position.x = 0.12;
+            headGroup.add(rightEye);
+
+            // Mouth
+
+            const mouth = new THREE.Mesh(
+                new THREE.BoxGeometry(0.18, 0.03, 0.02),
+                blackMat
+            );
+            mouth.position.set(0, -0.15, 0.35);
+            headGroup.add(mouth);
+
+            // Horns
+
+            const hornL = new THREE.Mesh(
+                new THREE.ConeGeometry(0.07, 0.32, 6),
+                armorMat
+            );
+            hornL.position.set(-0.18, 0.35, 0);
+            hornL.rotation.z = 0.4;
+            headGroup.add(hornL);
+
+            const hornR = hornL.clone();
+            hornR.position.set(0.18, 0.35, 0);
+            hornR.rotation.z = -0.4;
+            headGroup.add(hornR);
+
+            //================ SHOULDERS ==================
+
+            const shoulderL = new THREE.Mesh(
+                new THREE.SphereGeometry(0.16, 10, 10),
+                armorMat
+            );
+            shoulderL.position.set(-0.48, 2.15, 0);
+            enemy.add(shoulderL);
+
+            const shoulderR = shoulderL.clone();
+            shoulderR.position.x = 0.48;
+            enemy.add(shoulderR);
+
+            //================ ARMS ==================
+
+            const leftArm = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.11, 0.11, 1, 8),
+                armorMat
+            );
+            leftArm.position.set(-0.65, 1.65, 0);
+            leftArm.rotation.z = 0.3;
+            enemy.add(leftArm);
+
+            const rightArm = leftArm.clone();
+            rightArm.position.set(0.65, 1.65, 0);
+            rightArm.rotation.z = -0.3;
+            enemy.add(rightArm);
+
+            //================ LEGS ==================
+
+            const leftLeg = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.13, 0.13, 1.1, 8),
+                blackMat
+            );
+            leftLeg.position.set(-0.22, 0.55, 0);
+            enemy.add(leftLeg);
+
+            const rightLeg = leftLeg.clone();
+            rightLeg.position.x = 0.22;
+            enemy.add(rightLeg);
+
+            //================ GUN ==================
+
+            const weapon = new THREE.Group();
+
+            const gunBody = new THREE.Mesh(
+                new THREE.BoxGeometry(0.12, 0.12, 0.8),
+                blackMat
+            );
+            weapon.add(gunBody);
+
+            const barrel = new THREE.Mesh(
+                new THREE.CylinderGeometry(0.03, 0.03, 0.35, 8),
+                blackMat
+            );
+            barrel.rotation.x = Math.PI / 2;
+            barrel.position.z = 0.55;
+            weapon.add(barrel);
+
+            weapon.position.set(0.82, 1.7, 0.25);
+            weapon.rotation.x = Math.PI / 2;
+            enemy.add(weapon);
+
+            //================ POSITION ==================
+
+            enemy.position.set(x, 0, z);
+
+            if (window.innerWidth < 768) {
+                enemy.scale.set(0.75, 0.75, 0.75);
+            }
+
+            enemy.userData = {
+                speed: 0.04 + Math.random() * 0.03,
+                health: 100,
+                walkTime: Math.random() * 10,
+                leftArm,
+                rightArm,
+                leftLeg,
+                rightLeg,
+                head: headGroup,
+                body,
+                weapon,
+                alive: true,
+                chaseRange: 45
+            };
+
+            scene.add(enemy);
+            enemies.push(enemy);
+        }
+
+        /* ==========================================
+           SPAWN ENEMIES
+        ========================================== */
+
+        function spawnEnemies() {
+
+            for (let i = 0; i < MAX_ENEMIES; i++) {
+
+                createEnemy(
+
+                    (Math.random() - 0.5) * 220,
+
+                    (Math.random() - 0.5) * 220
+
+                );
 
             }
 
+        }
 
+        spawnEnemies();
+        /* ==========================================
+           ENEMY AI
+        ========================================== */
 
-            /* ==========================================
-               ENEMY SYSTEM
-            ========================================== */
+        function updateEnemies() {
 
+            enemies.forEach(enemy => {
 
-            const MAX_ENEMIES = 50;
+                let dx =
+                    player.position.x -
+                    enemy.position.x;
 
-            /* ==========================================
-               CREATE ENEMY
-            ========================================== */
-            function createEnemy(x, z) {
+                let dz =
+                    player.position.z -
+                    enemy.position.z;
 
-                const enemy = new THREE.Group();
-
-                const skinMat = new THREE.MeshStandardMaterial({ color: 0x2b2b2b });
-                const armorMat = new THREE.MeshStandardMaterial({
-                    color: 0xaa0000,
-                    metalness: 0.4,
-                    roughness: 0.4
-                });
-                const blackMat = new THREE.MeshStandardMaterial({ color: 0x222222 });
-                const eyeMat = new THREE.MeshStandardMaterial({
-                    color: 0xff0000,
-                    emissive: 0xff0000,
-                    emissiveIntensity: 2
-                });
-
-                //================ BODY ==================
-
-                const body = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.45, 0.35, 1.5, 8),
-                    armorMat
+                let dist = Math.sqrt(
+                    dx * dx + dz * dz
                 );
-                body.position.y = 1.7;
-                enemy.add(body);
 
-                //================ NECK ==================
+                /* Follow Player */
 
-                const neck = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.12, 0.12, 0.18, 8),
-                    skinMat
-                );
-                neck.position.y = 2.55;
-                enemy.add(neck);
+                if (dist > 0 && dist < 40) {
 
-                //================ HEAD GROUP ==================
+                    dx /= dist;
+                    dz /= dist;
 
-                const headGroup = new THREE.Group();
-                headGroup.position.set(0, 2.75, 0);
-                enemy.add(headGroup);
+                    enemy.position.x += dx * enemy.userData.speed;
+                    enemy.position.z += dz * enemy.userData.speed;
 
-                // Head
-
-                const head = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.38, 20, 20),
-                    skinMat
-                );
-                headGroup.add(head);
-
-                // Helmet
-
-                const helmet = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.42, 20, 20, 0, Math.PI * 2, 0, Math.PI / 2),
-                    blackMat
-                );
-                helmet.position.y = 0.08;
-                headGroup.add(helmet);
-
-                // Eyes
-
-                const leftEye = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.05, 8, 8),
-                    eyeMat
-                );
-                leftEye.position.set(-0.12, 0.02, 0.34);
-                headGroup.add(leftEye);
-
-                const rightEye = leftEye.clone();
-                rightEye.position.x = 0.12;
-                headGroup.add(rightEye);
-
-                // Mouth
-
-                const mouth = new THREE.Mesh(
-                    new THREE.BoxGeometry(0.18, 0.03, 0.02),
-                    blackMat
-                );
-                mouth.position.set(0, -0.15, 0.35);
-                headGroup.add(mouth);
-
-                // Horns
-
-                const hornL = new THREE.Mesh(
-                    new THREE.ConeGeometry(0.07, 0.32, 6),
-                    armorMat
-                );
-                hornL.position.set(-0.18, 0.35, 0);
-                hornL.rotation.z = 0.4;
-                headGroup.add(hornL);
-
-                const hornR = hornL.clone();
-                hornR.position.set(0.18, 0.35, 0);
-                hornR.rotation.z = -0.4;
-                headGroup.add(hornR);
-
-                //================ SHOULDERS ==================
-
-                const shoulderL = new THREE.Mesh(
-                    new THREE.SphereGeometry(0.16, 10, 10),
-                    armorMat
-                );
-                shoulderL.position.set(-0.48, 2.15, 0);
-                enemy.add(shoulderL);
-
-                const shoulderR = shoulderL.clone();
-                shoulderR.position.x = 0.48;
-                enemy.add(shoulderR);
-
-                //================ ARMS ==================
-
-                const leftArm = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.11, 0.11, 1, 8),
-                    armorMat
-                );
-                leftArm.position.set(-0.65, 1.65, 0);
-                leftArm.rotation.z = 0.3;
-                enemy.add(leftArm);
-
-                const rightArm = leftArm.clone();
-                rightArm.position.set(0.65, 1.65, 0);
-                rightArm.rotation.z = -0.3;
-                enemy.add(rightArm);
-
-                //================ LEGS ==================
-
-                const leftLeg = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.13, 0.13, 1.1, 8),
-                    blackMat
-                );
-                leftLeg.position.set(-0.22, 0.55, 0);
-                enemy.add(leftLeg);
-
-                const rightLeg = leftLeg.clone();
-                rightLeg.position.x = 0.22;
-                enemy.add(rightLeg);
-
-                //================ GUN ==================
-
-                const weapon = new THREE.Group();
-
-                const gunBody = new THREE.Mesh(
-                    new THREE.BoxGeometry(0.12, 0.12, 0.8),
-                    blackMat
-                );
-                weapon.add(gunBody);
-
-                const barrel = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.03, 0.03, 0.35, 8),
-                    blackMat
-                );
-                barrel.rotation.x = Math.PI / 2;
-                barrel.position.z = 0.55;
-                weapon.add(barrel);
-
-                weapon.position.set(0.82, 1.7, 0.25);
-                weapon.rotation.x = Math.PI / 2;
-                enemy.add(weapon);
-
-                //================ POSITION ==================
-
-                enemy.position.set(x, 0, z);
-
-                enemy.userData = {
-                    speed: 0.04 + Math.random() * 0.03,
-                    health: 100,
-                    walkTime: Math.random() * 10,
-                    leftArm,
-                    rightArm,
-                    leftLeg,
-                    rightLeg,
-                    head: headGroup,
-                    body,
-                    weapon,
-                    alive: true,
-                    chaseRange: 45
-                };
-
-                scene.add(enemy);
-                enemies.push(enemy);
-            }
-
-            /* ==========================================
-               SPAWN ENEMIES
-            ========================================== */
-
-            function spawnEnemies() {
-
-                for (let i = 0; i < MAX_ENEMIES; i++) {
-
-                    createEnemy(
-
-                        (Math.random() - 0.5) * 220,
-
-                        (Math.random() - 0.5) * 220
-
-                    );
+                    enemy.rotation.y = Math.atan2(dx, dz);
 
                 }
+                else {
 
-            }
+                    enemy.rotation.y += 0.01;
 
-            spawnEnemies();
-            /* ==========================================
-               ENEMY AI
-            ========================================== */
+                }
+                /* Walking Animation */
 
-            function updateEnemies() {
+                enemy.userData.walkTime += 0.15;
 
-                enemies.forEach(enemy => {
+                const walk =
+                    Math.sin(
+                        enemy.userData.walkTime
+                    ) * 0.7;
 
-                    let dx =
-                        player.position.x -
-                        enemy.position.x;
+                enemy.userData.leftArm.rotation.x =
+                    walk;
 
-                    let dz =
-                        player.position.z -
-                        enemy.position.z;
+                enemy.userData.rightArm.rotation.x =
+                    -walk;
 
-                    let dist = Math.sqrt(
-                        dx * dx + dz * dz
-                    );
+                enemy.userData.leftLeg.rotation.x =
+                    -walk;
 
-                    /* Follow Player */
+                enemy.userData.rightLeg.rotation.x =
+                    walk;
 
-                    if (dist > 0 && dist < 40) {
-
-                        dx /= dist;
-                        dz /= dist;
-
-                        enemy.position.x += dx * enemy.userData.speed;
-                        enemy.position.z += dz * enemy.userData.speed;
-
-                        enemy.rotation.y = Math.atan2(dx, dz);
-
-                    }
-                    else {
-
-                        enemy.rotation.y += 0.01;
-
-                    }
-                    /* Walking Animation */
-
-                    enemy.userData.walkTime += 0.15;
-
-                    const walk =
-                        Math.sin(
-                            enemy.userData.walkTime
-                        ) * 0.7;
-
-                    enemy.userData.leftArm.rotation.x =
-                        walk;
-
-                    enemy.userData.rightArm.rotation.x =
-                        -walk;
-
-                    enemy.userData.leftLeg.rotation.x =
-                        -walk;
-
-                    enemy.userData.rightLeg.rotation.x =
-                        walk;
-
-                    enemy.userData.head.position.y =
-                        2.2 +
-                        Math.sin(
-                            enemy.userData.walkTime * 2
-                        ) * 0.05;
+                enemy.userData.head.position.y =
+                    2.2 +
+                    Math.sin(
+                        enemy.userData.walkTime * 2
+                    ) * 0.05;
 
 
-                    enemy.position.y =
+                enemy.position.y =
 
-                        Math.sin(
+                    Math.sin(
 
-                            Date.now() * 0.004 +
+                        Date.now() * 0.004 +
 
-                            enemy.userData.walkTime
+                        enemy.userData.walkTime
 
-                        ) * 0.08;
-                });
+                    ) * 0.08;
+            });
 
 
 
-            }
+        }
 
-            /* ==========================================
-               BATTLE SYSTEM
-            ========================================== */
+        /* ==========================================
+           BATTLE SYSTEM
+        ========================================== */
 
-            let currentEnemy = null;
+        let currentEnemy = null;
 
-            /* Sample Questions
-               (પછી 100+ Questions અહીં ઉમેરતા જઈશું)
-            */
-             const questions = [
+        /* Sample Questions
+           (પછી 100+ Questions અહીં ઉમેરતા જઈશું)
+        */
+        const questions = [
 
             { q: "2 + 2 = ?", o: ["3", "4", "5"], a: 1 },
             { q: "Capital of India?", o: ["Delhi", "Mumbai", "Surat"], a: 0 },
@@ -1395,245 +1462,245 @@
             { q: "Which operating system is open source?", o: ["Linux", "Windows", "macOS"], a: 0 }
 
         ];
-            /* ==========================================
-               START BATTLE
-            ========================================== */
+        /* ==========================================
+           START BATTLE
+        ========================================== */
 
-            function startBattle(enemy) {
+        function startBattle(enemy) {
 
-                if (battle) return;
+            if (battle) return;
 
-                battle = true;
+            battle = true;
 
-                currentEnemy = enemy;
+            currentEnemy = enemy;
 
-                const q =
-                    questions[
-                    Math.floor(
-                        Math.random() * questions.length
-                    )
-                    ];
+            const q =
+                questions[
+                Math.floor(
+                    Math.random() * questions.length
+                )
+                ];
 
-                currentEnemy.userData.question = q;
+            currentEnemy.userData.question = q;
 
-                document
-                    .getElementById("battleBox")
-                    .classList
-                    .add("active");
+            document
+                .getElementById("battleBox")
+                .classList
+                .add("active");
 
-                document
-                    .getElementById("qText")
-                    .innerHTML = q.q;
+            document
+                .getElementById("qText")
+                .innerHTML = q.q;
 
-                const opts =
-                    document.getElementById("opts");
+            const opts =
+                document.getElementById("opts");
 
-                opts.innerHTML = "";
+            opts.innerHTML = "";
 
-                q.o.forEach((text, index) => {
+            q.o.forEach((text, index) => {
 
-                    const btn =
-                        document.createElement("button");
+                const btn =
+                    document.createElement("button");
 
-                    btn.innerHTML = text;
+                btn.innerHTML = text;
 
-                    btn.onclick = () => {
+                btn.onclick = () => {
 
-                        answerQuestion(index);
+                    answerQuestion(index);
 
-                    };
+                };
 
-                    opts.appendChild(btn);
+                opts.appendChild(btn);
 
-                });
+            });
 
-            }
+        }
 
-            /* ==========================================
-               ANSWER
-            ========================================== */
+        /* ==========================================
+           ANSWER
+        ========================================== */
 
-            function answerQuestion(index) {
+        function answerQuestion(index) {
 
-                if (!currentEnemy) return;
+            if (!currentEnemy) return;
 
-                const q =
-                    currentEnemy.userData.question;
+            const q =
+                currentEnemy.userData.question;
 
-                if (index === q.a) {
+            if (index === q.a) {
 
-                    coins += 10;
-                    updateCoins();
+                coins += 10;
+                updateCoins();
 
-                    explosion(
+                explosion(
 
-                        currentEnemy.position.x,
+                    currentEnemy.position.x,
 
-                        currentEnemy.position.y,
+                    currentEnemy.position.y,
 
-                        currentEnemy.position.z
-
-                    );
-
-                    scene.remove(currentEnemy);
-
-                    enemies = enemies.filter(
-                        e => e !== currentEnemy
-                    );
-
-                    setTimeout(() => {
-
-                        respawnEnemy();
-
-                    }, 3000);
-
-                }
-
-                else {
-
-                    health -= 10;
-                    updateHealth();
-
-                    if (health < 0)
-                        health = 0;
-                    updateHealth();
-
-                    if (health <= 0) {
-
-                        alert("GAME OVER");
-
-                        location.reload();
-
-                    }
-
-                }
-
-                currentEnemy = null;
-
-                battle = false;
-
-                document
-                    .getElementById("battleBox")
-                    .classList
-                    .remove("active");
-
-            }
-
-            /* ==========================================
-               CHECK DISTANCE
-            ========================================== */
-
-            function checkBattle() {
-
-                if (battle) return;
-
-                enemies.forEach(enemy => {
-
-                    const d =
-                        player.position.distanceTo(
-                            enemy.position
-                        );
-
-                    if (d < 2) {
-
-                        startBattle(enemy);
-
-                    }
-
-                });
-
-            }
-
-            /* ==========================================
-               EXPLOSION
-            ========================================== */
-
-            function explosion(x, y, z) {
-
-                for (let i = 0; i < 20; i++) {
-
-                    const p = new THREE.Mesh(
-
-                        new THREE.SphereGeometry(0.08, 8, 8),
-
-                        new THREE.MeshBasicMaterial({
-                            color: 0xffaa00
-                        })
-
-                    );
-
-                    p.position.set(x, y + 1, z);
-
-                    scene.add(p);
-
-                    const vx = (Math.random() - 0.5) * 0.35;
-                    const vy = Math.random() * 0.25;
-                    const vz = (Math.random() - 0.5) * 0.35;
-
-                    let t = 0;
-
-                    const id = setInterval(() => {
-
-                        p.position.x += vx;
-                        p.position.y += vy;
-                        p.position.z += vz;
-
-                        t++;
-
-                        if (t > 25) {
-
-                            clearInterval(id);
-
-                            scene.remove(p);
-
-                        }
-
-                    }, 16);
-
-                }
-
-            }
-
-
-
-
-
-
-
-            function updateCoins() {
-                document.getElementById("coins").textContent = coins;
-            }
-
-            function updateHealth() {
-                document.getElementById("health").textContent = health;
-            }
-
-            /* ==========================================
-               RESPAWN
-            ========================================== */
-
-            function respawnEnemy() {
-
-                createEnemy(
-
-                    (Math.random() - 0.5) * 220,
-
-                    (Math.random() - 0.5) * 220
+                    currentEnemy.position.z
 
                 );
 
+                scene.remove(currentEnemy);
+
+                enemies = enemies.filter(
+                    e => e !== currentEnemy
+                );
+
+                setTimeout(() => {
+
+                    respawnEnemy();
+
+                }, 3000);
+
             }
-          
-            function checkCollision(nextPos) {
-                for (let b of buildings) {
-                    // બિલ્ડિંગની પોઝિશન અને પ્લેયરની નવી પોઝિશન વચ્ચેનું અંતર ચેક કરો[cite: 2]
-                    if (Math.abs(nextPos.x - b.position.x) < 3 && Math.abs(nextPos.z - b.position.z) < 3) {
-                        return true; // જો નજીક હોય તો ટક્કર થઈ[cite: 2]
-                    }
+
+            else {
+
+                health -= 10;
+                updateHealth();
+
+                if (health < 0)
+                    health = 0;
+                updateHealth();
+
+                if (health <= 0) {
+
+                    alert("GAME OVER");
+
+                    location.reload();
+
                 }
-                return false;
+
             }
-            animate();
+
+            currentEnemy = null;
+
+            battle = false;
+
+            document
+                .getElementById("battleBox")
+                .classList
+                .remove("active");
+
+        }
+
+        /* ==========================================
+           CHECK DISTANCE
+        ========================================== */
+
+        function checkBattle() {
+
+            if (battle) return;
+
+            enemies.forEach(enemy => {
+
+                const d =
+                    player.position.distanceTo(
+                        enemy.position
+                    );
+
+                if (d < 2) {
+
+                    startBattle(enemy);
+
+                }
+
+            });
+
+        }
+
+        /* ==========================================
+           EXPLOSION
+        ========================================== */
+
+        function explosion(x, y, z) {
+
+            for (let i = 0; i < 20; i++) {
+
+                const p = new THREE.Mesh(
+
+                    new THREE.SphereGeometry(0.08, 8, 8),
+
+                    new THREE.MeshBasicMaterial({
+                        color: 0xffaa00
+                    })
+
+                );
+
+                p.position.set(x, y + 1, z);
+
+                scene.add(p);
+
+                const vx = (Math.random() - 0.5) * 0.35;
+                const vy = Math.random() * 0.25;
+                const vz = (Math.random() - 0.5) * 0.35;
+
+                let t = 0;
+
+                const id = setInterval(() => {
+
+                    p.position.x += vx;
+                    p.position.y += vy;
+                    p.position.z += vz;
+
+                    t++;
+
+                    if (t > 25) {
+
+                        clearInterval(id);
+
+                        scene.remove(p);
+
+                    }
+
+                }, 16);
+
+            }
+
+        }
+
+
+
+
+
+
+
+        function updateCoins() {
+            document.getElementById("coins").textContent = coins;
+        }
+
+        function updateHealth() {
+            document.getElementById("health").textContent = health;
+        }
+
+        /* ==========================================
+           RESPAWN
+        ========================================== */
+
+        function respawnEnemy() {
+
+            createEnemy(
+
+                (Math.random() - 0.5) * 220,
+
+                (Math.random() - 0.5) * 220
+
+            );
+
+        }
+
+        function checkCollision(nextPos) {
+            for (let b of buildings) {
+                // બિલ્ડિંગની પોઝિશન અને પ્લેયરની નવી પોઝિશન વચ્ચેનું અંતર ચેક કરો[cite: 2]
+                if (Math.abs(nextPos.x - b.position.x) < 3 && Math.abs(nextPos.z - b.position.z) < 3) {
+                    return true; // જો નજીક હોય તો ટક્કર થઈ[cite: 2]
+                }
+            }
+            return false;
+        }
+        animate();
 
     </script>
 
