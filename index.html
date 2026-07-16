@@ -2402,9 +2402,9 @@
 
             <div class="tile" onclick="startExam()"><span>📝</span><strong>Exams</strong> </div>
 
-            <div class="tile" onclick="showResults()"><span>📊</span><strong>Results</strong> </div>
+            <!-- <div class="tile" onclick="showResults()"><span>📊</span><strong>Results</strong> </div> -->
 
-            <div class="tile" onclick="openCertificate()"><span>🏆</span><strong>Certificate</strong></div>
+            <!-- <div class="tile" onclick="openCertificate()"><span>🏆</span><strong>Certificate</strong></div> -->
 
             <div class="tile" onclick="showFees()"><span>💰</span><strong>Fees</strong> </div>
 
@@ -2768,9 +2768,61 @@ justify-content:space-between;
 
 
         <script>
+            const DEFAULT_STUDENTS = [
+                { id: "STU001", password: "Maruti", name: "Maruti", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: true },
+                { id: "STU002", password: "Akash", name: "Akash", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU003", password: "Rohit", name: "Rohit", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU004", password: "Jayesh", name: "Jayesh", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU005", password: "Nilesh", name: "Nilesh", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU006", password: "Hitesh", name: "Hitesh", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU007", password: "Ketan", name: "Ketan", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU008", password: "Suresh", name: "Suresh", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU009", password: "Mahesh", name: "Mahesh", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU010", password: "Ramesh", name: "Ramesh", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU011", password: "Sanjay", name: "Sanjay", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU012", password: "Vijay", name: "Vijay", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU013", password: "Ravi", name: "Ravi", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU014", password: "Ajay", name: "Ajay", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU015", password: "Deepak", name: "Deepak", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU016", password: "Sandeep", name: "Sandeep", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU017", password: "Rakesh", name: "Rakesh", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU018", password: "Anil", name: "Anil", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU019", password: "Sunil", name: "Sunil", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU020", password: "Pankaj", name: "Pankaj", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU021", password: "Nitin", name: "Nitin", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU022", password: "Rohit2", name: "Rohit2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU023", password: "Jayesh2", name: "Jayesh2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU024", password: "Nilesh2", name: "Nilesh2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU025", password: "Hitesh2", name: "Hitesh2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU026", password: "Ketan2", name: "Ketan2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU027", password: "Suresh2", name: "Suresh2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU028", password: "Mahesh2", name: "Mahesh2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU029", password: "Ramesh2", name: "Ramesh2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU030", password: "Sanjay2", name: "Sanjay2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU031", password: "Vijay2", name: "Vijay2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU032", password: "Ravi2", name: "Ravi2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU033", password: "Ajay2", name: "Ajay2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU034", password: "Deepak2", name: "Deepak2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU035", password: "Sandeep2", name: "Sandeep2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU036", password: "Rakesh2", name: "Rakesh2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU037", password: "Anil2", name: "Anil2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU038", password: "Sunil2", name: "Sunil2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU039", password: "Pankaj2", name: "Pankaj2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU040", password: "Nitin2", name: "Nitin2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU041", password: "Akash2", name: "Akash2", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU042", password: "Rohit3", name: "Rohit3", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU043", password: "Jayesh3", name: "Jayesh3", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU044", password: "Nilesh3", name: "Nilesh3", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU045", password: "Hitesh3", name: "Hitesh3", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU046", password: "Ketan3", name: "Ketan3", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU047", password: "Suresh3", name: "Suresh3", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU048", password: "Mahesh3", name: "Mahesh3", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU049", password: "Ramesh3", name: "Ramesh3", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false },
+                { id: "STU050", password: "Sanjay3", name: "Sanjay3", mobile: "9106141725", attendance: 100, fees: "Paid", certificate: false }
 
+            ];
             const ADMINS = [
-                { username: "Akash", password: "Akash123" }
+                { username: "Akash", password: "Akash123" },
 
             ];
 
@@ -2793,11 +2845,14 @@ justify-content:space-between;
             ----------------------- */
 
             if (!localStorage.getItem("students")) {
-                localStorage.setItem("students", "[]");
-            }
+    localStorage.setItem(
+        "students",
+        JSON.stringify(DEFAULT_STUDENTS)
+    );
+}
 
             if (!localStorage.getItem("admin")) {
-
+                localStorage.setItem("admin", JSON.stringify(ADMINS));
             }
 
             /* -----------------------
@@ -2835,36 +2890,44 @@ justify-content:space-between;
             ----------------------- */
             function studentLogin() {
 
+    let savedStudents =
+        JSON.parse(localStorage.getItem("students")) || [];
 
-                let students = JSON.parse(localStorage.getItem("students")) || [];
+    // localStorage + Default Array બંને જોડો
+    let students = [...DEFAULT_STUDENTS, ...savedStudents];
 
-                let studentId =
-                    document.getElementById("loginUser").value;
+    // એક જ ID બે વખત ન આવે
+    students = students.filter(
+        (student, index, self) =>
+            index === self.findIndex(s => s.id === student.id)
+    );
 
-                let password =
-                    document.getElementById("loginPass").value;
+    let studentId = document.getElementById("loginUser").value.trim();
+    let password = document.getElementById("loginPass").value;
 
-                let user = students.find(s =>
-                    s.id === studentId &&
-                    s.password === password
-                );
+    let user = students.find(s =>
+        s.id === studentId &&
+        s.password === password
+    );
 
-                if (user) {
+    if (user) {
 
-                    localStorage.setItem("currentStudent", JSON.stringify(user));
+        localStorage.setItem(
+            "currentStudent",
+            JSON.stringify(user)
+        );
 
-                    document.getElementById("studentWelcome").innerHTML =
-                        "Welcome, " + user.name;
+        document.getElementById("studentWelcome").innerHTML =
+            "Welcome, " + user.name;
 
-                    showScreen("studentDashboard");
+        showScreen("studentDashboard");
 
-                } else {
+    } else {
 
-                    alert("Invalid Login");
+        alert("Invalid Login");
 
-                }
-            }
-
+    }
+}
             /* -----------------------
             ADMIN LOGIN
             ----------------------- */
@@ -3182,7 +3245,7 @@ style="background:#ff9800;color:white;padding:6px 10px;border:none;border-radius
                     user.grade =
                         score === 5 ? "A+" :
                             score === 4 ? "A" :
-                                score === 3 ? "B" : "C";
+                                score === 3 ? "B" : "C";    
 
                     user.percentage = ((score / 5) * 100).toFixed(0);
 
@@ -3697,30 +3760,30 @@ Password : ${password}`
 
             function resetPassword(studentId) {
 
-    let adminPassword = prompt("Enter Admin Password");
+                let adminPassword = prompt("Enter Admin Password");
 
-    // તમારો Admin Password
-    if (adminPassword !== "Akash123") {
-        alert("Wrong Admin Password");
-        return;
-    }
+                // તમારો Admin Password
+                if (adminPassword !== "Akash123") {
+                    alert("Wrong Admin Password");
+                    return;
+                }
 
-    let newPassword = prompt("Enter New Student Password");
+                let newPassword = prompt("Enter New Student Password");
 
-    if (!newPassword) return;
+                if (!newPassword) return;
 
-    let students = JSON.parse(localStorage.getItem("students")) || [];
+                let students = JSON.parse(localStorage.getItem("students")) || [];
 
-    students.forEach(student => {
-        if (student.id === studentId) {
-            student.password = newPassword;
-        }
-    });
+                students.forEach(student => {
+                    if (student.id === studentId) {
+                        student.password = newPassword;
+                    }
+                });
 
-    localStorage.setItem("students", JSON.stringify(students));
+                localStorage.setItem("students", JSON.stringify(students));
 
-    alert("Student Password Changed Successfully");
-}
+                alert("Student Password Changed Successfully");
+            }
 
 
             //  BOOK SYSTEM
