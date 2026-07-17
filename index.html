@@ -2846,11 +2846,11 @@ justify-content:space-between;
             ----------------------- */
 
             if (!localStorage.getItem("students")) {
-    localStorage.setItem(
-        "students",
-        JSON.stringify(DEFAULT_STUDENTS)
-    );
-}
+                localStorage.setItem(
+                    "students",
+                    JSON.stringify(DEFAULT_STUDENTS)
+                );
+            }
 
             if (!localStorage.getItem("admin")) {
                 localStorage.setItem("admin", JSON.stringify(ADMINS));
@@ -2891,44 +2891,44 @@ justify-content:space-between;
             ----------------------- */
             function studentLogin() {
 
-    let savedStudents =
-        JSON.parse(localStorage.getItem("students")) || [];
+                let savedStudents =
+                    JSON.parse(localStorage.getItem("students")) || [];
 
-    // localStorage + Default Array બંને જોડો
-    let students = [...DEFAULT_STUDENTS, ...savedStudents];
+                // localStorage + Default Array બંને જોડો
+                let students = [...DEFAULT_STUDENTS, ...savedStudents];
 
-    // એક જ ID બે વખત ન આવે
-    students = students.filter(
-        (student, index, self) =>
-            index === self.findIndex(s => s.id === student.id)
-    );
+                // એક જ ID બે વખત ન આવે
+                students = students.filter(
+                    (student, index, self) =>
+                        index === self.findIndex(s => s.id === student.id)
+                );
 
-    let studentId = document.getElementById("loginUser").value.trim();
-    let password = document.getElementById("loginPass").value;
+                let studentId = document.getElementById("loginUser").value.trim();
+                let password = document.getElementById("loginPass").value;
 
-    let user = students.find(s =>
-        s.id === studentId &&
-        s.password === password
-    );
+                let user = students.find(s =>
+                    s.id === studentId &&
+                    s.password === password
+                );
 
-    if (user) {
+                if (user) {
 
-        localStorage.setItem(
-            "currentStudent",
-            JSON.stringify(user)
-        );
+                    localStorage.setItem(
+                        "currentStudent",
+                        JSON.stringify(user)
+                    );
 
-        document.getElementById("studentWelcome").innerHTML =
-            "Welcome, " + user.name;
+                    document.getElementById("studentWelcome").innerHTML =
+                        "Welcome, " + user.name;
 
-        showScreen("studentDashboard");
+                    showScreen("studentDashboard");
 
-    } else {
+                } else {
 
-        alert("Invalid Login");
+                    alert("Invalid Login");
 
-    }
-}
+                }
+            }
             /* -----------------------
             ADMIN LOGIN
             ----------------------- */
@@ -3246,7 +3246,7 @@ style="background:#ff9800;color:white;padding:6px 10px;border:none;border-radius
                     user.grade =
                         score === 5 ? "A+" :
                             score === 4 ? "A" :
-                                score === 3 ? "B" : "C";    
+                                score === 3 ? "B" : "C";
 
                     user.percentage = ((score / 5) * 100).toFixed(0);
 
@@ -4196,6 +4196,9 @@ Password : ${password}`
 
             }
 
+            window.addEventListener("beforeunload", function () {
+                logout();
+            });
         </script>
 
 
