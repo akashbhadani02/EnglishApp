@@ -947,11 +947,11 @@
                 b.innerText = o;
                 b.onclick = () => {
                     if (i === q.correct) {
-                        updateWallet(0.5); // સાચો જવાબ પર 0.5
-                        alert("સાચો! +₹0.5");
+                        updateWallet(0.20); // સાચો જવાબ પર 0.20
+                        alert("સાચો! +₹0.20");
                     } else {
-                        updateWallet(-0.2); // ખોટો જવાબ પર 0.2 માઈનસ
-                        alert("ખોટો! -₹0.2");
+                        updateWallet(-0.15); // ખોટો જવાબ પર 0.2 માઈનસ
+                        alert("ખોટો! -₹0.15");
                     }
                     loadQuiz();
                 };
