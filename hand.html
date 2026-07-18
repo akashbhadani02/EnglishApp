@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>English Learning Game</title>
+    <style>
+        body { margin: 0; background: #222; color: #fff; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; }
+        #cursor { position: absolute; width: 25px; height: 25px; background: #0f0; border-radius: 50%; pointer-events: none; z-index: 100; box-shadow: 0 0 15px #0f0; }
+        #status { position: fixed; top: 20px; z-index: 200; background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 20px; border: 1px solid #fff; }
+        #btn-start { padding: 15px 30px; font-size: 20px; cursor: pointer; background: #0f0; border: none; border-radius: 10px; margin-top: 100px; }
+        .word-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; padding: 80px 20px; display: none; }
+        .word { display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #fff; border-radius: 12px; background: #333; width: 100px; text-align: center; }
+        .word img { width: 50px; height: 50px; margin-bottom: 8px; }
+    </style>
+</head>
+<body>
+
+    <button id="btn-start">Start Camera</button>
+    <div id="status"></div>
+    <div id="cursor"></div>
+    <div class="word-container" id="container"></div>
+    <video id="v" autoplay playsinline style="display:none;"></video>
+
+    <!-- MediaPipe Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+
+    <script>
+        const wordsList = [
+    {name: "Apple", img: "https://cdn-icons-png.flaticon.com/128/415/415733.png"},
+    {name: "Banana", img: "https://cdn-icons-png.flaticon.com/128/2909/2909765.png"},
+    {name: "Cat", img: "https://cdn-icons-png.flaticon.com/128/4080/4080017.png"},
+    {name: "Dog", img: "https://cdn-icons-png.flaticon.com/128/616/616408.png"},
+    {name: "Book", img: "https://cdn-icons-png.flaticon.com/128/2232/2232688.png"},
+    {name: "Sun", img: "https://cdn-icons-png.flaticon.com/128/869/869869.png"},
+    {name: "Moon", img: "https://cdn-icons-png.flaticon.com/128/1164/1164923.png"},
+    {name: "Fish", img: "https://cdn-icons-png.flaticon.com/128/2716/2716054.png"},
+    {name: "Bird", img: "https://cdn-icons-png.flaticon.com/128/2353/2353775.png"},
+    {name: "Tree", img: "https://cdn-icons-png.flaticon.com/128/2785/2785002.png"},
+    {name: "Car", img: "https://cdn-icons-png.flaticon.com/128/3062/3062634.png"},
+    {name: "Bus", img: "https://cdn-icons-png.flaticon.com/128/3062/3062645.png"},
+    {name: "Pen", img: "https://cdn-icons-png.flaticon.com/128/2355/2355523.png"},
+    {name: "Cup", img: "https://cdn-icons-png.flaticon.com/128/2725/2725211.png"},
+    {name: "Hat", img: "https://cdn-icons-png.flaticon.com/128/2784/2784403.png"},
+    {name: "Ball", img: "https://cdn-icons-png.flaticon.com/128/2590/2590509.png"},
+    {name: "Key", img: "https://cdn-icons-png.flaticon.com/128/2618/2618214.png"},
+    {name: "Lamp", img: "https://cdn-icons-png.flaticon.com/128/2771/2771092.png"},
+    {name: "Star", img: "https://cdn-icons-png.flaticon.com/128/1828/1828884.png"},
+    {name: "Cake", img: "https://cdn-icons-png.flaticon.com/128/2714/2714044.png"},
+    {name: "Milk", img: "https://cdn-icons-png.flaticon.com/128/2620/2620601.png"},
+    {name: "Hand", img: "https://cdn-icons-png.flaticon.com/128/2553/2553406.png"},
+    {name: "Eye", img: "https://cdn-icons-png.flaticon.com/128/2767/2767146.png"},
+    {name: "Foot", img: "https://cdn-icons-png.flaticon.com/128/2921/2921226.png"},
+    {name: "Chair", img: "https://cdn-icons-png.flaticon.com/128/2553/2553633.png"},
+    {name: "Table", img: "https://cdn-icons-png.flaticon.com/128/2553/2553678.png"},
+    {name: "Bag", img: "https://cdn-icons-png.flaticon.com/128/2733/2733971.png"},
+    {name: "Box", img: "https://cdn-icons-png.flaticon.com/128/2716/2716075.png"},
+    {name: "Door", img: "https://cdn-icons-png.flaticon.com/128/2716/2716091.png"},
+    {name: "Clock", img: "https://cdn-icons-png.flaticon.com/128/2696/2696199.png"},
+    {name: "Phone", img: "https://cdn-icons-png.flaticon.com/128/2544/2544087.png"},
+    {name: "Ship", img: "https://cdn-icons-png.flaticon.com/128/3062/3062638.png"},
+    {name: "Bike", img: "https://cdn-icons-png.flaticon.com/128/3062/3062641.png"},
+    {name: "Duck", img: "https://cdn-icons-png.flaticon.com/128/2716/2716056.png"},
+    {name: "Frog", img: "https://cdn-icons-png.flaticon.com/128/2716/2716053.png"},
+    {name: "Lion", img: "https://cdn-icons-png.flaticon.com/128/2716/2716073.png"},
+    {name: "Cow", img: "https://cdn-icons-png.flaticon.com/128/2716/2716065.png"},
+    {name: "Pig", img: "https://cdn-icons-png.flaticon.com/128/2716/2716061.png"},
+    {name: "Ant", img: "https://cdn-icons-png.flaticon.com/128/2716/2716068.png"},
+    {name: "Bee", img: "https://cdn-icons-png.flaticon.com/128/2716/2716059.png"},
+    {name: "Fire", img: "https://cdn-icons-png.flaticon.com/128/2716/2716078.png"},
+    {name: "Ice", img: "https://cdn-icons-png.flaticon.com/128/2716/2716076.png"},
+    {name: "Rain", img: "https://cdn-icons-png.flaticon.com/128/2716/2716084.png"},
+    {name: "Snow", img: "https://cdn-icons-png.flaticon.com/128/2716/2716086.png"},
+    {name: "Wind", img: "https://cdn-icons-png.flaticon.com/128/2716/2716096.png"},
+    {name: "Cloud", img: "https://cdn-icons-png.flaticon.com/128/2716/2716082.png"},
+    {name: "Gold", img: "https://cdn-icons-png.flaticon.com/128/2716/2716099.png"},
+    {name: "Ring", img: "https://cdn-icons-png.flaticon.com/128/2716/2716104.png"},
+    {name: "Gift", img: "https://cdn-icons-png.flaticon.com/128/2716/2716110.png"},
+    {name: "Toy", img: "https://cdn-icons-png.flaticon.com/128/2716/2716113.png"}
+];
+
+        const container = document.getElementById('container');
+        const btnStart = document.getElementById('btn-start');
+        const status = document.getElementById('status');
+        const v = document.getElementById('v');
+
+        wordsList.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'word';
+            div.innerHTML = `<img src="${item.img}"><span>${item.name}</span>`;
+            container.appendChild(div);
+        });
+
+        const hands = new Hands({
+            locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+        });
+
+        hands.setOptions({
+            maxNumHands: 1,
+            modelComplexity: 1,
+            minDetectionConfidence: 0.5,
+            minTrackingConfidence: 0.5
+        });
+
+        hands.onResults(r => {
+            if (r.multiHandLandmarks && r.multiHandLandmarks.length > 0) {
+                status.innerText = "હાથ ટ્રેક થઈ રહ્યો છે!";
+                const lm = r.multiHandLandmarks[0][8];
+                const x = (1 - lm.x) * window.innerWidth;
+                const y = lm.y * window.innerHeight;
+                document.getElementById('cursor').style.left = (x - 12) + 'px';
+                document.getElementById('cursor').style.top = (y - 12) + 'px';
+
+                document.querySelectorAll('.word').forEach(w => {
+                    const rect = w.getBoundingClientRect();
+                    if (x > rect.left && x < rect.right && y > rect.top && y < rect.bottom) {
+                        if (!window.speechSynthesis.speaking) {
+                            const u = new SpeechSynthesisUtterance(w.querySelector('span').innerText);
+                            window.speechSynthesis.speak(u);
+                        }
+                    }
+                });
+            } else {
+                status.innerText = "હાથ કેમેરા સામે લાવો...";
+            }
+        });
+
+        btnStart.addEventListener('click', async () => {
+            btnStart.style.display = 'none';
+            container.style.display = 'flex';
+            
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
+                v.srcObject = stream;
+                const cam = new Camera(v, {
+                    onFrame: async () => { await hands.send({ image: v }); },
+                    width: 640,
+                    height: 480
+                });
+                await cam.start();
+            } catch (e) {
+                status.innerText = "Error: " + e.message;
+            }
+        });
+    </script>
+</body>
+</html> 
