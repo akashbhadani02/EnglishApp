@@ -1,18 +1,80 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>English Learning Game</title>
     <style>
-        body { margin: 0; background: #222; color: #fff; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; }
-        #cursor { position: absolute; width: 25px; height: 25px; background: #0f0; border-radius: 50%; pointer-events: none; z-index: 100; box-shadow: 0 0 15px #0f0; }
-        #status { position: fixed; top: 20px; z-index: 200; background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 20px; border: 1px solid #fff; }
-        #btn-start { padding: 15px 30px; font-size: 20px; cursor: pointer; background: #0f0; border: none; border-radius: 10px; margin-top: 100px; }
-        .word-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; padding: 80px 20px; display: none; }
-        .word { display: flex; flex-direction: column; align-items: center; padding: 15px; border: 2px solid #fff; border-radius: 12px; background: #333; width: 100px; text-align: center; }
-        .word img { width: 50px; height: 50px; margin-bottom: 8px; }
+        body {
+            margin: 0;
+            background: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #cursor {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: #0f0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 100;
+            box-shadow: 0 0 15px #0f0;
+        }
+
+        #status {
+            position: fixed;
+            top: 20px;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid #fff;
+        }
+
+        #btn-start {
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            background: #0f0;
+            border: none;
+            border-radius: 10px;
+            margin-top: 100px;
+        }
+
+        .word-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            padding: 80px 20px;
+            display: none;
+        }
+
+        .word {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #fff;
+            border-radius: 12px;
+            background: #333;
+            width: 100px;
+            text-align: center;
+        }
+
+        .word img {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 8px;
+        }
     </style>
 </head>
+
 <body>
 
     <button id="btn-start">Start Camera</button>
@@ -27,57 +89,80 @@
 
     <script>
         const wordsList = [
-    {name: "Apple", img: "https://cdn-icons-png.flaticon.com/128/415/415733.png"},
-    {name: "Banana", img: "https://cdn-icons-png.flaticon.com/128/2909/2909765.png"},
-    {name: "Cat", img: "https://cdn-icons-png.flaticon.com/128/4080/4080017.png"},
-    {name: "Dog", img: "https://cdn-icons-png.flaticon.com/128/616/616408.png"},
-    {name: "Book", img: "https://cdn-icons-png.flaticon.com/128/2232/2232688.png"},
-    {name: "Sun", img: "https://cdn-icons-png.flaticon.com/128/869/869869.png"},
-    {name: "Moon", img: "https://cdn-icons-png.flaticon.com/128/1164/1164923.png"},
-    {name: "Fish", img: "https://cdn-icons-png.flaticon.com/128/2716/2716054.png"},
-    {name: "Bird", img: "https://cdn-icons-png.flaticon.com/128/2353/2353775.png"},
-    {name: "Tree", img: "https://cdn-icons-png.flaticon.com/128/2785/2785002.png"},
-    {name: "Car", img: "https://cdn-icons-png.flaticon.com/128/3062/3062634.png"},
-    {name: "Bus", img: "https://cdn-icons-png.flaticon.com/128/3062/3062645.png"},
-    {name: "Pen", img: "https://cdn-icons-png.flaticon.com/128/2355/2355523.png"},
-    {name: "Cup", img: "https://cdn-icons-png.flaticon.com/128/2725/2725211.png"},
-    {name: "Hat", img: "https://cdn-icons-png.flaticon.com/128/2784/2784403.png"},
-    {name: "Ball", img: "https://cdn-icons-png.flaticon.com/128/2590/2590509.png"},
-    {name: "Key", img: "https://cdn-icons-png.flaticon.com/128/2618/2618214.png"},
-    {name: "Lamp", img: "https://cdn-icons-png.flaticon.com/128/2771/2771092.png"},
-    {name: "Star", img: "https://cdn-icons-png.flaticon.com/128/1828/1828884.png"},
-    {name: "Cake", img: "https://cdn-icons-png.flaticon.com/128/2714/2714044.png"},
-    {name: "Milk", img: "https://cdn-icons-png.flaticon.com/128/2620/2620601.png"},
-    {name: "Hand", img: "https://cdn-icons-png.flaticon.com/128/2553/2553406.png"},
-    {name: "Eye", img: "https://cdn-icons-png.flaticon.com/128/2767/2767146.png"},
-    {name: "Foot", img: "https://cdn-icons-png.flaticon.com/128/2921/2921226.png"},
-    {name: "Chair", img: "https://cdn-icons-png.flaticon.com/128/2553/2553633.png"},
-    {name: "Table", img: "https://cdn-icons-png.flaticon.com/128/2553/2553678.png"},
-    {name: "Bag", img: "https://cdn-icons-png.flaticon.com/128/2733/2733971.png"},
-    {name: "Box", img: "https://cdn-icons-png.flaticon.com/128/2716/2716075.png"},
-    {name: "Door", img: "https://cdn-icons-png.flaticon.com/128/2716/2716091.png"},
-    {name: "Clock", img: "https://cdn-icons-png.flaticon.com/128/2696/2696199.png"},
-    {name: "Phone", img: "https://cdn-icons-png.flaticon.com/128/2544/2544087.png"},
-    {name: "Ship", img: "https://cdn-icons-png.flaticon.com/128/3062/3062638.png"},
-    {name: "Bike", img: "https://cdn-icons-png.flaticon.com/128/3062/3062641.png"},
-    {name: "Duck", img: "https://cdn-icons-png.flaticon.com/128/2716/2716056.png"},
-    {name: "Frog", img: "https://cdn-icons-png.flaticon.com/128/2716/2716053.png"},
-    {name: "Lion", img: "https://cdn-icons-png.flaticon.com/128/2716/2716073.png"},
-    {name: "Cow", img: "https://cdn-icons-png.flaticon.com/128/2716/2716065.png"},
-    {name: "Pig", img: "https://cdn-icons-png.flaticon.com/128/2716/2716061.png"},
-    {name: "Ant", img: "https://cdn-icons-png.flaticon.com/128/2716/2716068.png"},
-    {name: "Bee", img: "https://cdn-icons-png.flaticon.com/128/2716/2716059.png"},
-    {name: "Fire", img: "https://cdn-icons-png.flaticon.com/128/2716/2716078.png"},
-    {name: "Ice", img: "https://cdn-icons-png.flaticon.com/128/2716/2716076.png"},
-    {name: "Rain", img: "https://cdn-icons-png.flaticon.com/128/2716/2716084.png"},
-    {name: "Snow", img: "https://cdn-icons-png.flaticon.com/128/2716/2716086.png"},
-    {name: "Wind", img: "https://cdn-icons-png.flaticon.com/128/2716/2716096.png"},
-    {name: "Cloud", img: "https://cdn-icons-png.flaticon.com/128/2716/2716082.png"},
-    {name: "Gold", img: "https://cdn-icons-png.flaticon.com/128/2716/2716099.png"},
-    {name: "Ring", img: "https://cdn-icons-png.flaticon.com/128/2716/2716104.png"},
-    {name: "Gift", img: "https://cdn-icons-png.flaticon.com/128/2716/2716110.png"},
-    {name: "Toy", img: "https://cdn-icons-png.flaticon.com/128/2716/2716113.png"}
-];
+            { name: "Apple", img: "https://img.icons8.com/color/96/apple.png" },
+            { name: "Banana", img: "https://img.icons8.com/color/96/banana.png" },
+            { name: "Cat", img: "https://img.icons8.com/color/96/cat.png" },
+            { name: "Dog", img: "https://img.icons8.com/color/96/dog.png" },
+            { name: "Book", img: "https://img.icons8.com/color/96/book.png" },
+            { name: "Sun", img: "https://img.icons8.com/color/96/sun.png" },
+            { name: "Moon", img: "https://img.icons8.com/color/96/full-moon.png" },
+            { name: "Fish", img: "https://img.icons8.com/color/96/fish.png" },
+            { name: "Bird", img: "https://img.icons8.com/color/96/bird.png" },
+            { name: "Tree", img: "https://img.icons8.com/color/96/deciduous-tree.png" },
+            { name: "Car", img: "https://img.icons8.com/color/96/car.png" },
+            { name: "Bus", img: "https://img.icons8.com/color/96/bus.png" },
+            { name: "Pen", img: "https://img.icons8.com/color/96/pen.png" },
+            { name: "Cup", img: "https://img.icons8.com/color/96/tea-cup.png" },
+            { name: "Cap", img: "https://img.icons8.com/color/96/baseball-cap.png" },
+            { name: "Ball", img: "https://img.icons8.com/color/96/football2.png" },
+            { name: "Key", img: "https://img.icons8.com/color/96/key.png" },
+            { name: "Star", img: "https://img.icons8.com/color/96/star.png" },
+            { name: "Cake", img: "https://img.icons8.com/color/96/birthday-cake.png" },
+            { name: "Milk", img: "https://img.icons8.com/color/96/milk-bottle.png" },
+            { name: "Hand", img: "https://img.icons8.com/color/96/hand.png" },
+            { name: "Eye", img: "https://img.icons8.com/color/96/visible.png" },
+            { name: "Chair", img: "https://img.icons8.com/color/96/chair.png" },
+            { name: "Table", img: "https://img.icons8.com/color/96/table.png" },
+            { name: "Bag", img: "https://img.icons8.com/color/96/backpack.png" },
+            { name: "Box", img: "https://img.icons8.com/color/96/box.png" },
+            { name: "Door", img: "https://img.icons8.com/color/96/door.png" },
+            { name: "Clock", img: "https://img.icons8.com/color/96/clock.png" },
+            { name: "Phone", img: "https://img.icons8.com/color/96/smartphone.png" },
+            { name: "Bike", img: "https://img.icons8.com/color/96/bicycle.png" },
+            { name: "Duck", img: "https://img.icons8.com/color/96/duck.png" },
+            { name: "Frog", img: "https://img.icons8.com/color/96/frog.png" },
+            { name: "Lion", img: "https://img.icons8.com/color/96/lion.png" },
+            { name: "Cow", img: "https://img.icons8.com/color/96/cow.png" },
+            { name: "Pig", img: "https://img.icons8.com/color/96/pig.png" },
+            { name: "Ant", img: "https://img.icons8.com/color/96/ant.png" },
+            { name: "Bee", img: "https://img.icons8.com/color/96/bee.png" },
+            { name: "Fire", img: "https://img.icons8.com/color/96/fire-element.png" },
+            { name: "Ice", img: "https://img.icons8.com/color/96/iceberg.png" },
+            { name: "Rain", img: "https://img.icons8.com/color/96/rain.png" },
+            { name: "Snow", img: "https://img.icons8.com/color/96/snow.png" },
+            { name: "Wind", img: "https://img.icons8.com/color/96/wind.png" },
+            { name: "Cloud", img: "https://img.icons8.com/color/96/cloud.png" },
+            { name: "Gold", img: "https://img.icons8.com/color/96/gold-bars.png" },
+            { name: "Gift", img: "https://img.icons8.com/color/96/gift.png" },
+            { name: "Toy", img: "https://img.icons8.com/color/96/teddy-bear.png" },
+            { name: "Ring", img: "https://img.icons8.com/color/96/diamond-ring.png" },
+            { name: "Bottle", img: "https://img.icons8.com/color/96/water-bottle.png" },
+            { name: "Pizza", img: "https://img.icons8.com/color/96/pizza.png" },
+            { name: "Orange", img: "https://img.icons8.com/color/96/orange.png" },
+            { name: "Mango", img: "https://img.icons8.com/?size=96&id=92144&format=png" },
+            { name: "Grapes", img: "https://img.icons8.com/color/96/grapes.png" },
+            { name: "Strawberry", img: "https://img.icons8.com/color/96/strawberry.png" },
+            { name: "Pineapple", img: "https://img.icons8.com/color/96/pineapple.png" },
+            { name: "Watermelon", img: "https://img.icons8.com/color/96/watermelon.png" },
+            { name: "Cherry", img: "https://img.icons8.com/color/96/cherry.png" },
+            { name: "Pear", img: "https://img.icons8.com/color/96/pear.png" },
+            { name: "Peach", img: "https://img.icons8.com/color/96/peach.png" },
+            { name: "Coconut", img: "https://img.icons8.com/color/96/coconut.png" },
+            { name: "Egg", img: "https://img.icons8.com/color/96/egg.png" },
+            { name: "Bread", img: "https://img.icons8.com/color/96/bread.png" },
+            { name: "Burger", img: "https://img.icons8.com/color/96/hamburger.png" },
+            { name: "Sandwich", img: "https://img.icons8.com/color/96/sandwich.png" },
+            { name: "Noodles", img: "https://img.icons8.com/color/96/noodles.png" },
+            { name: "Rice", img: "https://img.icons8.com/color/96/rice-bowl.png" },
+            { name: "Cheese", img: "https://img.icons8.com/color/96/cheese.png" },
+            { name: "Cookie", img: "https://img.icons8.com/color/96/cookie.png" },
+            { name: "Donut", img: "https://img.icons8.com/color/96/doughnut.png" },
+            { name: "Candy", img: "https://img.icons8.com/color/96/candy.png" },
+            { name: "Pencil", img: "https://img.icons8.com/color/96/pencil.png" },
+            { name: "Eraser", img: "https://img.icons8.com/color/96/eraser.png" },
+            { name: "Ruler", img: "https://img.icons8.com/color/96/ruler.png" },
+            { name: "Scissors", img: "https://img.icons8.com/color/96/scissors.png" }
+        ];
 
         const container = document.getElementById('container');
         const btnStart = document.getElementById('btn-start');
@@ -128,7 +213,7 @@
         btnStart.addEventListener('click', async () => {
             btnStart.style.display = 'none';
             container.style.display = 'flex';
-            
+
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480 } });
                 v.srcObject = stream;
@@ -144,4 +229,5 @@
         });
     </script>
 </body>
-</html> 
+
+</html>
