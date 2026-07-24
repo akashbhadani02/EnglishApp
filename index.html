@@ -2159,59 +2159,6 @@
 
         }
 
-        /* ===== PREMIUM MOUSE CURSOR ===== */
-
-        body {
-            cursor: none;
-        }
-
-        .cursor {
-            position: fixed;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: 0.15s;
-            z-index: 99999999;
-        }
-
-        .dot {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            background: #000000;
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            z-index: 99999999;
-        }
-
-        .mouse-particle {
-            position: fixed;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: mouseTrail .8s linear forwards;
-            z-index: 9999999;
-        }
-
-        @keyframes mouseTrail {
-            0% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(1);
-            }
-
-            100% {
-                opacity: 0;
-                transform:
-                    translate(calc(-50% + var(--x)),
-                        calc(-50% + var(--y))) scale(3);
-            }
-        }
-
-
         .newStudentBtn {
             display: block !important;
             width: 100%;
@@ -2707,9 +2654,6 @@ justify-content:space-between;
         <button onclick="showScreen('bookScreen')" style="width: 100%;">
             Back To Books
         </button>
-
-        <div class="cursor"></div>
-        <div class="dot"></div>
 
 
         <script>
@@ -4064,92 +4008,7 @@ Password : ${password}`
 
             });
 
-            // ===== Premium Mouse Cursor =====
-
-            const cursor = document.querySelector(".cursor");
-            const dot = document.querySelector(".dot");
-
-            if (cursor && dot) {
-
-                document.addEventListener("mousemove", (e) => {
-
-                    cursor.style.left = e.clientX + "px";
-                    cursor.style.top = e.clientY + "px";
-
-                    dot.style.left = e.clientX + "px";
-                    dot.style.top = e.clientY + "px";
-
-                    createTrail(e.clientX, e.clientY);
-
-                });
-
-                function createTrail(x, y) {
-
-                    const p = document.createElement("div");
-
-                    p.className = "mouse-particle";
-
-                    p.style.left = x + "px";
-                    p.style.top = y + "px";
-
-                    const colors = [
-                        "#00ffff",
-                        "#00ff00",
-                        "#ff00ff",
-                        "#ff0000",
-                        "#ffff00",
-                        "#008cff"
-                    ];
-
-                    const color = colors[Math.floor(Math.random() * colors.length)];
-
-                    p.style.background = color;
-                    p.style.boxShadow = "0 0 20px " + color;
-
-                    p.style.setProperty("--x", (Math.random() * 100 - 50) + "px");
-                    p.style.setProperty("--y", (Math.random() * 100 - 50) + "px");
-
-                    document.body.appendChild(p);
-
-                    setTimeout(() => {
-                        p.remove();
-                    }, 800);
-
-                }
-
-                document.addEventListener("click", (e) => {
-
-                    for (let i = 0; i < 25; i++) {
-
-                        createTrail(e.clientX, e.clientY);
-
-                    }
-
-                });
-
-                document.querySelectorAll("button,a,input,.tile,.card").forEach(el => {
-
-                    el.addEventListener("mouseenter", () => {
-
-                        cursor.style.width = "60px";
-                        cursor.style.height = "60px";
-
-                    });
-
-                    el.addEventListener("mouseleave", () => {
-
-                        cursor.style.width = "35px";
-                        cursor.style.height = "35px";
-
-                    });
-
-                });
-
-            }
-
-            window.addEventListener("beforeunload", function () {
-                logout();
-            });
+           
         </script>
 
 
