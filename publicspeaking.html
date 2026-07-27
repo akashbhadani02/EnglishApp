@@ -1,0 +1,4076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SpeakPro Academy - English Speaking & Public Speaking</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+:root{
+    --primary:#10b981;
+    --primary-dark:#047857;
+    --secondary:#0f172a;
+    --bg:#f1f5f9;
+    --card:#ffffff;
+    --text:#0f172a;
+    --muted:#64748b;
+    --border:#e2e8f0;
+    --danger:#ef4444;
+    --warning:#f59e0b;
+    --blue:#3b82f6;
+    --purple:#8b5cf6;
+    --shadow:0 12px 35px rgba(15,23,42,.08);
+}
+
+body{
+    font-family:
+    Inter,
+    Arial,
+    Helvetica,
+    sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+    display:flex;
+    min-height:100vh;
+}
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar{
+    width:270px;
+    background:
+    linear-gradient(
+        180deg,
+        #022c22,
+        #064e3b
+    );
+    color:white;
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    z-index:100;
+    display:flex;
+    flex-direction:column;
+    transition:.3s;
+}
+
+.logo{
+    padding:25px 22px;
+    border-bottom:1px solid rgba(255,255,255,.1);
+}
+
+.logo h1{
+    font-size:23px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo p{
+    font-size:12px;
+    color:#a7f3d0;
+    margin-top:6px;
+}
+
+.sidebar-nav{
+    padding:18px 12px;
+    flex:1;
+    overflow-y:auto;
+}
+
+.nav-item{
+    width:100%;
+    border:none;
+    background:transparent;
+    color:#d1fae5;
+    padding:13px 15px;
+    border-radius:12px;
+    margin-bottom:7px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    text-align:left;
+    transition:.2s;
+}
+
+.nav-item:hover,
+.nav-item.active{
+    background:rgba(255,255,255,.14);
+    color:white;
+}
+
+.nav-icon{
+    width:24px;
+    text-align:center;
+    font-size:18px;
+}
+
+.sidebar-bottom{
+    padding:15px;
+    border-top:1px solid rgba(255,255,255,.1);
+}
+
+.streak-mini{
+    background:rgba(255,255,255,.1);
+    padding:14px;
+    border-radius:14px;
+}
+
+.streak-mini strong{
+    display:block;
+    font-size:20px;
+    margin-bottom:3px;
+}
+
+.streak-mini span{
+    font-size:12px;
+    color:#a7f3d0;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main{
+    margin-left:270px;
+    width:calc(100% - 270px);
+    min-height:100vh;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+    height:72px;
+    background:white;
+    border-bottom:1px solid var(--border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    position:sticky;
+    top:0;
+    z-index:50;
+}
+
+.menu-btn{
+    display:none;
+    border:none;
+    background:#f1f5f9;
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:20px;
+}
+
+.page-title h2{
+    font-size:20px;
+}
+
+.page-title p{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:3px;
+}
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.xp-pill{
+    background:#ecfdf5;
+    color:var(--primary-dark);
+    padding:9px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.avatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:
+    linear-gradient(
+        135deg,
+        var(--primary),
+        var(--primary-dark)
+    );
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+}
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content{
+    padding:30px;
+}
+
+.page{
+    display:none;
+}
+
+.page.active{
+    display:block;
+    animation:fadeIn .3s ease;
+}
+
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.welcome{
+    background:
+    linear-gradient(
+        135deg,
+        #064e3b,
+        #059669
+    );
+    color:white;
+    border-radius:24px;
+    padding:32px;
+    position:relative;
+    overflow:hidden;
+    margin-bottom:25px;
+}
+
+.welcome::after{
+    content:"🎤";
+    position:absolute;
+    right:50px;
+    bottom:-20px;
+    font-size:130px;
+    opacity:.12;
+}
+
+.welcome h1{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.welcome p{
+    color:#d1fae5;
+    max-width:650px;
+    line-height:1.6;
+}
+
+.welcome-actions{
+    margin-top:22px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.btn{
+    border:none;
+    padding:11px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:700;
+    transition:.2s;
+    font-size:14px;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+}
+
+.btn-primary{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-primary:hover{
+    background:var(--primary-dark);
+}
+
+.btn-white{
+    background:white;
+    color:var(--primary-dark);
+}
+
+.btn-dark{
+    background:var(--secondary);
+    color:white;
+}
+
+.btn-light{
+    background:#f1f5f9;
+    color:var(--text);
+}
+
+.btn-danger{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.btn-blue{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.btn-purple{
+    background:#ede9fe;
+    color:#6d28d9;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.stat-card{
+    background:white;
+    padding:20px;
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    border:1px solid var(--border);
+}
+
+.stat-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.stat-icon{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    background:#ecfdf5;
+}
+
+.stat-card h3{
+    font-size:28px;
+}
+
+.stat-card p{
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.two-grid{
+    display:grid;
+    grid-template-columns:
+    1.5fr 1fr;
+    gap:22px;
+}
+
+.three-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(3,1fr);
+    gap:18px;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:22px;
+    box-shadow:var(--shadow);
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.card-header h3{
+    font-size:17px;
+}
+
+.card-header span{
+    font-size:12px;
+    color:var(--muted);
+}
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+.progress-wrap{
+    margin-top:12px;
+}
+
+.progress-label{
+    display:flex;
+    justify-content:space-between;
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:7px;
+}
+
+.progress{
+    height:9px;
+    background:#e2e8f0;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:
+    linear-gradient(
+        90deg,
+        var(--primary),
+        #34d399
+    );
+    border-radius:20px;
+    transition:.5s;
+}
+
+/* =========================================================
+   CONTINUE CARD
+========================================================= */
+
+.continue-card{
+    background:
+    linear-gradient(
+        135deg,
+        #eff6ff,
+        #dbeafe
+    );
+    border:1px solid #bfdbfe;
+}
+
+.continue-content{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.continue-content h3{
+    margin-bottom:7px;
+}
+
+.continue-content p{
+    color:#475569;
+    font-size:13px;
+}
+
+/* =========================================================
+   ACTIVITY
+========================================================= */
+
+.activity{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+}
+
+.activity-item{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.activity-icon{
+    width:38px;
+    height:38px;
+    border-radius:10px;
+    background:#ecfdf5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.activity-item strong{
+    display:block;
+    font-size:13px;
+}
+
+.activity-item span{
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header{
+    margin-bottom:25px;
+}
+
+.page-header h1{
+    font-size:27px;
+    margin-bottom:7px;
+}
+
+.page-header p{
+    color:var(--muted);
+}
+
+/* =========================================================
+   LEVELS
+========================================================= */
+
+.level-card{
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.level-card:hover{
+    transform:translateY(-5px);
+}
+
+.level-number{
+    width:48px;
+    height:48px;
+    border-radius:15px;
+    background:#ecfdf5;
+    color:var(--primary-dark);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    font-weight:bold;
+    margin-bottom:15px;
+}
+
+.level-card.locked{
+    opacity:.65;
+    cursor:not-allowed;
+}
+
+.level-card.locked .level-number{
+    background:#f1f5f9;
+    color:#64748b;
+}
+
+.lock-badge{
+    position:absolute;
+    top:18px;
+    right:18px;
+    background:#f1f5f9;
+    color:#64748b;
+    padding:5px 9px;
+    border-radius:15px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.level-card h3{
+    margin-bottom:8px;
+}
+
+.level-card p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
+}
+
+.level-meta{
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+    padding-top:15px;
+    border-top:1px solid var(--border);
+    font-size:12px;
+    color:var(--muted);
+}
+
+/* =========================================================
+   LESSONS
+========================================================= */
+
+.lesson-toolbar{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.lesson-toolbar select,
+.lesson-toolbar input{
+    padding:11px 14px;
+    border:1px solid var(--border);
+    border-radius:10px;
+    outline:none;
+    background:white;
+}
+
+.lesson-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(3,1fr);
+    gap:18px;
+}
+
+.lesson-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+    position:relative;
+}
+
+.lesson-card.completed{
+    border-color:#86efac;
+}
+
+.lesson-card.locked{
+    opacity:.55;
+}
+
+.lesson-number{
+    color:var(--primary-dark);
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.lesson-card h3{
+    font-size:16px;
+    margin-bottom:8px;
+}
+
+.lesson-card p{
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.5;
+    min-height:58px;
+}
+
+.lesson-status{
+    margin:15px 0;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status-complete{
+    color:#16a34a;
+}
+
+.status-locked{
+    color:#64748b;
+}
+
+.status-open{
+    color:#2563eb;
+}
+
+/* =========================================================
+   PRACTICE ROOM
+========================================================= */
+
+.practice-layout{
+    display:grid;
+    grid-template-columns:
+    1.7fr 1fr;
+    gap:22px;
+}
+
+.practice-main{
+    background:white;
+    border-radius:22px;
+    border:1px solid var(--border);
+    padding:28px;
+    box-shadow:var(--shadow);
+}
+
+.practice-label{
+    color:var(--primary-dark);
+    font-size:12px;
+    font-weight:bold;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.practice-main h1{
+    margin:10px 0;
+    font-size:28px;
+}
+
+.practice-description{
+    color:var(--muted);
+    line-height:1.6;
+}
+
+.speech-box{
+    background:#f8fafc;
+    border-left:4px solid var(--primary);
+    padding:20px;
+    border-radius:12px;
+    margin:22px 0;
+    line-height:1.8;
+    font-size:16px;
+}
+
+.timer{
+    text-align:center;
+    font-size:65px;
+    font-weight:800;
+    letter-spacing:3px;
+    margin:20px 0;
+    color:var(--secondary);
+}
+
+.timer-options{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.timer-options button{
+    border:1px solid var(--border);
+    background:white;
+    padding:8px 14px;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+.timer-options button.active{
+    background:var(--primary);
+    color:white;
+    border-color:var(--primary);
+}
+
+.practice-actions{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.practice-side{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.tool-card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:20px;
+}
+
+.tool-card h3{
+    margin-bottom:12px;
+}
+
+.tool-card p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.5;
+}
+
+.recording-status{
+    text-align:center;
+    padding:12px;
+    background:#fef2f2;
+    color:#b91c1c;
+    border-radius:10px;
+    margin:12px 0;
+    font-size:13px;
+    font-weight:bold;
+}
+
+audio{
+    width:100%;
+    margin-top:10px;
+}
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+textarea{
+    width:100%;
+    min-height:150px;
+    padding:15px;
+    border:1px solid var(--border);
+    border-radius:12px;
+    resize:vertical;
+    outline:none;
+    font-family:inherit;
+    line-height:1.6;
+}
+
+textarea:focus{
+    border-color:var(--primary);
+}
+
+/* =========================================================
+   DAILY CHALLENGE
+========================================================= */
+
+.challenge{
+    background:
+    linear-gradient(
+        135deg,
+        #312e81,
+        #7c3aed
+    );
+    color:white;
+    border-radius:22px;
+    padding:35px;
+    text-align:center;
+}
+
+.challenge h2{
+    font-size:28px;
+    margin-bottom:15px;
+}
+
+.challenge-question{
+    font-size:22px;
+    font-weight:bold;
+    max-width:700px;
+    margin:25px auto;
+    line-height:1.5;
+}
+
+.challenge p{
+    color:#ddd6fe;
+}
+
+/* =========================================================
+   VOCABULARY
+========================================================= */
+
+.vocab-card{
+    text-align:center;
+}
+
+.word{
+    font-size:35px;
+    font-weight:800;
+    color:var(--primary-dark);
+    margin:20px 0 10px;
+}
+
+.meaning{
+    color:var(--muted);
+    margin-bottom:20px;
+}
+
+.example{
+    background:#f8fafc;
+    padding:15px;
+    border-radius:10px;
+    font-size:14px;
+    line-height:1.5;
+}
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.badge-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(4,1fr);
+    gap:18px;
+}
+
+.badge{
+    text-align:center;
+    background:white;
+    padding:22px;
+    border:1px solid var(--border);
+    border-radius:18px;
+}
+
+.badge-icon{
+    font-size:42px;
+    margin-bottom:10px;
+    filter:grayscale(1);
+    opacity:.4;
+}
+
+.badge.earned .badge-icon{
+    filter:none;
+    opacity:1;
+}
+
+.badge h3{
+    font-size:14px;
+    margin-bottom:5px;
+}
+
+.badge p{
+    font-size:11px;
+    color:var(--muted);
+}
+
+/* =========================================================
+   PRONUNCIATION
+========================================================= */
+
+.pronunciation-word{
+    text-align:center;
+    font-size:45px;
+    font-weight:bold;
+    color:var(--primary-dark);
+    margin:25px 0;
+}
+
+.pronunciation-tip{
+    background:#ecfdf5;
+    padding:15px;
+    border-radius:12px;
+    color:#065f46;
+    line-height:1.6;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.65);
+    z-index:500;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:650px;
+    max-height:90vh;
+    overflow-y:auto;
+    border-radius:22px;
+    padding:28px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.close-modal{
+    border:none;
+    background:#f1f5f9;
+    width:36px;
+    height:36px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    background:#0f172a;
+    color:white;
+    padding:14px 18px;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    transform:translateY(100px);
+    opacity:0;
+    transition:.3s;
+    z-index:999;
+}
+
+.toast.show{
+    transform:translateY(0);
+    opacity:1;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:1000px){
+
+    .stats-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .two-grid,
+    .practice-layout{
+        grid-template-columns:1fr;
+    }
+
+    .lesson-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+    .badge-grid{
+        grid-template-columns:
+        repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:750px){
+
+    .sidebar{
+        transform:translateX(-100%);
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+        width:100%;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .topbar{
+        padding:0 15px;
+    }
+
+    .content{
+        padding:18px 14px 90px;
+    }
+
+    .page-title p{
+        display:none;
+    }
+
+    .xp-pill{
+        display:none;
+    }
+
+    .welcome{
+        padding:24px;
+    }
+
+    .welcome h1{
+        font-size:24px;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr;
+        gap:10px;
+    }
+
+    .stat-card{
+        padding:15px;
+    }
+
+    .stat-card h3{
+        font-size:23px;
+    }
+
+    .lesson-grid,
+    .three-grid{
+        grid-template-columns:1fr;
+    }
+
+    .timer{
+        font-size:45px;
+    }
+
+    .continue-content{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .top-actions{
+        gap:7px;
+    }
+
+    .avatar{
+        width:35px;
+        height:35px;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- =====================================================
+SIDEBAR
+===================================================== -->
+
+<aside class="sidebar" id="sidebar">
+
+<div class="logo">
+
+<h1>Aducate Speaking</h1>
+
+<p>English Speaking Academy</p>
+
+</div>
+
+
+<div class="sidebar-nav">
+
+<button class="nav-item active"
+onclick="showPage('dashboard',this)">
+
+<span class="nav-icon">🏠</span>
+
+Dashboard
+
+</button>
+
+
+<button class="nav-item"
+onclick="showPage('levels',this)">
+
+<span class="nav-icon">🎓</span>
+
+My Course
+
+</button>
+
+
+<button class="nav-item"
+onclick="showPage('lessons',this)">
+
+<span class="nav-icon">📚</span>
+
+Lessons
+
+</button>
+
+
+<button class="nav-item"
+onclick="showPage('practice',this)">
+
+<span class="nav-icon">🎤</span>
+
+Speaking Room
+
+</button>
+
+
+<button class="nav-item"
+onclick="showPage('challenge',this)">
+
+<span class="nav-icon">🎯</span>
+
+Daily Challenge
+
+</button>
+
+
+<button class="nav-item"
+onclick="showPage('vocabulary',this)">
+
+<span class="nav-icon">🧠</span>
+
+Vocabulary
+
+</button>
+
+
+<button class="nav-item"
+onclick="showPage('pronunciation',this)">
+
+<span class="nav-icon">🔊</span>
+
+Pronunciation
+
+</button>
+
+
+<button class="nav-item"
+onclick="showPage('achievements',this)">
+
+<span class="nav-icon">🏆</span>
+
+Achievements
+
+</button>
+
+</div>
+
+
+<div class="sidebar-bottom">
+
+<div class="streak-mini">
+
+<strong>🔥 <span id="sideStreak">0</span> Day Streak</strong>
+
+<span>Keep practicing every day!</span>
+
+</div>
+
+</div>
+
+</aside>
+
+
+<!-- =====================================================
+MAIN
+===================================================== -->
+
+<main class="main">
+
+
+<header class="topbar">
+
+<div style="display:flex;align-items:center;gap:12px">
+
+<button class="menu-btn"
+onclick="toggleSidebar()">
+
+☰
+
+</button>
+
+<div class="page-title">
+
+<h2 id="pageTitle">
+Dashboard
+</h2>
+
+<p>
+Improve your English. Build your confidence.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="top-actions">
+
+<div class="xp-pill">
+
+⭐ <span id="topXP">0</span> XP
+
+</div>
+
+<div class="avatar">
+
+S
+
+</div>
+
+</div>
+
+</header>
+
+
+<div class="content">
+
+
+<!-- =====================================================
+DASHBOARD
+===================================================== -->
+
+<section id="dashboard" class="page active">
+
+<div class="welcome">
+
+<h1>
+Welcome back, Speaker! 👋
+</h1>
+
+<p>
+Your journey to confident English speaking starts with one sentence.
+Practice every day, complete lessons and become a powerful speaker.
+</p>
+
+<div class="welcome-actions">
+
+<button class="btn btn-white"
+onclick="continueLearning()">
+
+▶ Continue Learning
+
+</button>
+
+<button class="btn"
+style="background:rgba(255,255,255,.15);color:white"
+onclick="showPageById('challenge')">
+
+🎯 Daily Challenge
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="stats-grid">
+
+
+<div class="stat-card">
+
+<div class="stat-top">
+
+<div class="stat-icon">⭐</div>
+
+</div>
+
+<h3 id="dashboardXP">0</h3>
+
+<p>Total XP</p>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-top">
+
+<div class="stat-icon">🔥</div>
+
+</div>
+
+<h3 id="dashboardStreak">0</h3>
+
+<p>Day Streak</p>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-top">
+
+<div class="stat-icon">📚</div>
+
+</div>
+
+<h3 id="dashboardLessons">0</h3>
+
+<p>Lessons Completed</p>
+
+</div>
+
+
+<div class="stat-card">
+
+<div class="stat-top">
+
+<div class="stat-icon">🏆</div>
+
+</div>
+
+<h3 id="dashboardBadges">0</h3>
+
+<p>Badges Earned</p>
+
+</div>
+
+</div>
+
+
+<div class="two-grid">
+
+
+<div class="card continue-card">
+
+<div class="card-header">
+
+<h3>🚀 Continue Your Journey</h3>
+
+<span id="currentLevelText">
+Level 1
+</span>
+
+</div>
+
+<div class="continue-content">
+
+<div>
+
+<h3 id="continueLessonTitle">
+Lesson 1: Introduce Yourself
+</h3>
+
+<p id="continueLessonDesc">
+Start your English speaking journey.
+</p>
+
+<div class="progress-wrap">
+
+<div class="progress-label">
+
+<span>Course Progress</span>
+
+<strong id="coursePercent">
+0%
+</strong>
+
+</div>
+
+<div class="progress">
+
+<div class="progress-bar"
+id="courseProgress">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<button class="btn btn-primary"
+onclick="continueLearning()">
+
+Continue →
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-header">
+
+<h3>📈 Your Activity</h3>
+
+<span>Recent</span>
+
+</div>
+
+<div class="activity" id="activityList">
+
+<div class="activity-item">
+
+<div class="activity-icon">
+🎯
+</div>
+
+<div>
+
+<strong>
+Start your first lesson
+</strong>
+
+<span>
+Your progress will appear here
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+LEVELS
+===================================================== -->
+
+<section id="levels" class="page">
+
+<div class="page-header">
+
+<h1>🎓 My Learning Path</h1>
+
+<p>
+Complete each level to unlock the next stage of your speaking journey.
+</p>
+
+</div>
+
+<div class="three-grid" id="levelsGrid"></div>
+
+</section>
+
+
+<!-- =====================================================
+LESSONS
+===================================================== -->
+
+<section id="lessons" class="page">
+
+<div class="page-header">
+
+<h1>📚 Speaking Lessons</h1>
+
+<p>
+Practice structured lessons and improve your confidence step by step.
+</p>
+
+</div>
+
+
+<div class="lesson-toolbar">
+
+<select id="levelFilter"
+onchange="renderLessons()">
+
+<option value="all">
+All Levels
+</option>
+
+<option value="1">
+Level 1 - Beginner
+</option>
+
+<option value="2">
+Level 2 - Elementary
+</option>
+
+<option value="3">
+Level 3 - Intermediate
+</option>
+
+<option value="4">
+Level 4 - Advanced
+</option>
+
+<option value="5">
+Level 5 - Public Speaking Master
+</option>
+
+</select>
+
+
+<input
+type="text"
+id="lessonSearch"
+placeholder="Search lesson..."
+oninput="renderLessons()"
+>
+
+</div>
+
+
+<div class="lesson-grid"
+id="lessonGrid">
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+PRACTICE ROOM
+===================================================== -->
+
+<section id="practice" class="page">
+
+<div class="page-header">
+
+<h1>🎤 Speaking Practice Room</h1>
+
+<p>
+Choose a topic, listen to the model answer, then speak aloud.
+</p>
+
+</div>
+
+
+<div class="practice-layout">
+
+
+<div class="practice-main">
+
+<div class="practice-label">
+Current Speaking Topic
+</div>
+
+<h1 id="practiceTitle">
+Introduce Yourself
+</h1>
+
+<p class="practice-description"
+id="practiceDescription">
+
+Practice introducing yourself confidently to a new person.
+
+</p>
+
+
+<div class="speech-box"
+id="practiceSpeech">
+
+Hello everyone! My name is ______.
+I am from ______. I am currently studying
+or working as ______. In my free time,
+I enjoy ______. My goal is to improve myself
+and become a confident English speaker.
+
+</div>
+
+
+<div class="timer"
+id="timer">
+
+02:00
+
+</div>
+
+
+<div class="timer-options">
+
+<button onclick="setTimer(30,this)">
+30 sec
+</button>
+
+<button onclick="setTimer(60,this)">
+1 min
+</button>
+
+<button class="active"
+onclick="setTimer(120,this)">
+2 min
+</button>
+
+<button onclick="setTimer(300,this)">
+5 min
+</button>
+
+</div>
+
+
+<div class="practice-actions">
+
+<button class="btn btn-blue"
+onclick="listenSpeech()">
+
+🔊 Listen
+
+</button>
+
+<button class="btn btn-primary"
+onclick="startTimer()">
+
+▶ Start Timer
+
+</button>
+
+<button class="btn btn-light"
+onclick="pauseTimer()">
+
+⏸ Pause
+
+</button>
+
+<button class="btn btn-danger"
+onclick="resetTimer()">
+
+↻ Reset
+
+</button>
+
+</div>
+
+
+<div style="margin-top:25px">
+
+<button class="btn btn-purple"
+onclick="completeCurrentLesson()">
+
+✅ Mark Lesson Complete +20 XP
+
+</button>
+
+</div>
+
+</div>
+
+
+<div class="practice-side">
+
+
+<div class="tool-card">
+
+<h3>🎙️ Voice Recorder</h3>
+
+<p>
+Record your speech and listen to yourself.
+</p>
+
+
+<div class="recording-status"
+id="recordingStatus">
+
+Ready to record
+
+</div>
+
+
+<button class="btn btn-danger"
+id="recordBtn"
+onclick="toggleRecording()">
+
+🔴 Start Recording
+
+</button>
+
+
+<audio
+id="audioPlayer"
+controls>
+</audio>
+
+</div>
+
+
+<div class="tool-card">
+
+<h3>📝 Your Speech Notes</h3>
+
+<p>
+Write your ideas before speaking.
+</p>
+
+<br>
+
+<textarea
+id="speechNotes"
+placeholder="Write your speech here...">
+
+</textarea>
+
+<br><br>
+
+<button class="btn btn-primary"
+onclick="saveNotes()">
+
+💾 Save Notes
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+DAILY CHALLENGE
+===================================================== -->
+
+<section id="challenge" class="page">
+
+<div class="page-header">
+
+<h1>🎯 Daily Speaking Challenge</h1>
+
+<p>
+Challenge yourself to speak continuously without reading.
+</p>
+
+</div>
+
+
+<div class="challenge">
+
+<div style="font-size:50px">
+🎤
+</div>
+
+<h2>
+Today's Challenge
+</h2>
+
+<p>
+Speak for at least 2 minutes.
+Do not stop. Do not translate in your head.
+Just speak!
+</p>
+
+
+<div class="challenge-question"
+id="challengeQuestion">
+
+What is your biggest dream in life and why?
+
+</div>
+
+
+<button class="btn btn-white"
+onclick="newChallenge()">
+
+🔄 New Topic
+
+</button>
+
+<button class="btn"
+style="background:#10b981;color:white"
+onclick="completeChallenge()">
+
+🏆 Complete Challenge +30 XP
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+VOCABULARY
+===================================================== -->
+
+<section id="vocabulary" class="page">
+
+<div class="page-header">
+
+<h1>🧠 Speaking Vocabulary</h1>
+
+<p>
+Learn useful words and use them in your daily speaking practice.
+</p>
+
+</div>
+
+
+<div class="three-grid">
+
+<div class="card vocab-card">
+
+<div style="font-size:40px">
+📖
+</div>
+
+<div class="word"
+id="vocabWord">
+
+Confident
+
+</div>
+
+<div class="meaning"
+id="vocabMeaning">
+
+Feeling sure about your abilities.
+
+</div>
+
+<div class="example"
+id="vocabExample">
+
+"I feel confident when I speak English."
+
+</div>
+
+<br>
+
+<button class="btn btn-blue"
+onclick="speakVocabulary()">
+
+🔊 Pronounce
+
+</button>
+
+<button class="btn btn-primary"
+onclick="nextVocabulary()">
+
+Next Word →
+
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>💡 Speaking Tip</h3>
+
+<br>
+
+<p style="color:#64748b;line-height:1.7">
+
+Do not try to speak perfect English.
+Focus on communicating your ideas clearly.
+Mistakes are a natural part of learning.
+
+</p>
+
+<br>
+
+<strong>
+Remember:
+</strong>
+
+<p style="color:#059669;margin-top:7px">
+
+"Confidence comes from practice."
+
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>📊 Vocabulary Progress</h3>
+
+<br>
+
+<h2 id="vocabProgress">
+0
+</h2>
+
+<p style="color:#64748b">
+Words Practiced
+</p>
+
+<div class="progress-wrap">
+
+<div class="progress">
+
+<div class="progress-bar"
+id="vocabProgressBar">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+PRONUNCIATION
+===================================================== -->
+
+<section id="pronunciation" class="page">
+
+<div class="page-header">
+
+<h1>🔊 Pronunciation Lab</h1>
+
+<p>
+Listen carefully, repeat the word and practice your pronunciation.
+</p>
+
+</div>
+
+
+<div class="card"
+style="max-width:700px;margin:auto;text-align:center">
+
+<p style="color:#64748b">
+Practice this word
+</p>
+
+
+<div class="pronunciation-word"
+id="pronunciationWord">
+
+Confidence
+
+</div>
+
+
+<div class="pronunciation-tip">
+
+💡 Tip: Speak slowly.
+Break long words into smaller sounds.
+Repeat the word three times.
+
+</div>
+
+
+<br>
+
+<button class="btn btn-blue"
+onclick="speakPronunciation()">
+
+🔊 Listen
+
+</button>
+
+<button class="btn btn-primary"
+onclick="nextPronunciation()">
+
+Next Word →
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- =====================================================
+ACHIEVEMENTS
+===================================================== -->
+
+<section id="achievements" class="page">
+
+<div class="page-header">
+
+<h1>🏆 Achievements</h1>
+
+<p>
+Earn badges by practicing consistently and completing challenges.
+</p>
+
+</div>
+
+
+<div class="badge-grid"
+id="badgeGrid">
+
+</div>
+
+</section>
+
+
+</div>
+
+</main>
+
+</div>
+
+
+<!-- =====================================================
+LESSON MODAL
+===================================================== -->
+
+<div class="modal"
+id="lessonModal">
+
+<div class="modal-box">
+
+<div class="modal-header">
+
+<h2 id="modalTitle">
+Lesson
+</h2>
+
+<button class="close-modal"
+onclick="closeModal()">
+
+✕
+
+</button>
+
+</div>
+
+
+<div id="modalContent">
+
+</div>
+
+<br>
+
+<button class="btn btn-primary"
+onclick="startModalLesson()">
+
+🎤 Start Speaking Practice
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =====================================================
+TOAST
+===================================================== -->
+
+<div class="toast"
+id="toast">
+
+Success!
+
+</div>
+
+
+<script>
+
+/* =========================================================
+LESSON DATA
+100 LESSONS
+========================================================= */
+
+const lessons = [
+
+/* LEVEL 1 */
+
+["Introduce Yourself","Learn how to confidently introduce yourself.",1],
+["My Family","Talk about your family members.",1],
+["My Daily Routine","Describe your everyday routine.",1],
+["My Hobbies","Talk about your favourite hobbies.",1],
+["My Best Friend","Describe your best friend.",1],
+["My Favourite Food","Talk about food you enjoy.",1],
+["My City","Describe your city or town.",1],
+["My School or College","Talk about your education.",1],
+["My Future Dream","Describe your biggest dream.",1],
+["My Favourite Person","Talk about someone you admire.",1],
+["My Favourite Book","Describe a book you like.",1],
+["My Favourite Movie","Talk about your favourite movie.",1],
+["My Weekend","Describe your weekend activities.",1],
+["My Morning Routine","Talk about your morning.",1],
+["My Evening Routine","Describe your evening.",1],
+["My Favourite Season","Talk about your favourite season.",1],
+["My Favourite Sport","Describe a sport you enjoy.",1],
+["My Favourite Place","Talk about a place you love.",1],
+["My Pet","Talk about your pet or an animal.",1],
+["My Goal","Describe an important personal goal.",1],
+
+/* LEVEL 2 */
+
+["At the Restaurant","Practice ordering food.",2],
+["At the Hotel","Practice hotel conversations.",2],
+["At the Airport","Practice airport communication.",2],
+["At the Market","Practice shopping conversations.",2],
+["Asking for Directions","Learn to ask for directions.",2],
+["Giving Directions","Practice explaining directions.",2],
+["Making a Phone Call","Practice phone conversations.",2],
+["Meeting a New Person","Practice introductions.",2],
+["Making New Friends","Practice friendly conversations.",2],
+["Asking for Help","Practice asking for assistance.",2],
+["Giving Advice","Learn to give useful advice.",2],
+["Making a Complaint","Practice polite complaints.",2],
+["Making an Appointment","Practice scheduling.",2],
+["Talking About Weather","Practice casual conversation.",2],
+["Talking About Work","Describe your work.",2],
+["Talking About Studies","Describe your studies.",2],
+["Talking About Travel","Talk about your travel experience.",2],
+["Talking About Health","Discuss healthy habits.",2],
+["Talking About Technology","Discuss everyday technology.",2],
+["Talking About Social Media","Share your opinions.",2],
+
+/* LEVEL 3 */
+
+["Importance of Education","Discuss why education matters.",3],
+["Importance of Time","Explain why time is valuable.",3],
+["Importance of Hard Work","Talk about effort and success.",3],
+["Success in Life","Define what success means to you.",3],
+["Failure and Learning","Explain what failure teaches us.",3],
+["Leadership","Describe qualities of a good leader.",3],
+["Teamwork","Discuss the importance of teamwork.",3],
+["Communication Skills","Explain why communication matters.",3],
+["Confidence","Talk about building confidence.",3],
+["Discipline","Discuss the power of discipline.",3],
+["Social Media","Discuss the advantages and disadvantages.",3],
+["Technology","Talk about technology in modern life.",3],
+["Artificial Intelligence","Share your thoughts about AI.",3],
+["Environment","Discuss environmental protection.",3],
+["Climate Change","Talk about climate challenges.",3],
+["Health and Fitness","Discuss healthy living.",3],
+["Reading Books","Explain the benefits of reading.",3],
+["Online Education","Discuss digital learning.",3],
+["Work-Life Balance","Talk about balancing work and life.",3],
+["The Power of Positive Thinking","Discuss positive thinking.",3],
+
+/* LEVEL 4 */
+
+["Give a Presentation","Practice a professional presentation.",4],
+["Job Interview","Answer common interview questions.",4],
+["Tell a Story","Practice storytelling.",4],
+["Give a Motivational Speech","Inspire your audience.",4],
+["Persuasive Speaking","Convince your audience.",4],
+["Debate: Education","Practice debating education.",4],
+["Debate: Technology","Discuss technology critically.",4],
+["Debate: Social Media","Present different viewpoints.",4],
+["Group Discussion","Practice group discussion skills.",4],
+["Impromptu Speaking","Speak without preparation.",4],
+["Explain a Process","Explain something step by step.",4],
+["Describe a Problem","Clearly explain a problem.",4],
+["Suggest a Solution","Offer a practical solution.",4],
+["Express Your Opinion","Share your opinion confidently.",4],
+["Agree and Disagree","Practice respectful disagreement.",4],
+["Talk About Leadership","Give a leadership speech.",4],
+["Talk About Success","Deliver a success speech.",4],
+["Talk About Failure","Share lessons from failure.",4],
+["Talk About Your Career","Discuss your career plans.",4],
+["Professional Introduction","Introduce yourself professionally.",4],
+
+/* LEVEL 5 */
+
+["Master Public Speaking","Deliver a complete speech.",5],
+["Opening a Speech","Create a powerful opening.",5],
+["Closing a Speech","End your speech effectively.",5],
+["Use of Body Language","Practice confident body language.",5],
+["Voice Modulation","Control your speaking voice.",5],
+["Eye Contact","Practice audience engagement.",5],
+["Pause and Emphasis","Use pauses effectively.",5],
+["Handling Nervousness","Manage speaking anxiety.",5],
+["Answering Questions","Handle audience questions.",5],
+["Speaking Under Pressure","Speak confidently under pressure.",5],
+["Five Minute Speech","Deliver a five-minute speech.",5],
+["Motivational Presentation","Give a motivational presentation.",5],
+["Business Presentation","Practice business communication.",5],
+["Leadership Presentation","Deliver a leadership presentation.",5],
+["Storytelling Masterclass","Tell an engaging story.",5],
+["Debate Masterclass","Present strong arguments.",5],
+["Interview Masterclass","Master interview communication.",5],
+["Extempore Challenge","Speak on a random topic.",5],
+["Final Public Speaking Challenge","Complete the final challenge.",5],
+["Become a Confident Speaker","Give your best final speech.",5]
+
+];
+
+
+/* =========================================================
+STATE
+========================================================= */
+
+let state = JSON.parse(
+localStorage.getItem("speakProState")
+) || {
+
+xp:0,
+
+completed:[],
+
+streak:0,
+
+lastPractice:null,
+
+badges:[],
+
+vocabPracticed:0,
+
+activities:[]
+
+};
+
+
+let currentLesson = null;
+
+let timerSeconds = 120;
+
+let timerInterval = null;
+
+let timerRunning = false;
+
+let mediaRecorder = null;
+
+let audioChunks = [];
+
+let isRecording = false;
+
+
+/* =========================================================
+CHALLENGES
+========================================================= */
+
+const challenges = [
+
+"What is your biggest dream in life and why?",
+
+"Describe the person who inspires you most.",
+
+"What would you do if you became very rich?",
+
+"Talk about one mistake that taught you something.",
+
+"What makes a good leader?",
+
+"Why is English important in today's world?",
+
+"Describe your perfect day.",
+
+"If you could travel anywhere, where would you go?",
+
+"What would you change about your city?",
+
+"Is technology making life better?",
+
+"What is the most important quality in a friend?",
+
+"Talk about your future career.",
+
+"Why should students learn public speaking?",
+
+"What does success mean to you?",
+
+"How can people become more confident?"
+
+];
+
+
+/* =========================================================
+VOCABULARY
+========================================================= */
+
+const vocabulary = [
+
+["Confident","Feeling sure about your abilities.","I feel confident when I speak English."],
+
+["Improve","To become better at something.","I want to improve my speaking skills."],
+
+["Communicate","To share information or ideas.","English helps us communicate with people."],
+
+["Opportunity","A good chance to do something.","This course gives me an opportunity to practice."],
+
+["Challenge","Something difficult that tests your ability.","Public speaking is a challenge for me."],
+
+["Achieve","To successfully reach a goal.","I want to achieve my dreams."],
+
+["Fluent","Able to speak smoothly and easily.","She is fluent in English."],
+
+["Express","To show or communicate an idea.","I can express my opinion clearly."],
+
+["Audience","People watching or listening to a speaker.","The audience listened carefully."],
+
+["Persuade","To convince someone to do or believe something.","He tried to persuade the audience."]
+
+];
+
+
+const pronunciationWords = [
+
+"Confidence",
+
+"Communication",
+
+"Opportunity",
+
+"Presentation",
+
+"Environment",
+
+"Leadership",
+
+"Successful",
+
+"Motivation",
+
+"Experience",
+
+"Development",
+
+"Professional",
+
+"Achievement"
+
+];
+
+
+let vocabIndex = 0;
+
+let pronunciationIndex = 0;
+
+
+/* =========================================================
+LEVEL DATA
+========================================================= */
+
+const levels = [
+
+{
+id:1,
+name:"Beginner Speaker",
+icon:"🌱",
+description:"Build basic English speaking confidence.",
+required:0,
+lessons:20
+},
+
+{
+id:2,
+name:"Everyday Speaker",
+icon:"🗣️",
+description:"Handle common daily conversations.",
+required:10,
+lessons:20
+},
+
+{
+id:3,
+name:"Confident Speaker",
+icon:"🚀",
+description:"Express opinions and discuss important topics.",
+required:25,
+lessons:20
+},
+
+{
+id:4,
+name:"Advanced Speaker",
+icon:"🎤",
+description:"Master presentations, interviews and debates.",
+required:45,
+lessons:20
+},
+
+{
+id:5,
+name:"Public Speaking Master",
+icon:"🏆",
+description:"Become a powerful and confident public speaker.",
+required:65,
+lessons:20
+}
+
+];
+
+
+/* =========================================================
+SAVE STATE
+========================================================= */
+
+function saveState(){
+
+localStorage.setItem(
+"speakProState",
+JSON.stringify(state)
+);
+
+}
+
+
+/* =========================================================
+TOAST
+========================================================= */
+
+function toast(message){
+
+const el =
+document.getElementById("toast");
+
+el.innerText = message;
+
+el.classList.add("show");
+
+setTimeout(()=>{
+el.classList.remove("show");
+},2500);
+
+}
+
+
+/* =========================================================
+NAVIGATION
+========================================================= */
+
+function showPage(id,button){
+
+document
+.querySelectorAll(".page")
+.forEach(page=>{
+page.classList.remove("active");
+});
+
+
+document
+.getElementById(id)
+.classList.add("active");
+
+
+document
+.querySelectorAll(".nav-item")
+.forEach(item=>{
+item.classList.remove("active");
+});
+
+
+if(button){
+
+button.classList.add("active");
+
+}
+
+
+const titles = {
+
+dashboard:"Dashboard",
+
+levels:"My Course",
+
+lessons:"Lessons",
+
+practice:"Speaking Room",
+
+challenge:"Daily Challenge",
+
+vocabulary:"Vocabulary",
+
+pronunciation:"Pronunciation Lab",
+
+achievements:"Achievements"
+
+};
+
+
+document.getElementById("pageTitle")
+.innerText =
+titles[id] || "SpeakPro";
+
+
+document
+.getElementById("sidebar")
+.classList.remove("open");
+
+}
+
+
+function showPageById(id){
+
+const button =
+document.querySelector(
+`.nav-item[onclick*="'${id}'"]`
+);
+
+showPage(id,button);
+
+}
+
+
+function toggleSidebar(){
+
+document
+.getElementById("sidebar")
+.classList.toggle("open");
+
+}
+
+
+/* =========================================================
+LESSON UNLOCK
+========================================================= */
+
+function isLessonUnlocked(index){
+
+if(index===0){
+
+return true;
+
+}
+
+return state.completed.includes(index-1);
+
+}
+
+
+/* =========================================================
+RENDER LEVELS
+========================================================= */
+
+function renderLevels(){
+
+const container =
+document.getElementById("levelsGrid");
+
+container.innerHTML="";
+
+
+levels.forEach(level=>{
+
+const unlocked =
+state.completed.length >= level.required;
+
+
+const completedInLevel =
+lessons.filter(
+(item,index)=>
+item[2]===level.id &&
+state.completed.includes(index)
+).length;
+
+
+const percent =
+Math.round(
+(completedInLevel/level.lessons)*100
+);
+
+
+const card =
+document.createElement("div");
+
+card.className =
+"card level-card "
++
+(unlocked ? "" : "locked");
+
+
+card.innerHTML = `
+
+<div class="level-number">
+${level.icon}
+</div>
+
+${!unlocked ?
+`<div class="lock-badge">🔒 Locked</div>`
+:""}
+
+<h3>
+Level ${level.id}: ${level.name}
+</h3>
+
+<p>
+${level.description}
+</p>
+
+<div class="progress-wrap">
+
+<div class="progress-label">
+
+<span>
+${completedInLevel}/${level.lessons} Lessons
+</span>
+
+<strong>
+${percent}%
+</strong>
+
+</div>
+
+<div class="progress">
+
+<div class="progress-bar"
+style="width:${percent}%">
+
+</div>
+
+</div>
+
+</div>
+
+<div class="level-meta">
+
+<span>
+${unlocked ? "🔓 Unlocked":"🔒 Complete previous lessons"}
+</span>
+
+<span>
+${level.lessons} Lessons
+</span>
+
+</div>
+
+`;
+
+
+if(unlocked){
+
+card.onclick=()=>{
+
+document.getElementById(
+"levelFilter"
+).value=level.id;
+
+showPageById("lessons");
+
+renderLessons();
+
+};
+
+}
+
+
+container.appendChild(card);
+
+});
+
+}
+
+
+/* =========================================================
+RENDER LESSONS
+========================================================= */
+
+function renderLessons(){
+
+const grid =
+document.getElementById("lessonGrid");
+
+const filter =
+document.getElementById("levelFilter")
+.value;
+
+const search =
+document.getElementById("lessonSearch")
+.value
+.toLowerCase();
+
+
+grid.innerHTML="";
+
+
+lessons.forEach((lesson,index)=>{
+
+const title=lesson[0];
+
+const desc=lesson[1];
+
+const level=lesson[2];
+
+
+if(
+filter!=="all" &&
+String(level)!==filter
+)return;
+
+
+if(
+search &&
+!title.toLowerCase()
+.includes(search)
+)
+return;
+
+
+const completed =
+state.completed.includes(index);
+
+
+const unlocked =
+isLessonUnlocked(index);
+
+
+const card =
+document.createElement("div");
+
+card.className =
+"lesson-card "
++
+(completed?"completed ":"")
++
+(!unlocked?"locked":"");
+
+
+let statusText;
+
+let statusClass;
+
+
+if(completed){
+
+statusText="✅ Completed";
+
+statusClass="status-complete";
+
+}else if(!unlocked){
+
+statusText="🔒 Locked";
+
+statusClass="status-locked";
+
+}else{
+
+statusText="▶ Ready to Practice";
+
+statusClass="status-open";
+
+}
+
+
+card.innerHTML = `
+
+<div class="lesson-number">
+
+LESSON ${index+1} • LEVEL ${level}
+
+</div>
+
+<h3>
+${title}
+</h3>
+
+<p>
+${desc}
+</p>
+
+<div class="lesson-status ${statusClass}">
+${statusText}
+</div>
+
+<button class="btn ${
+unlocked ?
+"btn-primary" :
+"btn-light"
+}"
+${!unlocked?"disabled":""}
+onclick="openLesson(${index})">
+
+${completed ?
+"🔄 Practice Again" :
+unlocked ?
+"🎤 Start Lesson" :
+"🔒 Locked"}
+
+</button>
+
+`;
+
+
+grid.appendChild(card);
+
+});
+
+}
+
+
+/* =========================================================
+OPEN LESSON
+========================================================= */
+
+function openLesson(index){
+
+if(!isLessonUnlocked(index)){
+
+toast(
+"🔒 Complete the previous lesson first."
+);
+
+return;
+
+}
+
+
+currentLesson=index;
+
+const lesson =
+lessons[index];
+
+
+document.getElementById(
+"modalTitle"
+).innerText =
+`Lesson ${index+1}: ${lesson[0]}`;
+
+
+document.getElementById(
+"modalContent"
+).innerHTML = `
+
+<p style="color:#64748b;line-height:1.7">
+
+${lesson[1]}
+
+</p>
+
+<br>
+
+<div class="speech-box">
+
+Hello everyone.
+
+Today I would like to talk about
+<strong>${lesson[0]}</strong>.
+
+This is an important topic because
+it helps us improve our communication
+and confidence.
+
+I would like to share my thoughts,
+experiences and opinions about this topic.
+
+Thank you for listening.
+
+</div>
+
+<p style="font-size:13px;color:#64748b">
+
+💡 Tip: Read the example once.
+Then close your eyes and speak
+in your own words.
+
+</p>
+
+`;
+
+
+document
+.getElementById("lessonModal")
+.classList.add("show");
+
+}
+
+
+function closeModal(){
+
+document
+.getElementById("lessonModal")
+.classList.remove("show");
+
+}
+
+
+function startModalLesson(){
+
+closeModal();
+
+if(currentLesson!==null){
+
+loadPracticeLesson(currentLesson);
+
+}
+
+showPageById("practice");
+
+}
+
+
+/* =========================================================
+LOAD PRACTICE LESSON
+========================================================= */
+
+function loadPracticeLesson(index){
+
+currentLesson=index;
+
+const lesson =
+lessons[index];
+
+
+document.getElementById(
+"practiceTitle"
+).innerText =
+lesson[0];
+
+
+document.getElementById(
+"practiceDescription"
+).innerText =
+lesson[1];
+
+
+document.getElementById(
+"practiceSpeech"
+).innerText =
+
+`Hello everyone.
+
+Today I would like to talk about ${lesson[0]}.
+
+This is an important topic in our daily life.
+
+In my opinion, we can learn many useful things
+by thinking about this topic.
+
+I would like to share my personal thoughts,
+examples and experiences.
+
+Thank you for listening.`;
+
+
+resetTimer();
+
+}
+
+
+/* =========================================================
+CONTINUE LEARNING
+========================================================= */
+
+function continueLearning(){
+
+let next=0;
+
+
+for(
+let i=0;
+i<lessons.length;
+i++
+){
+
+if(!state.completed.includes(i)){
+
+next=i;
+
+break;
+
+}
+
+}
+
+
+loadPracticeLesson(next);
+
+showPageById("practice");
+
+}
+
+
+/* =========================================================
+TIMER
+========================================================= */
+
+function setTimer(seconds,button){
+
+timerSeconds=seconds;
+
+clearInterval(timerInterval);
+
+timerRunning=false;
+
+document
+.querySelectorAll(".timer-options button")
+.forEach(btn=>{
+btn.classList.remove("active");
+});
+
+
+if(button){
+
+button.classList.add("active");
+
+}
+
+updateTimer();
+
+}
+
+
+function updateTimer(){
+
+const min =
+Math.floor(timerSeconds/60);
+
+const sec =
+timerSeconds%60;
+
+
+document.getElementById("timer")
+.innerText =
+
+String(min).padStart(2,"0")
++
+":"
++
+String(sec).padStart(2,"0");
+
+}
+
+
+function startTimer(){
+
+if(timerRunning)
+return;
+
+
+timerRunning=true;
+
+
+timerInterval =
+setInterval(()=>{
+
+if(timerSeconds>0){
+
+timerSeconds--;
+
+updateTimer();
+
+}else{
+
+clearInterval(timerInterval);
+
+timerRunning=false;
+
+toast(
+"🎉 Excellent! Time completed!"
+);
+
+}
+
+},1000);
+
+}
+
+
+function pauseTimer(){
+
+clearInterval(timerInterval);
+
+timerRunning=false;
+
+}
+
+
+function resetTimer(){
+
+clearInterval(timerInterval);
+
+timerRunning=false;
+
+timerSeconds=120;
+
+updateTimer();
+
+}
+
+
+/* =========================================================
+TEXT TO SPEECH
+========================================================= */
+
+function speak(text){
+
+if(!("speechSynthesis" in window)){
+
+toast(
+"Text-to-Speech is not supported."
+);
+
+return;
+
+}
+
+
+speechSynthesis.cancel();
+
+
+const utterance =
+new SpeechSynthesisUtterance(text);
+
+
+utterance.lang="en-US";
+
+utterance.rate=.85;
+
+utterance.pitch=1;
+
+
+speechSynthesis.speak(
+utterance
+);
+
+}
+
+
+function listenSpeech(){
+
+speak(
+document.getElementById(
+"practiceSpeech"
+).innerText
+);
+
+}
+
+
+/* =========================================================
+VOICE RECORDING
+========================================================= */
+
+async function toggleRecording(){
+
+if(!isRecording){
+
+try{
+
+const stream =
+await navigator.mediaDevices
+.getUserMedia({
+audio:true
+});
+
+
+mediaRecorder =
+new MediaRecorder(stream);
+
+
+audioChunks=[];
+
+
+mediaRecorder
+.ondataavailable =
+event=>{
+
+audioChunks.push(
+event.data
+);
+
+};
+
+
+mediaRecorder
+.onstop = ()=>{
+
+const blob =
+new Blob(
+audioChunks,
+{
+type:"audio/webm"
+}
+);
+
+
+const url =
+URL.createObjectURL(blob);
+
+
+document.getElementById(
+"audioPlayer"
+).src=url;
+
+
+stream
+.getTracks()
+.forEach(track=>
+track.stop()
+);
+
+};
+
+
+mediaRecorder.start();
+
+isRecording=true;
+
+
+document.getElementById(
+"recordBtn"
+).innerText =
+"⏹ Stop Recording";
+
+
+document.getElementById(
+"recordingStatus"
+).innerText =
+"🔴 Recording... Speak now!";
+
+
+}catch(error){
+
+toast(
+"Microphone permission is required."
+);
+
+}
+
+}else{
+
+mediaRecorder.stop();
+
+isRecording=false;
+
+
+document.getElementById(
+"recordBtn"
+).innerText =
+"🔴 Start Recording";
+
+
+document.getElementById(
+"recordingStatus"
+).innerText =
+"✅ Recording completed";
+
+
+}
+
+}
+
+
+/* =========================================================
+COMPLETE LESSON
+========================================================= */
+
+function completeCurrentLesson(){
+
+if(currentLesson===null){
+
+currentLesson=0;
+
+}
+
+
+if(
+state.completed
+.includes(currentLesson)
+){
+
+toast(
+"Already completed!"
+);
+
+return;
+
+}
+
+
+state.completed.push(
+currentLesson
+);
+
+
+state.xp +=20;
+
+
+addActivity(
+`Completed Lesson ${currentLesson+1}`,
+`+20 XP • ${lessons[currentLesson][0]}`
+);
+
+
+updateStreak();
+
+
+checkBadges();
+
+saveState();
+
+updateUI();
+
+renderLessons();
+
+renderLevels();
+
+
+toast(
+"🎉 Lesson completed! +20 XP"
+);
+
+}
+
+
+/* =========================================================
+DAILY CHALLENGE
+========================================================= */
+
+function newChallenge(){
+
+const index =
+Math.floor(
+Math.random()*
+challenges.length
+);
+
+
+document.getElementById(
+"challengeQuestion"
+).innerText =
+challenges[index];
+
+}
+
+
+function completeChallenge(){
+
+const today =
+new Date()
+.toDateString();
+
+
+if(
+state.lastChallenge===today
+){
+
+toast(
+"Today's challenge is already completed!"
+);
+
+return;
+
+}
+
+
+state.lastChallenge=today;
+
+state.xp +=30;
+
+
+addActivity(
+"Daily Challenge Completed",
+"+30 XP"
+);
+
+
+updateStreak();
+
+checkBadges();
+
+saveState();
+
+updateUI();
+
+
+toast(
+"🏆 Challenge completed! +30 XP"
+);
+
+}
+
+
+/* =========================================================
+STREAK
+========================================================= */
+
+function updateStreak(){
+
+const today =
+new Date()
+.toDateString();
+
+
+if(
+state.lastPractice===today
+){
+
+return;
+
+}
+
+
+const yesterday =
+new Date(
+Date.now()-86400000
+)
+.toDateString();
+
+
+if(
+state.lastPractice===yesterday
+){
+
+state.streak++;
+
+}else{
+
+state.streak=1;
+
+}
+
+
+state.lastPractice=today;
+
+}
+
+
+/* =========================================================
+ACTIVITY
+========================================================= */
+
+function addActivity(title,detail){
+
+state.activities.unshift({
+
+title:title,
+
+detail:detail,
+
+time:new Date()
+.toLocaleDateString()
+
+});
+
+
+state.activities =
+state.activities.slice(0,5);
+
+}
+
+
+function renderActivity(){
+
+const container =
+document.getElementById(
+"activityList"
+);
+
+
+if(
+!state.activities ||
+state.activities.length===0
+){
+
+return;
+
+}
+
+
+container.innerHTML="";
+
+
+state.activities.forEach(item=>{
+
+container.innerHTML += `
+
+<div class="activity-item">
+
+<div class="activity-icon">
+🎯
+</div>
+
+<div>
+
+<strong>
+${item.title}
+</strong>
+
+<span>
+${item.detail} • ${item.time}
+</span>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* =========================================================
+BADGES
+========================================================= */
+
+const badges = [
+
+{
+id:"first",
+icon:"🌟",
+name:"First Step",
+desc:"Complete your first lesson.",
+condition:()=>state.completed.length>=1
+},
+
+{
+id:"five",
+icon:"🔥",
+name:"Getting Started",
+desc:"Complete 5 lessons.",
+condition:()=>state.completed.length>=5
+},
+
+{
+id:"ten",
+icon:"🚀",
+name:"Fast Learner",
+desc:"Complete 10 lessons.",
+condition:()=>state.completed.length>=10
+},
+
+{
+id:"twenty",
+icon:"🏅",
+name:"Dedicated Speaker",
+desc:"Complete 20 lessons.",
+condition:()=>state.completed.length>=20
+},
+
+{
+id:"fifty",
+icon:"🎤",
+name:"Public Speaker",
+desc:"Complete 50 lessons.",
+condition:()=>state.completed.length>=50
+},
+
+{
+id:"streak7",
+icon:"🔥",
+name:"7 Day Streak",
+desc:"Practice for 7 days.",
+condition:()=>state.streak>=7
+},
+
+{
+id:"xp500",
+icon:"⭐",
+name:"XP Master",
+desc:"Earn 500 XP.",
+condition:()=>state.xp>=500
+},
+
+{
+id:"master",
+icon:"👑",
+name:"Speaking Master",
+desc:"Complete all 100 lessons.",
+condition:()=>state.completed.length>=100
+}
+
+];
+
+
+function checkBadges(){
+
+badges.forEach(badge=>{
+
+if(
+badge.condition() &&
+!state.badges.includes(badge.id)
+){
+
+state.badges.push(
+badge.id
+);
+
+state.xp +=50;
+
+
+addActivity(
+`Badge Earned: ${badge.name}`,
+"+50 Bonus XP"
+);
+
+toast(
+`🏆 New Badge: ${badge.name}`
+);
+
+}
+
+});
+
+}
+
+
+function renderBadges(){
+
+const grid =
+document.getElementById(
+"badgeGrid"
+);
+
+
+grid.innerHTML="";
+
+
+badges.forEach(badge=>{
+
+const earned =
+state.badges.includes(
+badge.id
+);
+
+
+grid.innerHTML += `
+
+<div class="badge ${
+earned?"earned":""
+}">
+
+<div class="badge-icon">
+
+${badge.icon}
+
+</div>
+
+<h3>
+${badge.name}
+</h3>
+
+<p>
+${badge.desc}
+</p>
+
+<br>
+
+<small>
+${earned?"✅ Earned":"🔒 Locked"}
+</small>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* =========================================================
+VOCABULARY
+========================================================= */
+
+function renderVocabulary(){
+
+const item =
+vocabulary[vocabIndex];
+
+
+document.getElementById(
+"vocabWord"
+).innerText =
+item[0];
+
+
+document.getElementById(
+"vocabMeaning"
+).innerText =
+item[1];
+
+
+document.getElementById(
+"vocabExample"
+).innerText =
+`"${item[2]}"`;
+
+
+document.getElementById(
+"vocabProgress"
+).innerText =
+state.vocabPracticed;
+
+
+document.getElementById(
+"vocabProgressBar"
+).style.width =
+Math.min(
+state.vocabPracticed*10,
+100
+)+"%";
+
+}
+
+
+function nextVocabulary(){
+
+vocabIndex++;
+
+if(
+vocabIndex>=vocabulary.length
+){
+
+vocabIndex=0;
+
+}
+
+
+state.vocabPracticed++;
+
+state.xp +=5;
+
+saveState();
+
+updateUI();
+
+renderVocabulary();
+
+toast(
+"+5 XP • Vocabulary practiced!"
+);
+
+}
+
+
+function speakVocabulary(){
+
+speak(
+vocabulary[vocabIndex][0]
+);
+
+}
+
+
+/* =========================================================
+PRONUNCIATION
+========================================================= */
+
+function speakPronunciation(){
+
+speak(
+pronunciationWords[
+pronunciationIndex
+]
+);
+
+}
+
+
+function nextPronunciation(){
+
+pronunciationIndex++;
+
+if(
+pronunciationIndex>=
+pronunciationWords.length
+){
+
+pronunciationIndex=0;
+
+}
+
+
+document.getElementById(
+"pronunciationWord"
+).innerText =
+pronunciationWords[
+pronunciationIndex
+];
+
+
+state.xp +=3;
+
+saveState();
+
+updateUI();
+
+}
+
+
+/* =========================================================
+NOTES
+========================================================= */
+
+function saveNotes(){
+
+if(currentLesson===null){
+
+toast(
+"Select a lesson first."
+);
+
+return;
+
+}
+
+
+const notes =
+document.getElementById(
+"speechNotes"
+).value;
+
+
+localStorage.setItem(
+`speechNotes_${currentLesson}`,
+notes
+);
+
+
+toast(
+"📝 Your notes have been saved!"
+);
+
+}
+
+
+/* =========================================================
+UPDATE UI
+========================================================= */
+
+function updateUI(){
+
+const completed =
+state.completed.length;
+
+
+const percent =
+Math.round(
+(completed/lessons.length)*100
+);
+
+
+document.getElementById(
+"dashboardXP"
+).innerText =
+state.xp;
+
+
+document.getElementById(
+"topXP"
+).innerText =
+state.xp;
+
+
+document.getElementById(
+"dashboardStreak"
+).innerText =
+state.streak;
+
+
+document.getElementById(
+"sideStreak"
+).innerText =
+state.streak;
+
+
+document.getElementById(
+"dashboardLessons"
+).innerText =
+completed;
+
+
+document.getElementById(
+"dashboardBadges"
+).innerText =
+state.badges.length;
+
+
+document.getElementById(
+"coursePercent"
+).innerText =
+percent+"%";
+
+
+document.getElementById(
+"courseProgress"
+).style.width =
+percent+"%";
+
+
+const next =
+state.completed.length;
+
+
+if(next<lessons.length){
+
+document.getElementById(
+"continueLessonTitle"
+).innerText =
+`Lesson ${next+1}: ${lessons[next][0]}`;
+
+
+document.getElementById(
+"continueLessonDesc"
+).innerText =
+lessons[next][1];
+
+
+document.getElementById(
+"currentLevelText"
+).innerText =
+`Level ${lessons[next][2]}`;
+
+}
+
+
+renderActivity();
+
+renderBadges();
+
+renderVocabulary();
+
+}
+
+
+/* =========================================================
+INITIALIZE
+========================================================= */
+
+renderLevels();
+
+renderLessons();
+
+renderVocabulary();
+
+updateUI();
+
+updateTimer();
+
+
+/* =========================================================
+DEFAULT LESSON
+========================================================= */
+
+loadPracticeLesson(0);
+
+
+/* =========================================================
+CLOSE MODAL ON OUTSIDE CLICK
+========================================================= */
+
+document
+.getElementById("lessonModal")
+.addEventListener(
+"click",
+function(event){
+
+if(
+event.target===this
+){
+
+closeModal();
+
+}
+
+});
+
+
+</script>
+
+</body>
+</html>
