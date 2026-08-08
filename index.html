@@ -2719,14 +2719,13 @@ justify-content:space-between;
 
             /* -----------------------
             DATABASE INITIALIZATION
-            ----------------------- */
-
-            if (!localStorage.getItem("students")) {
-                localStorage.setItem(
-                    "students",
-                    JSON.stringify(DEFAULT_STUDENTS)
-                );
-            }
+            ----------------------- */            (function initializeStudents() {
+                const saved = JSON.parse(localStorage.getItem("students") || "[]");
+                const map = new Map();
+                DEFAULT_STUDENTS.forEach(s => map.set(String(s.id), s));
+                saved.forEach(s => map.set(String(s.id), s));
+                localStorage.setItem("students", JSON.stringify([...map.values()]));
+            })();
 
             if (!localStorage.getItem("admin")) {
                 localStorage.setItem("admin", JSON.stringify(ADMINS));
@@ -2768,16 +2767,9 @@ justify-content:space-between;
             function studentLogin() {
 
                 let savedStudents =
-                    JSON.parse(localStorage.getItem("students")) || [];
-
-                // localStorage + Default Array બંને જોડો
-                let students = [...DEFAULT_STUDENTS, ...savedStudents];
-
-                // એક જ ID બે વખત ન આવે
-                students = students.filter(
-                    (student, index, self) =>
-                        index === self.findIndex(s => s.id === student.id)
-                );
+                    JSON.parse(localStorage.getItem("students")) || [];                const map = new Map(DEFAULT_STUDENTS.map(s => [String(s.id), s]));
+                savedStudents.forEach(s => map.set(String(s.id), s));
+                let students = [...map.values()];
 
                 let studentId = document.getElementById("loginUser").value.trim();
                 let password = document.getElementById("loginPass").value;
@@ -3230,7 +3222,7 @@ style="background:#ff9800;color:white;padding:6px 10px;border:none;border-radius
     color:#ffffff;
 ">
                 <b>Exam ${user.examResults.length - index}</b><br>
-                Name: ${r.userName}<br>
+                Name: ${r.userName || user.name || "-"}<br>
                 Score: ${r.score}/${r.total}<br>
                 Result: ${status}<br>
                 Date: ${r.date}
@@ -3320,151 +3312,97 @@ style="background:#ff9800;color:white;padding:6px 10px;border:none;border-radius
             /* -----------------------
             ATTENDANCE SCREEN
             ----------------------- */
+            function getFreshCurrentStudent() {
+                const current = JSON.parse(localStorage.getItem("currentStudent") || "null");
+                if (!current) return null;
+                const students = JSON.parse(localStorage.getItem("students") || "[]");
+                const fresh = students.find(s => String(s.id) === String(current.id));
+                if (fresh) {
+                    localStorage.setItem("currentStudent", JSON.stringify(fresh));
+                    return fresh;
+                }
+                return current;
+            }
 
             function showAttendance() {
-
-                let user =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "currentStudent"
-                        )
-                    );
-
-                document.getElementById(
-                    "attendanceText"
-                ).innerHTML =
-                    (user.attendance || 0)
-                    +
-                    "%";
-
-                showScreen(
-                    "attendanceScreen"
-                );
-
+                const user = getFreshCurrentStudent();
+                if (!user) { alert("Please login first."); return; }
+                const value = Number(user.attendance);
+                document.getElementById("attendanceText").innerHTML =
+                    (Number.isFinite(value) ? value : 0) + "%";
+                showScreen("attendanceScreen");
             }
+
 
             /* -----------------------
             FEE SCREEN
             ----------------------- */
-
             function showFees() {
-
-                let user =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "currentStudent"
-                        )
-                    );
-
-                document.getElementById(
-                    "feeStatusText"
-                ).innerHTML =
-                    user.fees || "Pending";
-
-                showScreen(
-                    "feesScreen"
-                );
-
+                const user = getFreshCurrentStudent();
+                if (!user) { alert("Please login first."); return; }
+                const status = String(user.fees || "Pending");
+                const el = document.getElementById("feeStatusText");
+                el.innerHTML = status;
+                el.style.color = status.toLowerCase() === "paid" ? "#16a34a" : "#dc2626";
+                showScreen("feesScreen");
             }
+
 
             /* -----------------------
             ADMIN ATTENDANCE
             ----------------------- */
-
             function manageAttendance() {
-
-                let students =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "students"
-                        )
-                    );
-
-                let username =
-                    prompt(
-                        "Enter Student Username"
-                    );
-
+                let students = JSON.parse(localStorage.getItem("students") || "[]");
+                const username = prompt("Enter Student ID");
                 if (!username) return;
-
-                let percent =
-                    prompt(
-                        "Attendance Percentage"
-                    );
-
-                students =
-                    students.map(s => {
-
-                        if (s.id === username) {
-
-                            s.attendance =
-                                parseInt(percent) || 0;
-
-                        }
-
-                        return s;
-
-                    });
-
-                localStorage.setItem(
-                    "students",
-                    JSON.stringify(students)
-                );
-
-                alert(
-                    "Attendance Updated"
-                );
-
+                const percent = prompt("Attendance Percentage (0-100)");
+                if (percent === null) return;
+                const value = Math.max(0, Math.min(100, parseInt(percent, 10) || 0));
+                let found = false;
+                students = students.map(s => {
+                    if (String(s.id) === String(username)) {
+                        s.attendance = value;
+                        found = true;
+                    }
+                    return s;
+                });
+                if (!found) { alert("Student Not Found"); return; }
+                localStorage.setItem("students", JSON.stringify(students));
+                const current = JSON.parse(localStorage.getItem("currentStudent") || "null");
+                if (current && String(current.id) === String(username)) {
+                    localStorage.setItem("currentStudent", JSON.stringify(students.find(s => String(s.id) === String(username))));
+                }
+                alert("Attendance Updated");
             }
+
 
             /* -----------------------
             ADMIN FEES
             ----------------------- */
-
             function manageFees() {
-
-                let students =
-                    JSON.parse(
-                        localStorage.getItem(
-                            "students"
-                        )
-                    );
-
-                let username =
-                    prompt(
-                        "Enter Student Username"
-                    );
-
+                let students = JSON.parse(localStorage.getItem("students") || "[]");
+                const username = prompt("Enter Student ID");
                 if (!username) return;
-
-                let status =
-                    prompt(
-                        "Fee Status (Paid/Pending)"
-                    );
-
-                students =
-                    students.map(s => {
-
-                        if (s.id === username) {
-
-                            s.fees = status;
-
-                        }
-
-                        return s;
-
-                    });
-
-                localStorage.setItem(
-                    "students",
-                    JSON.stringify(students)
-                );
-
-                alert(
-                    "Fee Status Updated"
-                );
-
+                const status = prompt("Fee Status (Paid/Pending)");
+                if (status === null) return;
+                const normalized = status.trim().toLowerCase() === "paid" ? "Paid" : "Pending";
+                let found = false;
+                students = students.map(s => {
+                    if (String(s.id) === String(username)) {
+                        s.fees = normalized;
+                        found = true;
+                    }
+                    return s;
+                });
+                if (!found) { alert("Student Not Found"); return; }
+                localStorage.setItem("students", JSON.stringify(students));
+                const current = JSON.parse(localStorage.getItem("currentStudent") || "null");
+                if (current && String(current.id) === String(username)) {
+                    localStorage.setItem("currentStudent", JSON.stringify(students.find(s => String(s.id) === String(username))));
+                }
+                alert("Fee Status Updated");
             }
+
 
             /* -----------------------
             SHOW CERTIFICATE
@@ -3903,28 +3841,22 @@ Password : ${password}`
 
                 }
             );
-
             function loadCertificate(user) {
-
-                document.getElementById("studentName").innerText = user.name;
-
+                const nameEl = document.getElementById("certificateName");
+                const dateEl = document.getElementById("certificateDate");
+                if (nameEl) nameEl.innerText = user.name || "Student Name";
+                if (dateEl) dateEl.innerText = "Issued on " + (user.certificateDate || new Date().toLocaleDateString());
             }
 
             function openCertificate() {
-
-                let user = JSON.parse(localStorage.getItem("currentStudent"));
-
-                let students = JSON.parse(localStorage.getItem("students"));
-                user = students.find(s => s.id === user.id);
-
+                const user = getFreshCurrentStudent();
+                if (!user) { alert("Please login first."); return; }
                 if (!user.certificate) {
                     alert("Certificate Not Issued Yet");
                     return;
                 }
-
-                localStorage.setItem("currentStudent", JSON.stringify(user));
-
-                window.open("./certificate.html", "_blank");
+                loadCertificate(user);
+                showScreen("certificateScreen");
             }
 
             function deleteStudent(username) {
