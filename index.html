@@ -2210,6 +2210,113 @@
                 /* Moves text completely off-screen to the left */
             }
         }
+
+        .student-ads {
+    width: 100%;
+    margin: 20px auto;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.student-ad-box {
+    padding: 8px;
+    border-radius: 18px;
+    background: rgba(10,18,35,.8);
+    border: 1px solid rgba(0,229,255,.25);
+    cursor: pointer;
+    transition: .3s;
+}
+
+.student-ad-box:hover {
+    transform: translateY(-4px);
+    border-color: #00e5ff;
+    box-shadow: 0 0 20px rgba(0,229,255,.3);
+}
+
+.student-ad-box img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+
+/* FULLSCREEN */
+
+.ad-popup {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0,0,0,.94);
+
+    z-index: 999999;
+
+    padding: 20px;
+}
+
+.ad-popup.show {
+    display: flex;
+}
+
+.ad-popup-image {
+    max-width: 95vw;
+    max-height: 92vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+}
+
+.ad-popup-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+
+    width: 45px;
+    height: 45px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.15);
+    color: white;
+
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.ad-popup-close:hover {
+    background: #ff3366;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .student-ads {
+        gap: 8px;
+    }
+
+    .student-ad-box {
+        padding: 4px;
+    }
+
+    .ad-popup-image {
+        max-width: 98vw;
+        max-height: 90vh;
+    }
+
+}
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
@@ -2271,6 +2378,38 @@
             <h2>Student Dashboard</h2>
             <p id="studentWelcome"></p>
         </div>
+
+
+                <!-- STUDENT ADS -->
+<div class="student-ads">
+
+    <div class="student-ad-box">
+        <img src="./img/spoken.png"
+             alt="Advertisement 1"
+             onclick="openAdPopup(this.src)">
+    </div>
+
+    <div class="student-ad-box">
+        <img src="./img/CCC.png"
+             alt="Advertisement 2"
+             onclick="openAdPopup(this.src)">
+    </div>
+
+</div>
+
+<!-- FULLSCREEN POPUP -->
+<div id="adPopup" class="ad-popup">
+
+    <button class="ad-popup-close" onclick="closeAdPopup()">×</button>
+
+    <img id="adPopupImage"
+         class="ad-popup-image"
+         src=""
+         alt="Advertisement">
+
+</div>
+
+
 
         <marquee>LAST MONTH WINNERS BELOW:</marquee>
 
@@ -2344,7 +2483,6 @@
             <div class="tile" onclick="window.open('./publicspeaking.html','_blank')"><span>🗣</span><strong>Public speaking</strong></div>
 
         </div>
-
 
 
         <button class="logout" onclick="logout()">
@@ -3990,7 +4128,42 @@ Password : ${password}`
                 }
 
             });
+            function openAdPopup(imageSrc) {
 
+    document.getElementById("adPopupImage").src = imageSrc;
+
+    document.getElementById("adPopup").classList.add("show");
+
+    document.body.style.overflow = "hidden";
+}
+
+
+function closeAdPopup() {
+
+    document.getElementById("adPopup").classList.remove("show");
+
+    document.body.style.overflow = "";
+}
+
+
+// બહાર click કરવાથી close
+document.getElementById("adPopup").addEventListener("click", function(e) {
+
+    if (e.target === this) {
+        closeAdPopup();
+    }
+
+});
+
+
+// ESC થી close
+document.addEventListener("keydown", function(e) {
+
+    if (e.key === "Escape") {
+        closeAdPopup();
+    }
+
+});
            
         </script>
 
