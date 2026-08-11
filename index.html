@@ -2212,110 +2212,246 @@
         }
 
         .student-ads {
-    width: 100%;
-    margin: 20px auto;
+            width: 100%;
+            margin: 20px auto;
 
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-}
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
 
-.student-ad-box {
-    padding: 8px;
-    border-radius: 18px;
-    background: rgba(10,18,35,.8);
-    border: 1px solid rgba(0,229,255,.25);
-    cursor: pointer;
-    transition: .3s;
-}
+        .student-ad-box {
+            padding: 8px;
+            border-radius: 18px;
+            background: rgba(10, 18, 35, .8);
+            border: 1px solid rgba(0, 229, 255, .25);
+            cursor: pointer;
+            transition: .3s;
+        }
 
-.student-ad-box:hover {
-    transform: translateY(-4px);
-    border-color: #00e5ff;
-    box-shadow: 0 0 20px rgba(0,229,255,.3);
-}
+        .student-ad-box:hover {
+            transform: translateY(-4px);
+            border-color: #00e5ff;
+            box-shadow: 0 0 20px rgba(0, 229, 255, .3);
+        }
 
-.student-ad-box img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: contain;
-    border-radius: 12px;
-}
-
-
-/* FULLSCREEN */
-
-.ad-popup {
-    position: fixed;
-    inset: 0;
-
-    display: none;
-
-    justify-content: center;
-    align-items: center;
-
-    background: rgba(0,0,0,.94);
-
-    z-index: 999999;
-
-    padding: 20px;
-}
-
-.ad-popup.show {
-    display: flex;
-}
-
-.ad-popup-image {
-    max-width: 95vw;
-    max-height: 92vh;
-
-    width: auto;
-    height: auto;
-
-    object-fit: contain;
-}
-
-.ad-popup-close {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-
-    width: 45px;
-    height: 45px;
-
-    border: none;
-    border-radius: 50%;
-
-    background: rgba(255,255,255,.15);
-    color: white;
-
-    font-size: 30px;
-    cursor: pointer;
-}
-
-.ad-popup-close:hover {
-    background: #ff3366;
-}
+        .student-ad-box img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            border-radius: 12px;
+        }
 
 
-/* MOBILE */
+        /* FULLSCREEN */
 
-@media (max-width: 600px) {
+        .ad-popup {
+            position: fixed;
+            inset: 0;
 
+            display: none;
+
+            justify-content: center;
+            align-items: center;
+
+            background: rgba(0, 0, 0, .94);
+
+            z-index: 999999;
+
+            padding: 20px;
+        }
+
+        .ad-popup.show {
+            display: flex;
+        }
+
+        .ad-popup-image {
+            max-width: 95vw;
+            max-height: 92vh;
+
+            width: auto;
+            height: auto;
+
+            object-fit: contain;
+        }
+
+        .ad-popup-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+
+            width: 45px;
+            height: 45px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: rgba(255, 255, 255, .15);
+            color: white;
+
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .ad-popup-close:hover {
+            background: #ff3366;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .student-ads {
+                gap: 8px;
+            }
+
+            .student-ad-box {
+                padding: 4px;
+            }
+
+            .ad-popup-image {
+                max-width: 98vw;
+                max-height: 90vh;
+            }
+
+        }
+/* =========================================
+   MOBILE SCROLLING PERFORMANCE FIX
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    /* Smooth normal scrolling */
+    html {
+        scroll-behavior: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body {
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        /* Mobile પર heavy background animation બંધ */
+        animation: none !important;
+        background-size: 100% 100% !important;
+    }
+
+    /* Heavy animated background બંધ */
+    body::before,
+    body::after {
+        display: none !important;
+        animation: none !important;
+    }
+
+    /* Floating particles mobile પર બંધ */
+    body .particle {
+        display: none !important;
+        animation: none !important;
+    }
+
+    /* backdrop-filter mobile પર scrolling slow કરી શકે છે */
+    .header,
+    .card,
+    .tile,
+    .student-ad-box,
+    .vocab-card {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    /* Continuous floating animation બંધ */
+    .header {
+        animation: none !important;
+    }
+
+    /* Hover effects mobile પર જરૂરી નથી */
+    .card:hover,
+    .tile:hover,
+    .student-ad-box:hover,
+    #bookPage:hover {
+        transform: none !important;
+    }
+
+    /* Expensive glow/shadow ઓછું */
+    .card,
+    .tile,
+    .header,
+    .student-ad-box,
+    .vocab-card {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, .15) !important;
+    }
+
+    /* Tile transition simple */
+    .tile {
+        transition: transform .15s ease;
+    }
+
+    /* Images browser ને size પહેલેથી ખબર રહે */
+    .student-ad-box img,
+    #bookPage {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* Advertisement grid stable રાખો */
     .student-ads {
-        gap: 8px;
+        contain: layout paint;
     }
 
     .student-ad-box {
-        padding: 4px;
+        contain: content;
     }
 
-    .ad-popup-image {
-        max-width: 98vw;
-        max-height: 90vh;
+    /* Screen animation પણ simple */
+    .active {
+        animation: none !important;
     }
 
+    /* Certificate scaling થી mobile repaint ઓછું */
+    #certificateArea {
+        will-change: auto;
+    }
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+   ========================================= */
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 5px !important;
+    }
+
+    .screen {
+        padding: 8px !important;
+    }
+
+    .dashboard-grid {
+        gap: 8px !important;
+    }
+
+    .tile {
+        min-height: 100px !important;
+        padding: 12px 8px !important;
+        transform: none !important;
+    }
+
+    .tile span {
+        font-size: 30px !important;
+    }
+
+    .tile strong {
+        font-size: 12px !important;
+    }
+
+    .student-ads {
+        gap: 6px !important;
+    }
 }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -2380,34 +2516,27 @@
         </div>
 
 
-                <!-- STUDENT ADS -->
-<div class="student-ads">
+        <!-- STUDENT ADS -->
+        <div class="student-ads">
 
-    <div class="student-ad-box">
-        <img src="./img/spoken.png"
-             alt="Advertisement 1"
-             onclick="openAdPopup(this.src)">
-    </div>
+            <div class="student-ad-box">
+                <img src="./img/spoken.png" alt="Advertisement 1" onclick="openAdPopup(this.src)">
+            </div>
 
-    <div class="student-ad-box">
-        <img src="./img/CCC.png"
-             alt="Advertisement 2"
-             onclick="openAdPopup(this.src)">
-    </div>
+            <div class="student-ad-box">
+                <img src="./img/CCC.png" alt="Advertisement 2" onclick="openAdPopup(this.src)">
+            </div>
 
-</div>
+        </div>
 
-<!-- FULLSCREEN POPUP -->
-<div id="adPopup" class="ad-popup">
+        <!-- FULLSCREEN POPUP -->
+        <div id="adPopup" class="ad-popup">
 
-    <button class="ad-popup-close" onclick="closeAdPopup()">×</button>
+            <button class="ad-popup-close" onclick="closeAdPopup()">×</button>
 
-    <img id="adPopupImage"
-         class="ad-popup-image"
-         src=""
-         alt="Advertisement">
+            <img id="adPopupImage" class="ad-popup-image" src="" alt="Advertisement">
 
-</div>
+        </div>
 
 
 
@@ -2432,22 +2561,27 @@
 
             <div class="tile" onclick="showVocabulary()"><span>📚</span><strong>Vocabulary</strong></div>
 
-            <div class="tile" onclick="window.open('./phonics.html','_blank')"><span>🗣</span><strong>Phonics</strong></div>
+            <div class="tile" onclick="window.open('./phonics.html','_blank')"><span>🗣</span><strong>Phonics</strong>
+            </div>
 
             <div class="tile" onclick="showGrammar()"><span>✍</span><strong>Grammar</strong></div>
 
-            <div class="tile" onclick="window.open('./speaking.html','_blank')"><span>🎤</span><strong>Speaking Practice</strong></div>
+            <div class="tile" onclick="window.open('./speaking.html','_blank')"><span>🎤</span><strong>Speaking
+                    Practice</strong></div>
 
             <div class="tile" onclick="openVideoPractice()"><span>📹</span><strong>Video Practice</strong> </div>
 
-            <div class="tile" onclick="window.open('./exam.html','_blank')"><span>📝</span><strong>Practice Exam</strong></div>
+            <div class="tile" onclick="window.open('./exam.html','_blank')"><span>📝</span><strong>Practice
+                    Exam</strong></div>
 
             <div class="tile" onclick="startExam()"><span>📝</span><strong>Final Exam</strong> </div>
 
-            <div class="tile" onclick="window.open('https://papers-nu.vercel.app/','_blank')"><span>📃</span><strong>Paper</strong></div>
+            <div class="tile" onclick="window.open('https://papers-nu.vercel.app/','_blank')">
+                <span>📃</span><strong>Paper</strong></div>
 
-            <div class="tile" onclick="window.open('./cccexam.html','_blank')"><span>🖥</span><strong> CCC Practice Exam</strong></div>
-            
+            <div class="tile" onclick="window.open('./cccexam.html','_blank')"><span>🖥</span><strong> CCC Practice
+                    Exam</strong></div>
+
             <div class="tile" onclick="showResults()"><span>📊</span><strong>Results</strong> </div>
 
             <div class="tile" onclick="openCertificate()"><span>🏆</span><strong>Certificate</strong></div>
@@ -2456,31 +2590,43 @@
 
             <div class="tile" onclick="showAttendance()"><span>📅</span><strong>Attendance</strong></div>
 
-            <div class="tile" onclick="window.open('./typinggame.html','_blank')"><span>⌨</span><strong>TypingGame</strong></div>
+            <div class="tile" onclick="window.open('./typinggame.html','_blank')">
+                <span>⌨</span><strong>TypingGame</strong></div>
 
-            <div class="tile" onclick="window.open('./object.html','_blank')"><span>❔</span><strong>Objects</strong></div>
-            
-            <div class="tile" onclick="window.open('./hand.html','_blank')"><span>🖐🏻</span><strong>Hand Move</strong></div>
+            <div class="tile" onclick="window.open('./object.html','_blank')"><span>❔</span><strong>Objects</strong>
+            </div>
 
-            <div class="tile" onclick="window.open('./computer.html','_blank')"><span>🌐</span><strong>Web Development</strong></div> 
+            <div class="tile" onclick="window.open('./hand.html','_blank')"><span>🖐🏻</span><strong>Hand Move</strong>
+            </div>
+
+            <div class="tile" onclick="window.open('./computer.html','_blank')"><span>🌐</span><strong>Web
+                    Development</strong></div>
 
             <div class="tile" onclick="window.open('./reel.html','_blank')"><span>😀</span><strong>Reels</strong></div>
 
-            <div class="tile" onclick="window.open('./game.html','_blank')"><span>🎮</span><strong>Q & A Game</strong></div>
+            <div class="tile" onclick="window.open('./game.html','_blank')"><span>🎮</span><strong>Q & A Game</strong>
+            </div>
 
-            <div class="tile" onclick="window.open('./game2.html','_blank')"><span>🦜</span><strong>Parrot</strong></div>
+            <div class="tile" onclick="window.open('./game2.html','_blank')"><span>🦜</span><strong>Parrot</strong>
+            </div>
 
-            <div class="tile" onclick="window.open('./game3.html','_blank')"><span>🤝🏻</span><strong>English Practice</strong></div>
+            <div class="tile" onclick="window.open('./game3.html','_blank')"><span>🤝🏻</span><strong>English
+                    Practice</strong></div>
 
-            <div class="tile" onclick="window.open('https://aducate-english.vercel.app','_blank')"><span>🤑</span><strong>Earn</strong></div>
+            <div class="tile" onclick="window.open('https://aducate-english.vercel.app','_blank')">
+                <span>🤑</span><strong>Earn</strong></div>
 
-            <div class="tile" onclick="window.open('https://zoom-meeting-app-aup6.onrender.com','_blank')"><span>👨‍💼</span><strong>Online Meeting</strong></div>
-            
-            <div class="tile" onclick="window.open('https://zoom-meeting-app-aup6.onrender.com','_blank')"><span>🏛</span><strong>🔴Live</strong></div>
+            <div class="tile" onclick="window.open('https://zoom-meeting-app-aup6.onrender.com','_blank')">
+                <span>👨‍💼</span><strong>Online Meeting</strong></div>
 
-            <div class="tile" onclick="window.open('./advanceenglish.html','_blank')"><span>📗</span><strong>Advance English</strong></div>
-            
-            <div class="tile" onclick="window.open('./publicspeaking.html','_blank')"><span>🗣</span><strong>Public speaking</strong></div>
+            <div class="tile" onclick="window.open('https://zoom-meeting-app-aup6.onrender.com','_blank')">
+                <span>🏛</span><strong>🔴Live</strong></div>
+
+            <div class="tile" onclick="window.open('./advanceenglish.html','_blank')"><span>📗</span><strong>Advance
+                    English</strong></div>
+
+            <div class="tile" onclick="window.open('./publicspeaking.html','_blank')"><span>🗣</span><strong>Public
+                    speaking</strong></div>
 
         </div>
 
@@ -2811,29 +2957,29 @@ justify-content:space-between;
                 { id: "Akash", password: "Akash", name: "Akash Bhadani", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Seenu", password: "Seenu", name: "Seenu Ravat", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Vaibhav", password: "Vaibhav", name: "Vaibhav Goswami", mobile: "", attendance: 100, fees: "Paid", certificate: true },
-//home batch
+                //home batch
                 { id: "rajvi", password: "rajvi", name: "Rajvi Navadiya", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "harshil", password: "harshil", name: "Harshil Navadiya", mobile: "", attendance: 100, fees: "Paid", certificate: true },
-//Maruti nandan education hub mota varachha
+                //Maruti nandan education hub mota varachha
                 { id: "Laksh", password: "savaliya", name: "Laksh Savaliya", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Tithi", password: "Tithi", name: "Tithi Talaviya", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Hamna", password: "Hamna", name: "Hamna Janab", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Disha", password: "Disha", name: "Disha Chitroda", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Dhruvi", password: "Dhruvi", name: "Dhruvi Sangani", mobile: "", attendance: 100, fees: "Paid", certificate: true },
-                { id: "Netra", password: "Netra", name: "Netra Lathiya", mobile: "", attendance: 100, fees: "Paid", certificate: true },         
+                { id: "Netra", password: "Netra", name: "Netra Lathiya", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Hepin", password: "Hepin", name: "Hepin Butani", mobile: "", attendance: 100, fees: "Paid", certificate: true },
-                
-//Maruti nandan education hub Velanja
-                
+
+                //Maruti nandan education hub Velanja
+
                 { id: "Poonam", password: "Poonam", name: "Poonam Vataliya", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Prince", password: "Prince", name: "Prince Sabhadiya", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Netra m", password: "Netra m", name: "Nerta Malani", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Dharman", password: "Dharman", name: "Dharman Goyani", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Jay", password: "Jay", name: "Jay Madhani", mobile: "", attendance: 100, fees: "Paid", certificate: true },
                 { id: "Dhaval", password: "Dhaval", name: "Dhaval Joshi", mobile: "", attendance: 100, fees: "Paid", certificate: true },
-                { id: "Nehal", password: "Nehal", name: "Nehal Gohil", mobile: "", attendance: 100, fees: "Paid", certificate: true }, 
-                { id: "Rudra", password: "Rudra", name: "Rudra Jiyani", mobile: "", attendance: 100, fees: "Paid", certificate: true },         
-                { id: "Vraj", password: "Vraj", name: "Vraj Kathiriya", mobile: "", attendance: 100, fees: "Paid", certificate: true },         
+                { id: "Nehal", password: "Nehal", name: "Nehal Gohil", mobile: "", attendance: 100, fees: "Paid", certificate: true },
+                { id: "Rudra", password: "Rudra", name: "Rudra Jiyani", mobile: "", attendance: 100, fees: "Paid", certificate: true },
+                { id: "Vraj", password: "Vraj", name: "Vraj Kathiriya", mobile: "", attendance: 100, fees: "Paid", certificate: true },
 
                 { id: "Ami", password: "Ami", name: "Ami Shekhada", mobile: "", attendance: 100, fees: "Paid", certificate: true },
 
@@ -4096,7 +4242,19 @@ Password : ${password}`
                 }, 1500);
                 // Floating Particles
 
-                for (let i = 0; i < 35; i++) {
+                if (window.innerWidth > 768) {
+    for (let i = 0; i < 35; i++) {
+        let p = document.createElement("div");
+
+        p.className = "particle";
+
+        p.style.left = Math.random() * 100 + "vw";
+        p.style.animationDuration = (8 + Math.random() * 8) + "s";
+        p.style.animationDelay = Math.random() * 10 + "s";
+
+        document.body.appendChild(p);
+    }
+}
 
                     let p = document.createElement("div");
 
@@ -4130,41 +4288,41 @@ Password : ${password}`
             });
             function openAdPopup(imageSrc) {
 
-    document.getElementById("adPopupImage").src = imageSrc;
+                document.getElementById("adPopupImage").src = imageSrc;
 
-    document.getElementById("adPopup").classList.add("show");
+                document.getElementById("adPopup").classList.add("show");
 
-    document.body.style.overflow = "hidden";
-}
-
-
-function closeAdPopup() {
-
-    document.getElementById("adPopup").classList.remove("show");
-
-    document.body.style.overflow = "";
-}
+                document.body.style.overflow = "hidden";
+            }
 
 
-// બહાર click કરવાથી close
-document.getElementById("adPopup").addEventListener("click", function(e) {
+            function closeAdPopup() {
 
-    if (e.target === this) {
-        closeAdPopup();
-    }
+                document.getElementById("adPopup").classList.remove("show");
 
-});
+                document.body.style.overflow = "";
+            }
 
 
-// ESC થી close
-document.addEventListener("keydown", function(e) {
+            // બહાર click કરવાથી close
+            document.getElementById("adPopup").addEventListener("click", function (e) {
 
-    if (e.key === "Escape") {
-        closeAdPopup();
-    }
+                if (e.target === this) {
+                    closeAdPopup();
+                }
 
-});
-           
+            });
+
+
+            // ESC થી close
+            document.addEventListener("keydown", function (e) {
+
+                if (e.key === "Escape") {
+                    closeAdPopup();
+                }
+
+            });
+
         </script>
 
 
