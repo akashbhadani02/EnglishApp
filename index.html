@@ -1067,55 +1067,162 @@
        STUDENT ADS
     ========================================================= */
 
+    /* =========================================================
+       STUDENT AD SLIDER
+    ========================================================= */
+
     .student-ads {
+        position: relative;
         width: 100%;
-
         margin: 20px auto;
+        overflow: hidden;
+        border: 1px solid rgba(0, 229, 255, .28);
+        border-radius: 22px;
+        background: rgba(10, 18, 35, .82);
+        box-shadow:
+            0 0 20px rgba(0, 229, 255, .14),
+            0 0 45px rgba(0, 140, 255, .08);
+        contain: layout paint;
+    }
 
-        display: grid;
-
-        grid-template-columns:
-            repeat(2, 1fr);
-
-        gap: 15px;
+    .student-ad-track {
+        display: flex;
+        width: 100%;
+        transition: transform .55s cubic-bezier(.22,.61,.36,1);
+        will-change: transform;
     }
 
     .student-ad-box {
-        padding: 8px;
-
-        background: rgba(10, 18, 35, .80);
-
-        border: 1px solid rgba(0, 229, 255, .25);
-
-        border-radius: 18px;
-
+        flex: 0 0 100%;
+        min-width: 100%;
+        padding: 7px;
         cursor: pointer;
-
-        transition: .3s;
-
-        contain: content;
-    }
-
-    .student-ad-box:hover {
-        transform: translateY(-4px);
-
-        border-color: #00e5ff;
-
-        box-shadow:
-            0 0 20px rgba(0, 229, 255, .30);
+        position: relative;
     }
 
     .student-ad-box img {
         display: block;
-
         width: 100%;
-        height: auto;
-
+        height: clamp(150px, 28vw, 330px);
         object-fit: contain;
-
-        border-radius: 12px;
-
+        border-radius: 16px;
         cursor: pointer;
+        user-select: none;
+        -webkit-user-drag: none;
+        background: rgba(0, 0, 0, .12);
+    }
+
+    .ad-slider-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 5;
+        width: 42px;
+        height: 42px;
+        margin: 0;
+        padding: 0;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,.25);
+        background: rgba(0,0,0,.48);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        color: #fff;
+        font-size: 25px;
+        line-height: 42px;
+        box-shadow: 0 0 15px rgba(0,229,255,.18);
+    }
+
+    .ad-slider-btn:hover {
+        transform: translateY(-50%) scale(1.08);
+    }
+
+    .ad-slider-prev {
+        left: 10px;
+    }
+
+    .ad-slider-next {
+        right: 10px;
+    }
+
+    .ad-slider-dots {
+        position: absolute;
+        left: 50%;
+        bottom: 12px;
+        transform: translateX(-50%);
+        z-index: 5;
+        display: flex;
+        gap: 7px;
+        padding: 6px 10px;
+        border-radius: 20px;
+        background: rgba(0,0,0,.38);
+        backdrop-filter: blur(6px);
+    }
+
+    .ad-slider-dot {
+        width: 8px;
+        height: 8px;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: rgba(255,255,255,.45);
+        box-shadow: none;
+        cursor: pointer;
+    }
+
+    .ad-slider-dot.active {
+        width: 22px;
+        border-radius: 10px;
+        background: #00e5ff;
+        box-shadow: 0 0 10px rgba(0,229,255,.75);
+    }
+
+    @media (max-width: 768px) {
+        .student-ads {
+            margin: 14px auto;
+            border-radius: 18px;
+        }
+
+        .student-ad-box {
+            padding: 4px;
+        }
+
+        .student-ad-box img {
+            height: clamp(130px, 42vw, 240px);
+            border-radius: 14px;
+        }
+
+        .ad-slider-btn {
+            width: 34px;
+            height: 34px;
+            font-size: 20px;
+            line-height: 34px;
+        }
+
+        .ad-slider-prev {
+            left: 7px;
+        }
+
+        .ad-slider-next {
+            right: 7px;
+        }
+
+        .ad-slider-dots {
+            bottom: 7px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .student-ad-box img {
+            height: 145px;
+        }
+
+        .ad-slider-btn {
+            width: 30px;
+            height: 30px;
+            font-size: 17px;
+            line-height: 30px;
+        }
     }
 
 
@@ -1907,30 +2014,45 @@
     </div>
 
 
-    <!-- ADS -->
+    <!-- STUDENT AD SLIDER -->
 
-    <div class="student-ads">
+    <div class="student-ads" id="studentAdSlider">
 
-        <div class="student-ad-box">
+        <div class="student-ad-track" id="studentAdTrack">
 
-            <img
-                src="./img/spokn.png"
-                alt="Advertisement 1"
-                onclick="openAdPopup(this.src)"
-            >
+            <div class="student-ad-box">
+                <img
+                    src="./img/spokn.png"
+                    alt="Advertisement 1"
+                    onclick="openAdPopup(this.src)"
+                >
+            </div>
+
+            <div class="student-ad-box">
+                <img
+                    src="./img/CC.png"
+                    alt="Advertisement 2"
+                    onclick="openAdPopup(this.src)"
+                >
+            </div>
 
         </div>
 
+        <button
+            class="ad-slider-btn ad-slider-prev"
+            onclick="prevStudentAd()"
+            aria-label="Previous advertisement"
+            type="button"
+        >‹</button>
 
-        <div class="student-ad-box">
+        <button
+            class="ad-slider-btn ad-slider-next"
+            onclick="nextStudentAd()"
+            aria-label="Next advertisement"
+            type="button"
+        >›</button>
 
-            <img
-                src="./img/CC.png"
-                alt="Advertisement 2"
-                onclick="openAdPopup(this.src)"
-            >
-
-        </div>
+        <div class="ad-slider-dots" id="adSliderDots"></div>
 
     </div>
 
@@ -4950,6 +5072,144 @@ Password : ${password}`
         );
 
     }
+
+
+    /* =========================================================
+       STUDENT AD SLIDER
+    ========================================================= */
+
+    let currentStudentAd = 0;
+    let studentAdTimer = null;
+    let studentAdStartX = 0;
+    let studentAdMoveX = 0;
+
+    function initStudentAdSlider() {
+        const track = document.getElementById("studentAdTrack");
+        const slider = document.getElementById("studentAdSlider");
+        const dots = document.getElementById("adSliderDots");
+
+        if (!track || !slider || !dots) return;
+
+        const slides = track.querySelectorAll(".student-ad-box");
+
+        dots.innerHTML = "";
+
+        slides.forEach((_, index) => {
+            const dot = document.createElement("button");
+            dot.type = "button";
+            dot.className = "ad-slider-dot";
+            dot.setAttribute("aria-label", "Advertisement " + (index + 1));
+            dot.onclick = () => goToStudentAd(index);
+            dots.appendChild(dot);
+        });
+
+        updateStudentAdSlider();
+        startStudentAdAutoPlay();
+
+        slider.addEventListener("mouseenter", stopStudentAdAutoPlay);
+        slider.addEventListener("mouseleave", startStudentAdAutoPlay);
+
+        slider.addEventListener("touchstart", function(e) {
+            studentAdStartX = e.touches[0].clientX;
+            studentAdMoveX = studentAdStartX;
+            stopStudentAdAutoPlay();
+        }, { passive: true });
+
+        slider.addEventListener("touchmove", function(e) {
+            studentAdMoveX = e.touches[0].clientX;
+        }, { passive: true });
+
+        slider.addEventListener("touchend", function() {
+            const diff = studentAdMoveX - studentAdStartX;
+
+            if (Math.abs(diff) > 45) {
+                if (diff < 0) {
+                    nextStudentAd();
+                } else {
+                    prevStudentAd();
+                }
+            }
+
+            startStudentAdAutoPlay();
+        });
+    }
+
+    function updateStudentAdSlider() {
+        const track = document.getElementById("studentAdTrack");
+        const dots = document.querySelectorAll(".ad-slider-dot");
+
+        if (!track) return;
+
+        track.style.transform =
+            "translate3d(-" + (currentStudentAd * 100) + "%, 0, 0)";
+
+        dots.forEach((dot, index) => {
+            dot.classList.toggle(
+                "active",
+                index === currentStudentAd
+            );
+        });
+    }
+
+    function goToStudentAd(index) {
+        const track = document.getElementById("studentAdTrack");
+        if (!track) return;
+
+        const slides = track.querySelectorAll(".student-ad-box");
+        if (!slides.length) return;
+
+        currentStudentAd =
+            (index + slides.length) % slides.length;
+
+        updateStudentAdSlider();
+    }
+
+    function nextStudentAd() {
+        const track = document.getElementById("studentAdTrack");
+        if (!track) return;
+
+        const slides = track.querySelectorAll(".student-ad-box");
+        if (!slides.length) return;
+
+        currentStudentAd =
+            (currentStudentAd + 1) % slides.length;
+
+        updateStudentAdSlider();
+    }
+
+    function prevStudentAd() {
+        const track = document.getElementById("studentAdTrack");
+        if (!track) return;
+
+        const slides = track.querySelectorAll(".student-ad-box");
+        if (!slides.length) return;
+
+        currentStudentAd =
+            (currentStudentAd - 1 + slides.length) %
+            slides.length;
+
+        updateStudentAdSlider();
+    }
+
+    function startStudentAdAutoPlay() {
+        stopStudentAdAutoPlay();
+
+        studentAdTimer = setInterval(
+            nextStudentAd,
+            4000
+        );
+    }
+
+    function stopStudentAdAutoPlay() {
+        if (studentAdTimer) {
+            clearInterval(studentAdTimer);
+            studentAdTimer = null;
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        initStudentAdSlider();
+    });
 
 
     /* =========================================================
