@@ -1371,6 +1371,17 @@
        VERY SMALL MOBILE
     ========================================================= */
 
+    /* =========================================================
+       DESKTOP TILE LAYOUT
+       Keep dashboard tiles in 4 columns on computers
+    ========================================================= */
+    @media (min-width: 901px) {
+        .dashboard-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+            gap: 20px !important;
+        }
+    }
+
     @media (max-width: 480px) {
 
         body {
