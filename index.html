@@ -1187,6 +1187,381 @@
         background: #ff3366;
     }
 
+
+    /* =========================================================
+       LOADER
+    ========================================================= */
+
+    #loader {
+        position: fixed;
+
+        inset: 0;
+
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+
+        flex-direction: column;
+
+        background: #02040a;
+
+        z-index: 999999;
+
+        overflow: hidden;
+    }
+
+    #loader::before {
+        content: "";
+
+        position: absolute;
+
+        width: 500px;
+        height: 500px;
+
+        border-radius: 50%;
+
+        background:
+            radial-gradient(
+                circle,
+                #00e5ff33,
+                transparent 70%
+            );
+
+        animation: loaderPulse 3s infinite;
+    }
+
+    #loader::after {
+        content: "";
+
+        position: absolute;
+
+        width: 800px;
+        height: 800px;
+
+        border: 1px solid rgba(0, 229, 255, .08);
+
+        border-radius: 50%;
+
+        animation:
+            rotateLoader 18s linear infinite;
+    }
+
+    #loader h1 {
+        position: relative;
+        z-index: 2;
+
+        font-family: "Orbitron", sans-serif;
+
+        font-size: 42px;
+
+        letter-spacing: 4px;
+
+        color: #fff;
+
+        text-shadow:
+            0 0 10px #00e5ff,
+            0 0 25px #00e5ff,
+            0 0 45px #008cff;
+    }
+
+    #loader h1::after {
+        content: "";
+
+        display: block;
+
+        width: 260px;
+        height: 6px;
+
+        margin-top: 20px;
+
+        border-radius: 20px;
+
+        background: rgba(255, 255, 255, .08);
+    }
+
+    #loader h1::before {
+        content: "";
+
+        position: absolute;
+
+        left: 0;
+        bottom: -30px;
+
+        width: 90px;
+        height: 6px;
+
+        border-radius: 20px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #00e5ff,
+                #008cff,
+                #7c3aed
+            );
+
+        animation:
+            loadingBar 2.2s infinite;
+    }
+
+    @keyframes loaderPulse {
+        0% {
+            transform: scale(.8);
+            opacity: .4;
+        }
+
+        50% {
+            transform: scale(1.2);
+            opacity: .8;
+        }
+
+        100% {
+            transform: scale(.8);
+            opacity: .4;
+        }
+    }
+
+    @keyframes rotateLoader {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes loadingBar {
+        0% {
+            left: 0;
+        }
+
+        50% {
+            left: 170px;
+        }
+
+        100% {
+            left: 0;
+        }
+    }
+
+
+    /* =========================================================
+       PARTICLES
+    ========================================================= */
+
+    .particle {
+        position: fixed;
+
+        width: 5px;
+        height: 5px;
+
+        background: #00e5ff;
+
+        border-radius: 50%;
+
+        pointer-events: none;
+
+        opacity: .6;
+
+        animation:
+            particleFloat linear infinite;
+    }
+
+    @keyframes particleFloat {
+        0% {
+            transform:
+                translateY(100vh)
+                scale(.3);
+
+            opacity: 0;
+        }
+
+        20% {
+            opacity: 1;
+        }
+
+        100% {
+            transform:
+                translateY(-100px)
+                scale(1);
+
+            opacity: 0;
+        }
+    }
+
+
+    /* =========================================================
+       GLOW BORDER
+    ========================================================= */
+
+    .glow-border {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glow-border::before {
+        content: "";
+
+        position: absolute;
+
+        inset: -2px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #00e5ff,
+                #008cff,
+                #8b5cf6,
+                #00e5ff
+            );
+
+        background-size: 300%;
+
+        animation:
+            borderMove 5s linear infinite;
+
+        z-index: -2;
+
+        border-radius: inherit;
+    }
+
+    .glow-border::after {
+        content: "";
+
+        position: absolute;
+
+        inset: 2px;
+
+        background: #0b1222;
+
+        border-radius: inherit;
+
+        z-index: -1;
+    }
+
+    @keyframes borderMove {
+        0% {
+            background-position: 0%;
+        }
+
+        100% {
+            background-position: 300%;
+        }
+    }
+
+
+    /* =========================================================
+       NEW STUDENT BUTTON
+    ========================================================= */
+
+    .newStudentBtn {
+        display: block !important;
+
+        width: 100%;
+
+        margin: 15px 0;
+
+        padding: 15px;
+
+        border-radius: 15px;
+
+        font-size: 16px;
+        font-weight: 600;
+
+        background:
+            linear-gradient(
+                135deg,
+                #00b7ff,
+                #0066ff,
+                #7c3aed
+            );
+    }
+
+
+    /* =========================================================
+       SCROLLBAR
+    ========================================================= */
+
+    ::-webkit-scrollbar {
+        width: 9px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #05070d;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background:
+            linear-gradient(
+                180deg,
+                #00e5ff,
+                #008cff,
+                #7c3aed
+            );
+
+        border-radius: 20px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #00e5ff;
+    }
+
+
+    /* =========================================================
+       TABLET
+    ========================================================= */
+
+    @media (max-width: 900px) {
+
+        .dashboard-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .tile {
+            min-height: 130px;
+        }
+
+        .tile span {
+            font-size: 42px;
+        }
+    }
+
+
+    /* =========================================================
+       MOBILE PERFORMANCE
+    ========================================================= */
+
+    @media (max-width: 768px) {
+
+        html {
+            scroll-behavior: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body {
+            padding: 5px;
+
+            overflow-x: hidden;
+            overflow-y: auto;
+
+            animation: none !important;
+
+            background-size: 100% 100% !important;
+        }
+
+        body::before,
+        body::after {
+            display: none !important;
+            animation: none !important;
+        }
+
+        .particle {
+            display: none !important;
+            animation: none !important;
+        }
+
+        .header,
+        .card,
+        .tile,
+        .student-ad-box,
         .vocab-card {
             backdrop-filter: none !important;
             -webkit-backdrop-filter: none !important;
@@ -1364,23 +1739,21 @@
             max-width: 98vw;
             max-height: 90vh;
         }
-}
+
+        #loader h1 {
+            font-size: 28px;
+            letter-spacing: 2px;
+        }
+
+        #loader h1::after {
+            width: 180px;
+        }
+    }
 
 
     /* =========================================================
        VERY SMALL MOBILE
     ========================================================= */
-
-    /* =========================================================
-       DESKTOP TILE LAYOUT
-       Keep dashboard tiles in 4 columns on computers
-    ========================================================= */
-    @media (min-width: 901px) {
-        .dashboard-grid {
-            grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
-            gap: 20px !important;
-        }
-    }
 
     @media (max-width: 480px) {
 
@@ -1431,76 +1804,20 @@
         }
     }
 
-
-
-/* =========================================================
-   RESPONSIVE FLOATING AD - ALL DEVICES
-========================================================= */
-.floating-ad {
-    position: fixed;
-    right: 16px;
-    bottom: 90px;
-    width: 155px;
-    max-width: 30vw;
-    padding: 5px;
-    background: rgba(2, 4, 10, .96);
-    border: 1px solid rgba(0, 229, 255, .55);
-    border-radius: 14px;
-    box-shadow: 0 8px 30px rgba(0,0,0,.45), 0 0 18px rgba(0,229,255,.25);
-    z-index: 99990;
-    cursor: pointer;
-    touch-action: manipulation;
-}
-.floating-ad img {
-    display:block;
-    width:100%;
-    height:auto;
-    max-height:220px;
-    object-fit:contain;
-    border-radius:10px;
-    user-select:none;
-    -webkit-user-select:none;
-    -webkit-user-drag:none;
-}
-.floating-ad-close {
-    position:absolute;
-    top:-9px;
-    right:-9px;
-    width:27px;
-    height:27px;
-    padding:0;
-    border:2px solid #fff;
-    border-radius:50%;
-    background:#ff3366;
-    color:#fff;
-    font-size:18px;
-    font-weight:700;
-    line-height:22px;
-    z-index:3;
-    cursor:pointer;
-}
-.floating-ad-close:hover { transform:scale(1.08); }
-@media (max-width: 768px) {
-    .floating-ad {
-        right:10px;
-        bottom:82px;
-        width:112px;
-        max-width:30vw;
-        border-radius:12px;
-    }
-    .floating-ad img { max-height:155px; border-radius:8px; }
-    .floating-ad-close { width:25px; height:25px; font-size:17px; }
-}
-@media (max-width: 480px) {
-    .floating-ad { right:8px; bottom:76px; width:96px; max-width:28vw; }
-    .floating-ad img { max-height:135px; }
-}
-
 </style>
 
 </head>
 
 <body>
+
+<!-- =========================================================
+     LOADER
+========================================================= -->
+
+<div id="loader">
+    <h1>📚 Aducate English</h1>
+</div>
+
 
 <!-- =========================================================
      HOME
@@ -1589,11 +1906,34 @@
 
     </div>
 
-    <!-- FLOATING AD -->
-    <div id="floatingAd" class="floating-ad" role="button" tabindex="0" aria-label="Open advertisement">
-        <button type="button" class="floating-ad-close" aria-label="Close advertisement">×</button>
-        <img id="floatingAdImage" src="./img/spoken.png" alt="Advertisement" draggable="false">
+
+    <!-- ADS -->
+
+    <div class="student-ads">
+
+        <div class="student-ad-box">
+
+            <img
+                src="./img/spoken.png"
+                alt="Advertisement 1"
+                onclick="openAdPopup(this.src)"
+            >
+
+        </div>
+
+
+        <div class="student-ad-box">
+
+            <img
+                src="./img/CCC.png"
+                alt="Advertisement 2"
+                onclick="openAdPopup(this.src)"
+            >
+
+        </div>
+
     </div>
+
 
     <!-- FULLSCREEN AD POPUP -->
 
@@ -4664,56 +5004,6 @@ Password : ${password}`
     }
 
 
-
-
-    /* =========================================================
-       FLOATING AD
-    ========================================================= */
-    const floatingAdImages = ["./img/spoken.png", "./img/CCC.png"];
-    let floatingAdIndex = 0;
-    let floatingAdTimer = null;
-
-    function initFloatingAd() {
-        const ad = document.getElementById("floatingAd");
-        const image = document.getElementById("floatingAdImage");
-        const close = ad ? ad.querySelector(".floating-ad-close") : null;
-        if (!ad || !image) return;
-
-        const open = function(event) {
-            if (event) event.stopPropagation();
-            openAdPopup(image.src);
-        };
-        ad.addEventListener("click", function(event) {
-            if (event.target === close || event.target.closest(".floating-ad-close")) return;
-            open(event);
-        });
-        ad.addEventListener("touchend", function(event) {
-            if (event.target === close || event.target.closest(".floating-ad-close")) return;
-            event.preventDefault();
-            open(event);
-        }, {passive:false});
-        close.addEventListener("click", function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            ad.style.display = "none";
-            clearInterval(floatingAdTimer);
-        });
-        ad.addEventListener("keydown", function(event) {
-            if (event.key === "Enter" || event.key === " ") {
-                event.preventDefault();
-                open(event);
-            }
-        });
-        clearInterval(floatingAdTimer);
-        floatingAdTimer = setInterval(function() {
-            if (!document.getElementById("studentDashboard")?.classList.contains("active")) return;
-            floatingAdIndex = (floatingAdIndex + 1) % floatingAdImages.length;
-            image.src = floatingAdImages[floatingAdIndex];
-        }, 8000);
-    }
-
-    document.addEventListener("DOMContentLoaded", initFloatingAd);
-
     /* =========================================================
        KEYBOARD
     ========================================================= */
@@ -4889,7 +5179,31 @@ Password : ${password}`
     window.addEventListener(
         "load",
         function () {
-/* Restore Login */
+
+            /* Loader */
+
+            setTimeout(
+                function () {
+
+                    const loader =
+                        document.getElementById(
+                            "loader"
+                        );
+
+
+                    if (loader) {
+
+                        loader.style.display =
+                            "none";
+
+                    }
+
+                },
+                1500
+            );
+
+
+            /* Restore Login */
 
             const currentStudent =
                 JSON.parse(
