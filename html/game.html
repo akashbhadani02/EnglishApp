@@ -251,6 +251,57 @@
     </div>
 
     <script>
+        /* =========================================================
+   ENHANCED BASIC PROTECTION
+========================================================= */
+
+document.addEventListener(
+    "contextmenu",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+document.addEventListener(
+    "dragstart",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+        // Prevent Ctrl+S, Ctrl+U
+        if (
+            event.ctrlKey &&
+            (
+                event.key.toLowerCase() === "s" ||
+                event.key.toLowerCase() === "u"
+            )
+        ) {
+            event.preventDefault();
+        }
+
+        // Prevent F12
+        if (event.key === "F12") {
+            event.preventDefault();
+        }
+
+        // Prevent Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+        if (
+            event.ctrlKey &&
+            event.shiftKey &&
+            (
+                event.key.toLowerCase() === "i" ||
+                event.key.toLowerCase() === "j" ||
+                event.key.toLowerCase() === "c"
+            )
+        ) {
+            event.preventDefault();
+        }
+    }
+);
 
         /* ===================================
            GLOBAL VARIABLES

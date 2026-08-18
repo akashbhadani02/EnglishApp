@@ -218,6 +218,57 @@
     </div>
 
     <script>
+        /* =========================================================
+   ENHANCED BASIC PROTECTION
+========================================================= */
+
+document.addEventListener(
+    "contextmenu",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+document.addEventListener(
+    "dragstart",
+    function (event) {
+        event.preventDefault();
+    }
+);
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+        // Prevent Ctrl+S, Ctrl+U
+        if (
+            event.ctrlKey &&
+            (
+                event.key.toLowerCase() === "s" ||
+                event.key.toLowerCase() === "u"
+            )
+        ) {
+            event.preventDefault();
+        }
+
+        // Prevent F12
+        if (event.key === "F12") {
+            event.preventDefault();
+        }
+
+        // Prevent Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+        if (
+            event.ctrlKey &&
+            event.shiftKey &&
+            (
+                event.key.toLowerCase() === "i" ||
+                event.key.toLowerCase() === "j" ||
+                event.key.toLowerCase() === "c"
+            )
+        ) {
+            event.preventDefault();
+        }
+    }
+);
 
        const paragraphs = [
     "Learning English every day is one of the most effective ways to improve communication skills and build self confidence. Students who practice reading, writing, listening, and speaking regularly become more fluent over time. Reading books, newspapers, and articles helps increase vocabulary and improves grammar naturally. Watching educational videos and listening to English conversations also enhance pronunciation and understanding. Making mistakes is a normal part of learning, so students should never feel afraid to speak. Daily practice, patience, and consistency are the keys to success. With determination and regular effort, anyone can become a confident English speaker and communicate effectively with people from different countries around the world.",
