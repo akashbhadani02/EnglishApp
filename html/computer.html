@@ -1235,53 +1235,53 @@
    XP Progress Card
 ========================== */
 
-.progressCard{
+        .progressCard {
 
-text-align:center;
+            text-align: center;
 
-padding:25px;
+            padding: 25px;
 
-}
+        }
 
-.progressCircle{
+        .progressCircle {
 
-width:150px;
+            width: 150px;
 
-height:150px;
+            height: 150px;
 
-margin:20px auto;
+            margin: 20px auto;
 
-border-radius:50%;
+            border-radius: 50%;
 
-display:flex;
+            display: flex;
 
-justify-content:center;
+            justify-content: center;
 
-align-items:center;
+            align-items: center;
 
-font-size:28px;
+            font-size: 28px;
 
-font-weight:bold;
+            font-weight: bold;
 
-background:conic-gradient(#00e5ff 0deg,#00ff99 0deg,#1f2937 0deg);
+            background: conic-gradient(#00e5ff 0deg, #00ff99 0deg, #1f2937 0deg);
 
-transition:1s;
+            transition: 1s;
 
-color:#fff;
+            color: #fff;
 
-}
+        }
 
-#badgeText{
+        #badgeText {
 
-margin-top:15px;
+            margin-top: 15px;
 
-font-size:20px;
+            font-size: 20px;
 
-font-weight:bold;
+            font-weight: bold;
 
-color:#00e5ff;
+            color: #00e5ff;
 
-}
+        }
     </style>
 
 </head>
@@ -3767,7 +3767,7 @@ hello();
                 <button onclick="showSection('jsNotes')">⬅ Back</button>
 
                 <button onclick="completeLesson();updateProgress();">🏆 Complete Lesson</button>
-    
+
 
                 <div id="output10"></div>
 
@@ -3808,53 +3808,53 @@ hello();
    ENHANCED BASIC PROTECTION
 ========================================================= */
 
-document.addEventListener(
-    "contextmenu",
-    function (event) {
-        event.preventDefault();
-    }
-);
+        document.addEventListener(
+            "contextmenu",
+            function (event) {
+                event.preventDefault();
+            }
+        );
 
-document.addEventListener(
-    "dragstart",
-    function (event) {
-        event.preventDefault();
-    }
-);
+        document.addEventListener(
+            "dragstart",
+            function (event) {
+                event.preventDefault();
+            }
+        );
 
-document.addEventListener(
-    "keydown",
-    function (event) {
-        // Prevent Ctrl+S, Ctrl+U
-        if (
-            event.ctrlKey &&
-            (
-                event.key.toLowerCase() === "s" ||
-                event.key.toLowerCase() === "u"
-            )
-        ) {
-            event.preventDefault();
-        }
+        document.addEventListener(
+            "keydown",
+            function (event) {
+                // Prevent Ctrl+S, Ctrl+U
+                if (
+                    event.ctrlKey &&
+                    (
+                        event.key.toLowerCase() === "s" ||
+                        event.key.toLowerCase() === "u"
+                    )
+                ) {
+                    event.preventDefault();
+                }
 
-        // Prevent F12
-        if (event.key === "F12") {
-            event.preventDefault();
-        }
+                // Prevent F12
+                if (event.key === "F12") {
+                    event.preventDefault();
+                }
 
-        // Prevent Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-        if (
-            event.ctrlKey &&
-            event.shiftKey &&
-            (
-                event.key.toLowerCase() === "i" ||
-                event.key.toLowerCase() === "j" ||
-                event.key.toLowerCase() === "c"
-            )
-        ) {
-            event.preventDefault();
-        }
-    }
-);
+                // Prevent Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+                if (
+                    event.ctrlKey &&
+                    event.shiftKey &&
+                    (
+                        event.key.toLowerCase() === "i" ||
+                        event.key.toLowerCase() === "j" ||
+                        event.key.toLowerCase() === "c"
+                    )
+                ) {
+                    event.preventDefault();
+                }
+            }
+        );
 
         let dark = true;
 
@@ -4502,67 +4502,67 @@ document.addEventListener(
         function copyEditor10() { navigator.clipboard.writeText(jsEditor10.value); alert("Copied"); }
 
 
-        let completedTopics=0;
+        let completedTopics = 0;
 
-function updateProgress(){
+        function updateProgress() {
 
-completedTopics++;
+            completedTopics++;
 
-let percent=Math.floor((completedTopics/10)*100);
+            let percent = Math.floor((completedTopics / 10) * 100);
 
-document.getElementById("xpValue").innerHTML=percent+"%";
+            document.getElementById("xpValue").innerHTML = percent + "%";
 
-let deg=percent*3.6;
+            let deg = percent * 3.6;
 
-document.querySelector(".progressCircle").style.background=
+            document.querySelector(".progressCircle").style.background =
 
-`conic-gradient(#00e5ff ${deg}deg,#00ff99 ${deg}deg,#1f2937 0deg)`;
+                `conic-gradient(#00e5ff ${deg}deg,#00ff99 ${deg}deg,#1f2937 0deg)`;
 
-if(percent>=100){
+            if (percent >= 100) {
 
-document.getElementById("badgeText").innerHTML="🏆 JavaScript Master";
+                document.getElementById("badgeText").innerHTML = "🏆 JavaScript Master";
 
-}
+            }
 
-else if(percent>=70){
+            else if (percent >= 70) {
 
-document.getElementById("badgeText").innerHTML="🥇 Advanced";
+                document.getElementById("badgeText").innerHTML = "🥇 Advanced";
 
-}
+            }
 
-else if(percent>=40){
+            else if (percent >= 40) {
 
-document.getElementById("badgeText").innerHTML="🥈 Intermediate";
+                document.getElementById("badgeText").innerHTML = "🥈 Intermediate";
 
-}
+            }
 
-else{
+            else {
 
-document.getElementById("badgeText").innerHTML="🥉 Beginner";
+                document.getElementById("badgeText").innerHTML = "🥉 Beginner";
 
-}
+            }
 
-localStorage.setItem("jsProgress",completedTopics);
+            localStorage.setItem("jsProgress", completedTopics);
 
-}
+        }
 
-window.addEventListener("load",()=>{
+        window.addEventListener("load", () => {
 
-let save=localStorage.getItem("jsProgress");
+            let save = localStorage.getItem("jsProgress");
 
-if(save){
+            if (save) {
 
-completedTopics=parseInt(save);
+                completedTopics = parseInt(save);
 
-for(let i=0;i<completedTopics;i++){
+                for (let i = 0; i < completedTopics; i++) {
 
-updateProgress();
+                    updateProgress();
 
-}
+                }
 
-}
+            }
 
-});
+        });
     </script>
 
 </body>
