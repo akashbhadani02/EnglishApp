@@ -1907,10 +1907,12 @@
 
 
 <!-- =========================================================
-     HOME
+     HOME (LOGIN SCREEN DISABLED / COMMENTED OUT)
+     જો ભવિષ્યમાં લોગીન પાછું ચાલુ કરવું હોય, તો નીચેથી <!-- અને --> હટાવી દેવું
 ========================================================= -->
 
-<div class="screen active" id="home">
+<!-- 
+<div class="screen" id="home">
 
     <div class="header">
 
@@ -1977,19 +1979,20 @@
     </div>
 
 </div>
+-->
 
 
 <!-- =========================================================
-     STUDENT DASHBOARD
+     STUDENT DASHBOARD (DIRECT ACTIVE)
 ========================================================= -->
 
-<div class="screen" id="studentDashboard">
+<div class="screen active" id="studentDashboard">
 
     <div class="header">
 
         <h2>Student<span  onclick="showBooks()"> </span>Dashboard</h2>
 
-        <p id="studentWelcome"></p>
+        <p id="studentWelcome">Welcome to Aducate English</p>
 
     </div>
     
@@ -3486,13 +3489,7 @@ document.addEventListener(
                 localStorage.getItem(
                     "currentStudent"
                 )
-            );
-
-
-        if (!user) {
-            showScreen("home");
-            return;
-        }
+            ) || {};
 
 
         document.getElementById(
@@ -3514,15 +3511,12 @@ document.addEventListener(
 
     function saveProfile() {
 
-        const user =
+        let user =
             JSON.parse(
                 localStorage.getItem(
                     "currentStudent"
                 )
-            );
-
-
-        if (!user) return;
+            ) || { id: "GUEST" };
 
 
         const students =
@@ -3887,7 +3881,15 @@ document.addEventListener(
             );
 
 
-        if (!currentUser) return;
+        if (!currentUser) {
+            document.getElementById("resultMessage").innerHTML = `
+                <div style="text-align:center; font-weight:600;">
+                    📄 No Exam Results Found
+                </div>
+            `;
+            showScreen("resultScreen");
+            return;
+        }
 
 
         const students =
@@ -4113,16 +4115,13 @@ document.addEventListener(
                 localStorage.getItem(
                     "currentStudent"
                 )
-            );
-
-
-        if (!user) return;
+            ) || { attendance: 100 };
 
 
         document.getElementById(
             "attendanceText"
         ).innerHTML =
-            (user.attendance || 0) + "%";
+            (user.attendance || 100) + "%";
 
 
         showScreen(
@@ -4143,16 +4142,13 @@ document.addEventListener(
                 localStorage.getItem(
                     "currentStudent"
                 )
-            );
-
-
-        if (!user) return;
+            ) || { fees: "Paid" };
 
 
         document.getElementById(
             "feeStatusText"
         ).innerHTML =
-            user.fees || "Pending";
+            user.fees || "Paid";
 
 
         showScreen(
@@ -4433,7 +4429,13 @@ document.addEventListener(
             );
 
 
-        if (!current) return;
+        if (!current) {
+            window.open(
+                "./html/certificate.html",
+                "_blank"
+            );
+            return;
+        }
 
 
         const students =
@@ -5062,18 +5064,8 @@ Password : ${password}`
         );
 
 
-        document.getElementById(
-            "loginUser"
-        ).value = "";
-
-
-        document.getElementById(
-            "loginPass"
-        ).value = "";
-
-
         showScreen(
-            "home"
+            "studentDashboard"
         );
 
     }
@@ -5253,6 +5245,9 @@ Password : ${password}`
             );
 
 
+        if (!popup) return;
+
+
         popup.classList.remove(
             "show"
         );
@@ -5329,9 +5324,9 @@ Password : ${password}`
        AD POPUP OUTSIDE CLICK
     ========================================================= */
 
-    document
-        .getElementById("adPopup")
-        .addEventListener(
+    const adPopupElem = document.getElementById("adPopup");
+    if (adPopupElem) {
+        adPopupElem.addEventListener(
             "click",
             function (event) {
 
@@ -5346,6 +5341,7 @@ Password : ${password}`
 
             }
         );
+    }
 
 
     /* =========================================================
@@ -5398,10 +5394,10 @@ Password : ${password}`
 
     history.replaceState(
         {
-            screen: "home"
+            screen: "studentDashboard"
         },
         "",
-        "#home"
+        "#studentDashboard"
     );
 
 
@@ -5422,7 +5418,7 @@ Password : ${password}`
             } else {
 
                 showScreen(
-                    "home",
+                    "studentDashboard",
                     false
                 );
 
@@ -5463,7 +5459,7 @@ Password : ${password}`
             );
 
 
-            /* Restore Login */
+            /* Always show studentDashboard */
 
             const currentStudent =
                 JSON.parse(
@@ -5473,7 +5469,7 @@ Password : ${password}`
                 );
 
 
-            if (currentStudent) {
+            if (currentStudent && currentStudent.name) {
 
                 document.getElementById(
                     "studentWelcome"
@@ -5481,13 +5477,13 @@ Password : ${password}`
                     "Welcome, " +
                     currentStudent.name;
 
-
-                showScreen(
-                    "studentDashboard",
-                    false
-                );
-
             }
+
+
+            showScreen(
+                "studentDashboard",
+                false
+            );
 
 
             /* Desktop Particles Only */
