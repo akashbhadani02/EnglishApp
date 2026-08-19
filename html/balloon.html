@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aducate - Pro Animated Balloon Challenge</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    user-select:none;
+}
+
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow:hidden;
+    background: linear-gradient(180deg, #050c1e 0%, #0d2b5c 50%, #1a5276 100%);
+    height:100vh;
+}
+
+.game{
+    width:100%;
+    height:100vh;
+    position:relative;
+    overflow:hidden;
+}
+
+/* BACKGROUND ANIMATED CLOUDS & STARS */
+.cloud {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    pointer-events: none;
+    z-index: 1;
+    animation: moveCloud linear infinite;
+}
+
+.cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 50%;
+}
+
+.c1 { width: 180px; height: 60px; top: 20%; left: -200px; animation-duration: 25s; }
+.c1::before { width: 80px; height: 80px; top: -30px; left: 30px; }
+.c1::after { width: 60px; height: 60px; top: -20px; right: 30px; }
+
+.c2 { width: 250px; height: 80px; top: 60%; left: -300px; animation-duration: 35s; animation-delay: 5s; }
+.c2::before { width: 100px; height: 100px; top: -40px; left: 40px; }
+.c2::after { width: 80px; height: 80px; top: -30px; right: 40px; }
+
+@keyframes moveCloud {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(120vw); }
+}
+
+/* TOP BAR */
+.topbar{
+    position:absolute;
+    top:12px;
+    left:50%;
+    transform: translateX(-50%);
+    width:92%;
+    max-width: 800px;
+    height:65px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    color:white;
+    z-index:1000;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.stat{
+    text-align:center;
+    min-width:80px;
+}
+
+.stat small{
+    display:block;
+    font-size:11px;
+    letter-spacing: 1px;
+    opacity:.8;
+    color: #ffd21c;
+    font-weight: bold;
+}
+
+.stat strong{
+    font-size:20px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+/* QUESTION BOX */
+.question{
+    position:absolute;
+    top:90px;
+    left:50%;
+    transform:translateX(-50%);
+    width:90%;
+    max-width:600px;
+    padding:14px 25px;
+    text-align:center;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50px;
+    z-index:900;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3), inset 0 0 15px rgba(0,119,255,0.2);
+    border: 2px solid #0077ff;
+}
+
+.question h2{
+    color:#172b4d;
+    font-size:20px;
+    font-weight: 800;
+}
+
+.question span{
+    color:#0077ff;
+    display: inline-block;
+    font-size: 24px;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+/* NEXT WORD POPUP ANIMATION */
+.word-pop {
+    animation: wordPopAnim 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important;
+}
+
+@keyframes wordPopAnim {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+        filter: drop-shadow(0 0 0px rgba(0, 119, 255, 0));
+    }
+    60% {
+        transform: scale(1.35);
+        opacity: 1;
+        color: #ff3b6b;
+        filter: drop-shadow(0 0 20px rgba(255, 59, 107, 0.9));
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+        color: #0077ff;
+        filter: drop-shadow(0 0 8px rgba(0, 119, 255, 0.5));
+    }
+}
+
+/* PLAY AREA */
+.play-area{
+    position:absolute;
+    top:160px;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:hidden;
+}
+
+/* BALLOON */
+.balloon{
+    position:absolute;
+    width:110px;
+    height:130px;
+    border-radius:50% 50% 48% 48%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:12px;
+    color:#ffffff !important;
+    font-weight:900;
+    font-size:15px;
+    letter-spacing: 0.5px;
+    cursor:pointer;
+    z-index:50;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.9);
+
+    box-shadow:
+        inset -12px -12px 20px rgba(0,0,0,0.35),
+        inset 10px 10px 15px rgba(255,255,255,0.5),
+        0 15px 25px rgba(0,0,0,0.3);
+
+    animation: floatAndWiggle linear forwards;
+    transition: transform 0.1s ease;
+}
+
+.balloon:hover {
+    filter: brightness(1.15);
+}
+
+.balloon::after{
+    content:"";
+    position:absolute;
+    bottom:-45px;
+    left:50%;
+    width:2px;
+    height:48px;
+    background:rgba(255,255,255,0.6);
+}
+
+.balloon::before{
+    content:"";
+    position:absolute;
+    bottom:-8px;
+    left:50%;
+    transform:translateX(-50%);
+    width:0;
+    height:0;
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    border-top:12px solid inherit;
+}
+
+@keyframes floatAndWiggle{
+    0%{
+        transform: translateY(0) rotate(0deg) scale(0.8);
+    }
+    25%{
+        transform: translateY(-30vh) rotate(-6deg) scale(1);
+    }
+    50%{
+        transform: translateY(-60vh) rotate(6deg) scale(1.03);
+    }
+    75%{
+        transform: translateY(-90vh) rotate(-4deg) scale(1);
+    }
+    100%{
+        transform: translateY(-125vh) rotate(2deg) scale(0.95);
+    }
+}
+
+/* POP ANIMATION */
+.pop{
+    animation: popFlash 0.25s ease-out forwards !important;
+}
+
+@keyframes popFlash{
+    0%{
+        transform: scale(1);
+        opacity: 1;
+        filter: brightness(1);
+    }
+    50%{
+        transform: scale(1.6);
+        opacity: 0.8;
+        filter: brightness(2);
+    }
+    100%{
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+/* PARTICLES */
+.particle{
+    position:absolute;
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:200;
+    box-shadow: 0 0 8px currentColor;
+    animation: particleSpread .6s cubic-bezier(0,0,0.2,1) forwards;
+}
+
+@keyframes particleSpread{
+    from{
+        transform: translate(0,0) scale(1.5);
+        opacity:1;
+    }
+    to{
+        transform: translate(var(--x), var(--y)) scale(0);
+        opacity:0;
+    }
+}
+
+/* START SCREEN */
+.start-screen{
+    position:absolute;
+    inset:0;
+    background: radial-gradient(circle, #0b2b5a 0%, #030a18 100%);
+    z-index:3000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+    padding:20px;
+}
+
+.start-box{
+    width:95%;
+    max-width:480px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border-radius: 35px;
+    padding: 40px 25px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+    animation: floatBox 4s ease-in-out infinite alternate;
+}
+
+@keyframes floatBox {
+    from { transform: translateY(-5px); }
+    to { transform: translateY(5px); }
+}
+
+.logo{
+    font-size:42px;
+    font-weight:900;
+    letter-spacing: 2px;
+    margin-bottom:5px;
+    text-shadow: 0 0 20px rgba(255, 210, 28, 0.4);
+}
+
+.logo span{
+    color:#ffd21c;
+}
+
+.start-box h2{
+    margin:15px 0;
+    font-size:24px;
+}
+
+.start-box p{
+    opacity:.85;
+    line-height:1.6;
+    font-size: 15px;
+}
+
+.start-btn{
+    margin-top:25px;
+    border:0;
+    padding:16px 45px;
+    border-radius:50px;
+    background: linear-gradient(45deg, #ffd21c, #ff9f43);
+    color:#091a3a;
+    font-size:18px;
+    font-weight:900;
+    cursor:pointer;
+    box-shadow: 0 10px 25px rgba(255, 210, 28, 0.4);
+    transition: all 0.2s ease;
+}
+
+.start-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 30px rgba(255, 210, 28, 0.6);
+}
+
+/* GAME OVER */
+.game-over{
+    position:absolute;
+    inset:0;
+    background:rgba(3,14,32,0.92);
+    backdrop-filter: blur(10px);
+    z-index:2500;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    color:white;
+}
+
+.game-over-box{
+    background:white;
+    color:#172b4d;
+    width:90%;
+    max-width:400px;
+    padding:35px;
+    border-radius:30px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    animation: popModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popModal {
+    from { transform: scale(0.6); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.final-score{
+    font-size:50px;
+    font-weight:900;
+    color:#0077ff;
+    margin:10px 0;
+}
+
+.restart{
+    border:0;
+    padding:14px 35px;
+    border-radius:30px;
+    background: linear-gradient(45deg, #0077ff, #00d2ff);
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(0,119,255,0.4);
+    transition: 0.2s;
+}
+
+.restart:hover {
+    transform: scale(1.05);
+}
+
+/* COMBO TEXT ANIMATION */
+.combo{
+    position:absolute;
+    left:50%;
+    top:45%;
+    transform:translate(-50%,-50%);
+    color:#ffe000;
+    font-size:45px;
+    font-weight:900;
+    pointer-events:none;
+    z-index:500;
+    text-shadow: 0 0 20px rgba(255, 224, 0, 0.8), 0 4px 10px rgba(0,0,0,0.8);
+    animation: comboAnim 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes comboAnim{
+    0%{ opacity:0; transform:translate(-50%,-30%) scale(0.3); }
+    40%{ opacity:1; transform:translate(-50%,-50%) scale(1.2); }
+    100%{ opacity:0; transform:translate(-50%,-100%) scale(1); }
+}
+
+/* SCREEN SHAKE EFFECT */
+.shake {
+    animation: shakeAnim 0.35s ease-in-out;
+}
+
+@keyframes shakeAnim {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-12px); }
+    40%, 80% { transform: translateX(12px); }
+}
+
+@media(max-width:600px){
+    .topbar{ height:55px; top: 8px; }
+    .stat strong{ font-size:16px; }
+    .question{ top:72px; padding:10px 15px; }
+    .question h2{ font-size:15px; }
+    .play-area{ top:135px; }
+    .balloon{ width:92px; height:112px; font-size:13px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="game" id="gameContainer">
+
+    <!-- ANIMATED BACKGROUND CLOUDS -->
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+
+    <!-- START SCREEN -->
+    <div class="start-screen" id="startScreen">
+        <div class="start-box">
+            <div class="logo"><span>ADU</span>CATE</div>
+            <h2>🎈 English Balloon Challenge</h2>
+            <p>
+                Correct English balloon શોધો અને તેને ફોડો!<br>
+                Wrong balloon ફોડશો તો life ઘટશે.<br><br>
+                ⏳ <strong>સમય: 5 મિનિટ (300s)</strong>
+            </p>
+            <button class="start-btn" onclick="startGame()">🚀 START GAME</button>
+        </div>
+    </div>
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="stat">
+            <small>SCORE</small>
+            <strong id="score">0</strong>
+        </div>
+        <div class="stat">
+            <small>LEVEL</small>
+            <strong id="level">1</strong>
+        </div>
+        <div class="stat">
+            <small>❤️ LIVES</small>
+            <strong id="lives">3</strong>
+        </div>
+        <div class="stat">
+            <small>TIME</small>
+            <strong id="time">300</strong>
+        </div>
+    </div>
+
+    <!-- QUESTION -->
+    <div class="question" id="questionBox">
+        <h2>🎯 Find the word: <span id="target">Hello</span></h2>
+    </div>
+
+    <!-- PLAY AREA -->
+    <div class="play-area" id="playArea"></div>
+
+    <!-- GAME OVER -->
+    <div class="game-over" id="gameOver">
+        <div class="game-over-box">
+            <h1>🎉 Game Over!</h1>
+            <p>Your Final Score</p>
+            <div class="final-score" id="finalScore">0</div>
+            <p id="resultText" style="margin-bottom: 20px; font-weight: 600; color: #555;"></p>
+            <button class="restart" onclick="restartGame()">🔄 Play Again</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+const words = [
+    { target:"Hello", options:["Hello","Goodbye","School","Book"] },
+    { target:"Beautiful", options:["Beautiful","Angry","Fast","Small"] },
+    { target:"Thank You", options:["Thank You","Sorry","Morning","Water"] },
+    { target:"Teacher", options:["Teacher","Student","Doctor","Driver"] },
+    { target:"Happy", options:["Happy","Sad","Slow","Weak"] },
+    { target:"Important", options:["Important","Easy","Cold","Short"] },
+    { target:"Practice", options:["Practice","Sleep","Run","Eat"] },
+    { target:"Confidence", options:["Confidence","Fear","Food","House"] },
+    { target:"Opportunity", options:["Opportunity","Problem","Chair","Window"] },
+    { target:"Success", options:["Success","Failure","Rain","Table"] },
+    { target:"Communication", options:["Communication","Computer","Bottle","Garden"] },
+    { target:"Improve", options:["Improve","Destroy","Forget","Close"] },
+    { target:"Excellent", options:["Excellent","Bad","Weak","Late"] },
+    { target:"Knowledge", options:["Knowledge","Money","Road","Phone"] },
+    { target:"Believe", options:["Believe","Break","Throw","Catch"] },
+    { target:"Apple", options:["Apple","Banana","Orange","Grape"] },
+    { target:"Water", options:["Water","Milk","Juice","Tea"] },
+    { target:"Sun", options:["Sun","Moon","Star","Sky"] },
+    { target:"Friend", options:["Friend","Enemy","Neighbor","Stranger"] },
+    { target:"Family", options:["Family","Team","Group","Class"] },
+    { target:"Mother", options:["Mother","Father","Sister","Brother"] },
+    { target:"Father", options:["Father","Uncle","Aunt","Cousin"] },
+    { target:"Brother", options:["Brother","Sister","Friend","Nephew"] },
+    { target:"Sister", options:["Sister","Mother","Aunt","Niece"] },
+    { target:"House", options:["House","Building","Office","Store"] },
+    { target:"Car", options:["Car","Bike","Bus","Train"] },
+    { target:"Book", options:["Book","Pen","Pencil","Paper"] },
+    { target:"Pen", options:["Pen","Pencil","Eraser","Ruler"] },
+    { target:"School", options:["School","College","Classroom","Library"] },
+    { target:"Student", options:["Student","Teacher","Principal","Doctor"] },
+    { target:"Doctor", options:["Doctor","Nurse","Patient","Dentist"] },
+    { target:"Hospital", options:["Hospital","Clinic","Pharmacy","Market"] },
+    { target:"Food", options:["Food","Drink","Fruit","Vegetable"] },
+    { target:"City", options:["City","Village","Town","State"] },
+    { target:"Country", options:["Country","City","World","Nation"] },
+    { target:"World", options:["World","Earth","Planet","Space"] },
+    { target:"Time", options:["Time","Hour","Minute","Second"] },
+    { target:"Day", options:["Day","Night","Morning","Evening"] },
+    { target:"Night", options:["Night","Day","Midnight","Noon"] },
+    { target:"Money", options:["Money","Coin","Cash","Bank"] },
+    { target:"Job", options:["Job","Work","Business","Career"] },
+    { target:"Love", options:["Love","Hate","Care","Respect"] },
+    { target:"Peace", options:["Peace","War","Quiet","Calm"] },
+    { target:"Life", options:["Life","Death","Birth","Health"] },
+    { target:"Health", options:["Health","Disease","Doctor","Fitness"] },
+    { target:"Music", options:["Music","Song","Dance","Art"] },
+    { target:"Art", options:["Art","Painting","Music","Dance"] },
+    { target:"Computer", options:["Computer","Laptop","Mobile","Tablet"] },
+    { target:"Internet", options:["Internet","Website","Network","Data"] },
+    { target:"Phone", options:["Phone","Camera","Watch","Radio"] },
+    { target:"Question", options:["Question","Answer","Problem","Solution"] },
+    { target:"Answer", options:["Answer","Question","Result","Option"] },
+    { target:"Truth", options:["Truth","Lie","Fact","Secret"] },
+    { target:"Light", options:["Light","Dark","Color","Bright"] },
+    { target:"Darkness", options:["Darkness","Light","Shadow","Night"] },
+    { target:"Fire", options:["Fire","Water","Air","Earth"] },
+    { target:"Air", options:["Air","Wind","Sky","Gas"] },
+    { target:"Earth", options:["Earth","Soil","Ground","Nature"] },
+    { target:"Tree", options:["Tree","Plant","Flower","Forest"] },
+    { target:"Flower", options:["Flower","Leaf","Tree","Grass"] },
+    { target:"River", options:["River","Lake","Ocean","Sea"] },
+    { target:"Ocean", options:["Ocean","Sea","River","Stream"] },
+    { target:"Mountain", options:["Mountain","Hill","Valley","Peak"] },
+    { target:"Rain", options:["Rain","Snow","Cloud","Wind"] },
+    { target:"Wind", options:["Wind","Air","Storm","Breeze"] },
+    { target:"Animal", options:["Animal","Bird","Fish","Insect"] },
+    { target:"Bird", options:["Bird","Animal","Wing","Feather"] },
+    { target:"Fish", options:["Fish","Water","Ocean","River"] },
+    { target:"Dog", options:["Dog","Cat","Animal","Pet"] },
+    { target:"Cat", options:["Cat","Dog","Tiger","Lion"] },
+    { target:"Lion", options:["Lion","Tiger","Bear","Elephant"] },
+    { target:"Elephant", options:["Elephant","Lion","Tiger","Giraffe"] },
+    { target:"Color", options:["Color","Red","Blue","Green"] },
+    { target:"Red", options:["Red","Blue","Green","Yellow"] },
+    { target:"Blue", options:["Blue","Red","Green","Black"] },
+    { target:"Green", options:["Green","Yellow","Red","White"] },
+    { target:"White", options:["White","Black","Gray","Silver"] },
+    { target:"Black", options:["Black","White","Gray","Dark"] },
+    { target:"Good", options:["Good","Bad","Best","Better"] },
+    { target:"Bad", options:["Bad","Good","Worst","Worse"] },
+    { target:"Big", options:["Big","Small","Huge","Large"] },
+    { target:"Small", options:["Small","Big","Tiny","Little"] },
+    { target:"Fast", options:["Fast","Slow","Quick","Rapid"] },
+    { target:"Slow", options:["Slow","Fast","Calm","Steady"] },
+    { target:"Hot", options:["Hot","Cold","Warm","Cool"] },
+    { target:"Cold", options:["Cold","Hot","Ice","Freeze"] },
+    { target:"Old", options:["Old","New","Young","Ancient"] },
+    { target:"New", options:["New","Old","Modern","Fresh"] },
+    { target:"Young", options:["Young","Old","Child","Youth"] },
+    { target:"Rich", options:["Rich","Poor","Wealthy","Money"] },
+    { target:"Poor", options:["Poor","Rich","Needy","Weak"] },
+    { target:"Strong", options:["Strong","Weak","Power","Brave"] },
+    { target:"Weak", options:["Weak","Strong","Soft","Tired"] },
+    { target:"Easy", options:["Easy","Hard","Simple","Difficult"] },
+    { target:"Hard", options:["Hard","Easy","Tough","Solid"] },
+    { target:"Clean", options:["Clean","Dirty","Pure","Neat"] },
+    { target:"Dirty", options:["Dirty","Clean","Dusty","Messy"] },
+    { target:"Full", options:["Full","Empty","Complete","Total"] },
+    { target:"Empty", options:["Empty","Full","Blank","Zero"] },
+    { target:"Open", options:["Open","Close","Shut","Unlock"] },
+    { target:"Close", options:["Close","Open","Near","Shut"] },
+    { target:"Start", options:["Start","Stop","Begin","Finish"] },
+    { target:"Stop", options:["Stop","Start","End","Halt"] },
+    { target:"First", options:["First","Last","Second","Begin"] },
+    { target:"Last", options:["Last","First","End","Final"] },
+    { target:"High", options:["High","Low","Tall","Top"] },
+    { target:"Low", options:["Low","High","Deep","Bottom"] },
+    { target:"Right", options:["Right","Wrong","Left","Correct"] },
+    { target:"Wrong", options:["Wrong","Right","False","Mistake"] },
+    { target:"True", options:["True","False","Real","Truth"] },
+    { target:"False", options:["False","True","Wrong","Fake"] },
+    { target:"Happy", options:["Happy","Sad","Joy","Glad"] },
+    { target:"Sad", options:["Sad","Happy","Upset","Cry"] },
+    { target:"Smile", options:["Smile","Laugh","Cry","Face"] },
+    { target:"Laugh", options:["Laugh","Smile","Cry","Fun"] },
+    { target:"Cry", options:["Cry","Laugh","Tears","Sad"] },
+    { target:"Walk", options:["Walk","Run","Step","Move"] },
+    { target:"Run", options:["Run","Walk","Fast","Race"] },
+    { target:"Jump", options:["Jump","Hop","Fly","Skip"] },
+    { target:"Sit", options:["Sit","Stand","Chair","Seat"] },
+    { target:"Stand", options:["Stand","Sit","Up","Rise"] },
+    { target:"Sleep", options:["Sleep","Wake","Bed","Rest"] },
+    { target:"Wake", options:["Wake","Sleep","Up","Morning"] },
+    { target:"Eat", options:["Eat","Drink","Food","Bite"] },
+    { target:"Drink", options:["Drink","Eat","Water","Juice"] },
+    { target:"Read", options:["Read","Write","Book","Study"] },
+    { target:"Write", options:["Write","Read","Pen","Draw"] },
+    { target:"Speak", options:["Speak","Talk","Listen","Say"] },
+    { target:"Listen", options:["Listen","Hear","Speak","Sound"] },
+    { target:"See", options:["See","Look","Watch","Eye"] },
+    { target:"Think", options:["Think","Know","Mind","Idea"] },
+    { target:"Know", options:["Know","Learn","Think","Understand"] },
+    { target:"Learn", options:["Learn","Study","Teach","Know"] },
+    { target:"Teach", options:["Teach","Learn","School","Teacher"] },
+    { target:"Help", options:["Help","Support","Aid","Care"] },
+    { target:"Work", options:["Work","Job","Task","Office"] },
+    { target:"Play", options:["Play","Game","Sport","Fun"] },
+    { target:"Buy", options:["Buy","Sell","Shop","Pay"] },
+    { target:"Sell", options:["Sell","Buy","Trade","Store"] },
+    { target:"Give", options:["Give","Take","Offer","Present"] },
+    { target:"Take", options:["Take","Give","Get","Hold"] },
+    { target:"Make", options:["Make","Create","Build","Form"] },
+    { target:"Build", options:["Build","Create","Make","House"] },
+    { target:"Change", options:["Change","New","Shift","Turn"] },
+    { target:"Grow", options:["Grow","Plant","Big","Increase"] },
+    { target:"Open", options:["Open","Close","Door","Start"] },
+    { target:"Move", options:["Move","Stop","Walk","Shift"] },
+    { target:"Win", options:["Win","Lose","Success","Game"] },
+    { target:"Lose", options:["Lose","Win","Failure","Miss"] },
+    { target:"Memory", options:["Memory","Mind","Brain","Forget"] },
+    { target:"Mind", options:["Mind","Brain","Thought","Idea"] },
+    { target:"Heart", options:["Heart","Love","Blood","Body"] },
+    { target:"Hand", options:["Hand","Finger","Arm","Hold"] },
+    { target:"Eye", options:["Eye","See","Look","Sight"] },
+    { target:"Face", options:["Face","Head","Smile","Look"] },
+    { target:"Door", options:["Door","Window","Gate","Room"] },
+    { target:"Window", options:["Window","Door","Glass","Wall"] },
+    { target:"Table", options:["Table","Chair","Desk","Furniture"] },
+    { target:"Chair", options:["Chair","Seat","Table","Bench"] },
+    { target:"Bag", options:["Bag","Purse","Backpack","Box"] },
+    { target:"Clock", options:["Clock","Watch","Time","Hour"] },
+    { target:"Shirt", options:["Shirt","Pants","Clothes","Dress"] },
+    { target:"Shoes", options:["Shoes","Socks","Feet","Walk"] },
+    { target:"Road", options:["Road","Street","Path","Way"] },
+    { target:"Bridge", options:["Bridge","River","Cross","Road"] },
+    { target:"Village", options:["Village","City","Town","Rural"] },
+    { target:"Garden", options:["Garden","Park","Flower","Plant"] },
+    { target:"Farmer", options:["Farmer","Farm","Field","Crop"] },
+    { target:"Driver", options:["Driver","Car","Bus","Road"] },
+    { target:"Pilot", options:["Pilot","Plane","Fly","Sky"] },
+    { target:"Police", options:["Police","Officer","Safety","Law"] },
+    { target:"Army", options:["Army","Soldier","War","Nation"] },
+    { target:"King", options:["King","Queen","Crown","Palace"] },
+    { target:"Queen", options:["Queen","King","Crown","Palace"] },
+    { target:"Dream", options:["Dream","Sleep","Night","Goal"] },
+    { target:"Goal", options:["Goal","Target","Aim","Success"] },
+    { target:"Future", options:["Future","Past","Present","Time"] },
+    { target:"Past", options:["Past","History","Future","Old"] },
+    { target:"Present", options:["Present","Gift","Now","Today"] },
+    { target:"History", options:["History","Past","Story","Old"] },
+    { target:"Science", options:["Science","Math","Study","Physics"] },
+    { target:"Math", options:["Math","Number","Count","Science"] },
+    { target:"Music", options:["Music","Song","Sound","Play"] },
+    { target:"Language", options:["Language","Words","Speak","English"] },
+    { target:"Letter", options:["Letter","Post","Mail","Alphabet"] },
+    { target:"Message", options:["Message","Text","Chat","Phone"] },
+    { target:"Camera", options:["Camera","Photo","Picture","Video"] },
+    { target:"Picture", options:["Picture","Photo","Image","Art"] },
+    { target:"Movie", options:["Movie","Film","Cinema","Show"] },
+    { target:"Story", options:["Story","Book","Read","History"] },
+    { target:"Game", options:["Game","Play","Sport","Fun"] },
+    { target:"Team", options:["Team","Group","Player","Match"] },
+    { target:"Match", options:["Match","Game","Play","Team"] },
+    { target:"Power", options:["Power","Energy","Strong","Force"] },
+    { target:"Energy", options:["Energy","Power","Force","Light"] },
+    { target:"Freedom", options:["Freedom","Free","Peace","Rights"] },
+    { target:"Safety", options:["Safety","Safe","Protection","Care"] },
+    { target:"Danger", options:["Danger","Risk","Safety","Warn"] },
+    { target:"Secret", options:["Secret","Hide","Truth","Private"] },
+    { target:"Simple", options:["Simple","Easy","Basic","Clear"] },
+    { target:"Complex", options:["Complex","Hard","Difficult","Tough"] },
+    { target:"Perfect", options:["Perfect","Best","Good","Exact"] },
+    { target:"Unique", options:["Unique","Special","Different","One"] },
+    { target:"Special", options:["Special","Unique","Important","Best"] },
+    { target:"Famous", options:["Famous","Popular","Known","Star"] },
+    { target:"Brave", options:["Brave","Strong","Hero","Fearless"] },
+    { target:"Honest", options:["Honest","Truth","Good","Sincere"] },
+    { target:"Kind", options:["Kind","Nice","Good","Gentle"] }
+];
+
+let score = 0;
+let lives = 3;
+let level = 1;
+let time = 300; 
+
+let gameRunning = false;
+let timerInterval;
+let balloonInterval;
+let currentQuestion;
+
+let colors = [
+    "#ff3b6b", "#7b61ff", "#00b894", 
+    "#ff9f43", "#00a8ff", "#e84393", "#6c5ce7"
+];
+
+const playArea = document.getElementById("playArea");
+const gameContainer = document.getElementById("gameContainer");
+const questionBox = document.getElementById("questionBox");
+const scoreEl = document.getElementById("score");
+const livesEl = document.getElementById("lives");
+const levelEl = document.getElementById("level");
+const timeEl = document.getElementById("time");
+const targetEl = document.getElementById("target");
+const startScreen = document.getElementById("startScreen");
+const gameOver = document.getElementById("gameOver");
+const finalScore = document.getElementById("finalScore");
+const resultText = document.getElementById("resultText");
+
+function startGame(){
+    startScreen.style.display = "none";
+    score = 0;
+    lives = 3;
+    level = 1;
+    time = 300; 
+    gameRunning = true;
+
+    updateUI();
+    nextQuestion();
+
+    clearInterval(timerInterval);
+    timerInterval = setInterval(function(){
+        if(!gameRunning) return;
+        time--;
+        timeEl.textContent = time;
+        if(time <= 0){
+            endGame();
+        }
+    },1000);
+
+    clearInterval(balloonInterval);
+    balloonInterval = setInterval(function(){
+        if(gameRunning){
+            createBalloon();
+        }
+    },750);
+}
+
+function nextQuestion(){
+    currentQuestion = words[Math.floor(Math.random()*words.length)];
+    targetEl.textContent = currentQuestion.target;
+    
+    // POP-UP ANIMATION FOR NEXT WORD
+    targetEl.classList.remove('word-pop');
+    void targetEl.offsetWidth; // Trigger reflow
+    targetEl.classList.add('word-pop');
+}
+
+function createBalloon(){
+    if(!gameRunning) return;
+
+    const balloon = document.createElement("div");
+    balloon.className = "balloon";
+
+    let isCorrect = Math.random() < 0.32;
+    let word;
+
+    if(isCorrect){
+        word = currentQuestion.target;
+    }else{
+        let wrongWords = currentQuestion.options.filter(x => x !== currentQuestion.target);
+        word = wrongWords[Math.floor(Math.random()*wrongWords.length)];
+    }
+
+    balloon.textContent = word;
+    balloon.dataset.correct = isCorrect ? "true" : "false";
+
+    const areaWidth = playArea.clientWidth;
+    let maxX = Math.max(10, areaWidth - 120);
+    balloon.style.left = Math.random()*maxX + "px";
+    balloon.style.bottom = "-150px";
+
+    let bgColor = colors[Math.floor(Math.random()*colors.length)];
+    balloon.style.background = bgColor;
+    balloon.style.borderColor = bgColor; 
+
+    let speed = Math.max(3.5, 8 - (level * 0.3));
+    balloon.style.animationDuration = speed + "s";
+
+    balloon.addEventListener("pointerdown", function(){
+        popBalloon(balloon);
+    });
+
+    playArea.appendChild(balloon);
+
+    setTimeout(function(){
+        if(balloon.parentNode){
+            balloon.remove();
+        }
+    }, (speed * 1000) + 1000);
+}
+
+function popBalloon(balloon){
+    if(!gameRunning) return;
+    if(balloon.classList.contains("pop")) return;
+
+    let correct = balloon.dataset.correct === "true";
+    createParticles(balloon);
+    balloon.classList.add("pop");
+
+    if(correct){
+        score += 10;
+        showCombo("✨ +10");
+        if(score >= level * 100){
+            level++;
+            showCombo("🔥 LEVEL UP!");
+        }
+        nextQuestion();
+    }else{
+        lives--;
+        showCombo("❌ -1 LIFE");
+        
+        gameContainer.classList.add("shake");
+        setTimeout(() => gameContainer.classList.remove("shake"), 350);
+
+        if(lives <= 0){
+            setTimeout(endGame, 400);
+        }
+    }
+
+    updateUI();
+
+    setTimeout(function(){
+        if(balloon.parentNode){
+            balloon.remove();
+        }
+    }, 250);
+}
+
+function createParticles(balloon){
+    const rect = balloon.getBoundingClientRect();
+    const gameRect = gameContainer.getBoundingClientRect();
+
+    const centerX = rect.left - gameRect.left + rect.width / 2;
+    const centerY = rect.top - gameRect.top + rect.height / 2;
+
+    for(let i = 0; i < 22; i++){
+        const particle = document.createElement("div");
+        particle.className = "particle";
+        particle.style.left = centerX + "px";
+        particle.style.top = centerY + "px";
+        
+        let pColor = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.background = pColor;
+        particle.style.color = pColor;
+
+        particle.style.setProperty("--x", ((Math.random() - 0.5) * 240) + "px");
+        particle.style.setProperty("--y", ((Math.random() - 0.5) * 240) + "px");
+
+        gameContainer.appendChild(particle);
+
+        setTimeout(function(){
+            particle.remove();
+        }, 600);
+    }
+}
+
+function showCombo(text){
+    const combo = document.createElement("div");
+    combo.className = "combo";
+    combo.textContent = text;
+    gameContainer.appendChild(combo);
+
+    setTimeout(function(){
+        combo.remove();
+    }, 800);
+}
+
+function updateUI(){
+    scoreEl.textContent = score;
+    livesEl.textContent = "❤️".repeat(lives);
+    levelEl.textContent = level;
+    timeEl.textContent = time;
+}
+
+function endGame(){
+    if(!gameRunning) return;
+    gameRunning = false;
+
+    clearInterval(timerInterval);
+    clearInterval(balloonInterval);
+    playArea.innerHTML = "";
+
+    finalScore.textContent = score;
+
+    if(score >= 400){
+        resultText.textContent = "🏆 Mastermind! Your English is Outstanding!";
+    }else if(score >= 200){
+        resultText.textContent = "👏 Awesome Job! Great speed and skill!";
+    }else{
+        resultText.textContent = "💪 Keep Practicing! You can do better!";
+    }
+
+    gameOver.style.display = "flex";
+}
+
+function restartGame(){
+    gameOver.style.display = "none";
+    startGame();
+}
+
+document.addEventListener("touchmove", function(e){
+    if(gameRunning){
+        e.preventDefault();
+    }
+}, {passive: false});
+
+</script>
+
+</body>
+</html>
